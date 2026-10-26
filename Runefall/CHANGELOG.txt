@@ -2,6 +2,9 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-26
+- I3 loot/tier engines: LootEngine (deterministic RNG, rank-biased rarity, category-unique affix
+  selection, socket rolls, self-test) and TierEngine (weighted rank rolls, self-test), wired into
+  the probe harness. DLL build PASS, 840,704 bytes, SHA-256 4DEDE109...1C16.
 - I3 item metadata core: ItemRegistry (rarity/ilvl/sockets/enhancements/tags, self-test) and
   co-save section 3 (item registry persistence: save pulls registry, load rebuilds, revert clears).
   DLL build PASS, 797,696 bytes, SHA-256 BDC48229...E38A.

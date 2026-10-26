@@ -90,6 +90,8 @@ else()
         src/FormResolver.cpp
         src/CoSave.cpp
         src/ItemRegistry.cpp
+        src/LootEngine.cpp
+        src/TierEngine.cpp
         src/DebugHarness.cpp
         src/PapyrusBridge.cpp
         "${CMAKE_CURRENT_BINARY_DIR}/src/version.rc"

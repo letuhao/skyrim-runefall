@@ -4,6 +4,8 @@
 #include "DataStore.h"
 #include "FormResolver.h"
 #include "ItemRegistry.h"
+#include "LootEngine.h"
+#include "TierEngine.h"
 #include "PackManager.h"
 
 #include <format>
@@ -45,10 +47,14 @@ namespace Runefall
 		results.push_back(Config::Get().SelfTest());
 		results.push_back(DataStore::Get().LoadAll(RunefallDataDir()));
 		results.push_back(DataStore::Get().SelfTest());
+		LootEngine::Get().Reload();
+		TierEngine::Get().Reload();
 		results.push_back(PackManager::Get().Scan());
 		results.push_back(PackManager::Get().SelfTest());
 		results.push_back(FormResolver::SelfTest());
 		results.push_back(ItemRegistry::SelfTest());
+		results.push_back(LootEngine::SelfTest());
+		results.push_back(TierEngine::SelfTest());
 		results.push_back(CoSave::SelfTest());
 
 		lastPasses = 0;

@@ -128,6 +128,19 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## I3 loot/tier engines build (2026-10-26, implement-first)
+
+- LootEngine: parses affixes/rarity/rarity_weights/drops_general from DataStore; deterministic
+  xorshift RNG; rank-biased rarity selection; one-affix-per-category rule; slot/ilvl filters;
+  socket rolls; produces ItemMetadata and registers it. Self-test: same seed = identical item,
+  500-roll sweep checks rarity 0-5, enhancementCount == rarity, unique categories, value bounds.
+- TierEngine: parses enemy_ranks/spawn_weights; deterministic weighted rank roll; self-test over
+  500 seeds x 6 RF tiers.
+- Both plugged into DebugHarness (Reload after DataStore load, self-tests run at probe time).
+- Artifact: Runefall.dll 840,704 bytes,
+  SHA-256 4DEDE109D7C86B710953230840BF080BDD6ED65F9F536E9EE225CE503DD11C16.
+- Build PASS; static self-tests compile. Generator unchanged (PASS).
+
 ## I3 item metadata core build (2026-10-26, implement-first)
 
 - New module: ItemRegistry (metadata: registryId, base form, rarity, ilvl, sockets, up to 5

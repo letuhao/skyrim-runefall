@@ -75,10 +75,10 @@ Implementation phase I1 (native core) is in progress:
    modular bootstrap. Build PASS (780,288 bytes, hash 7867ABEB...1ECB); deployed to the test env.
 2. DONE (I2 foundation): Runefall.Build generator PASS; 3 ESL plugins (184/40/38 records) +
    18 data CSVs + manifests + ini generated and deployed to J:\SkyrimTest\1.6.1170.
-3. IN PROGRESS I3: ItemRegistry (metadata + self-test) and co-save section 3 exist and build
-   PASS (DLL 797,696 bytes, hash BDC48229...E38A). NEXT: loot roll engine, tier/hunt/progression/
-   RuneForge modules, dynamic-enchantment application; then I2 record families (SPEL/PERK/COBJ/
-   QUST/NPC), I4 Papyrus/UI/input, I5 probe suite/static gates, I6 package, T1 batch test.
+3. IN PROGRESS I3: ItemRegistry + co-save section 3; LootEngine (deterministic rarity/affix/socket
+   rolls + self-test) and TierEngine (rank rolls + self-test) build PASS (DLL 840,704 bytes, hash
+   4DEDE109...1C16). NEXT: hunt engine, progression, RuneForge, dynamic-enchantment application;
+   then I2 record families, I4 Papyrus/UI/input, I5 probe suite/static gates, I6 package, T1.
 
 Already proven and kept as evidence: DLL build, plugin load, Papyrus/co-save registration and
 kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\evidence\phase0).
