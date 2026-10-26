@@ -128,6 +128,18 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## I3 dynamic enchantment build (2026-10-26, implement-first)
+
+- DynamicEnchantment: creates a runtime EnchantmentItem via IFormFactory, fills one Effect per
+  enhancement with the affix MGEF template resolved by EditorID, registers it with the data
+  handler, and attaches it to a world reference's extra data or an inventory entry's extra data
+  list (with optional override display name).
+- Self-test creates a runtime enchantment with one effect from RF_MGEF_Affix_000; warns before
+  data load, fails if the MGEF is unresolved or the factory is unavailable.
+- Artifact: Runefall.dll 869,376 bytes, SHA-256 865DC871A4382B265E9D9A720A8E1CB508E208610A20D29F7C4A8CD7B32FD364. Build PASS.
+- NOT yet wired to live loot/container/save flow; that is the next implementation step and the
+  first thing the T1 probe must exercise.
+
 ## I3 RuneForge build (2026-10-26, implement-first)
 
 - RuneForge transactions: reroll (with optional locked enhancement), rarity upgrade (60 percent),

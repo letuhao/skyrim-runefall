@@ -1,8 +1,8 @@
 Runefall 0.2.0-dev
 created: 2026-10-26
-stage: implement-first (D-063); I3 item/loot/tier/hunt/progression/RuneForge engines built
+stage: implement-first (D-063); I3 engines + dynamic enchantment built
 parent: 0.1.18
 target: Skyrim SE/AE 1.6.1170 + SKSE 1.6.1170 + Address Library 1.6.1170 (D-062)
-artifact: Runefall.dll 865,280 bytes sha256 51F28C256636C8D884411CF3B01D5B29EE037D7181F70EA3F68F78927BB0BAD0
+artifact: Runefall.dll 869,376 bytes sha256 865DC871A4382B265E9D9A720A8E1CB508E208610A20D29F7C4A8CD7B32FD364
 content: Runefall/build/dist (3 ESL plugins, 18 CSVs, manifests)
 runtime: not launched; batch probe at T1

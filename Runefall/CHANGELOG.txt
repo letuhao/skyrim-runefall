@@ -2,6 +2,9 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-26
+- I3 dynamic enchantment: runtime EnchantmentItem creation from affix MGEF templates, registration
+  with the data handler, attachment to world references and inventory entries, self-test.
+  DLL PASS, 869,376 bytes, SHA-256 865DC871...D364.
 - I3 RuneForge: reroll/locked reroll, rarity upgrade, socket/extract, rune conversion, salvage
   yield, wallet spending, plus LootEngine enhancement reroll; self-test. DLL PASS, 865,280 bytes,
   SHA-256 51F28C25...BAD0.
