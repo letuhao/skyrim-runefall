@@ -1,8 +1,8 @@
 Runefall 0.2.0-dev
 created: 2026-10-27
-stage: runtime loot/hunt unique; progression/rune semantics; automated batch harness
+stage: runtime loot/hunt unique; quest Papyrus scripts; automated harness
 parent: 0.1.18
 target: Skyrim SE/AE 1.6.1170 + SKSE 1.6.1170 + Address Library 1.6.1170 (D-062)
 artifact: Runefall.dll 963072 bytes sha256 356B06D2F2EC05F29A54368AE0E6C4253B62AB2A4B0FA29C0FC0E007D262755A
-candidate: build/release/Runefall-0.2.0-dev.zip 465774 bytes sha256 9C7F98E070327FCDE35B72154BEF2A2FBDCB8C174DDB6A17C0528C2C02FBBD95
-runtime: probe 18/18; hunt unique item + material PASS; batch harness core checks PASS
+candidate: build/release/Runefall-0.2.0-dev.zip 467245 bytes sha256 15080DB44D3FA5ED9BEA9A53980E076A0170514B6772476FB37069D3DCBBEF64
+runtime: probe 18/18; hunt unique item + material PASS; batch core PASS

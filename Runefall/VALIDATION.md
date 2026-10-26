@@ -128,6 +128,15 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## Papyrus quest scripts 2026-10-27 05:30-05:35
+
+- Added `RunefallQuestHost.psc` and `RunefallMenuBridge.psc`; attached them to the generated
+  Debug/Attunement quest VMADs (RunefallProbe remains on Debug).
+- Papyrus compile gate PASS; generator/validator PASS (3 quest hosts, no null EFID effects).
+- Static gates: 5/5 PASS (evidence static-gates-20261027-053405.md).
+- Artifact DLL 963072 B SHA-256 356B06D2F2EC05F29A54368AE0E6C4253B62AB2A4B0FA29C0FC0E007D262755A; candidate zip 467245 B SHA-256 15080DB44D3FA5ED9BEA9A53980E076A0170514B6772476FB37069D3DCBBEF64.
+- Quest-start runtime proof and Papyrus property wiring are not yet tested.
+
 ## Automated batch harness 2026-10-27 05:15-05:25
 
 - Added `tools/run-batch-test.ps1`: loads the clean save through MCP, checks player/cell/inventory/
