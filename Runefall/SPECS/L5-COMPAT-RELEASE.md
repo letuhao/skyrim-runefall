@@ -13,7 +13,7 @@ passes, module packaging, release gates, publishing deliverables and support pol
 | SKSE | hard | 1.6.1170 build (record exact tested build) | DLL loader |
 | Address Library | hard | 1.6.1170 bins (versionlib-1-6-1170-0.bin and -0-1) | relocation data |
 | CommonLibSSE-NG | build-time | **alandtse fork v14.0.1** (commit 723cfda480ae, 2026-10-25) | DLL framework; active fork with 1.7.99+ support |
-| SKSE Menu Framework | soft -> hard when UI module chosen | tested version range | v1 UI pages |
+| SKSE Menu Framework | hard for the UI module | **3.18 release** (Nexus 120352; DEV only for debug DLLs) | v1 UI pages |
 | MCM Helper | optional fallback | tested version range | fallback UI only |
 | SkyUI | not required | - | no hard SkyUI dependency |
 | JContainers / PO3 Papyrus Extender / UILib / PapyrusUtil | not used | - | dependency hygiene (L4) |
