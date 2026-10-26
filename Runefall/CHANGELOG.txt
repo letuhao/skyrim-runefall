@@ -1,7 +1,13 @@
 Runefall CHANGELOG
 ==================
 
-0.2.0-dev - 2026-10-26
+0.2.0-dev - 2026-10-27
+- T1 batch findings/fixes: scan TESDataHandler light mods (ESLs), map pack manifests by plugin
+  field, resolve base items by vanilla FormID with EditorID fallback, demote lazy-form checks to
+  warnings, and defer gameplay probes to new game. Latest DLL 923,648 B,
+  SHA-256 A433CFB6...4652; candidate archive 448,398 B, SHA-256 E312BC68...2C28.
+- SkyLink AI (net10.0) installed in the test env for automated T1 control (plugin
+  7C174179...62DB).
 - T1 prep: added tools/run-t1.ps1 (safe load-order backup/restore, refuses to run while any other
   Skyrim is active, collects Runefall/Probe/SKSE logs and stops only the test process). First T1
   attempt was blocked by the user's live Mantras game; evidence recorded, Plugins.txt restored.

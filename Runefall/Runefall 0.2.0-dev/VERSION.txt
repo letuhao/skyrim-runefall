@@ -1,8 +1,8 @@
 Runefall 0.2.0-dev
-created: 2026-10-26
-stage: implement-first (D-063); static gates 5/5 PASS; v1 candidate archive built; T1 pending
+created: 2026-10-27
+stage: T1 batch in progress; light-plugin/manifest/lazy-form fixes applied
 parent: 0.1.18
 target: Skyrim SE/AE 1.6.1170 + SKSE 1.6.1170 + Address Library 1.6.1170 (D-062)
-artifact: Runefall.dll 914,432 bytes sha256 B88B509A566E156D9B762306A542EA00CDE944C2D294FC398BE3EE143F295399
-candidate: build/release/Runefall-0.2.0-dev.zip sha256 13CFE91F83B72ADC7DE05EED8F0EBCD50D7596F193863111F5575C52247D8FB1
-runtime: not launched; single batch probe at T1
+artifact: Runefall.dll 923,648 bytes sha256 A433CFB675C07482792F8CB95F62117981F073DF29729906F66DE76541AD4652
+candidate: build/release/Runefall-0.2.0-dev.zip sha256 E312BC686D8F8246E8D54367D24391D7B8A0CBD31073C33A92E8C1883E1B2C28
+runtime: partial T1 runs (main menu); new-game gameplay probes pending

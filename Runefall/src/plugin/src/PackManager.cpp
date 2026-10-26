@@ -44,12 +44,46 @@ namespace Runefall
 		if (!dataHandler)
 			return { "PackManager.Scan", CheckStatus::Fail, "TESDataHandler unavailable" };
 
-		const auto* mods = dataHandler->GetLoadedMods();
-		const auto  count = dataHandler->GetLoadedModCount();
-		for (std::uint8_t i = 0; i < count; ++i) {
-			const auto* file = mods[i];
-			if (!file)
-				continue;
+		std::vector<const RE::TESFile*> loadedFiles;
+		const auto* fullMods = dataHandler->GetLoadedMods();
+		const auto  fullCount = dataHandler->GetLoadedModCount();
+		for (std::uint8_t i = 0; i < fullCount; ++i) {
+			if (fullMods[i])
+				loadedFiles.push_back(fullMods[i]);
+		}
+		const auto* lightMods = dataHandler->GetLoadedLightMods();
+		const auto  lightCount = dataHandler->GetLoadedLightModCount();
+		for (std::uint16_t i = 0; i < lightCount; ++i) {
+			if (lightMods[i])
+				loadedFiles.push_back(lightMods[i]);
+		}
+		std::unordered_map<std::string, PackInfo> manifestByPlugin;
+		if (fs::exists(RunefallPackDir())) {
+			for (const auto& entry : fs::directory_iterator(RunefallPackDir())) {
+				if (!entry.is_regular_file() || entry.path().extension() != ".json")
+					continue;
+				try {
+					std::ifstream f{ entry.path() };
+					auto          json = nlohmann::json::parse(f);
+					PackInfo      info;
+					info.packId = json.value("packId", entry.path().stem().string());
+					info.plugin = json.value("plugin", std::string{});
+					info.format = json.value("format", 0);
+					info.minBaseVersion = json.value("minBaseVersion", std::string{});
+					if (json.contains("contentFiles") && json["contentFiles"].is_array())
+						for (const auto& item : json["contentFiles"])
+							if (item.is_string())
+								info.contentFiles.push_back(item.get<std::string>());
+					info.state = info.format == 1 ? "ok" : "format-mismatch";
+					if (!info.plugin.empty())
+						manifestByPlugin[info.plugin] = std::move(info);
+				} catch (const std::exception& e) {
+					logger::warn("pack manifest {}: {}", entry.path().filename().string(), e.what());
+				}
+			}
+		}
+
+		for (const auto* file : loadedFiles) {
 			const std::string filename{ file->GetFilename() };
 			if (!StartsWithInsensitive(filename, "Runefall"))
 				continue;
@@ -63,43 +97,26 @@ namespace Runefall
 			}
 
 			PackInfo pack;
-			pack.plugin = filename;
-			pack.packId = filename;
-			const auto manifest = RunefallPackDir() / (pack.packId + ".json");
-			if (!fs::exists(manifest)) {
-				// also try packId.json without extension
-				const auto alt = RunefallPackDir() / (pack.packId.substr(0, pack.packId.find_last_of('.')) + ".json");
-				if (!fs::exists(alt)) {
-					pack.state = "manifest-missing";
-					packs.push_back(std::move(pack));
-					continue;
-				}
-				pack.packId = alt.stem().string();
-			}
-			try {
-				const auto manifestPath = RunefallPackDir() / (pack.packId + ".json");
-				if (fs::exists(manifestPath)) {
-					std::ifstream f{ manifestPath };
-					auto          json = nlohmann::json::parse(f);
-					pack.packId = json.value("packId", pack.packId);
-					pack.format = json.value("format", 0);
-					pack.minBaseVersion = json.value("minBaseVersion", std::string{});
-					if (json.contains("contentFiles") && json["contentFiles"].is_array())
-						for (const auto& item : json["contentFiles"])
-							if (item.is_string())
-								pack.contentFiles.push_back(item.get<std::string>());
-					pack.state = pack.format == 1 ? "ok" : "format-mismatch";
-				} else {
-					pack.state = "manifest-missing";
-				}
-			} catch (const std::exception& e) {
-				pack.state = std::string{ "manifest-error: " } + e.what();
+			if (const auto it = manifestByPlugin.find(filename); it != manifestByPlugin.end()) {
+				pack = it->second;
+			} else {
+				pack.plugin = filename;
+				pack.packId = filename;
+				pack.state = "manifest-missing";
 			}
 			packs.push_back(std::move(pack));
 		}
 
-		if (!basePresent)
-			return { "PackManager.Scan", CheckStatus::Warn, "base plugin Runefall.esp not loaded (content phase pending)" };
+		if (!basePresent) {
+			std::string loaded;
+			for (const auto* file : loadedFiles) {
+				const std::string name{ file->GetFilename() };
+				if (!loaded.empty())
+					loaded += ",";
+				loaded += name;
+			}
+			return { "PackManager.Scan", CheckStatus::Warn, std::format("base plugin not loaded; mods({})={}", loadedFiles.size(), loaded) };
+		}
 		if (packs.empty())
 			return { "PackManager.Scan", CheckStatus::Pass, "base present; no pack plugins loaded" };
 

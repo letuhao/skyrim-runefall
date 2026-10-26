@@ -128,6 +128,30 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## T1 batch runs 2026-10-26/27 (in progress)
+
+Three launch attempts were made with the safe runner. Key findings and fixes:
+
+1. Run 1 (23:49): plugin + framework loaded, probe 15 PASS / 2 WARN / 1 FAIL. PackManager only
+   saw 5 masters because light plugins live in TESDataHandler::GetLoadedLightMods(), not the
+   full-mod array. FormResolver IronSword lookup failed because many vanilla weapons are not
+   loaded at kDataLoaded.
+2. Run 2 (23:58): after scanning light mods, PackManager reported "base present, 2 packs, 2
+   issues" (manifest lookup by filename failed; manifests are named unique.json/hunt.json).
+   IronSword still unresolved (lazy form), so FormResolver/LootService failed.
+3. Fixes: scan GetLoadedLightMods/Count, map pack manifests by their "plugin" field, resolve
+   base items by vanilla FormID (IronSword 0x12EB7 etc.) with EditorID fallback, make
+   LootService a WARN when a lazy form is not loaded yet, and remove lazy-form assertions from
+   the kDataLoaded FormResolver self-test.
+4. Latest static gates 5/5 PASS: DLL 923,648 bytes, SHA-256 A433CFB675C07482792F8CB95F62117981F073DF29729906F66DE76541AD4652; candidate
+   Runefall-0.2.0-dev.zip 448,398 bytes, SHA-256 E312BC686D8F8246E8D54367D24391D7B8A0CBD31073C33A92E8C1883E1B2C28.
+5. Run 3 blocked before launch: user's Steam Skyrim (E: 1.7.104) was running; runner refused.
+   Next T1 attempt must run after that process closes and should start a new game so the
+   gameplay probes (form resolution, probe item, death drop) execute.
+
+SkyLink AI installed in the test env for T1 automation: SkyrimMCPPlugin.dll 1,794,048 bytes,
+SHA-256 7C174179...62DB + SkyLinkAI_Server (net10.0, .NET 10 runtime present).
+
 ## T1 attempt 2026-10-26 23:37 - BLOCKED by live user game
 
 - A first T1 launch was attempted and immediately detected the user's Mantras game already
