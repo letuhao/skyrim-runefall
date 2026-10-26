@@ -4,6 +4,7 @@
 #include "Config.h"
 #include "DebugHarness.h"
 #include "InputManager.h"
+#include "MenuUI.h"
 #include "LootService.h"
 #include "PapyrusBridge.h"
 
@@ -42,6 +43,7 @@ namespace
 		logger::info("Runefall data loaded: bootstrap complete, API {}", Runefall::kApiVersion);
 		Runefall::LootService::Get().RegisterHooks();
 		Runefall::InputManager::Get().Register();
+		Runefall::MenuUI::Register();
 		if (Runefall::Config::Get().DebugSelfTest())
 			Runefall::DebugHarness::RunAll();
 	}

@@ -2,6 +2,9 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-26
+- I4 Menu Framework pages: SDK-linked MenuUI (Character, Rune Forge, Hunt Codex, Item Detail)
+  registered with SKSE Menu Framework 3.18; CMake auto-detects the SDK. DLL PASS, 913,408 bytes,
+  SHA-256 927CF942...996D; imgui.dll runtime installed in the test env.
 - Required-mod install + docs: SKSE Menu Framework 3.18 (Nexus 120352) installed into the
   1.6.1170 test env; README now documents the four hard requirements (Skyrim 1.6.1170, SKSE
   1.6.1170, Address Library 1.6.1170, SKSE Menu Framework 3.18), install/load order and the

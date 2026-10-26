@@ -3,7 +3,8 @@
 param(
     [string]$TestEnv = "J:\SkyrimTest\1.6.1170",
     [string]$FrameworkPackage = "D:\Works\source\skyrim-moddings\rpg-mechanism\skyrim-menu-framework\SKSE Menu Framework 120352 3.18 2026-09-17T16-36Z cE8hkAlOT",
-    [string]$Project = (Join-Path $PSScriptRoot "..")
+    [string]$Project = (Join-Path $PSScriptRoot ".."),
+    [string]$ImGuiDll = "D:\Works\source\skyrim-moddings\rpg-mechanism\skyrim-menu-framework\SKSE-Menu-Framework-SDK-main\ImGui\release\bin\imgui.dll"
 )
 $ErrorActionPreference = "Stop"
 if (-not (Test-Path $TestEnv)) { throw "Test environment not found: $TestEnv" }
@@ -22,6 +23,14 @@ $dist = Join-Path $Project "build\dist\Data"
 if (Test-Path $dist) {
     robocopy $dist $data /E /NFL /NDL /NP /R:1 /W:1 | Out-Null
     if ($LASTEXITCODE -ge 8) { throw "Content copy failed: $LASTEXITCODE" }
+}
+
+Write-Output "Installing ImGui runtime..."
+if (Test-Path $ImGuiDll) {
+    Copy-Item $ImGuiDll (Join-Path $TestEnv "imgui.dll") -Force
+    Copy-Item $ImGuiDll (Join-Path $data "SKSE\Plugins\imgui.dll") -Force
+} else {
+    Write-Warning "imgui.dll not found; UI menu will fail to load"
 }
 
 Write-Output "Installing native DLL..."

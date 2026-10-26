@@ -98,6 +98,7 @@ else()
         src/DynamicEnchantment.cpp
         src/LootService.cpp
         src/MenuApi.cpp
+        src/MenuUI.cpp
         src/InputManager.cpp
         src/DebugHarness.cpp
         src/PapyrusBridge.cpp
@@ -105,6 +106,23 @@ else()
         USE_ADDRESS_LIBRARY)
 
     source_group("Resources" FILES "${CMAKE_CURRENT_BINARY_DIR}/src/version.rc")
+
+    # Optional SKSE Menu Framework integration (release SDK + ImGui from the downloaded package).
+    set(RUNEFALL_MENU_SDK "D:/Works/source/skyrim-moddings/rpg-mechanism/skyrim-menu-framework/SKSE-Menu-Framework-SDK-main" CACHE PATH "SKSE Menu Framework SDK root")
+    if(EXISTS "${RUNEFALL_MENU_SDK}/ImGui/release/lib/imgui.lib"
+       AND EXISTS "${RUNEFALL_MENU_SDK}/Mods/SKSE Menu Framework/SKSE/Plugins/SKSEMenuFramework.lib")
+        target_compile_definitions(${PROJECT_NAME} PRIVATE RUNEFALL_MENU_FRAMEWORK)
+        target_include_directories(${PROJECT_NAME} PRIVATE
+            "${RUNEFALL_MENU_SDK}/ImGui/release/include"
+            "${RUNEFALL_MENU_SDK}/Mods/SKSE Menu Framework/SKSE/Plugins"
+            "${RUNEFALL_MENU_SDK}/Mods/SKSE Menu Framework DEV/SKSE/Plugins")
+        target_link_libraries(${PROJECT_NAME} PRIVATE
+            "${RUNEFALL_MENU_SDK}/ImGui/release/lib/imgui.lib"
+            "${RUNEFALL_MENU_SDK}/Mods/SKSE Menu Framework/SKSE/Plugins/SKSEMenuFramework.lib")
+        message(STATUS "Runefall: SKSE Menu Framework UI enabled")
+    else()
+        message(STATUS "Runefall: SKSE Menu Framework SDK not found; UI pages disabled")
+    endif()
 
     # cmake_llvm_rc preprocesses RC files using the target's INCLUDE_DIRECTORIES, not CMAKE_C_FLAGS.
     # The xwin SDK paths are in CMAKE_C_FLAGS_INIT as /imsvc flags and are invisible to cmake_llvm_rc,

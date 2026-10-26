@@ -128,6 +128,17 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## I4 Menu Framework pages build (2026-10-26)
+
+- MenuUI.cpp compiles against the downloaded SDK (SKSEMenuFramework.h + ImGui 1.90.8 release
+  libs); pages: Character, Rune Forge, Hunt Codex, Item Detail. Registered at kDataLoaded via
+  SKSEMenuFramework::SetSection("Runefall") + AddSectionItem.
+- CMake detects the SDK at RUNEFALL_MENU_SDK and defines RUNEFALL_MENU_FRAMEWORK; otherwise the
+  UI compiles out with a warning.
+- Artifact: Runefall.dll 913,408 bytes, SHA-256 927CF942...996D. ImGui runtime imgui.dll
+  (65B02627...863D) installed in the test env root and SKSE\Plugins.
+- Not runtime-tested; T1 must open the Runefall menu (F1 framework toggle) and verify pages.
+
 ## Required-mod install in test env (2026-10-26)
 
 - SKSE Menu Framework 3.18 release (Nexus 120352) installed into J:\SkyrimTest\1.6.1170\Data\SKSE:

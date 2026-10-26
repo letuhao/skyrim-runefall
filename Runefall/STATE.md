@@ -75,10 +75,10 @@ Implementation phase I1 (native core) is in progress:
    modular bootstrap. Build PASS (780,288 bytes, hash 7867ABEB...1ECB); deployed to the test env.
 2. DONE (I2 foundation): Runefall.Build generator PASS; 3 ESL plugins (184/40/38 records) +
    18 data CSVs + manifests + ini generated and deployed to J:\SkyrimTest\1.6.1170.
-3. IN PROGRESS I4 + I2: bridge/menu/input/Papyrus build PASS; probe script attached to
-   RF_QUST_Debug VMAD; content generator emits 246-record base + packs. SKSE Menu Framework 3.18
-   installed into the 1.6.1170 test env; README documents hard requirements. NEXT: Menu Framework
-   pages, COBJ/NPC records, probe/static gates, package candidate, T1.
+3. IN PROGRESS I4: SDK-linked Menu Framework pages (Character/Rune Forge/Hunt Codex/Item Detail)
+   build PASS (DLL 913,408 bytes, hash 927CF942...996D); framework 3.18 + imgui.dll installed in
+   test env; README requirements documented. NEXT: T1-batch harness/static gates, COBJ/NPC
+   records, package candidate, then the single batch game test.
 
 Already proven and kept as evidence: DLL build, plugin load, Papyrus/co-save registration and
 kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\evidence\phase0).

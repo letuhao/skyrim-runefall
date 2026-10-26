@@ -30,6 +30,7 @@ namespace Runefall
 		void Reload();
 		[[nodiscard]] bool HasData() const noexcept { return loaded; }
 		[[nodiscard]] std::size_t FamilyCount() const noexcept { return groups.size(); }
+		[[nodiscard]] const std::vector<RaceGroupDef>& Families() const noexcept { return groups; }
 
 		[[nodiscard]] const RaceGroupDef* FindFamilyForRace(std::string_view a_raceEditorId) const;
 		[[nodiscard]] const RaceGroupDef* FindFamily(std::string_view a_group) const;
