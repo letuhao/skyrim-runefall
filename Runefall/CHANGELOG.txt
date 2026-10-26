@@ -2,6 +2,9 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-26
+- I3 loot service + death hook: death event sink rolls loot for non-player deaths, attaches runtime
+  enchantment and adds the item to the actor inventory; debug probe injects one test item on
+  new game/load. DLL PASS, 888,320 bytes, SHA-256 C66FB1B5...FF16.
 - I3 dynamic enchantment: runtime EnchantmentItem creation from affix MGEF templates, registration
   with the data handler, attachment to world references and inventory entries, self-test.
   DLL PASS, 869,376 bytes, SHA-256 865DC871...D364.

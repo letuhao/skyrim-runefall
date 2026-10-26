@@ -7,6 +7,7 @@ namespace Runefall
 	{
 	public:
 		static void RunAll();
+		static void RunGameplayProbes();
 
 		[[nodiscard]] static const std::string& LastSummary() noexcept { return lastSummary; }
 		[[nodiscard]] static int                LastFailures() noexcept { return lastFailures; }

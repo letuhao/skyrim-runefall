@@ -3,6 +3,7 @@
 #include "CoSave.h"
 #include "Config.h"
 #include "DebugHarness.h"
+#include "LootService.h"
 #include "PapyrusBridge.h"
 
 namespace
@@ -38,6 +39,7 @@ namespace
 	void OnDataLoaded()
 	{
 		logger::info("Runefall data loaded: bootstrap complete, API {}", Runefall::kApiVersion);
+		Runefall::LootService::Get().RegisterHooks();
 		if (Runefall::Config::Get().DebugSelfTest())
 			Runefall::DebugHarness::RunAll();
 	}
@@ -47,6 +49,10 @@ namespace
 		switch (a_msg->type) {
 		case SKSE::MessagingInterface::kDataLoaded:
 			OnDataLoaded();
+			break;
+		case SKSE::MessagingInterface::kNewGame:
+		case SKSE::MessagingInterface::kPostLoadGame:
+			Runefall::DebugHarness::RunGameplayProbes();
 			break;
 		default:
 			break;

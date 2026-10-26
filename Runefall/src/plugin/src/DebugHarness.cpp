@@ -8,6 +8,7 @@
 #include "LootEngine.h"
 #include "Progression.h"
 #include "DynamicEnchantment.h"
+#include "LootService.h"
 #include "RuneForge.h"
 #include "TierEngine.h"
 #include "PackManager.h"
@@ -44,6 +45,19 @@ namespace Runefall
 		logger::info("probe: report written to {}", path.string());
 	}
 
+	void DebugHarness::RunGameplayProbes()
+	{
+		if (!Config::Get().DebugSelfTest())
+			return;
+		if (LootService::Get().InjectProbeItem()) {
+			logger::info("[probe] gameplay: probe item injected into player inventory");
+			if (auto* console = RE::ConsoleLog::GetSingleton())
+				console->Print("[Runefall] probe item injected");
+		} else {
+			logger::warn("[probe] gameplay: probe item injection skipped (data/player/base item unavailable)");
+		}
+	}
+
 	void DebugHarness::RunAll()
 	{
 		std::vector<SelfTestResult> results;
@@ -64,6 +78,7 @@ namespace Runefall
 		results.push_back(Progression::SelfTest());
 		results.push_back(RuneForge::SelfTest());
 		results.push_back(DynamicEnchantment::SelfTest());
+		results.push_back(LootService::SelfTest());
 		results.push_back(CoSave::SelfTest());
 
 		lastPasses = 0;

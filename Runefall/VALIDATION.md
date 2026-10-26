@@ -128,6 +128,19 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## I3 loot service + death hook build (2026-10-26, implement-first)
+
+- LootService: death event sink (ScriptEventSourceHolder + BSTEventSink<TESDeathEvent>); on a
+  non-player death it rolls rank/tier/ilvl/family, builds metadata, creates the runtime
+  enchantment, sets an override display name and adds the item to the dying actor's inventory.
+  One roll per actor FormID; player deaths ignored.
+- Debug/probe path: on kNewGame/kPostLoadGame in debug mode, one probe item (Iron Sword, rolled
+  metadata + runtime enchantment) is injected into the player inventory and logged/printed.
+- Self-test: checks TESDataHandler + attribute data + vanilla base item resolution.
+- Artifact: Runefall.dll 888,320 bytes, SHA-256 C66FB1B5057193A160283382BAFC1598C55F1D68231C09D0368A13E44F2EFF16. Build PASS.
+- NOT yet runtime-tested; T1 must verify death drops, probe item, extra-data persistence and
+  save/load. This is the first live-flow test target.
+
 ## I3 dynamic enchantment build (2026-10-26, implement-first)
 
 - DynamicEnchantment: creates a runtime EnchantmentItem via IFormFactory, fills one Effect per
