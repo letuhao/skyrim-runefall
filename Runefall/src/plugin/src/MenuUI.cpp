@@ -93,6 +93,10 @@ namespace Runefall
 	void MenuUI::Register()
 	{
 #ifdef RUNEFALL_MENU_FRAMEWORK
+		if (!GetModuleHandleW(L"SKSEMenuFramework.dll")) {
+			logger::warn("menu: SKSEMenuFramework.dll is not loaded; pages disabled");
+			return;
+		}
 		SKSEMenuFramework::SetSection("Runefall");
 		SKSEMenuFramework::AddSectionItem("Character", RenderCharacter);
 		SKSEMenuFramework::AddSectionItem("Rune Forge", RenderRuneForge);

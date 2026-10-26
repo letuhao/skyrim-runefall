@@ -19,6 +19,7 @@ namespace Runefall
 		[[nodiscard]] bool        EnableCoSave() const noexcept { return enableCoSave; }
 		[[nodiscard]] bool        EnableProbes() const noexcept { return enableProbes; }
 		[[nodiscard]] bool        DebugTrace() const noexcept { return debugTrace; }
+		[[nodiscard]] int         GameplayDelaySeconds() const noexcept { return gameplayDelaySeconds; }
 		[[nodiscard]] int         LootAuthority() const noexcept { return lootAuthority; }
 		[[nodiscard]] std::string DataDirOverride() const { return dataDirOverride; }
 		[[nodiscard]] std::string PackDirOverride() const { return packDirOverride; }
@@ -28,6 +29,7 @@ namespace Runefall
 
 		bool        debugSelfTest = true;
 		bool        debugTrace = false;
+		int         gameplayDelaySeconds = 300;
 		bool        enableMenu = true;
 		bool        enableInput = true;
 		bool        enableLootHooks = true;

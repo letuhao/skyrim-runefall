@@ -49,11 +49,16 @@ namespace Runefall
 			const auto& enhancement = a_metadata.enhancements[i];
 			if (enhancement.effectEditorId.empty())
 				continue;
+			auto* baseEffect = FormResolver::ResolveAs<RE::EffectSetting>(enhancement.effectEditorId);
+			if (!baseEffect) {
+				logger::warn("dynamic-enchantment: effect template '{}' not found; skipping", enhancement.effectEditorId);
+				continue;
+			}
 			auto* effect = new RE::Effect();
 			effect->effectItem.magnitude = enhancement.magnitude;
 			effect->effectItem.area = static_cast<std::uint32_t>((std::max)(0, enhancement.area));
 			effect->effectItem.duration = static_cast<std::uint32_t>((std::max)(0, enhancement.duration));
-			effect->baseEffect = FormResolver::ResolveAs<RE::EffectSetting>(enhancement.effectEditorId);
+			effect->baseEffect = baseEffect;
 			effect->cost = 0.0f;
 			enchantment->effects.push_back(effect);
 			++created;

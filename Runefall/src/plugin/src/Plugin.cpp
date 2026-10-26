@@ -9,8 +9,16 @@
 #include "DynamicEnchantment.h"
 #include "PapyrusBridge.h"
 
+#include <atomic>
+#include <chrono>
+#include <thread>
+
 namespace
 {
+	std::atomic_bool   g_activationScheduled{ false };
+	std::atomic_uint64_t g_activationGeneration{ 0 };
+	std::jthread       g_activationThread;
+
 	void SetupLog()
 	{
 		auto logsFolder = logger::log_directory();
@@ -39,9 +47,39 @@ namespace
 		spdlog::flush_on(spdlog::level::info);
 	}
 
+	void ActivateGameplayAfterDelay()
+	{
+		if (g_activationScheduled.exchange(true))
+			return;
+		const auto delaySeconds = Runefall::Config::Get().GameplayDelaySeconds();
+		const auto generation = ++g_activationGeneration;
+		Runefall::DynamicEnchantment::SetGameplayReady(false);
+		logger::info("gameplay activation scheduled in {} seconds (generation {})", delaySeconds, generation);
+		g_activationThread = std::jthread([delaySeconds, generation](std::stop_token a_stop) {
+			const auto until = std::chrono::steady_clock::now() + std::chrono::seconds{ delaySeconds };
+			while (!a_stop.stop_requested() && std::chrono::steady_clock::now() < until)
+				std::this_thread::sleep_for(std::chrono::milliseconds{ 500 });
+			if (a_stop.stop_requested() || generation != g_activationGeneration.load())
+				return;
+			if (auto* tasks = SKSE::GetTaskInterface()) {
+				tasks->AddTask([generation]() {
+					if (generation != g_activationGeneration.load())
+						return;
+					Runefall::DynamicEnchantment::SetGameplayReady(true);
+					if (Runefall::Config::Get().EnableProbes())
+						Runefall::DebugHarness::RunGameplayProbes();
+				});
+			} else {
+				logger::error("gameplay activation: task interface unavailable");
+			}
+		});
+		g_activationScheduled.store(false);
+	}
+
 	void OnDataLoaded()
 	{
 		logger::info("Runefall data loaded: bootstrap complete, API {}", Runefall::kApiVersion);
+		Runefall::DynamicEnchantment::SetGameplayReady(false);
 		if (Runefall::Config::Get().EnableLootHooks())
 			Runefall::LootService::Get().RegisterHooks();
 		if (Runefall::Config::Get().EnableInput())
@@ -59,15 +97,11 @@ namespace
 			OnDataLoaded();
 			break;
 		case SKSE::MessagingInterface::kNewGame:
-			// kNewGame still fires before the world/player are safe for runtime form creation.
-			// Keep runtime forms disabled here; only a loaded save is a safe gameplay signal.
-			if (Runefall::Config::Get().EnableProbes())
-				Runefall::DebugHarness::RunGameplayProbes();
-			break;
 		case SKSE::MessagingInterface::kPostLoadGame:
-			Runefall::DynamicEnchantment::SetGameplayReady(true);
-			if (Runefall::Config::Get().EnableProbes())
-				Runefall::DebugHarness::RunGameplayProbes();
+			// Never touch runtime forms/player here: even a loaded kNewGame/kPostLoadGame message can
+			// fire while the world is still streaming in. Wait the configured delay on a worker,
+			// then enqueue one main-thread activation task.
+			ActivateGameplayAfterDelay();
 			break;
 		default:
 			break;

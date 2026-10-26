@@ -128,6 +128,20 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## Timing + safety pass 2026-10-27 02:14-02:20
+
+- Root cause fix retained: no runtime form creation at kDataLoaded; DynamicEnchantment
+  SelfTest is logic-only; runtime forms gated.
+- New default timing: gameplay activation is delayed **300 seconds** after kNewGame/kPostLoadGame
+  (configurable iGameplayDelaySeconds). The delay runs on a worker thread that only sleeps, then
+  enqueues one main-thread SKSE task to set gameplay-ready and run gameplay probes. Test with
+  iGameplayDelaySeconds=5: activation fired, no crash.
+- Safety guards added: DynamicEnchantment refuses runtime forms before gameplay-ready and skips
+  null EFID/baseEffect templates; MenuUI refuses dynamic framework calls when
+  SKSEMenuFramework.dll is not loaded; generated runefall.ini documents the delay.
+- New RunefallStage.dll layer target retained (stage.ini iStageLayer 0..7).
+- Independent safety audit requested from another agent (task-9); report pending.
+
 ## Layer bisection 2026-10-27 01:58-02:13 - ROOT CAUSE FOUND
 
 Built a separate **RunefallStage.dll** target (same core sources, empty StagePlugin.cpp) whose

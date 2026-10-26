@@ -153,7 +153,8 @@ internal static class Program
                    "; Implement-first build: probe harness on by default.\n" +
                    "bDebugSelfTest=1\n" +
                    "bDebugTrace=0\n" +
-                   "iLootAuthority=0\n\n" +
+                   "iLootAuthority=0\n" +
+            "iGameplayDelaySeconds=300\n\n" +
                    "[Paths]\n" +
                    "sDataDir=\n" +
                    "sPackDir=\n";

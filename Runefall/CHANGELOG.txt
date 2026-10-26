@@ -2,6 +2,10 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- Timing hardening: gameplay/runtime forms activate 300 s (configurable iGameplayDelaySeconds)
+  after kNewGame/kPostLoadGame, on a worker delay + main-thread task. No runtime form creation at
+  kDataLoaded/kNewGame. Added null base-effect guard and missing-menu-framework guard; generated
+  ini documents the delay. RunefallStage layer build retained. Independent safety audit pending.
 - Root cause found via layer bisection: runtime EnchantmentItem created/registered in
   DynamicEnchantment.SelfTest at kDataLoaded corrupted the game heap and crashed at new game.
   Fix: SelfTest is logic-only; DynamicEnchantment has a gameplay-ready gate (kPostLoadGame);
