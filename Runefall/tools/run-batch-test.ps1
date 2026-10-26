@@ -60,6 +60,21 @@ function Wait-Game {
     return $false
 }
 
+function Focus-Game {
+    Add-Type -TypeDefinition @"
+using System;
+using System.Runtime.InteropServices;
+public static class RFWindow {
+  [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr hWnd);
+}
+"@ -ErrorAction SilentlyContinue
+    $p = Get-Process SkyrimSE -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($p -and $p.MainWindowHandle -ne 0) {
+        [RFWindow]::SetForegroundWindow($p.MainWindowHandle) | Out-Null
+        Start-Sleep -Milliseconds 800
+    }
+}
+
 function Send-Key([int]$vk) {
     Add-Type -TypeDefinition @"
 using System;
@@ -100,7 +115,12 @@ if (-not $proc) {
     Write-Host "Using running Skyrim PID $($proc.ProcessId)"
 }
 
-$conn = Invoke-Mcp 'check_connection'
+$conn = ''
+for ($attempt = 0; $attempt -lt 15; ++$attempt) {
+    $conn = Invoke-Mcp 'check_connection'
+    if ($conn -match '"connected":true') { break }
+    Start-Sleep -Seconds 2
+}
 Add-Check 'MCP connected' ($conn -match '"connected":true') ''
 $load = Invoke-Mcp 'load_save' @{ saveName = $SaveName }
 Add-Check 'Load save requested' ($load -match '"loading":true') $SaveName
@@ -135,6 +155,7 @@ if (-not $NoInputHotkeys) {
         $logBefore = if (Test-Path $runefallLog) { (Get-Content $runefallLog -Raw).Length } else { 0 }
         $wshell = New-Object -ComObject WScript.Shell
         $activated = $wshell.AppActivate('Skyrim Special Edition')
+        Focus-Game
         Add-Check 'Game window activated' ([bool]$activated) ''
         Start-Sleep -Seconds 2
         Send-Key 0x79  # F10 snapshot
