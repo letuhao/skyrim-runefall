@@ -9,6 +9,7 @@
 #include "Progression.h"
 #include "DynamicEnchantment.h"
 #include "LootService.h"
+#include "MenuApi.h"
 #include "RuneForge.h"
 #include "TierEngine.h"
 #include "PackManager.h"
@@ -79,6 +80,7 @@ namespace Runefall
 		results.push_back(RuneForge::SelfTest());
 		results.push_back(DynamicEnchantment::SelfTest());
 		results.push_back(LootService::SelfTest());
+		results.push_back(MenuApi::SelfTest());
 		results.push_back(CoSave::SelfTest());
 
 		lastPasses = 0;

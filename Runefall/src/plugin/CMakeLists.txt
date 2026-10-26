@@ -97,6 +97,7 @@ else()
         src/RuneForge.cpp
         src/DynamicEnchantment.cpp
         src/LootService.cpp
+        src/MenuApi.cpp
         src/DebugHarness.cpp
         src/PapyrusBridge.cpp
         "${CMAKE_CURRENT_BINARY_DIR}/src/version.rc"

@@ -128,6 +128,17 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## I4 Papyrus bridge + menu API build (2026-10-26, implement-first)
+
+- Papyrus bridge expanded: GetAttribute, GetAttributePoints, GetSkillPoints, GetRuneTier,
+  GetSkillRank, GetRuneCount, GetHuntFirstKill, SpendAttributePoint, SpendSkillPoint,
+  GetMenuSnapshot (plus the earlier probe functions).
+- MenuApi: compact JSON snapshot (api, tier, points, attributes, runes, item count, hunt families,
+  affix count, rank count) with self-test validating keys/braces.
+- CoSave now syncs Progression on save/load (Progression::SaveToCoSave on save,
+  LoadFromCoSave after a successful co-save decode).
+- Artifact: Runefall.dll 903,680 bytes, SHA-256 AFBD033BC5026DF9FC92A09ED752DDF6D54E65A0E7AF562511DE3B5E3C5A600D. Build PASS.
+
 ## I3 loot service + death hook build (2026-10-26, implement-first)
 
 - LootService: death event sink (ScriptEventSourceHolder + BSTEventSink<TESDeathEvent>); on a

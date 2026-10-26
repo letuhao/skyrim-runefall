@@ -1,6 +1,7 @@
 #include "CoSave.h"
 
 #include "ItemRegistry.h"
+#include "Progression.h"
 
 #include <cstring>
 #include <format>
@@ -344,6 +345,7 @@ namespace Runefall
 		if (!a_intfc)
 			return;
 		auto& state = CoSave::Get().State();
+		Progression::Get().SaveToCoSave();
 		state.items = ItemRegistry::Get().All();
 		state.configHash = HashConfig();
 		const auto bytes = Encode(state);
@@ -380,6 +382,7 @@ namespace Runefall
 			}
 			if (Decode(payload, CoSave::Get().State())) {
 				ItemRegistry::Get().Load(CoSave::Get().State().items);
+				Progression::Get().LoadFromCoSave();
 				logger::info("co-save: loaded schema {} ({} bytes, {} item entries)", version, payload.size(), CoSave::Get().State().items.size());
 			} else {
 				logger::error("co-save: malformed section payload, state reset");

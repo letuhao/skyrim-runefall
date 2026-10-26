@@ -2,6 +2,9 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-26
+- I4 Papyrus bridge + menu API: attribute/point/rune/skill/hunt/spend functions and
+  GetMenuSnapshot; MenuApi compact JSON snapshot with self-test; Progression co-save sync.
+  DLL PASS, 903,680 bytes, SHA-256 AFBD033B...600D.
 - I3 loot service + death hook: death event sink rolls loot for non-player deaths, attaches runtime
   enchantment and adds the item to the actor inventory; debug probe injects one test item on
   new game/load. DLL PASS, 888,320 bytes, SHA-256 C66FB1B5...FF16.
