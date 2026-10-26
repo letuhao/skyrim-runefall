@@ -128,6 +128,21 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## Self-audit 2026-10-27 02:40-02:45
+
+- Added mandatory C++ hard rules to workspace AGENTS.md section 3.1: timing/readiness, null and
+  type safety, ownership, event-dispatch queuing, thread rules, save-data caps, guarded file
+  input, fail-loud logging, post-implementation self-audit, debug/PDB/CrashLogger requirements.
+  Statement of intent: warnings/disabled features are acceptable; a player CTD is not.
+- Created Runefall/SAFETY-AUDIT.md with invariants, current status and residual risks.
+- Self-audit pattern scan (30 hits) reviewed: every `new RE::Effect`/`new RE::ExtraDataList`
+  is game-heap-safe per the CommonLib `TES_HEAP_REDEFINE_NEW` audit; `delete extraList` only
+  runs before ownership transfer; factory forms are never deleted; every game singleton/lookup
+  hit has a guard or an immediately preceding check.
+- Closed residual ownership gap: `DynamicEnchantment::AttachToEntry` now fails closed with an
+  error log (unproven ExtraDataList ownership) instead of attaching a new list.
+- Release build PASS after self-audit. Artifact: 944640 bytes, SHA-256 E7D09F1DE8B361117278A87912F1BF970C783283FFFC9D3E0023741124E6F16C.
+
 ## Independent safety audit + fixes 2026-10-27 02:20-02:35
 
 Another agent audited the native plugin read-only (task-9), 20 ranked findings. Fixed in this pass:

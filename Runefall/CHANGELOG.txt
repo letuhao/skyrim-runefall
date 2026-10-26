@@ -2,6 +2,9 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- Safety process: AGENTS.md C++ hard rules (timing, null/type safety, ownership, event/thread
+  rules, capped save data, self-audit, debug/PDB requirements) and Runefall/SAFETY-AUDIT.md.
+  Self-audit pattern review PASS; unproven InventoryEntryData extra-list path disabled.
 - Independent safety audit (task-9) fixes: null EffectSetting pre-validation, main-thread queuing for
   death/input handlers, RAII restoration of SelfTest wallet/first-kill state, unconditional data
   loading, PackManager exception/null guards, co-save/registry caps, deleted-form rejection, config

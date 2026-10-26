@@ -100,32 +100,12 @@ namespace Runefall
 		return true;
 	}
 
-	bool DynamicEnchantment::AttachToEntry(RE::InventoryEntryData* a_entry, const ItemMetadata& a_metadata, std::uint16_t a_charge, std::string_view a_displayName)
+	bool DynamicEnchantment::AttachToEntry(RE::InventoryEntryData*, const ItemMetadata&, std::uint16_t, std::string_view)
 	{
-		if (!a_entry)
-			return false;
-		auto* enchantment = Create(a_metadata);
-		if (!enchantment)
-			return false;
-
-		RE::ExtraDataList* list = nullptr;
-		if (a_entry->extraLists) {
-			for (auto& existing : *a_entry->extraLists) {
-				if (existing) {
-					list = existing;
-					break;
-				}
-			}
-		}
-		if (!list)
-			list = new RE::ExtraDataList();
-
-		list->SetEnchantment(enchantment, a_charge, false);
-		if (!a_displayName.empty())
-			list->SetOverrideName(std::string{ a_displayName }.c_str());
-		if (!a_entry->extraLists)
-			a_entry->AddExtraList(list);
-		return true;
+		// Disabled: InventoryEntryData owns only its list nodes, not a newly attached ExtraDataList.
+		// The ownership path is unproven, so this feature fails closed instead of risking a leak/CTD.
+		logger::error("dynamic-enchantment: AttachToEntry disabled (unproven ExtraDataList ownership)");
+		return false;
 	}
 
 	SelfTestResult DynamicEnchantment::SelfTest()

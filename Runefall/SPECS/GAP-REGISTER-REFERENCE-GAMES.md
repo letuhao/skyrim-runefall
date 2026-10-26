@@ -343,9 +343,146 @@ Rules:
 - `GAP-REGISTER-FUTURE.md` F-01..F-35 (reserved gameplay/presentation/compatibility) and N-01..N-10 (cheap hooks) already cover most RESERVED items here. New gaps from this register that are NOT already in that file: RG-004..RG-020, RG-024..RG-041, RG-044..RG-060, RG-062..RG-086, RG-093..RG-097, RG-111, RG-119, RG-120, RG-125..RG-139, RG-141..RG-143, RG-146..RG-149, RG-153, RG-154, RG-156..RG-158, RG-165, RG-169. These should be appended to `GAP-REGISTER-FUTURE.md` section 1/2/3 when the user wants them tracked there (D-047 requires the register to be the single source of truth). Until then, this file is the authoritative reference-game gap source.
 - Decision codes and rules (D-047, D-048) apply unchanged: RESERVE never enters v1 code; only hooks (N-01..N-10 and the NOW items above) may.
 
-## 12. Recommended next actions (not implementation)
+## 13. Skyrim framework feasibility (context from rpg-mechanism)
 
-1. Review the NOW list (5 items) and decide which enter v1; if any do, add them to `GAP-REGISTER-FUTURE.md` as new N-xx hooks and update L1/L3.
-2. Decide whether to merge this register into `GAP-REGISTER-FUTURE.md` (single source of truth) or keep it as a companion. Recommendation: merge the RESERVED items as new F-xx rows with cross-reference RG- IDs, keeping this file as the detailed provenance.
-3. For each RESERVED item that turns out to need a v1 hook, update section 4 (cheap hooks) of `GAP-REGISTER-FUTURE.md` and D-048 before any work (D-047 rule 4).
-4. Do not let reference-game parity drive scope creep: the v1 scope lock (D-047) stands; this register is a backlog, not a commitment.
+Context basis: `D:\Works\source\skyrim-moddings\_context\rpg-mechanism\` (00-INDEX, 01-10,
+including PROTEUS 3.4.0) and the Runefall specs. The constraints below are what the Skyrim
+SE/AE engine, SKSE, Papyrus, and the CommonLibSSE-NG runtime actually allow. A gap that
+violates a hard constraint cannot be shipped as a Runefall feature no matter how much effort
+is spent; it must be dropped or reframed as a non-Skyrim product.
+
+### 13.1 Hard constraints
+
+1. **No vanilla/shared base-record mutation for gameplay state.** SKSE exposes record natives
+   (Armor/SetArmorRating, Form/SetWeight, Weapon/SetSpeed, etc.) but they mutate the base form
+   shared by every instance and are session-scoped/leaky (PROTEUS evidence, D-027). Per-instance
+   state must live in extra data + co-save (D-023, D-028).
+2. **No leveled-list, container, or cell edits in core.** Loot and ranks are applied at
+   runtime by the DLL (D-004, D-024, D-025).
+3. **No vanilla actor-value repurposing.** Worlds Dawn's 28-AV technique is rejected (D-006);
+   attribute effects use our own GLOBAL/PERK/MGEF/SPEL records and the co-save.
+4. **Forms created at runtime are not persisted.** Dynamic enchantment + co-save metadata is
+   the only safe route (D-023).
+5. **No per-frame gameplay work.** Budgets are per-hook (L-04, D-055).
+6. **No procedural world generation.** Skyrim's worldspace/cell graph is authored at build time;
+   the engine cannot generate new worldspaces, cells, or navmesh at runtime.
+7. **No multiplayer, trading, clans, PvP, leaderboards, or battle pass.** Single-player mod.
+8. **No console support** (SKSE requirement); VR only via multi-runtime build with test hardware.
+9. **UI is SKSE Menu Framework or MCM.** No custom Scaleform/Flash (D-022); no native
+   passive-tree/paragon-board UI without building it ourselves in ImGui.
+10. **Inventory is vanilla.** Replacing it with a grid requires a separate mod (Grid Inventory)
+    as an optional dependency.
+11. **No mount/monster-riding animation hooks.** Monster mounting and wirebug-style movement
+    require animation/behavior files and engine hooks we do not own.
+12. **No native socketed-gem/links/colors system.** PoE-style gem sockets with links are not a
+    Skyrim concept; our sockets are rune ranks (I-05).
+13. **No native flask/charge system.** Potions exist; a charged flask with suffixes is custom
+    item state + co-save.
+14. **No native ailment/damage-type/penetration framework.** Buildable on MGEF + co-save.
+15. **No native passive tree.** Could be built as a node grid in SKSE Menu Framework.
+
+### 13.2 Feasibility classification
+
+Legend: **A** = Implementable (normal effort); **B** = Hard but possible (new system/UI/data
+layer); **C** = Not feasible in Skyrim (violates a hard constraint; drop or reframe);
+**D** = Out of scope (already classified OUT).
+
+#### C — Not feasible in Skyrim (engine limitation)
+
+| RG ID | Feature | Why not feasible |
+|---|---|---|
+| RG-021 | Mounts and mount-based combat | Animation/engine; vanilla mounts only. |
+| RG-040 | Cluster jewels (add passive nodes) | Requires a passive tree we cannot build natively. |
+| RG-041 | Timeless jewels (transform keystones) | Same as above. |
+| RG-055 | Skill-gem sockets with links/colors | No native gem/link system. |
+| RG-096 | Map device / Atlas of Worlds | No procedural map generation. |
+| RG-097 | Delve (infinite depth) | No procedural generation. |
+| RG-098 | Heist | No procedural generation. |
+| RG-099 | Expedition | No procedural generation. |
+| RG-100 | Ritual | No procedural generation. |
+| RG-101 | Ultimatum | No procedural generation. |
+| RG-102 | Sanctum (roguelike) | No procedural generation. |
+| RG-104 | Metamorph | No procedural generation. |
+| RG-105 | Incursion (temple) | No procedural generation. |
+| RG-106 | Betrayal (syndicate) | No procedural generation. |
+| RG-107 | Legion (time bubbles) | No procedural generation. |
+| RG-108 | Breach (domains) | No procedural generation. |
+| RG-109 | Abyss (depths) | No procedural generation. |
+| RG-110 | Harbinger (beachheads) | No procedural generation. |
+| RG-112 | Beyond (demons) | No procedural generation. |
+| RG-113 | Torment (spirits) | No procedural generation. |
+| RG-121 | Turf wars / monster interactions | Animation/engine. |
+| RG-122 | Mounting monsters | Animation/engine. |
+| RG-123 | Wirebug movement / seikret | Animation/engine. |
+| RG-126 | Anomaly quests / coalescence | No procedural generation (could be a fixed quest). |
+| RG-141 | Endless dungeon (pit / greater rift) | No procedural generation. |
+| RG-155 | Leaderboards | No backend. |
+| RG-185 | Multiplayer / co-op scaling | No netcode. |
+| RG-186 | Trading / auction house | No backend/multiplayer. |
+| RG-187 | Clan / guild systems | No backend. |
+| RG-188 | Party play / group loot | No multiplayer. |
+| RG-189 | PvP | No multiplayer. |
+| RG-190 | Console support | SKSE requirement. |
+| RG-194 | Battle pass / monetization | Not a mod. |
+| RG-195 | Leaderboards | No backend. |
+
+Note: RG-103 (Blight), RG-114 (Bloodlines), RG-115 (Domination), RG-116 (Invasion) can be
+reframed as **fixed authored content** (a quest, a spawn wave, a boss) rather than a procedural
+system; if reframed they move to B.
+
+#### B — Hard but possible (new system/UI/data layer; high effort)
+
+RG-001, RG-002, RG-003, RG-004, RG-005, RG-006, RG-007, RG-008, RG-010, RG-011, RG-012,
+RG-013, RG-014, RG-015, RG-017, RG-019, RG-020, RG-022, RG-023, RG-025, RG-026, RG-027,
+RG-028, RG-029, RG-030, RG-032, RG-033, RG-034, RG-035, RG-036, RG-037, RG-038, RG-039,
+RG-042, RG-043, RG-044, RG-045, RG-048, RG-049, RG-050, RG-051, RG-053, RG-054, RG-056,
+RG-057, RG-058, RG-059, RG-060, RG-062, RG-063, RG-064, RG-065, RG-066, RG-067, RG-068,
+RG-069, RG-070, RG-071, RG-072, RG-073, RG-076, RG-077, RG-078, RG-079, RG-081, RG-082,
+RG-083, RG-084, RG-085, RG-086, RG-093, RG-094, RG-095, RG-111, RG-119, RG-120, RG-124,
+RG-125, RG-127, RG-128, RG-129, RG-130, RG-131, RG-132, RG-133, RG-134, RG-135, RG-136,
+RG-137, RG-138, RG-139, RG-140, RG-142, RG-143, RG-146, RG-147, RG-148, RG-149, RG-150,
+RG-151, RG-152, RG-153, RG-154, RG-156, RG-157, RG-158, RG-165, RG-169, RG-170, RG-171,
+RG-172, RG-173, RG-174, RG-175, RG-176, RG-177, RG-178, RG-179, RG-180, RG-191, RG-192,
+RG-193, RG-196, RG-197, RG-198, RG-199, RG-200, RG-201, RG-074, RG-061.
+
+#### A — Implementable (normal effort; fits existing systems)
+
+RG-009, RG-024, RG-031/RG-080, RG-046, RG-047, RG-090, RG-091, RG-092, RG-159, RG-160,
+RG-161, RG-162, RG-163, RG-164, RG-166, RG-167, RG-168, RG-181, RG-182, RG-183, RG-184,
+RG-087, RG-088, RG-089.
+
+### 13.3 Implications
+
+- 34 entries are **C (not feasible)** and should be reclassified from RESERVE to OUT (engine
+  limitation) unless reframed as fixed authored content. They must not be promised on the
+  Nexus page.
+- The remaining RESERVE items are B (hard but possible) and are legitimate expansion
+  candidates, but each requires a dedicated pack and a budget decision.
+- The 5 NOW candidates (RG-009, RG-024, RG-031/RG-080, RG-047) are all A/B and cheap;
+  they can enter v1 without new systems.
+
+### 13.4 Provenance
+
+The constraints in 13.1 are evidenced by:
+- PROTEUS 3.4.0 analysis (10-PROTEUS.md): base-record mutation is session-scoped and leaks
+  across saves; no JContainers/PO3/UILib/Flash dependency for Runefall.
+- `_context/rpg-mechanism/01-09`: DiabloRim (runtime affix roll), Worlds Dawn (28-AV
+  repurposing rejected, 2s scan, permanent token markers), Fortunate Foes (SPID/SkyPatcher
+  distribution, no KYWD records).
+- AGENTS.md section 4 and SPECS L2/L4 (hook map, budgets, co-save TLV).
+- Runefall decisions D-003, D-004, D-006, D-023, D-024, D-025, D-027, D-028, D-040,
+  D-047, D-048, D-050, D-052, D-055.
+
+## 14. Recommended next actions (not implementation)
+
+1. Review the NOW list (5 items: RG-009, RG-024, RG-031/RG-080, RG-047) and decide which
+   enter v1; if any do, add them to `GAP-REGISTER-FUTURE.md` as new N-xx hooks and update L1/L3.
+2. Reclassify the 34 C-feasibility entries from RESERVE to OUT (engine limitation) in
+   `GAP-REGISTER-FUTURE.md` so they are never promised; keep them here as provenance.
+3. Decide whether to merge this register into `GAP-REGISTER-FUTURE.md` (single source of
+   truth). Recommendation: merge the B-feasibility RESERVED items as new F-xx rows with
+   RG- cross-references, keeping this file as the detailed provenance.
+4. For each RESERVED item that turns out to need a v1 hook, update section 4 (cheap hooks)
+   of `GAP-REGISTER-FUTURE.md` and D-048 before any work (D-047 rule 4).
+5. Do not let reference-game parity drive scope creep: the v1 scope lock (D-047) stands;
+   this register is a backlog, not a commitment.
