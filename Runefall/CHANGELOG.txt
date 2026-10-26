@@ -2,6 +2,8 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-26
+- I4 input manager: InputEvent sink with F10 (menu snapshot), F11 (rerun probe), F12 (probe item)
+  hotkeys; self-test. DLL PASS, 908,800 bytes, SHA-256 E956464F...454AB.
 - I2 record families: generator emits 27 skill SPEL, 27 skill PERK, 3 QUST hosts and 5 FLST pools;
   base plugin now 246 records; validator checks 27/27/3/5 and PASSes. COBJ/NPC still pending.
 - I4 Papyrus bridge + menu API: attribute/point/rune/skill/hunt/spend functions and

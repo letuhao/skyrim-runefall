@@ -3,6 +3,7 @@
 #include "CoSave.h"
 #include "Config.h"
 #include "DebugHarness.h"
+#include "InputManager.h"
 #include "LootService.h"
 #include "PapyrusBridge.h"
 
@@ -40,6 +41,7 @@ namespace
 	{
 		logger::info("Runefall data loaded: bootstrap complete, API {}", Runefall::kApiVersion);
 		Runefall::LootService::Get().RegisterHooks();
+		Runefall::InputManager::Get().Register();
 		if (Runefall::Config::Get().DebugSelfTest())
 			Runefall::DebugHarness::RunAll();
 	}

@@ -1,8 +1,8 @@
 Runefall 0.2.0-dev
 created: 2026-10-26
-stage: implement-first (D-063); I2 record families (SPEL/PERK/QUST/FLST) + I4 bridge/menu built
+stage: implement-first (D-063); I2 record families, I4 bridge/menu/input built
 parent: 0.1.18
 target: Skyrim SE/AE 1.6.1170 + SKSE 1.6.1170 + Address Library 1.6.1170 (D-062)
-artifact: Runefall.dll 903,680 bytes sha256 AFBD033BC5026DF9FC92A09ED752DDF6D54E65A0E7AF562511DE3B5E3C5A600D
+artifact: Runefall.dll 908,800 bytes sha256 E956464F3B5A5E54E3E1C9A7E8C6CB2170FECCFD8CF7C532D9EA5365AAB454AB
 content: build/dist: Runefall.esp 246 records, Unique 40, Hunt 38; 18 CSVs; manifests
 runtime: not launched; batch probe at T1

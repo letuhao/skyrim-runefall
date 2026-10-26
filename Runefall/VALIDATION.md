@@ -128,6 +128,15 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## I4 input manager build (2026-10-26, implement-first)
+
+- InputManager: registers BSTEventSink<InputEvent*> on BSInputDeviceManager; F10 prints the
+  MenuApi snapshot, F11 reruns the probe harness, F12 injects the probe item. Self-test checks
+  device manager availability + registration. Build PASS, DLL 908,800 bytes,
+  SHA-256 E956464F3B5A5E54E3E1C9A7E8C6CB2170FECCFD8CF7C532D9EA5365AAB454AB.
+- SKSE Menu Framework pages are NOT implemented yet; the hotkeys currently print to log/console.
+  Papyrus probe script source + compiled PEX still pending.
+
 ## I2 record families build (2026-10-26, implement-first)
 
 - Generator now emits skill records: 27 SPEL (9 active skills x 3 ranks), 27 PERK (9 passive
