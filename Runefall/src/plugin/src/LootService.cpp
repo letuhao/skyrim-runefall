@@ -3,6 +3,7 @@
 #include "CoSave.h"
 #include "DynamicEnchantment.h"
 #include "FormResolver.h"
+#include "DataStore.h"
 #include "HuntEngine.h"
 #include "ItemRegistry.h"
 #include "FormResolver.h"
@@ -219,6 +220,77 @@ namespace Runefall
 
 	namespace
 	{
+		void GrantUniqueHuntItem(RE::Actor* a_actor, const RaceGroupDef& a_family, std::size_t a_familyIndex)
+		{
+			const auto* table = DataStore::Get().GetTable("unique_affixes.csv");
+			if (!table) {
+				logger::warn("hunt: unique_affixes.csv not loaded");
+				return;
+			}
+			auto column = [&](std::string_view a_name) {
+				for (std::size_t i = 0; i < table->headers.size(); ++i)
+					if (table->headers[i] == a_name)
+						return static_cast<int>(i);
+				return -1;
+			};
+			const int cId = column("uniqueId");
+			const int cName = column("name");
+			const int cEffect = column("effectEditorId");
+			const int cMin = column("minValue");
+			const int cMax = column("maxValue");
+			const int cDuration = column("duration");
+			const int cArea = column("area");
+			for (const auto& row : table->rows) {
+				if (cId < 0 || static_cast<std::size_t>(cId) >= row.size() || row[static_cast<std::size_t>(cId)] != a_family.uniqueAffixId)
+					continue;
+				auto cell = [&](int a_col) -> std::string_view {
+					if (a_col < 0 || static_cast<std::size_t>(a_col) >= row.size())
+						return {};
+					return row[static_cast<std::size_t>(a_col)];
+				};
+				const auto effectEditorId = cell(cEffect);
+				if (effectEditorId.empty())
+					return;
+				RE::EffectSetting* effect = FormResolver::ResolveAs<RE::EffectSetting>(effectEditorId);
+				if (!effect) {
+					// Hunt.esp allocates its MGEF block at 0x900 in race_groups.csv order.
+					if (auto* dataHandler = RE::TESDataHandler::GetSingleton())
+						effect = dataHandler->LookupForm<RE::EffectSetting>(static_cast<RE::FormID>(0x900 + a_familyIndex), "Runefall - Hunt.esp");
+				}
+				auto* base = ResolveBaseObject("IronSword");
+				if (!effect || !base) {
+					logger::warn("hunt: unique '{}' resources unresolved", a_family.uniqueAffixId);
+					return;
+				}
+				auto parseFloat = [](std::string_view a_text, float a_default) {
+					if (a_text.empty())
+						return a_default;
+					std::string copy{ a_text };
+					char* end = nullptr;
+					const auto value = std::strtof(copy.c_str(), &end);
+					return end == copy.c_str() ? a_default : value;
+				};
+				const auto minValue = parseFloat(cell(cMin), 25.0f);
+				const auto maxValue = parseFloat(cell(cMax), 35.0f);
+				const auto duration = static_cast<std::int32_t>(parseFloat(cell(cDuration), 0.0f));
+				const auto area = static_cast<std::int32_t>(parseFloat(cell(cArea), 0.0f));
+				auto* enchantment = DynamicEnchantment::CreateFromEffect(effect, (minValue + maxValue) * 0.5f, duration, area);
+				if (!enchantment)
+					return;
+				auto* changes = a_actor->GetInventoryChanges();
+				if (!changes)
+					return;
+				auto* extraList = changes->EnchantObject(base, nullptr, enchantment, 100);
+				if (!extraList)
+					return;
+				const auto displayName = "Runed " + a_family.group + " " + std::string{ cell(cName) };
+				extraList->SetOverrideName(displayName.c_str());
+				a_actor->AddObjectToContainer(base, extraList, 1, nullptr);
+				logger::info("hunt: granted unique affix '{}' as '{}'", a_family.uniqueAffixId, displayName);
+				return;
+			}
+		}
+
 		void GrantHuntFirstKill(RE::Actor* a_actor)
 		{
 			auto* actorBase = a_actor ? a_actor->GetActorBase() : nullptr;
@@ -229,6 +301,12 @@ namespace Runefall
 			const auto* family = HuntEngine::Get().FindFamilyForRace(raceEditorID);
 			if (!family || HuntEngine::Get().HasFirstKill(family->group))
 				return;
+			std::size_t familyIndex = 0;
+			for (const auto& candidate : HuntEngine::Get().Families()) {
+				if (candidate.group == family->group)
+					break;
+				++familyIndex;
+			}
 			if (!HuntEngine::Get().MarkFirstKill(family->group))
 				return;
 			logger::info("hunt: first kill family '{}' on actor {:08X}", family->group, a_actor->GetFormID());
@@ -253,6 +331,7 @@ namespace Runefall
 			} else {
 				logger::warn("hunt: material '{}' unresolved", family->materialId);
 			}
+			GrantUniqueHuntItem(a_actor, *family, familyIndex);
 		}
 	}
 

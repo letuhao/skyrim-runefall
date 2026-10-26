@@ -15,6 +15,9 @@ namespace Runefall
 		// Runefall plugins. Returned form is registered with the data handler.
 		[[nodiscard]] static RE::EnchantmentItem* Create(const ItemMetadata& a_metadata);
 
+		// Single-effect runtime enchantment (unique hunt/boss rewards).
+		[[nodiscard]] static RE::EnchantmentItem* CreateFromEffect(RE::EffectSetting* a_effect, float a_magnitude, std::int32_t a_duration, std::int32_t a_area);
+
 		// Attaches the runtime enchantment to a world reference's extra data.
 		[[nodiscard]] static bool AttachToReference(RE::TESObjectREFR* a_reference, const ItemMetadata& a_metadata, std::uint16_t a_charge);
 

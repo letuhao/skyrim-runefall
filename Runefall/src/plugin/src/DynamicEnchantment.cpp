@@ -7,6 +7,58 @@ namespace Runefall
 	namespace
 	{
 		std::atomic_bool g_gameplayReady{ false };
+
+		struct ResolvedEffect
+		{
+			RE::EffectSetting* baseEffect;
+			float              magnitude;
+			std::int32_t       area;
+			std::int32_t       duration;
+		};
+
+		RE::EnchantmentItem* CreateEnchantment(std::vector<ResolvedEffect> a_effects)
+		{
+			if (a_effects.empty())
+				return nullptr;
+			auto* factory = RE::IFormFactory::GetFormFactoryByType(RE::FormType::Enchantment);
+			if (!factory) {
+				logger::error("dynamic-enchantment: no Enchantment form factory");
+				return nullptr;
+			}
+			auto* enchantment = factory->Create<RE::EnchantmentItem>();
+			if (!enchantment) {
+				logger::error("dynamic-enchantment: factory Create<EnchantmentItem> returned null");
+				return nullptr;
+			}
+
+			enchantment->data.flags = RE::EnchantmentItem::EnchantmentFlag::kNone;
+			enchantment->data.castingType = RE::MagicSystem::CastingType::kFireAndForget;
+			enchantment->data.delivery = RE::MagicSystem::Delivery::kSelf;
+			enchantment->data.spellType = RE::MagicSystem::SpellType::kEnchantment;
+			enchantment->data.costOverride = 0;
+			enchantment->data.chargeOverride = 0;
+
+			for (const auto& entry : a_effects) {
+				auto* effect = new RE::Effect();
+				effect->effectItem.magnitude = entry.magnitude;
+				effect->effectItem.area = static_cast<std::uint32_t>((std::max)(0, entry.area));
+				effect->effectItem.duration = static_cast<std::uint32_t>((std::max)(0, entry.duration));
+				effect->baseEffect = entry.baseEffect;
+				effect->cost = 0.0f;
+				enchantment->effects.push_back(effect);
+			}
+
+			auto* dataHandler = RE::TESDataHandler::GetSingleton();
+			if (!dataHandler) {
+				logger::error("dynamic-enchantment: TESDataHandler missing; refusing unregistered form");
+				return nullptr;
+			}
+			if (!dataHandler->AddFormToDataHandler(enchantment)) {
+				logger::error("dynamic-enchantment: AddFormToDataHandler failed; form left unregistered");
+				return nullptr;
+			}
+			return enchantment;
+		}
 	}
 
 	void DynamicEnchantment::SetGameplayReady(bool a_ready) noexcept
@@ -31,14 +83,6 @@ namespace Runefall
 			return nullptr;
 		}
 
-		struct ResolvedEffect
-		{
-			RE::EffectSetting* baseEffect;
-			float              magnitude;
-			std::int32_t       area;
-			std::int32_t       duration;
-		};
-
 		std::vector<ResolvedEffect> resolved;
 		for (std::uint8_t i = 0; i < a_metadata.enhancementCount && i < 5; ++i) {
 			const auto& enhancement = a_metadata.enhancements[i];
@@ -55,45 +99,20 @@ namespace Runefall
 			logger::warn("dynamic-enchantment: no valid effects; refusing to create form");
 			return nullptr;
 		}
+		return CreateEnchantment(std::move(resolved));
+	}
 
-		auto* factory = RE::IFormFactory::GetFormFactoryByType(RE::FormType::Enchantment);
-		if (!factory) {
-			logger::error("dynamic-enchantment: no Enchantment form factory");
+	RE::EnchantmentItem* DynamicEnchantment::CreateFromEffect(RE::EffectSetting* a_effect, float a_magnitude, std::int32_t a_duration, std::int32_t a_area)
+	{
+		if (!g_gameplayReady.load()) {
+			logger::warn("dynamic-enchantment: refused runtime form before gameplay-ready");
 			return nullptr;
 		}
-		auto* enchantment = factory->Create<RE::EnchantmentItem>();
-		if (!enchantment) {
-			logger::error("dynamic-enchantment: factory Create<EnchantmentItem> returned null");
+		if (!a_effect || a_effect->IsDeleted()) {
+			logger::warn("dynamic-enchantment: CreateFromEffect got a missing/deleted effect");
 			return nullptr;
 		}
-
-		enchantment->data.flags = RE::EnchantmentItem::EnchantmentFlag::kNone;
-		enchantment->data.castingType = RE::MagicSystem::CastingType::kFireAndForget;
-		enchantment->data.delivery = RE::MagicSystem::Delivery::kSelf;
-		enchantment->data.spellType = RE::MagicSystem::SpellType::kEnchantment;
-		enchantment->data.costOverride = 0;
-		enchantment->data.chargeOverride = 0;
-
-		for (const auto& entry : resolved) {
-			auto* effect = new RE::Effect();
-			effect->effectItem.magnitude = entry.magnitude;
-			effect->effectItem.area = static_cast<std::uint32_t>((std::max)(0, entry.area));
-			effect->effectItem.duration = static_cast<std::uint32_t>((std::max)(0, entry.duration));
-			effect->baseEffect = entry.baseEffect;
-			effect->cost = 0.0f;
-			enchantment->effects.push_back(effect);
-		}
-
-		auto* dataHandler = RE::TESDataHandler::GetSingleton();
-		if (!dataHandler) {
-			logger::error("dynamic-enchantment: TESDataHandler missing; refusing unregistered form");
-			return nullptr;
-		}
-		if (!dataHandler->AddFormToDataHandler(enchantment)) {
-			logger::error("dynamic-enchantment: AddFormToDataHandler failed; form left unregistered");
-			return nullptr;
-		}
-		return enchantment;
+		return CreateEnchantment({ { a_effect, a_magnitude, a_area, a_duration } });
 	}
 
 	bool DynamicEnchantment::AttachToReference(RE::TESObjectREFR* a_reference, const ItemMetadata& a_metadata, std::uint16_t a_charge)

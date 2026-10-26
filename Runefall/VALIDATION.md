@@ -128,6 +128,16 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## Unique hunt affix item 2026-10-27 05:10-05:15
+
+- First kill now also grants a runtime-enchanted unique item: reads unique_affixes.csv for the
+  family's uniqueAffixId, creates a single-effect EnchantmentItem via CreateFromEffect, attaches
+  it with InventoryChanges::EnchantObject, and adds the item to the corpse.
+- Verified in-game on a Draugr: corpse had "Runed Draugr Draugr Hunt" (Iron Sword, Hunt Draugr
+  effect, magnitude 30, runtime enchantment FF000F47) plus "Draugr Essence"; no crash.
+- Static gates re-run: 5/5 PASS (evidence static-gates-20261027-051426.md).
+- Artifact DLL 963072 B SHA-256 E47C50E27E5D8B5C5DDFB153E2308522AEA0EBE769B14134B01574BC6F449BCA; candidate zip 465721 B SHA-256 E75B6C2770818602254D06B37306219D1BA83AE729A60DA31DBF62601B136BCF.
+
 ## Progression/rune semantics 2026-10-27 05:05-05:10
 
 - P4.13: `SoftCappedAttribute` corrected to full gains 1-30, half gains 31-60, hard cap 60.

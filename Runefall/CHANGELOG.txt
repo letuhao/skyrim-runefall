@@ -2,6 +2,8 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- Hunt first kill now also grants a runtime-enchanted unique item from unique_affixes.csv;
+  verified on a Draugr corpse ("Runed Draugr Draugr Hunt", Hunt Draugr effect).
 - Progression: SoftCappedAttribute corrected (hard cap 60); RuneForge spends rune units from the
   highest rank down (R1=1..R5=625) with self-test update.
 - Hunt first-kill wired to the death hook: family lookup by race, co-save first-kill flag, and
