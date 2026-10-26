@@ -2,6 +2,9 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-26
+- I3 RuneForge: reroll/locked reroll, rarity upgrade, socket/extract, rune conversion, salvage
+  yield, wallet spending, plus LootEngine enhancement reroll; self-test. DLL PASS, 865,280 bytes,
+  SHA-256 51F28C25...BAD0.
 - I3 hunt/progression: HuntEngine (race family lookup, reward tables, first-kill co-save state,
   self-test) and Progression (9 attributes, points, skill ranks, respec, soft caps, co-save sync,
   self-test), wired into the probe harness. DLL PASS, 857,600 bytes, SHA-256 83E50D9A...6A51.

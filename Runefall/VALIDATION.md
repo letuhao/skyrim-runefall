@@ -128,6 +128,16 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## I3 RuneForge build (2026-10-26, implement-first)
+
+- RuneForge transactions: reroll (with optional locked enhancement), rarity upgrade (60 percent),
+  socket/extract rune, rune conversion (5 -> 1 next rank), salvage yield; rune wallet spent from
+  CoSave state. LootEngine gained RerollEnhancements (keeps rarity/sockets/ilvl, category-unique
+  affix selection).
+- Self-test covers reroll spend/fill, socket+extract, repeated upgrade until success, conversion
+  and salvage yield; wallet restored afterwards.
+- Artifact: Runefall.dll 865,280 bytes, SHA-256 51F28C256636C8D884411CF3B01D5B29EE037D7181F70EA3F68F78927BB0BAD0. Build PASS.
+
 ## I3 hunt/progression engines build (2026-10-26, implement-first)
 
 - HuntEngine: parses race_groups.csv + drops_races.csv; race->family lookup, reward lookup,

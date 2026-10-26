@@ -74,6 +74,8 @@ namespace Runefall
 		[[nodiscard]] std::size_t AffixCount() const noexcept { return data.affixes.size(); }
 		[[nodiscard]] std::size_t RarityCount() const noexcept { return data.rarities.size(); }
 
+		bool RerollEnhancements(ItemMetadata& a_item, std::int32_t a_lockedIndex, std::string_view a_slotGroup, Rng& a_rng);
+
 		[[nodiscard]] std::optional<ItemMetadata> Generate(
 			std::int32_t  a_rank,
 			std::int32_t  a_rfTier,

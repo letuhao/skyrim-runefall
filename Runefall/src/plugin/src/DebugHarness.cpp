@@ -7,6 +7,7 @@
 #include "HuntEngine.h"
 #include "LootEngine.h"
 #include "Progression.h"
+#include "RuneForge.h"
 #include "TierEngine.h"
 #include "PackManager.h"
 
@@ -60,6 +61,7 @@ namespace Runefall
 		results.push_back(TierEngine::SelfTest());
 		results.push_back(HuntEngine::SelfTest());
 		results.push_back(Progression::SelfTest());
+		results.push_back(RuneForge::SelfTest());
 		results.push_back(CoSave::SelfTest());
 
 		lastPasses = 0;

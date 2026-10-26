@@ -285,6 +285,71 @@ namespace Runefall
 		return item;
 	}
 
+	bool LootEngine::RerollEnhancements(ItemMetadata& a_item, std::int32_t a_lockedIndex, std::string_view a_slotGroup, Rng& a_rng)
+	{
+		if (!loaded || a_item.enhancementCount > 5)
+			return false;
+
+		Enhancement locked;
+		bool        hasLocked = false;
+		if (a_lockedIndex >= 0 && a_lockedIndex < a_item.enhancementCount) {
+			locked = a_item.enhancements[a_lockedIndex];
+			hasLocked = true;
+		}
+
+		for (auto& enhancement : a_item.enhancements)
+			enhancement = Enhancement{};
+
+		std::unordered_set<std::string> usedCategories;
+		if (hasLocked) {
+			a_item.enhancements[0] = locked;
+			usedCategories.insert(std::to_string(locked.category)); // category is an index in metadata; uniqueness enforced below by affix category lookup
+		}
+
+		const std::int32_t maxAffixTier = (std::min)(5, 1 + (static_cast<std::int32_t>(a_item.ilvl) / 20));
+		std::uint8_t outputSlot = hasLocked ? 1 : 0;
+		while (outputSlot < a_item.enhancementCount) {
+			std::vector<const AffixDef*> eligible;
+			std::vector<float>           affixWeights;
+			for (const auto& affix : data.affixes) {
+				if (affix.tier > maxAffixTier || affix.minItemLevel > a_item.ilvl)
+					continue;
+				if (!SlotsMatch(affix.slots, a_slotGroup))
+					continue;
+				bool duplicate = false;
+				for (std::uint8_t e = 0; e < a_item.enhancementCount; ++e) {
+					if (a_item.enhancements[e].affixId.empty())
+						continue;
+					if (a_item.enhancements[e].affixId == affix.id)
+						continue;
+					const auto existing = std::find_if(data.affixes.begin(), data.affixes.end(), [&](const AffixDef& def) { return def.id == a_item.enhancements[e].affixId; });
+					if (existing != data.affixes.end() && existing->category == affix.category) {
+						duplicate = true;
+						break;
+					}
+				}
+				if (duplicate)
+					continue;
+				eligible.push_back(&affix);
+				affixWeights.push_back(affix.weight);
+			}
+			if (eligible.empty())
+				break;
+			const auto index = static_cast<std::size_t>(WeightedPick(affixWeights, a_rng));
+			const auto* affix = eligible[(std::min)(index, eligible.size() - 1)];
+			auto& enhancement = a_item.enhancements[outputSlot];
+			enhancement.affixId = affix->id;
+			enhancement.effectEditorId = affix->effectEditorId;
+			enhancement.category = static_cast<std::int32_t>(outputSlot);
+			enhancement.tier = affix->tier;
+			enhancement.magnitude = affix->minValue + (affix->maxValue - affix->minValue) * a_rng.Float01();
+			enhancement.duration = affix->duration;
+			enhancement.area = affix->area;
+			++outputSlot;
+		}
+		return true;
+	}
+
 	std::optional<ItemMetadata> LootEngine::Generate(
 		std::int32_t a_rank,
 		std::int32_t a_rfTier,
