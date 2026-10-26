@@ -103,7 +103,7 @@ v13 are Nexus-login gated and the plugin ecosystem is not ready. The 1.7.104 clo
     [20:06:48] co-save callbacks registered
     [20:06:53] RunefallNative Papyrus functions registered (api 1)
     [20:06:59] Runefall data loaded: bootstrap complete, API 1
-  Evidence copies in Runefall\build\phase0-evidence\. Game process stopped after verification.
+  Evidence copies in Runefall\evidence\phase0\. Game process stopped after verification.
   Not yet tested: Papyrus call from a script, co-save save/load round-trip, hooks, menu page.
 
 ### J:\SkyrimTest\1.7.104 - REMOVED (deferred)

@@ -1,0 +1,5 @@
+[20:06:48.812] [info] [Plugin.cpp:118] Runefall v0-2-0-0 loading (api 1)
+[20:06:48.812] [info] [Plugin.cpp:119] runtime: AE version 1-6-1170-0
+[20:06:48.834] [info] [Plugin.cpp:131] co-save callbacks registered
+[20:06:53.311] [info] [Plugin.cpp:53] RunefallNative Papyrus functions registered (api 1)
+[20:06:59.884] [info] [Plugin.cpp:90] Runefall data loaded: bootstrap complete, API 1

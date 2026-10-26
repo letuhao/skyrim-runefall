@@ -47,7 +47,7 @@ native SKSE plugin plus ESL content, with maximum compatibility.
   The 1.7.104 clone was removed after the target was deferred (D-062); no 1.7.104 support claim.
 - **Phase 0 runtime verified on 1.6.1170**: SKSE loaded Runefall.dll; log shows plugin load,
   runtime AE 1.6.1170, co-save callbacks, Papyrus functions, kDataLoaded bootstrap complete.
-  Evidence in Runefall\build\phase0-evidence. Game process stopped after test.
+  Evidence in Runefall\evidence\phase0. Game process stopped after test.
 - 1.7.104 Steam build verified (1.7.104.0, buildid 24914197) but deferred/unsupported for v1
   (D-062); its clone was removed. Mantras 1.6.1170 is the sole release target.
 - Phase 0 build SUCCESS: Runefall.dll 613,376 bytes, SHA-256 00F206D5...32B2A; exports
@@ -80,7 +80,7 @@ Implementation phase I1 (native core) is in progress:
    I6 package candidate, T1 batch test. Goal: implement-first, batch-test (session goal).
 
 Already proven and kept as evidence: DLL build, plugin load, Papyrus/co-save registration and
-kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\build\phase0-evidence).
+kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\evidence\phase0).
 
 ## Blocking decisions
 

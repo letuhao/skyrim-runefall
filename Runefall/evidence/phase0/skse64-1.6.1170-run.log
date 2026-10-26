@@ -1,0 +1,24 @@
+SKSE64 runtime: initialize (version = 2.2.6 01064920 01DD654ADC376E31, os = 6.2 (9200))
+imagebase = 00007FF61F850000
+reloc mgr imagebase = 00007FF61F850000
+config path = J:\SkyrimTest\1.6.1170\Data\SKSE\skse.ini
+plugin directory = J:\SkyrimTest\1.6.1170\Data\SKSE\Plugins\
+scanning plugin directory J:\SkyrimTest\1.6.1170\Data\SKSE\Plugins\
+checking plugin Runefall.dll
+loading plugin "Runefall"
+registering plugin listener for SKSE at 1 of 3
+plugin Runefall.dll (00000001 Runefall 00020000) loaded correctly (handle 1)
+dispatch message (0) to plugin listeners
+sending message type 0 to plugin 1
+dispatched message.
+dispatch message (1) to plugin listeners
+sending message type 1 to plugin 1
+dispatched message.
+init complete
+hooked dinput
+dispatch message (6) to plugin listeners
+sending message type 6 to plugin 1
+dispatched message.
+dispatch message (8) to plugin listeners
+sending message type 8 to plugin 1
+dispatched message.

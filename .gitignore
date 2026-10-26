@@ -82,3 +82,7 @@ Runefall 0.*/build/
 .env
 *.zip
 *.7z
+
+# Runefall evidence logs are intentionally tracked
+!Runefall/evidence/
+!Runefall/evidence/**

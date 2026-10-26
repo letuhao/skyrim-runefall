@@ -37,7 +37,7 @@ Runefall CHANGELOG
 - Phase 0 runtime PASS on J:\SkyrimTest\1.6.1170 (built from Mantras Stock Game + SKSE 1.6.1170 +
   Address Library 1.6.1170): SKSE loaded Runefall.dll; log confirms plugin load, AE 1.6.1170
   detection, co-save callbacks, Papyrus registration and kDataLoaded. Evidence logs copied to
-  Runefall\build\phase0-evidence. Game process stopped after verification.
+  Runefall\evidence\phase0. Game process stopped after verification.
 - Test environment: J:\SkyrimTest\1.6.1170 built from Mantras Stock Game + SKSE 1.6.1170 +
   Address Library 1.6.1170 + Runefall.dll (ready to launch). The 1.7.104 clone was removed after
   the target was deferred; SKSE 2.3.1 / AL v13 are no longer requirements (D-062).
