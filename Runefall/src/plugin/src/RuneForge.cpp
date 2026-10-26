@@ -173,8 +173,9 @@ namespace Runefall
 		const auto socketResult = RuneForge::Get().Socket(item, 0, 2);
 		if (!socketResult.ok || item.socketRunes[0] != 2)
 			return { "RuneForge.SelfTest", CheckStatus::Fail, "socket failed" };
+		const auto unitsBeforeExtract = WalletTotalUnits();
 		const auto extractResult = RuneForge::Get().Extract(item, 0);
-		if (!extractResult.ok || item.socketRunes[0] != 0 || wallet[1] < 100)
+		if (!extractResult.ok || item.socketRunes[0] != 0 || WalletTotalUnits() != unitsBeforeExtract + 5)
 			return { "RuneForge.SelfTest", CheckStatus::Fail, "extract failed" };
 
 		const auto beforeUpgrade = item.rarity;

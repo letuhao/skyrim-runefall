@@ -128,6 +128,22 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## Automated batch harness 2026-10-27 05:15-05:25
+
+- Added `tools/run-batch-test.ps1`: loads the clean save through MCP, checks player/cell/inventory/
+  SKSE plugins, waits for activation, exercises F10/F11/F12 through SendInput, optionally spawns
+  and kills a Draugr, verifies hunt material/unique item, scans for new crash logs, and writes a
+  markdown report under `build/evidence/`.
+- First runs: MCP/load/player/cell/inventory/plugin checks PASS; self-tests PASS 18/18 after the
+  RuneForge test fix; spawn/kill/hunt material checks PASS. Known harness limitations:
+  SendInput F10/F11/F12 did not produce new log lines when the harness launched the game
+  (foreground focus), and the unique-item check requires gameplay activation (temporary
+  `iGameplayDelaySeconds=5`); both are follow-ups.
+- RuneForge.SelfTest was stale after the rune-unit change and now verifies wallet units instead of
+  a single rank count; runtime probe report is 18/18 PASS.
+- Static gates: 5/5 PASS (evidence static-gates-20261027-052345.md).
+- Artifact DLL 963072 B SHA-256 356B06D2F2EC05F29A54368AE0E6C4253B62AB2A4B0FA29C0FC0E007D262755A; candidate zip 465774 B SHA-256 9C7F98E070327FCDE35B72154BEF2A2FBDCB8C174DDB6A17C0528C2C02FBBD95.
+
 ## Unique hunt affix item 2026-10-27 05:10-05:15
 
 - First kill now also grants a runtime-enchanted unique item: reads unique_affixes.csv for the
