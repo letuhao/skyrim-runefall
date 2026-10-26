@@ -7,6 +7,10 @@ namespace Runefall
 	class DynamicEnchantment
 	{
 	public:
+		// Runtime game forms may only be created after kNewGame/kPostLoadGame.
+		static void SetGameplayReady(bool a_ready) noexcept;
+		[[nodiscard]] static bool GameplayReady() noexcept;
+
 		// Creates a runtime EnchantmentItem using the affix MGEF templates from the loaded
 		// Runefall plugins. Returned form is registered with the data handler.
 		[[nodiscard]] static RE::EnchantmentItem* Create(const ItemMetadata& a_metadata);

@@ -6,6 +6,7 @@
 #include "InputManager.h"
 #include "MenuUI.h"
 #include "LootService.h"
+#include "DynamicEnchantment.h"
 #include "PapyrusBridge.h"
 
 namespace
@@ -58,7 +59,13 @@ namespace
 			OnDataLoaded();
 			break;
 		case SKSE::MessagingInterface::kNewGame:
+			// kNewGame still fires before the world/player are safe for runtime form creation.
+			// Keep runtime forms disabled here; only a loaded save is a safe gameplay signal.
+			if (Runefall::Config::Get().EnableProbes())
+				Runefall::DebugHarness::RunGameplayProbes();
+			break;
 		case SKSE::MessagingInterface::kPostLoadGame:
+			Runefall::DynamicEnchantment::SetGameplayReady(true);
 			if (Runefall::Config::Get().EnableProbes())
 				Runefall::DebugHarness::RunGameplayProbes();
 			break;

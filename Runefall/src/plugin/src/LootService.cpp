@@ -117,6 +117,10 @@ namespace Runefall
 	{
 		if (!a_actor || LootEngine::Get().HasData() == false)
 			return false;
+		if (!DynamicEnchantment::GameplayReady()) {
+			logger::warn("loot: runtime forms not ready yet; skip spawn for actor {:08X}", a_actor ? a_actor->GetFormID() : 0);
+			return false;
+		}
 
 		const auto rfTier = Progression::Get().RuneTier();
 		const auto seed = static_cast<std::uint64_t>(a_actor->GetFormID()) ^ (static_cast<std::uint64_t>(std::time(nullptr)) << 32);
@@ -174,6 +178,8 @@ namespace Runefall
 
 	bool LootService::InjectProbeItem()
 	{
+		if (!DynamicEnchantment::GameplayReady())
+			return false;
 		auto* player = RE::PlayerCharacter::GetSingleton();
 		if (!player)
 			return false;

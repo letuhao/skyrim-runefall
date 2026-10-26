@@ -1,8 +1,7 @@
 Runefall 0.2.0-dev
 created: 2026-10-27
-stage: T1 batch in progress; COBJ content complete; light/manifest/lazy-form fixes applied
+stage: crash root cause fixed; full plugin stable at new game (18/18 probes)
 parent: 0.1.18
 target: Skyrim SE/AE 1.6.1170 + SKSE 1.6.1170 + Address Library 1.6.1170 (D-062)
-artifact: Runefall.dll 923,648 bytes sha256 A433CFB675C07482792F8CB95F62117981F073DF29729906F66DE76541AD4652
-candidate: build/release/Runefall-0.2.0-dev.zip sha256 E62301129A092463B77AC1241A720D1E727EDD96DE6D9D7AA85A4669104FD6EC
-runtime: partial T1 (main menu); new-game probes blocked by running E: game
+artifact: Runefall.dll 925184 bytes sha256 E0A275DDF4EAF6BAECA502ACE01E75979DAD8D818D85568AAB5B62BAF049A2BD
+runtime: new-game launch stable; probe item injection still skipped at kNewGame (gated)

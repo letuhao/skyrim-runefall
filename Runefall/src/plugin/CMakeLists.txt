@@ -75,15 +75,7 @@ else()
     file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/src")
     configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/version.rc.in" "${CMAKE_CURRENT_BINARY_DIR}/src/version.rc" @ONLY)
 
-    # Plugin — auto-generates SKSEPlugin_Version; Plugin.cpp only needs SKSEPlugin_Load
-    add_commonlibsse_plugin(
-        ${PROJECT_NAME}
-        NAME
-        "Runefall"
-        AUTHOR
-        "Runefall contributors"
-        SOURCES
-        src/Plugin.cpp
+    set(RUNEFALL_CORE_SOURCES
         src/Config.cpp
         src/DataStore.cpp
         src/PackManager.cpp
@@ -101,9 +93,33 @@ else()
         src/MenuUI.cpp
         src/InputManager.cpp
         src/DebugHarness.cpp
-        src/PapyrusBridge.cpp
+        src/PapyrusBridge.cpp)
+
+    # Plugin — auto-generates SKSEPlugin_Version; Plugin.cpp only needs SKSEPlugin_Load
+    add_commonlibsse_plugin(
+        ${PROJECT_NAME}
+        NAME
+        "Runefall"
+        AUTHOR
+        "Runefall contributors"
+        SOURCES
+        src/Plugin.cpp
+        ${RUNEFALL_CORE_SOURCES}
         "${CMAKE_CURRENT_BINARY_DIR}/src/version.rc"
         USE_ADDRESS_LIBRARY)
+
+    # Stage build: empty load path with optional layers selected at runtime via Data/Runefall/stage.ini.
+    add_commonlibsse_plugin(
+        RunefallStage
+        NAME
+        "RunefallStage"
+        AUTHOR
+        "Runefall contributors"
+        SOURCES
+        src/stage/StagePlugin.cpp
+        ${RUNEFALL_CORE_SOURCES}
+        USE_ADDRESS_LIBRARY)
+    target_compile_definitions(RunefallStage PRIVATE RUNEFALL_STAGE)
 
     source_group("Resources" FILES "${CMAKE_CURRENT_BINARY_DIR}/src/version.rc")
 
@@ -202,5 +218,19 @@ else()
         COMMAND "${CMAKE_COMMAND}" --install "${CMAKE_BINARY_DIR}"
         DEPENDS ${PROJECT_NAME}
         COMMENT "Deploying to ${DEPLOY_DIR}/SKSE/Plugins")
+
+    if(TARGET RunefallStage)
+        target_compile_definitions(RunefallStage PRIVATE RUNEFALL_MENU_FRAMEWORK)
+        target_include_directories(RunefallStage PRIVATE "${RUNEFALL_MENU_HEADER_DIR}"
+                                                          "${CMAKE_CURRENT_SOURCE_DIR}/src"
+                                                          "${CMAKE_CURRENT_BINARY_DIR}/src")
+        target_precompile_headers(RunefallStage PRIVATE src/PCH.h)
+        set_target_properties(RunefallStage PROPERTIES OUTPUT_NAME RunefallStage PREFIX "" SUFFIX ".dll")
+        if(MSVC)
+            target_compile_options(RunefallStage PRIVATE /Zi "$<$<CONFIG:Release>:/Zc:inline;/JMC->")
+            target_link_options(RunefallStage PRIVATE "$<$<CONFIG:Debug>:/INCREMENTAL;/OPT:NOREF;/OPT:NOICF>"
+                                "$<$<CONFIG:Release>:/INCREMENTAL:NO;/OPT:REF;/OPT:ICF;/DEBUG:FULL>")
+        endif()
+    endif()
 
 endif() # PLUGIN_TESTS_ONLY

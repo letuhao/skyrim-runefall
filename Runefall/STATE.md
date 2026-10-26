@@ -75,13 +75,12 @@ Implementation phase I1 (native core) is in progress:
    modular bootstrap. Build PASS (780,288 bytes, hash 7867ABEB...1ECB); deployed to the test env.
 2. DONE (I2 foundation): Runefall.Build generator PASS; 3 ESL plugins (184/40/38 records) +
    18 data CSVs + manifests + ini generated and deployed to J:\SkyrimTest\1.6.1170.
-3. CRASH ROOT-CAUSE IN PROGRESS: xEdit found 27 null-EFID SPEL errors (fixed: 9 skill MGEFs,
-   base now 263 records, validator PASS). Remaining crash is heap corruption in SkyrimSE+0CD045C
-   at new game, no plugin frame; ESP-only and DLL-only each ran, both enabled crashed. Code
-   review found untrusted `new RE::Effect`/`new RE::ExtraDataList` allocations and a wrong
-   delete of an IFormFactory form (delete removed). Added component kill switches in
-   runefall.ini (menu/input/hooks/papyrus/cosave/probes) and a debug-windows build for bisection.
-   NEXT: bisect with kill switches, then fix/remove runtime enchantment/extra-list creation.
+3. CRASH ROOT CAUSE FOUND + GUARDED: layer bisection with new RunefallStage.dll (stage.ini
+   iStageLayer 0..7) showed layer 7 crashed. DynamicEnchantment.SelfTest created/registered a
+   runtime EnchantmentItem at kDataLoaded; this corrupted the game heap and crashed at new game.
+   Self-test is now logic-only; runtime forms are gated until kPostLoadGame; LootService refuses
+   spawns before that gate. Full plugin new-game run is RUNNING (18/18 probes, co-save writes).
+   Next: verify probe item/save-load path in-game, then candidate/static gates.
 
 Already proven and kept as evidence: DLL build, plugin load, Papyrus/co-save registration and
 kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\evidence\phase0).

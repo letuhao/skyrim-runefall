@@ -128,6 +128,33 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## Layer bisection 2026-10-27 01:58-02:13 - ROOT CAUSE FOUND
+
+Built a separate **RunefallStage.dll** target (same core sources, empty StagePlugin.cpp) whose
+runtime layer is selected by Data/Runefall/stage.ini (iStageLayer 0..7). Tested new game per
+layer with the original DLL removed:
+
+| Layer | Action | Result |
+|---|---|---|
+| 0 | load + logging only | RUNNING |
+| 1 | Config load | RUNNING |
+| 2 | DataStore LoadAll | RUNNING |
+| 3 | PackManager Scan | RUNNING |
+| 4 | CoSave register | RUNNING |
+| 5 | Papyrus register | RUNNING |
+| 6 | MenuUI + InputManager | RUNNING |
+| 7 | DebugHarness RunAll + gameplay probe | CRASH (heap, SkyrimSE+0CD045C) |
+
+Root cause: DynamicEnchantment.SelfTest at kDataLoaded created a runtime EnchantmentItem
+(IFormFactory) and registered it with TESDataHandler while the game was still initialising.
+The corruption surfaced later at new game. Guarding the self-test to logic-only made layer 7
+stable. A second unsafe path existed in the real plugin: LootService death hooks could create
+runtime forms at kNewGame; DynamicEnchantment now has a gameplay-ready gate (only enabled at
+kPostLoadGame) and LootService refuses spawns before that gate.
+
+Latest full plugin: 925184 bytes, SHA-256 E0A275DDF4EAF6BAECA502ACE01E75979DAD8D818D85568AAB5B62BAF049A2BD; new-game run RUNNING with 18/18 probe
+checks and co-save writes, no crash.
+
 ## T1 crash root-cause pass 2026-10-27 01:20-01:45
 
 - xEdit error check supplied by the user found 27 SPEL errors in Runefall.esp:

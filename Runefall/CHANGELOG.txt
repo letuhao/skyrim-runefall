@@ -2,6 +2,11 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- Root cause found via layer bisection: runtime EnchantmentItem created/registered in
+  DynamicEnchantment.SelfTest at kDataLoaded corrupted the game heap and crashed at new game.
+  Fix: SelfTest is logic-only; DynamicEnchantment has a gameplay-ready gate (kPostLoadGame);
+  LootService refuses runtime spawns before the gate. Added new empty RunefallStage.dll target
+  with stage.ini layer selection (0..7) for future bisection. Full plugin new-game run is stable.
 - Fixed xEdit-reported SPEL errors (27 null EFID effects): generator emits 9 skill MGEFs and
   links every skill spell; validator rejects null effects. Base plugin 263 records.
 - Added runefall.ini kill switches for component bisection and a debug-windows CMake preset;

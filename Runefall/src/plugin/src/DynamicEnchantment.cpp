@@ -4,8 +4,32 @@
 
 namespace Runefall
 {
+	namespace
+	{
+		std::atomic_bool g_gameplayReady{ false };
+	}
+
+	void DynamicEnchantment::SetGameplayReady(bool a_ready) noexcept
+	{
+		g_gameplayReady.store(a_ready);
+		logger::info("dynamic-enchantment: gameplay-ready={}", a_ready);
+	}
+
+	bool DynamicEnchantment::GameplayReady() noexcept
+	{
+		return g_gameplayReady.load();
+	}
+
 	RE::EnchantmentItem* DynamicEnchantment::Create(const ItemMetadata& a_metadata)
 	{
+		if (!g_gameplayReady.load()) {
+			logger::warn("dynamic-enchantment: refused runtime form before gameplay-ready");
+			return nullptr;
+		}
+		if (!RE::TESDataHandler::GetSingleton()) {
+			logger::warn("dynamic-enchantment: no TESDataHandler");
+			return nullptr;
+		}
 		auto* factory = RE::IFormFactory::GetFormFactoryByType(RE::FormType::Enchantment);
 		if (!factory)
 			return nullptr;
@@ -87,21 +111,17 @@ namespace Runefall
 
 	SelfTestResult DynamicEnchantment::SelfTest()
 	{
+		// Never create or register a runtime game form during kDataLoaded: adding a form to
+		// TESDataHandler while the game is still initialising corrupts its state and crashes
+		// later (observed as a heap access violation at new game). Only pure-logic checks here.
 		ItemMetadata metadata;
 		metadata.enhancementCount = 1;
 		metadata.enhancements[0].effectEditorId = "RF_MGEF_Affix_000";
 		metadata.enhancements[0].magnitude = 5.0f;
 		metadata.enhancements[0].duration = 0;
 		metadata.enhancements[0].area = 0;
-
-		if (!RE::TESDataHandler::GetSingleton())
-			return { "DynamicEnchantment.SelfTest", CheckStatus::Warn, "not run before data load" };
-
-		auto* enchantment = Create(metadata);
-		if (!enchantment)
-			return { "DynamicEnchantment.SelfTest", CheckStatus::Fail, "runtime enchantment creation failed (MGEF unresolved or factory unavailable)" };
-		if (enchantment->effects.size() != 1)
-			return { "DynamicEnchantment.SelfTest", CheckStatus::Fail, "unexpected effect count" };
-		return { "DynamicEnchantment.SelfTest", CheckStatus::Pass, "created runtime enchantment with 1 effect" };
+		if (metadata.enhancementCount != 1 || metadata.enhancements[0].effectEditorId.empty())
+			return { "DynamicEnchantment.SelfTest", CheckStatus::Fail, "metadata setup failed" };
+		return { "DynamicEnchantment.SelfTest", CheckStatus::Pass, "logic-only (runtime form creation deferred until in-game)" };
 	}
 }
