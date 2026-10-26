@@ -201,9 +201,16 @@ namespace Runefall
 			return false;
 
 		Rng rng(0xC0FFEE);
-		auto metadata = LootEngine::Get().Generate(2, 2, 30, static_cast<std::uint16_t>(ItemTag::Debug), "WEAPON", rng);
-		if (!metadata)
+		std::optional<ItemMetadata> metadata;
+		for (int attempt = 0; attempt < 16; ++attempt) {
+			metadata = LootEngine::Get().Generate(2, 2, 30, static_cast<std::uint16_t>(ItemTag::Debug), "WEAPON", rng);
+			if (metadata && metadata->enhancementCount > 0)
+				break;
+		}
+		if (!metadata || metadata->enhancementCount == 0) {
+			logger::warn("loot: probe generation produced no enchanted item");
 			return false;
+		}
 		metadata->baseFormId = base->GetFormID();
 		metadata->registryId = ItemRegistry::Get().Add(*metadata);
 

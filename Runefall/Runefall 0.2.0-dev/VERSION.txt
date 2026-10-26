@@ -1,7 +1,7 @@
 Runefall 0.2.0-dev
 created: 2026-10-27
-stage: safety-audited; 300s gameplay delay; full plugin stable at new game
+stage: MCP in-game testing; clean save loaded; probe-generation fix
 parent: 0.1.18
 target: Skyrim SE/AE 1.6.1170 + SKSE 1.6.1170 + Address Library 1.6.1170 (D-062)
-artifact: Runefall.dll 944640 bytes sha256 E7D09F1DE8B361117278A87912F1BF970C783283FFFC9D3E0023741124E6F16C
-safety: AGENTS.md section 3.1 hard rules + Runefall/SAFETY-AUDIT.md; warnings allowed, CTDs blocked
+artifact: Runefall.dll 946176 bytes sha256 085DFB50A4AC3D7D92560FBA2632B9AB200E4FB5192C4F2AA0B9162B9CCEE6C0
+runtime: CleanSave loaded via MCP; activation fired; post-MCP crash under isolation

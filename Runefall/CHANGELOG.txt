@@ -2,6 +2,9 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- In-game MCP test: clean save CleanSave loaded through SkyLink AI (exterior Riverwood); Runefall
+  delayed activation fired. Fixed probe generation to retry until an enchanted item exists.
+  A post-MCP heap crash without plugin frame is under isolation (see VALIDATION).
 - Safety process: AGENTS.md C++ hard rules (timing, null/type safety, ownership, event/thread
   rules, capped save data, self-audit, debug/PDB requirements) and Runefall/SAFETY-AUDIT.md.
   Self-audit pattern review PASS; unproven InventoryEntryData extra-list path disabled.

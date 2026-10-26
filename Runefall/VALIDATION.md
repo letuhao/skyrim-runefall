@@ -128,6 +128,21 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## In-game MCP session 2026-10-27 03:12-03:17
+
+- Clean save loaded in the running test game through SkyLink AI MCP: newest save is character
+  **CleanSave**, exterior Skyrim near Riverwood; stored in _context/clean-save with hash.
+- Runefall loaded (Runefall.dll 944,640 B, ESLs 68 light plugins, FE041-FE043). Delayed gameplay
+  activation fired at 03:13:39: gameplay-ready=true.
+- **Bug found:** probe item generation rolled an item with zero enhancements (Common rarity), so
+  DynamicEnchantment refused to create an empty enchantment and injection was skipped. Fixed
+  InjectProbeItem to retry generation until the metadata has at least one enhancement; latest DLL
+  is 946176 bytes, SHA-256 085DFB50A4AC3D7D92560FBA2632B9AB200E4FB5192C4F2AA0B9162B9CCEE6C0.
+- **Crash after MCP session:** 03:17:43, SkyrimSE+0CD045C heap access violation, uptime 9:23, no
+  plugin frame; crash log copied to _context/skylink-mcp. It occurred after repeated MCP server
+  connect/disconnect + get_load_order/get_inventory calls. MCP/SkyLink vs Runefall still needs
+  isolation before the automatic flow is trusted; keep MCP sessions short and one server per step.
+
 ## Self-audit 2026-10-27 02:40-02:45
 
 - Added mandatory C++ hard rules to workspace AGENTS.md section 3.1: timing/readiness, null and

@@ -75,11 +75,10 @@ Implementation phase I1 (native core) is in progress:
    modular bootstrap. Build PASS (780,288 bytes, hash 7867ABEB...1ECB); deployed to the test env.
 2. DONE (I2 foundation): Runefall.Build generator PASS; 3 ESL plugins (184/40/38 records) +
    18 data CSVs + manifests + ini generated and deployed to J:\SkyrimTest\1.6.1170.
-3. SAFETY HARDENED + SELF-AUDITED: root cause fixed; runtime forms activate only after a
-   configurable delay (default 300 s) plus player check. Audit task-9's critical/high findings
-   fixed; unproven ExtraDataList path disabled; SAFETY-AUDIT.md and AGENTS.md C++ hard rules added
-   (warnings acceptable, CTDs are release blockers, mandatory self-audit). Full plugin new-game
-   runs stable; next is gameplay probe item/save-load and release gates.
+3. IN-GAME MCP TESTING ACTIVE: clean save CleanSave loads via SkyLink MCP (exterior Riverwood).
+   Runefall activation/probe path runs in-game; found and fixed zero-enhancement probe roll.
+   A post-MCP heap crash (SkyrimSE+0CD045C, no plugin frame) needs MCP/SkyLink vs Runefall
+   isolation. Skills are workspace-local; MCP control skill + clean-save manifest stored.
 
 Already proven and kept as evidence: DLL build, plugin load, Papyrus/co-save registration and
 kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\evidence\phase0).
