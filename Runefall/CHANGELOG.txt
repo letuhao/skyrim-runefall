@@ -2,6 +2,10 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-26
+- Required-mod install + docs: SKSE Menu Framework 3.18 (Nexus 120352) installed into the
+  1.6.1170 test env; README now documents the four hard requirements (Skyrim 1.6.1170, SKSE
+  1.6.1170, Address Library 1.6.1170, SKSE Menu Framework 3.18), install/load order and the
+  not-required list. Added Runefall/tools/setup-test-env.ps1.
 - I4 Papyrus scripts: RunefallNative (native declarations) + RunefallProbe (quest probe) compile
   cleanly with the original Steam sources/flags; PEX deployed; probe script attached to
   RF_QUST_Debug VMAD. T1 console: cqf RunefallProbe RunProbe.

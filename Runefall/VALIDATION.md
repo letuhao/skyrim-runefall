@@ -128,6 +128,17 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## Required-mod install in test env (2026-10-26)
+
+- SKSE Menu Framework 3.18 release (Nexus 120352) installed into J:\SkyrimTest\1.6.1170\Data\SKSE:
+  SKSEMenuFramework.dll 4,583,936 bytes (SHA-256 0C107AD4...D55A2), fonts, ini, strings, themes.
+- Runefall layers re-installed by Runefall\tools\setup-test-env.ps1: generated content, Papyrus
+  PEX files and Runefall.dll (908,800 bytes). Framework PDB excluded.
+- Repo README now documents the four hard requirements (Skyrim 1.6.1170, SKSE 1.6.1170, Address
+  Library 1.6.1170, SKSE Menu Framework 3.18) and installation/load order; "not required" list
+  (SkyUI/MCM Helper/JContainers/PapyrusUtil) is explicit.
+- Framework DLL load is a T1 check (SKSE log must list SKSEMenuFramework).
+
 ## I4 Papyrus scripts build (2026-10-26, implement-first)
 
 - Sources: Runefall/src/papyrus/RunefallNative.psc (native bridge declarations) and
