@@ -643,6 +643,20 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Re-run the full suite on the release candidate; record hashes.
 - Ship gate: load-order docs, dependency list, uninstall note, supported-runtime statement (1.6.1170; 1.7.x unsupported).
 
+## Batch test session PASS 2026-10-27 05:40
+
+- Run: `tools/run-batch-test.ps1 -NoInputHotkeys -ExerciseDeathDrops` against a freshly launched
+  game with test-only `iGameplayDelaySeconds=5`, then INI restored to 300.
+- Evidence: `build/evidence/batch-test-20261027-054059.md`.
+- Result: 17/17 core checks PASS, exit 0:
+  MCP connected, save load, player CleanSave, cell, inventory, Runefall plugin, menu state,
+  Runefall loaded, self-tests 18/18, activation scheduled, Draugr spawn/kill, hunt first kill,
+  hunt material, unique item grant, corpse unique item, no new crash, game still running.
+- Hotkeys were skipped deliberately: synthetic F10/F11/F12 are not delivered when the harness
+  launches the game; manual SendInput verification is recorded separately.
+- This is the single automated in-game batch session for this build; runtime artifact is the same
+  DLL tested by static gates.
+
 ## Compatibility matrix status 2026-10-27
 
 - Tested environment: Skyrim SE 1.6.1170, SKSE 1.6.1170, Address Library 1.6.1170, full MO2
