@@ -77,13 +77,15 @@ namespace Runefall
 	{
 		if (const char* env = std::getenv("RUNEFALL_GAME_ROOT"); env && *env) {
 			fs::path candidate{ env };
-			if (fs::exists(candidate / "Data" / "Skyrim.esm"))
+			std::error_code ec;
+			if (fs::exists(candidate / "Data" / "Skyrim.esm", ec) && !ec)
 				return candidate;
 		}
 
 		auto cursor = fs::current_path();
 		for (int i = 0; i < 10; ++i) {
-			if (fs::exists(cursor / "Data" / "Skyrim.esm"))
+			std::error_code ec;
+			if (fs::exists(cursor / "Data" / "Skyrim.esm", ec) && !ec)
 				return cursor;
 			if (!cursor.has_parent_path())
 				break;

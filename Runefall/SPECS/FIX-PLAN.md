@@ -1,6 +1,18 @@
 # Runefall — Fix Plan (from 4-agent audit, 2026-10-27)
 
-Status: planning document. **No fixes applied yet.** Version stays `0.2.0-dev` (user decision).
+Status: **P1 safety fixes applied 2026-10-27** (runtime loot verified in-game). Version stays `0.2.0-dev`.
+
+## Status update 2026-10-27
+
+- **P1.1 FIXED:** runtime loot now uses the engine's `InventoryChanges::EnchantObject` instead of a
+  manually allocated ExtraDataList + AddObjectToContainer. Verified in-game: probe item "Refined
+  Iron Sword" and death drop "Mythic Iron Mace" with 4 affix effects on a Bandit corpse, no crash.
+- **P1.2-P1.8 FIXED:** FormResolver singleton captured/guarded; CoSave section/item caps and
+  rarity/socket validation; null message guards in both plugins; DynamicEnchantment factory and
+  data-handler logs; Core/DataStore filesystem error_code guards; explicit loot failure logs.
+- **P1.9 N/A:** `AddObjectToContainer` returns void in this CommonLibSSE-NG version; documented.
+- Runtime loot default is now **enabled** (`bEnableRuntimeLoot=1`) and both probe/death paths pass.
+- Remaining work starts at P2 (spec consistency) and P3.1/P3.2 (FormID allocation + validator).
 
 Audit sources:
 - Spec consistency audit (15 findings)

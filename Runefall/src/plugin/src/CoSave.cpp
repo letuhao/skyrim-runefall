@@ -247,6 +247,11 @@ namespace Runefall
 		if (!reader.U16(saveVersion) || !reader.U32(sectionCount))
 			return false;
 
+		constexpr std::uint32_t kMaxSections = 64;
+		if (sectionCount > kMaxSections) {
+			logger::error("co-save: sectionCount {} exceeds cap {}", sectionCount, kMaxSections);
+			return false;
+		}
 		for (std::uint32_t i = 0; i < sectionCount; ++i) {
 			std::uint16_t id = 0;
 			std::uint32_t len = 0;
@@ -285,6 +290,10 @@ namespace Runefall
 						return false;
 					if (!sectionReader.U8(item.rarity) || !sectionReader.U16(item.ilvl) || !sectionReader.U8(item.socketCount))
 						return false;
+					if (item.rarity > 5 || item.socketCount > 3) {
+						logger::error("co-save: invalid item rarity {} / socketCount {}", item.rarity, item.socketCount);
+						return false;
+					}
 					for (auto& rune : item.socketRunes)
 						if (!sectionReader.I32(rune))
 							return false;

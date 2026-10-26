@@ -57,11 +57,15 @@ namespace Runefall
 		}
 
 		auto* factory = RE::IFormFactory::GetFormFactoryByType(RE::FormType::Enchantment);
-		if (!factory)
+		if (!factory) {
+			logger::error("dynamic-enchantment: no Enchantment form factory");
 			return nullptr;
+		}
 		auto* enchantment = factory->Create<RE::EnchantmentItem>();
-		if (!enchantment)
+		if (!enchantment) {
+			logger::error("dynamic-enchantment: factory Create<EnchantmentItem> returned null");
 			return nullptr;
+		}
 
 		enchantment->data.flags = RE::EnchantmentItem::EnchantmentFlag::kNone;
 		enchantment->data.castingType = RE::MagicSystem::CastingType::kFireAndForget;
@@ -80,11 +84,14 @@ namespace Runefall
 			enchantment->effects.push_back(effect);
 		}
 
-		if (auto* dataHandler = RE::TESDataHandler::GetSingleton()) {
-			if (!dataHandler->AddFormToDataHandler(enchantment)) {
-				logger::error("dynamic-enchantment: AddFormToDataHandler failed; form left unregistered");
-				return nullptr;
-			}
+		auto* dataHandler = RE::TESDataHandler::GetSingleton();
+		if (!dataHandler) {
+			logger::error("dynamic-enchantment: TESDataHandler missing; refusing unregistered form");
+			return nullptr;
+		}
+		if (!dataHandler->AddFormToDataHandler(enchantment)) {
+			logger::error("dynamic-enchantment: AddFormToDataHandler failed; form left unregistered");
+			return nullptr;
 		}
 		return enchantment;
 	}

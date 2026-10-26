@@ -2,6 +2,11 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- Runtime loot fixed: use InventoryChanges::EnchantObject instead of manual ExtraDataList;
+  probe item and enchanted death drop verified in-game (Mythic Iron Mace, 4 affixes), no crash.
+  Death task keeps NiPointer; dead-actor guard corrected; runtime loot enabled by default.
+- FIX-PLAN P1 safety items applied (FormResolver guard, CoSave caps/validation, null message
+  guards, factory/data-handler logs, filesystem error_code guards).
 - In-game menu/hotkey probe: F1 Mod Control Panel verified; Runefall section registered; F10/F11/F12
   debug hotkeys verified via SendInput (snapshot, 18/18 rerun, disabled probe warning). Reset test
   INI defaults and added bEnableRuntimeLoot=0 to generated config.

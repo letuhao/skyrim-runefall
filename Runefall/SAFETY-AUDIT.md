@@ -24,13 +24,13 @@ feature is acceptable; **a player CTD is never acceptable**.
 |---|---|
 | Runtime form timing | PASS: gameplay-ready gate, default 300 s delay, player check, clamp >=5 s |
 | Null/validity checks | PASS: EFID/baseEffect, deleted forms, arrays, base name, datahandler, framework |
-| Ownership | PASS on shipped paths; `AttachToEntry` disabled (unproven ExtraDataList ownership) |
+| Ownership | PASS: runtime loot uses InventoryChanges::EnchantObject (verified in-game); AttachToEntry remains disabled |
 | Event dispatch | PASS: death/input capture FormID and queue main-thread tasks |
 | Threads | PASS: worker only sleeps; game calls on main-thread tasks |
 | Save data | PASS: 16 MiB record cap, 10k item cap, malformed payload rejected |
 | SelfTest state | PASS: RuneForge wallet + HuntEngine first-kill map restored via RAII |
 | File/config input | PASS: PackManager null/try-catch, config defaults, missing framework guarded |
-| Runtime testing | new-game runs stable; gameplay probe item was still skipped because player/base was not ready at the probe instant |
+| Runtime testing | probe item + death drop (enchanted corpse item) verified in-game with EnchantObject; no crash |
 
 ## Residual / accepted gaps
 

@@ -128,6 +128,21 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## Runtime loot fixed 2026-10-27 04:20-04:36
+
+- Root cause: manually allocated ExtraDataList + SetEnchantment + AddObjectToContainer crashed.
+- Fix: use `InventoryChanges::EnchantObject(base, nullptr, enchantment, 100)`, then
+  AddObjectToContainer with the returned list. This is the engine's own enchant-and-add path.
+- Verified in-game:
+  - Probe item in player inventory: "Refined Iron Sword", runtime enchantment FF000AE7, Affix 019.
+  - Bandit death: "Mythic Iron Mace" with 4 affix effects (074/044/022/055) on corpse.
+  - No crash; death event task uses NiPointer so temporary refs stay alive.
+- Also fixed death handler rejecting already-dead actors (death events fire after death).
+- P1 safety list applied: FormResolver singleton guard, CoSave section/item caps + rarity/socket
+  validation, null message guards, factory/data-handler logs, filesystem error_code guards.
+- Runtime loot default is now enabled (bEnableRuntimeLoot=1); generated INI template updated.
+- Artifact: Runefall.dll 955904 B, SHA-256 15B53797BD804C0C84859952F8C224AD7FAF6E8C982A9AAE1FB3F720A316FA01.
+
 ## Menu/hotkey test + config reset 2026-10-27 04:00-04:05
 
 - F1 verified open: SKSE Menu Framework Mod Control Panel (screen capture). Runefall pages are

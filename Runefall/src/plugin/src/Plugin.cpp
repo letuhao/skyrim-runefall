@@ -110,6 +110,10 @@ namespace
 
 	void OnMessage(SKSE::MessagingInterface::Message* a_msg)
 	{
+		if (!a_msg) {
+			logger::error("message: null message");
+			return;
+		}
 		switch (a_msg->type) {
 		case SKSE::MessagingInterface::kDataLoaded:
 			OnDataLoaded();

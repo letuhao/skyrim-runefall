@@ -21,14 +21,26 @@ namespace Runefall
 		public:
 			RE::BSEventNotifyControl ProcessEvent(const RE::TESDeathEvent* a_event, RE::BSTEventSource<RE::TESDeathEvent>*) override
 			{
-				if (!a_event || !a_event->dead || !a_event->actorDying)
+				if (!a_event)
 					return RE::BSEventNotifyControl::kContinue;
-				const auto formId = a_event->actorDying->GetFormID();
+				logger::info("death: event dead={} actor={}", a_event->dead ? "true" : "false",
+					a_event->actorDying ? std::to_string(a_event->actorDying->GetFormID()) : "null");
+				if (!a_event->dead || !a_event->actorDying)
+					return RE::BSEventNotifyControl::kContinue;
+				auto dying = a_event->actorDying;  // NiPointer keeps the temporary ref alive across the task
 				if (auto* tasks = SKSE::GetTaskInterface()) {
-					tasks->AddTask([formId]() {
-						auto* actor = RE::TESForm::LookupByID<RE::Actor>(formId);
-						if (actor && !actor->IsDead(false))
-							LootService::Get().OnActorDeath(actor);
+					tasks->AddTask([dying]() {
+						if (!dying) {
+							logger::warn("death: dying ref expired before task");
+							return;
+						}
+						auto* actor = dying->As<RE::Actor>();
+						if (!actor) {
+							logger::warn("death: dying ref is not an actor");
+							return;
+						}
+						logger::info("death: task actor={:08X} dead={}", actor->GetFormID(), actor->IsDead(false) ? "true" : "false");
+						LootService::Get().OnActorDeath(actor);
 					});
 				}
 				return RE::BSEventNotifyControl::kContinue;
@@ -130,8 +142,14 @@ namespace Runefall
 			logger::info("loot: runtime loot disabled (bEnableRuntimeLoot=0)");
 			return false;
 		}
-		if (!a_actor || LootEngine::Get().HasData() == false)
+		if (!a_actor) {
+			logger::warn("loot: spawn rejected (null actor)");
 			return false;
+		}
+		if (!LootEngine::Get().HasData()) {
+			logger::warn("loot: spawn rejected (loot data not loaded)");
+			return false;
+		}
 		if (!DynamicEnchantment::GameplayReady()) {
 			logger::warn("loot: runtime forms not ready yet; skip spawn for actor {:08X}", a_actor ? a_actor->GetFormID() : 0);
 			return false;
@@ -156,19 +174,37 @@ namespace Runefall
 		if (rank >= 4)
 			tags |= static_cast<std::uint16_t>(ItemTag::BossDrop);
 
-		auto metadata = LootEngine::Get().Generate(rank, rfTier, 10 + rfTier * 10, tags, "WEAPON", rng);
+		std::optional<ItemMetadata> metadata;
+		for (int attempt = 0; attempt < 16; ++attempt) {
+			metadata = LootEngine::Get().Generate(rank, rfTier, 10 + rfTier * 10, tags, "WEAPON", rng);
+			if (metadata && metadata->enhancementCount > 0)
+				break;
+		}
 		if (!metadata)
 			return false;
 		metadata->baseFormId = base->GetFormID();
 		metadata->registryId = ItemRegistry::Get().Add(*metadata);
 
-		auto* extraList = new RE::ExtraDataList();
+		if (metadata->enhancementCount == 0) {
+			// Fail closed on the affix roll, but still leave a readable base drop.
+			a_actor->AddObjectToContainer(base, nullptr, 1, nullptr);
+			logger::warn("loot: actor {:08X} rolled an unenchanted drop", a_actor->GetFormID());
+			return true;
+		}
+
 		auto* enchantment = DynamicEnchantment::Create(*metadata);
-		if (!enchantment) {
-			delete extraList;
+		if (!enchantment)
+			return false;
+		auto* inventoryChanges = a_actor->GetInventoryChanges();
+		if (!inventoryChanges) {
+			logger::error("loot: actor has no InventoryChanges");
 			return false;
 		}
-		extraList->SetEnchantment(enchantment, 100, false);
+		auto* extraList = inventoryChanges->EnchantObject(base, nullptr, enchantment, 100);
+		if (!extraList) {
+			logger::error("loot: EnchantObject returned null");
+			return false;
+		}
 		const char* baseNameRaw = base->GetName();
 		const std::string baseName{ baseNameRaw && *baseNameRaw ? baseNameRaw : "item" };
 		const auto* rarityName = rarityNameFor(static_cast<int>(metadata->rarity));
@@ -182,7 +218,8 @@ namespace Runefall
 
 	void LootService::OnActorDeath(RE::Actor* a_actor)
 	{
-		if (!a_actor || a_actor->IsPlayerRef() || a_actor->IsDead(false))
+		// Death events fire while the actor is already dead; only the player is excluded.
+		if (!a_actor || a_actor->IsPlayerRef())
 			return;
 		const auto formId = a_actor->GetFormID();
 		if (processedActors.contains(formId))
@@ -223,13 +260,19 @@ namespace Runefall
 		metadata->baseFormId = base->GetFormID();
 		metadata->registryId = ItemRegistry::Get().Add(*metadata);
 
-		auto* extraList = new RE::ExtraDataList();
 		auto* enchantment = DynamicEnchantment::Create(*metadata);
-		if (!enchantment) {
-			delete extraList;
+		if (!enchantment)
+			return false;
+		auto* inventoryChanges = player->GetInventoryChanges();
+		if (!inventoryChanges) {
+			logger::error("loot: player has no InventoryChanges");
 			return false;
 		}
-		extraList->SetEnchantment(enchantment, 100, false);
+		auto* extraList = inventoryChanges->EnchantObject(base, nullptr, enchantment, 100);
+		if (!extraList) {
+			logger::error("loot: EnchantObject returned null for probe item");
+			return false;
+		}
 		const char* baseNameRaw = base->GetName();
 		const std::string baseName{ baseNameRaw && *baseNameRaw ? baseNameRaw : "item" };
 		extraList->SetOverrideName(BuildDisplayName(*metadata, baseName, rarityNameFor(static_cast<int>(metadata->rarity))).c_str());

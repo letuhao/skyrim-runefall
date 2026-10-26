@@ -31,7 +31,7 @@ namespace Runefall
 		bool        debugSelfTest = true;
 		bool        debugTrace = false;
 		int         gameplayDelaySeconds = 300;
-		bool        enableRuntimeLoot = false;
+		bool        enableRuntimeLoot = true;
 		bool        enableMenu = true;
 		bool        enableInput = true;
 		bool        enableLootHooks = true;

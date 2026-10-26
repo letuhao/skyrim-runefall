@@ -75,11 +75,10 @@ Implementation phase I1 (native core) is in progress:
    modular bootstrap. Build PASS (780,288 bytes, hash 7867ABEB...1ECB); deployed to the test env.
 2. DONE (I2 foundation): Runefall.Build generator PASS; 3 ESL plugins (184/40/38 records) +
    18 data CSVs + manifests + ini generated and deployed to J:\SkyrimTest\1.6.1170.
-3. IN-GAME MCP TESTING ACTIVE: CleanSave loads via SkyLink MCP; 18/18 self-tests and CoSave
-   save/load pass. F1 opens Menu Framework; Runefall pages register (section selector), and
-   F10/F11/F12 hotkeys verified via SendInput. Runtime loot/probe/death-drop path crashes at
-   AddObjectToContainer and is disabled by default (bEnableRuntimeLoot=0). INI defaults restored.
-   Menu page interaction and Papyrus bridge still need direct checks.
+3. IN-GAME TESTING ACTIVE: CleanSave+MCP, 18/18 self-tests, CoSave save/load, F1 menu and
+   F10/F11/F12 hotkeys pass. Runtime loot FIXED via InventoryChanges::EnchantObject and enabled
+   by default; probe item + enchanted death drop verified on a Bandit corpse with no crash.
+   FIX-PLAN P1 safety items applied; next work is P2/P3.1-P3.2 and menu page interaction.
 
 Already proven and kept as evidence: DLL build, plugin load, Papyrus/co-save registration and
 kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\evidence\phase0).

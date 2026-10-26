@@ -47,9 +47,16 @@ namespace Runefall
 		if (!RE::TESDataHandler::GetSingleton())
 			return { "FormResolver.SelfTest", CheckStatus::Fail, "TESDataHandler unavailable" };
 
-		const auto* skyrim = RE::TESDataHandler::GetSingleton()->LookupModByName("Skyrim.esm");
-		if (!skyrim)
+		auto* dataHandler = RE::TESDataHandler::GetSingleton();
+		if (!dataHandler) {
+			logger::error("form-resolver: TESDataHandler null");
+			return { "FormResolver.SelfTest", CheckStatus::Fail, "TESDataHandler unavailable" };
+		}
+		const auto* skyrim = dataHandler->LookupModByName("Skyrim.esm");
+		if (!skyrim) {
+			logger::error("form-resolver: Skyrim.esm not loaded");
 			return { "FormResolver.SelfTest", CheckStatus::Fail, "Skyrim.esm not loaded" };
+		}
 
 		const auto* race = ResolveAs<RE::TESRace>("DraugrRace");
 		if (!race)

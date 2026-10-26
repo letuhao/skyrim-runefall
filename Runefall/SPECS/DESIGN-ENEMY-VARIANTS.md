@@ -220,6 +220,7 @@ Mechanic ID: **V-02 Variant eligibility and selection.**
 
 ### L1 — Rule and numbers
 
+- **V-02.0 Variants per base NPC (Q2).** A base NPC has N *candidate* variant packages (typically 3-6, filtered by race eligibility in `variant_packages.csv`); at most ONE is applied per instance (or none, if the chance roll fails or the density cap is reached). "Normal" is the no-variant outcome. There is no separate "Elite Variant" vs "Boss Variant" axis — see §0.1 and §5 (variants and bosses are mutually exclusive). So the prompt's "3 variants per NPC" maps to "3 candidate packages, one applied or none."
 - **V-02.1 Eligibility (V-13 pool).** An actor is eligible for a variant if ALL of:
   1. It is hostile (base race is in the hostile race set: the 19 race families from
      L-11 plus vanilla hostile races not in a family).
