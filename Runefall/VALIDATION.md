@@ -128,6 +128,18 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## I4 Papyrus scripts build (2026-10-26, implement-first)
+
+- Sources: Runefall/src/papyrus/RunefallNative.psc (native bridge declarations) and
+  RunefallProbe.psc (quest probe calling api/menu/attribute/probe functions).
+- Compiled with E:\SteamLibrary\steamapps\common\Skyrim Special Edition\Papyrus Compiler\
+  PapyrusCompiler.exe, flags TSEV_Papyrus_Flags.flg and original sources from
+  Data\Source\Scripts: 0 errors, 0 warnings; RunefallNative.pex 1,323 bytes,
+  RunefallProbe.pex 1,432 bytes. Build script: Runefall/tools/build-papyrus.ps1.
+- Generator attaches RunefallProbe to RF_QUST_Debug via Quest VMAD; validator PASS.
+- PEX files deployed to build/dist/Data/Scripts and the 1.6.1170 test env.
+- T1 test command: cqf RunefallProbe RunProbe (console).
+
 ## I4 input manager build (2026-10-26, implement-first)
 
 - InputManager: registers BSTEventSink<InputEvent*> on BSInputDeviceManager; F10 prints the

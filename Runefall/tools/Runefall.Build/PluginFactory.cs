@@ -128,7 +128,14 @@ internal static class PluginFactory
         }
 
         mod.Quests.Add(new Quest(mod) { EditorID = "RF_QUST_Core", Name = "Runefall Core" });
-        mod.Quests.Add(new Quest(mod) { EditorID = "RF_QUST_Debug", Name = "Runefall Debug" });
+        var debugQuest = new Quest(mod) { EditorID = "RF_QUST_Debug", Name = "Runefall Debug" };
+        debugQuest.VirtualMachineAdapter = new QuestAdapter();
+        debugQuest.VirtualMachineAdapter.Scripts.Add(new ScriptEntry
+        {
+            Name = "RunefallProbe",
+            Flags = ScriptEntry.Flag.Local
+        });
+        mod.Quests.Add(debugQuest);
         mod.Quests.Add(new Quest(mod) { EditorID = "RF_QUST_Attunement", Name = "Runefall Attunement" });
         for (var pool = 1; pool <= 5; ++pool)
             mod.FormLists.Add(new FormList(mod) { EditorID = "RF_FLST_Pool_" + pool });
