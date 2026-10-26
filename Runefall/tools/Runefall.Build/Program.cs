@@ -154,7 +154,8 @@ internal static class Program
                    "bDebugSelfTest=1\n" +
                    "bDebugTrace=0\n" +
                    "iLootAuthority=0\n" +
-            "iGameplayDelaySeconds=300\n\n" +
+            "iGameplayDelaySeconds=300\n" +
+            "bEnableRuntimeLoot=0\n\n" +
                    "[Paths]\n" +
                    "sDataDir=\n" +
                    "sPackDir=\n";

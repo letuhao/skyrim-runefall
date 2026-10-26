@@ -2,6 +2,9 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- In-game menu/hotkey probe: F1 Mod Control Panel verified; Runefall section registered; F10/F11/F12
+  debug hotkeys verified via SendInput (snapshot, 18/18 rerun, disabled probe warning). Reset test
+  INI defaults and added bEnableRuntimeLoot=0 to generated config.
 - Runtime loot crash isolated: probe injection into AddObjectToContainer crashes (heap AV, no
   plugin frame). Runtime loot/probe/death-drop path disabled by default with bEnableRuntimeLoot=0;
   fail-closed logs. Added ESL affix MGEF local-FormID fallback and probe-generation retry.

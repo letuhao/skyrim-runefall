@@ -239,8 +239,11 @@ package plus affix contributions plus socket contributions. The formula lives in
 I-07 Naming. Item name = rarity marker + affix prefix + base name + affix suffix. Economy of
 words: at most three words of affix text.
 
-I-08 No bind-on-pickup, no durability, no item degradation. Skyrim players expect to keep
-what they find.
+I-08 (amended 2026-10-27) No bind-on-pickup, no item degradation in core. Durability
+and break is an optional module (I-10; see SPECS/DESIGN-ITEM-CRAFTING.md section 2) shipped
+as a separate FOMOD module (default off); when it is off, items never degrade and
+SetItemHealthPercent stays free for the tempering channel (D-023). Bind-on-pickup is never
+used. Skyrim players expect to keep what they find.
 
 ## 6. Loot generation (L)
 

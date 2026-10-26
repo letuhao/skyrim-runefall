@@ -128,6 +128,18 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## Menu/hotkey test + config reset 2026-10-27 04:00-04:05
+
+- F1 verified open: SKSE Menu Framework Mod Control Panel (screen capture). Runefall pages are
+  registered per Runefall.log ("menu: Runefall section registered (4 pages)"); they live under the
+  "Runefall" section selected from the framework's top section selector.
+- F10/F11/F12 are debug hotkeys, not menu pages. Using SendInput: F10 logs the menu snapshot JSON,
+  F11 runs 18/18 self-tests, F12 logs probe-injection-disabled. WScript.SendKeys does not reach
+  Skyrim DirectInput.
+- Test INI had all bEnable* flags reset to 0 by bisection; reset to defaults and added
+  bEnableRuntimeLoot=0 to the generated runefall.ini template. Menu/input/CoSave/Papyrus will
+  register normally on the next restart.
+
 ## Runtime loot crash + gate 2026-10-27 03:39-03:52
 
 - Probe item generation now retries until an enchanted item exists, and ESL affix MGEFs resolve
