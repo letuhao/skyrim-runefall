@@ -128,6 +128,15 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## Progression/rune semantics 2026-10-27 05:05-05:10
+
+- P4.13: `SoftCappedAttribute` corrected to full gains 1-30, half gains 31-60, hard cap 60.
+- P4.14: rune spending now uses rune units (R1=1, R2=5, R3=25, R4=125, R5=625) and spends from
+  the highest rank downward; RuneForge self-test updated to compare unit totals.
+- Static gates re-run: 5/5 PASS (evidence static-gates-20261027-050506.md).
+- Artifact DLL 958464 B SHA-256 951668B8E42EF2126373B007CCA64A0C14368153DC796829E6FEA933222C8E9F; candidate zip 463378 B SHA-256 3C61F89B23BB9257944D3C3F96C2CF681D8948BFC747AE479F3DD0EFC39EC67C.
+- Runtime self-tests not re-run after these pure-logic changes.
+
 ## Hunt first-kill + final gates 2026-10-27 04:50-05:00
 
 - Hunt first-kill wired to death hook: race family looked up from race EditorID; first kill marks

@@ -25,7 +25,11 @@ Status: **P1 safety fixes applied 2026-10-27** (runtime loot verified in-game). 
 - **P4.9 PARTIAL (2026-10-27):** death hook now grants the race-family hunt material on first kill
   (Draugr -> "Draugr Essence" verified in-game via local FormID fallback); unique-affix granting
   and hunt-category wiring remain.
-- Remaining work: P3.3-P3.7/P3.9-P3.17 data pipeline, P4 feature gaps, P5 release gates.
+- **P4.13 FIXED:** SoftCappedAttribute now returns full 1-30, half 31-60, hard cap 60.
+- **P4.14 FIXED:** rune wallet spends in rune units (R1=1, R2=5, R3=25, R4=125, R5=625) from the
+  highest rank downward; self-test updated.
+- Remaining work: unique-affix item grant (P4.9 tail), P3.3-P3.7/P3.9-P3.17 data pipeline,
+  P4.2/P4.10/P4.12/P4.13-P4.14 remaining gaps, P5 release gates.
 
 Audit sources:
 - Spec consistency audit (15 findings)

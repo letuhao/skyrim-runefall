@@ -124,7 +124,7 @@ namespace Runefall
 			return a_raw;
 		if (a_raw <= 60)
 			return 30 + ((a_raw - 30) / 2);
-		return 45 + std::clamp(a_raw - 60, 0, 15);
+		return 60;
 	}
 
 	SelfTestResult Progression::SelfTest()

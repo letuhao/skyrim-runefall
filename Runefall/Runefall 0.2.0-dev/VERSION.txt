@@ -1,8 +1,8 @@
 Runefall 0.2.0-dev
 created: 2026-10-27
-stage: runtime loot + hunt first-kill material; static gates 5/5
+stage: runtime loot + hunt material; progression/rune semantics; static gates 5/5
 parent: 0.1.18
 target: Skyrim SE/AE 1.6.1170 + SKSE 1.6.1170 + Address Library 1.6.1170 (D-062)
-artifact: Runefall.dll 958464 bytes sha256 FA021126089D4944E705F5A69EE7FDA8F4BA898433A42D8D0EEAC1628E1E02E4
-candidate: build/release/Runefall-0.2.0-dev.zip 463370 bytes sha256 97EAD1A91ED904EAFC2CBE716E6A1021394B63220118FC9FB5AEDD00611ECE15
+artifact: Runefall.dll 958464 bytes sha256 951668B8E42EF2126373B007CCA64A0C14368153DC796829E6FEA933222C8E9F
+candidate: build/release/Runefall-0.2.0-dev.zip 463378 bytes sha256 3C61F89B23BB9257944D3C3F96C2CF681D8948BFC747AE479F3DD0EFC39EC67C
 runtime: probe item, enchanted death drop, Draugr first-kill material PASS

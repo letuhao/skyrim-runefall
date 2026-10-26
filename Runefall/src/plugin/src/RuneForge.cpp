@@ -22,30 +22,33 @@ namespace Runefall
 			return CoSave::Get().State().runes;
 		}
 
-		std::int32_t WalletTotal()
+		constexpr std::array<std::int32_t, 5> kRuneUnits{ 1, 5, 25, 125, 625 };
+
+		std::int32_t WalletTotalUnits()
 		{
 			std::int32_t total = 0;
-			for (const auto count : Wallet())
-				total += count;
+			for (std::size_t i = 0; i < Wallet().size(); ++i)
+				total += Wallet()[i] * kRuneUnits[i];
 			return total;
 		}
 
-		bool SpendRunes(std::int32_t a_cost)
+		bool SpendRunes(std::int32_t a_costUnits)
 		{
-			if (a_cost <= 0)
+			if (a_costUnits <= 0)
 				return true;
-			std::int32_t available = WalletTotal();
-			if (available < a_cost)
+			if (WalletTotalUnits() < a_costUnits)
 				return false;
-			for (auto& count : Wallet()) {
-				while (count > 0 && a_cost > 0) {
-					--count;
-					--a_cost;
-				}
-				if (a_cost == 0)
+			// Spend from the highest rank down: one R5 is worth 625 R1 units.
+			for (int rank = 4; rank >= 0; --rank) {
+				auto& count = Wallet()[static_cast<std::size_t>(rank)];
+				const auto unit = kRuneUnits[static_cast<std::size_t>(rank)];
+				const auto use = (std::min)(count, a_costUnits / unit);
+				count -= use;
+				a_costUnits -= use * unit;
+				if (a_costUnits == 0)
 					return true;
 			}
-			return a_cost == 0;
+			return false;
 		}
 
 		void AddRunes(std::int32_t a_rank, std::int32_t a_amount)
@@ -159,10 +162,10 @@ namespace Runefall
 		item.socketCount = 1;
 		item.socketRunes[0] = 0;
 
-		const auto beforeReroll = WalletTotal();
+		const auto beforeReroll = WalletTotalUnits();
 		Rng rng(4242);
 		const auto reroll = RuneForge::Get().Reroll(item, -1, "WEAPON", rng);
-		if (!reroll.ok || WalletTotal() >= beforeReroll)
+		if (!reroll.ok || WalletTotalUnits() >= beforeReroll)
 			return { "RuneForge.SelfTest", CheckStatus::Fail, "reroll did not spend runes" };
 		if (item.enhancementCount != 1 || item.enhancements[0].affixId.empty())
 			return { "RuneForge.SelfTest", CheckStatus::Fail, "reroll did not fill enhancement" };
