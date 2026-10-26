@@ -5,6 +5,7 @@
 #include "FormResolver.h"
 #include "HuntEngine.h"
 #include "ItemRegistry.h"
+#include "FormResolver.h"
 #include "LootEngine.h"
 #include "Progression.h"
 #include "TierEngine.h"
@@ -216,6 +217,45 @@ namespace Runefall
 		return true;
 	}
 
+	namespace
+	{
+		void GrantHuntFirstKill(RE::Actor* a_actor)
+		{
+			auto* actorBase = a_actor ? a_actor->GetActorBase() : nullptr;
+			auto* race = actorBase ? actorBase->GetRace() : nullptr;
+			const char* raceEditorID = race ? race->GetFormEditorID() : nullptr;
+			if (!raceEditorID || !*raceEditorID)
+				return;
+			const auto* family = HuntEngine::Get().FindFamilyForRace(raceEditorID);
+			if (!family || HuntEngine::Get().HasFirstKill(family->group))
+				return;
+			if (!HuntEngine::Get().MarkFirstKill(family->group))
+				return;
+			logger::info("hunt: first kill family '{}' on actor {:08X}", family->group, a_actor->GetFormID());
+			if (family->materialId.empty())
+				return;
+			auto* material = FormResolver::ResolveAs<RE::TESObjectMISC>(family->materialId);
+			if (!material) {
+				// Hunt.esp allocates its MISC block at local 0xB80 in race_groups.csv order.
+				if (auto* dataHandler = RE::TESDataHandler::GetSingleton()) {
+					const auto& families = HuntEngine::Get().Families();
+					for (std::size_t i = 0; i < families.size(); ++i) {
+						if (families[i].group != family->group)
+							continue;
+						material = dataHandler->LookupForm<RE::TESObjectMISC>(static_cast<RE::FormID>(0xB80 + i), "Runefall - Hunt.esp");
+						break;
+					}
+				}
+			}
+			if (material) {
+				a_actor->AddObjectToContainer(material, nullptr, 1, nullptr);
+				logger::info("hunt: granted first-kill material '{}'", family->materialId);
+			} else {
+				logger::warn("hunt: material '{}' unresolved", family->materialId);
+			}
+		}
+	}
+
 	void LootService::OnActorDeath(RE::Actor* a_actor)
 	{
 		// Death events fire while the actor is already dead; only the player is excluded.
@@ -225,6 +265,7 @@ namespace Runefall
 		if (processedActors.contains(formId))
 			return;
 		processedActors.insert(formId);
+		GrantHuntFirstKill(a_actor);
 		if (!SpawnForActor(a_actor))
 			logger::warn("loot: death roll failed for actor {:08X}", formId);
 	}

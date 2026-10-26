@@ -2,6 +2,8 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- Hunt first-kill wired to the death hook: family lookup by race, co-save first-kill flag, and
+  material MISC grant (Draugr Essence verified in-game). Added MISC/Hunt.esp FormID fallbacks.
 - Spec consistency: D-003/D-015 superseded, D-010 closed, D-031 ranges updated, D-038 retitled,
   unique total 59, boss budget 20, MGEF ~201, record totals ~465-495, hunt families 19.
   Plugin README now documents hard requirements/build/safety/diagnostics.

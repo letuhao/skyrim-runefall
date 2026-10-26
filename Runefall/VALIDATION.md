@@ -128,6 +128,16 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## Hunt first-kill + final gates 2026-10-27 04:50-05:00
+
+- Hunt first-kill wired to death hook: race family looked up from race EditorID; first kill marks
+  co-save state and grants the family material MISC. Verified in-game: killed a spawned Draugr,
+  corpse received "Draugr Essence" (FE043B80); log: "hunt: first kill family 'Draugr'".
+- FormResolver gained MISC EditorID scan + Hunt.esp local-FormID fallback (MISC block 0xB80+index).
+- Static gates re-run: 5/5 PASS (evidence static-gates-20261027-045945.md).
+- Artifact DLL 958,464 B SHA-256 FA021126...E02E4; candidate zip 463,370 B SHA-256 97EAD1A9...ECE15.
+- Unique-affix granting on first kill still pending (data-only currently).
+
 ## Spec consistency + docs 2026-10-27 04:45-04:55
 
 - P2 key fixes: D-003/D-015 superseded by D-040; D-010 closed by D-022; D-031 ranges updated

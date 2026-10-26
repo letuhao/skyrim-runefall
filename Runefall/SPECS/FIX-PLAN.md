@@ -22,6 +22,9 @@ Status: **P1 safety fixes applied 2026-10-27** (runtime loot verified in-game). 
   Deeper cross-reference/open-question tables remain nice-to-have.
 - **P5.3/P5.8 PARTIAL:** src/plugin/README.md now documents runtime requirements, build, safety
   and diagnostics; root README documents dependencies. Nexus media plan/credits still pending.
+- **P4.9 PARTIAL (2026-10-27):** death hook now grants the race-family hunt material on first kill
+  (Draugr -> "Draugr Essence" verified in-game via local FormID fallback); unique-affix granting
+  and hunt-category wiring remain.
 - Remaining work: P3.3-P3.7/P3.9-P3.17 data pipeline, P4 feature gaps, P5 release gates.
 
 Audit sources:

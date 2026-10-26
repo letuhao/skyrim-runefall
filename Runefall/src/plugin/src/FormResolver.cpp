@@ -19,6 +19,20 @@ namespace Runefall
 					}
 				}
 			}
+			// Hunt materials are MISC records; light-plugin EditorIDs also miss the global map.
+			if (a_editorID.starts_with("RF_MISC_")) {
+				if (auto* dataHandler = RE::TESDataHandler::GetSingleton()) {
+					for (auto* misc : dataHandler->GetFormArray<RE::TESObjectMISC>()) {
+						if (!misc)
+							continue;
+						const char* editorID = misc->GetFormEditorID();
+						if (editorID && a_editorID == editorID) {
+							logger::info("form-resolver: '{}' resolved via MISC array scan", a_editorID);
+							return misc;
+						}
+					}
+				}
+			}
 			// Fall back to scanning the loaded effect array and matching the runtime EditorID.
 			if (auto* dataHandler = RE::TESDataHandler::GetSingleton()) {
 				const auto effects = dataHandler->GetFormArray<RE::EffectSetting>();

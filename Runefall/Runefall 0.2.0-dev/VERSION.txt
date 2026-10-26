@@ -1,8 +1,8 @@
 Runefall 0.2.0-dev
 created: 2026-10-27
-stage: runtime loot fixed; category FormIDs + validator; candidate rebuilt
+stage: runtime loot + hunt first-kill material; static gates 5/5
 parent: 0.1.18
 target: Skyrim SE/AE 1.6.1170 + SKSE 1.6.1170 + Address Library 1.6.1170 (D-062)
-artifact: Runefall.dll 955904 bytes sha256 9E425F30F514727684CBD2DF944F8D5DC37C1B7C1C22E4523AFCEC960024D68F
-candidate: build/release/Runefall-0.2.0-dev.zip 462,412 bytes sha256 43ADC5482830C6144BE6276B5A87104414C0123050C96D8732A73757267BF378
-runtime: probe item + enchanted death drop PASS; no crash
+artifact: Runefall.dll 958464 bytes sha256 FA021126089D4944E705F5A69EE7FDA8F4BA898433A42D8D0EEAC1628E1E02E4
+candidate: build/release/Runefall-0.2.0-dev.zip 463370 bytes sha256 97EAD1A91ED904EAFC2CBE716E6A1021394B63220118FC9FB5AEDD00611ECE15
+runtime: probe item, enchanted death drop, Draugr first-kill material PASS

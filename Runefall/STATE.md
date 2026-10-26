@@ -75,10 +75,10 @@ Implementation phase I1 (native core) is in progress:
    modular bootstrap. Build PASS (780,288 bytes, hash 7867ABEB...1ECB); deployed to the test env.
 2. DONE (I2 foundation): Runefall.Build generator PASS; 3 ESL plugins (184/40/38 records) +
    18 data CSVs + manifests + ini generated and deployed to J:\SkyrimTest\1.6.1170.
-3. IN-GAME + FIX-PLAN P1-P3.2: runtime loot/probe/death drops pass; category FormID windows and
-   validator enforce L3 §1.1; FOMOD ships SKSE payload; candidate rebuilt and re-tested after
-   renumbering. P2 key spec inconsistencies fixed and plugin README added. Remaining: P3.3-P3.7
-   data pipeline, P4 feature gaps/P5 release gates.
+3. IN-GAME + FIX-PLAN P1/P2/P3.1-3.2/P4.9-partial: runtime loot/probe/death drops pass; FormID
+   category windows and validator enforce L3 §1.1; FOMOD ships SKSE payload. Hunt first-kill now
+   grants race material (Draugr Essence verified on corpse). Remaining: unique affix grants,
+   P3.3-P3.7 data pipeline, P4 features, P5 release gates.
 
 Already proven and kept as evidence: DLL build, plugin load, Papyrus/co-save registration and
 kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\evidence\phase0).
