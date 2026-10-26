@@ -128,6 +128,17 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## I3 item metadata core build (2026-10-26, implement-first)
+
+- New module: ItemRegistry (metadata: registryId, base form, rarity, ilvl, sockets, up to 5
+  enhancements with affix/effect ids, tags). Self-test covers insert/find/id uniqueness/clear.
+- CoSave extended with section 3 (item registry): u32 count + per-entry metadata (strings,
+  floats, sockets, tags). Save pulls ItemRegistry; load rebuilds it; revert clears it; co-save
+  self-test now round-trips one item entry.
+- Artifact: Runefall.dll 797,696 bytes,
+  SHA-256 BDC4822952E31E4F113256D6C2F82EBEB56F26F6AA6614F163B461DC2017E38A.
+- Build PASS; static self-tests compile (probe runs at T1). Generator output unchanged (PASS).
+
 ## I2 content generator build (2026-10-26, implement-first)
 
 - Tool: Runefall\tools\Runefall.Build (C#, net8.0, Mutagen.Bethesda.Skyrim 0.50.2).

@@ -2,6 +2,9 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-26
+- I3 item metadata core: ItemRegistry (rarity/ilvl/sockets/enhancements/tags, self-test) and
+  co-save section 3 (item registry persistence: save pulls registry, load rebuilds, revert clears).
+  DLL build PASS, 797,696 bytes, SHA-256 BDC48229...E38A.
 - Repository initialized: project moved to D:\Works\source\skyrim-moddings\skyrim-runefall
   (GitHub letuhao/skyrim-runefall) under the Runefall/ folder; README and .gitignore updated;
   third-party toolchain and build outputs excluded; initial commit created.

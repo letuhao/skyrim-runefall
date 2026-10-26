@@ -3,6 +3,7 @@
 #include "Config.h"
 #include "DataStore.h"
 #include "FormResolver.h"
+#include "ItemRegistry.h"
 #include "PackManager.h"
 
 #include <format>
@@ -47,6 +48,7 @@ namespace Runefall
 		results.push_back(PackManager::Get().Scan());
 		results.push_back(PackManager::Get().SelfTest());
 		results.push_back(FormResolver::SelfTest());
+		results.push_back(ItemRegistry::SelfTest());
 		results.push_back(CoSave::SelfTest());
 
 		lastPasses = 0;

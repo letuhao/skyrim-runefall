@@ -1,8 +1,8 @@
 Runefall 0.2.0-dev
 created: 2026-10-26
-stage: implement-first (D-063); I1 native core + I2 content generator foundation built; batch test at T1
+stage: implement-first (D-063); I3 item metadata core + co-save item registry built
 parent: 0.1.18
 target: Skyrim SE/AE 1.6.1170 + SKSE 1.6.1170 + Address Library 1.6.1170 (D-062)
-artifact: build/Runefall.dll 780,288 bytes sha256 7867ABEB86EAC4890E1A0C47022A8F3640365E067D14E418B6C757F424FE1ECB
-content: build/dist (3 ESL plugins, 18 CSVs, manifests), deployed to J:\SkyrimTest\1.6.1170
+artifact: Runefall.dll 797,696 bytes sha256 BDC4822952E31E4F113256D6C2F82EBEB56F26F6AA6614F163B461DC2017E38A
+content: Runefall/build/dist (3 ESL plugins, 18 CSVs, manifests)
 runtime: not launched; batch probe at T1

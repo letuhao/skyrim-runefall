@@ -1,5 +1,6 @@
 #pragma once
 #include "Core.h"
+#include "ItemMetadata.h"
 
 namespace Runefall
 {
@@ -11,6 +12,7 @@ namespace Runefall
 		std::array<std::int32_t, 5> runes{};
 		std::unordered_map<std::string, std::uint8_t> huntFirstKill;
 		std::unordered_map<std::string, std::string>  packVersions;
+		std::vector<ItemMetadata>                     items;
 		std::uint32_t                                 configHash = 0;
 	};
 

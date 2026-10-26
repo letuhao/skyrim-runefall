@@ -89,6 +89,7 @@ else()
         src/PackManager.cpp
         src/FormResolver.cpp
         src/CoSave.cpp
+        src/ItemRegistry.cpp
         src/DebugHarness.cpp
         src/PapyrusBridge.cpp
         "${CMAKE_CURRENT_BINARY_DIR}/src/version.rc"

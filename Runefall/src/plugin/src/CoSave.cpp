@@ -1,5 +1,8 @@
 #include "CoSave.h"
 
+#include "ItemRegistry.h"
+
+#include <cstring>
 #include <format>
 
 namespace Runefall
@@ -10,6 +13,7 @@ namespace Runefall
 		constexpr std::uint32_t kSerializationRecord = 'RNF2';
 		constexpr std::uint16_t kSectionProgression = 1;
 		constexpr std::uint16_t kSectionRunes = 2;
+		constexpr std::uint16_t kSectionItems = 3;
 		constexpr std::uint16_t kSectionHunt = 4;
 		constexpr std::uint16_t kSectionPackState = 7;
 		constexpr std::uint16_t kSectionConfigHash = 8;
@@ -35,6 +39,13 @@ namespace Runefall
 		{
 			PutU16(a_out, static_cast<std::uint16_t>(a_value.size()));
 			a_out.insert(a_out.end(), a_value.begin(), a_value.end());
+		}
+
+		void PutFloat(std::vector<std::uint8_t>& a_out, float a_value)
+		{
+			std::uint32_t raw = 0;
+			std::memcpy(&raw, &a_value, sizeof(raw));
+			PutU32(a_out, raw);
 		}
 
 		class Reader
@@ -76,6 +87,15 @@ namespace Runefall
 				if (!U32(raw))
 					return false;
 				a_value = static_cast<std::int32_t>(raw);
+				return true;
+			}
+
+			bool Float(float& a_value)
+			{
+				std::uint32_t raw = 0;
+				if (!U32(raw))
+					return false;
+				std::memcpy(&a_value, &raw, sizeof(raw));
 				return true;
 			}
 
@@ -153,6 +173,31 @@ namespace Runefall
 			PutI32(runes, value);
 		sections.push_back(BuildSection(kSectionRunes, runes));
 
+		std::vector<std::uint8_t> items;
+		PutU32(items, static_cast<std::uint32_t>(a_state.items.size()));
+		for (const auto& item : a_state.items) {
+			PutU32(items, item.registryId);
+			PutU32(items, item.baseFormId);
+			items.push_back(item.rarity);
+			PutU16(items, item.ilvl);
+			items.push_back(item.socketCount);
+			for (const auto rune : item.socketRunes)
+				PutI32(items, rune);
+			items.push_back(item.enhancementCount);
+			for (std::uint8_t e = 0; e < 5; ++e) {
+				const auto& enhancement = item.enhancements[e];
+				PutString(items, enhancement.affixId);
+				PutString(items, enhancement.effectEditorId);
+				PutI32(items, enhancement.category);
+				PutI32(items, enhancement.tier);
+				PutFloat(items, enhancement.magnitude);
+				PutI32(items, enhancement.duration);
+				PutI32(items, enhancement.area);
+			}
+			PutU16(items, item.tags);
+		}
+		sections.push_back(BuildSection(kSectionItems, items));
+
 		std::vector<std::uint8_t> hunt;
 		PutU32(hunt, static_cast<std::uint32_t>(a_state.huntFirstKill.size()));
 		for (const auto& [id, flag] : a_state.huntFirstKill) {
@@ -229,6 +274,34 @@ namespace Runefall
 					if (!sectionReader.I32(value))
 						return false;
 				break;
+			case kSectionItems: {
+				std::uint32_t count = 0;
+				if (!sectionReader.U32(count) || count > 100000)
+					return false;
+				a_out.items.resize(count);
+				for (auto& item : a_out.items) {
+					if (!sectionReader.U32(item.registryId) || !sectionReader.U32(item.baseFormId))
+						return false;
+					if (!sectionReader.U8(item.rarity) || !sectionReader.U16(item.ilvl) || !sectionReader.U8(item.socketCount))
+						return false;
+					for (auto& rune : item.socketRunes)
+						if (!sectionReader.I32(rune))
+							return false;
+					if (!sectionReader.U8(item.enhancementCount) || item.enhancementCount > 5)
+						return false;
+					for (auto& enhancement : item.enhancements) {
+						if (!sectionReader.String(enhancement.affixId) || !sectionReader.String(enhancement.effectEditorId))
+							return false;
+						if (!sectionReader.I32(enhancement.category) || !sectionReader.I32(enhancement.tier) || !sectionReader.Float(enhancement.magnitude))
+							return false;
+						if (!sectionReader.I32(enhancement.duration) || !sectionReader.I32(enhancement.area))
+							return false;
+					}
+					if (!sectionReader.U16(item.tags))
+						return false;
+				}
+				break;
+			}
 			case kSectionHunt: {
 				std::uint32_t count = 0;
 				if (!sectionReader.U32(count) || count > 10000)
@@ -271,6 +344,7 @@ namespace Runefall
 		if (!a_intfc)
 			return;
 		auto& state = CoSave::Get().State();
+		state.items = ItemRegistry::Get().All();
 		state.configHash = HashConfig();
 		const auto bytes = Encode(state);
 		if (!a_intfc->OpenRecord(kSerializationRecord, kSaveVersion)) {
@@ -304,16 +378,19 @@ namespace Runefall
 				logger::error("co-save: schema {} newer than supported {}", version, kSaveVersion);
 				continue;
 			}
-			if (Decode(payload, CoSave::Get().State()))
-				logger::info("co-save: loaded schema {} ({} bytes)", version, payload.size());
-			else
+			if (Decode(payload, CoSave::Get().State())) {
+				ItemRegistry::Get().Load(CoSave::Get().State().items);
+				logger::info("co-save: loaded schema {} ({} bytes, {} item entries)", version, payload.size(), CoSave::Get().State().items.size());
+			} else {
 				logger::error("co-save: malformed section payload, state reset");
+			}
 		}
 	}
 
 	void CoSave::OnRevert(SKSE::SerializationInterface*)
 	{
 		CoSave::Get().Reset();
+		ItemRegistry::Get().Clear();
 		logger::info("co-save: reverted");
 	}
 
@@ -343,6 +420,17 @@ namespace Runefall
 		sample.huntFirstKill["Draugr"] = 1;
 		sample.huntFirstKill["Dragon"] = 0;
 		sample.packVersions["unique"] = "0.2.0";
+		ItemMetadata item;
+		item.registryId = 3;
+		item.baseFormId = 0x12EB7;
+		item.rarity = 2;
+		item.ilvl = 17;
+		item.socketCount = 1;
+		item.socketRunes[0] = 2;
+		item.enhancementCount = 1;
+		item.enhancements[0] = { "rf_affix_003", "RF_MGEF_Affix_003", 2, 1, 3.5f, 0, 4 };
+		item.tags = static_cast<std::uint16_t>(ItemTag::ContainerLoot);
+		sample.items.push_back(item);
 		sample.configHash = HashConfig();
 
 		const auto encoded = Encode(sample);
@@ -352,7 +440,9 @@ namespace Runefall
 		if (decoded.attributes != sample.attributes || decoded.attributePoints != sample.attributePoints ||
 			decoded.skillPoints != sample.skillPoints || decoded.runes != sample.runes ||
 			decoded.huntFirstKill != sample.huntFirstKill || decoded.packVersions != sample.packVersions ||
-			decoded.configHash != sample.configHash)
+			decoded.configHash != sample.configHash || decoded.items.size() != 1 ||
+			decoded.items[0].registryId != item.registryId || decoded.items[0].enhancements[0].affixId != item.enhancements[0].affixId ||
+			decoded.items[0].enhancements[0].magnitude != item.enhancements[0].magnitude || decoded.items[0].tags != item.tags)
 			return { "CoSave.SelfTest", CheckStatus::Fail, "round-trip data mismatch" };
 
 		// Truncated input must be rejected, not crash.
