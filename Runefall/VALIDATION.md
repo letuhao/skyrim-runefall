@@ -669,3 +669,11 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
   Runefall edits no vanilla records/leveled lists, but that is design evidence, not a pass.
 - Known limitation: synthetic F10/F11/F12 input is not delivered when the batch harness launches
   the game; hotkeys were manually verified separately.
+
+## Release archive verification 2026-10-27 05:44
+
+- Added `tools/verify-release.ps1`; run against the current candidate.
+- Result: PASS, 21/21 checks:
+  required FOMOD/data/DLL/Papyrus members, no top-level wrapper, no Data/Data nesting, no duplicates,
+  FOMOD XML parses, info version 0.2.0-dev, Data\SKSE reference present, DLL non-empty, ESP is TES4.
+- Evidence: `build/evidence/release-verify-20261027-054406.md`.
