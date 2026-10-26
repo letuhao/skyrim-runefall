@@ -30,6 +30,9 @@ namespace Runefall
 		bool RespecAttributes(std::int32_t a_runeCost);
 		bool RespecSkills(std::int32_t a_runeCost);
 
+		// 0 = attuned, 1 = insufficient runes, 2 = already max tier.
+		[[nodiscard]] std::int32_t TryAttune();
+
 		void SetRuneTier(std::int32_t a_tier) noexcept { runeTier = std::clamp(a_tier, 0, 5); }
 
 		[[nodiscard]] static std::int32_t SoftCappedAttribute(std::int32_t a_raw);

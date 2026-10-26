@@ -59,6 +59,11 @@ namespace Runefall
 		}
 	}
 
+	bool RuneForge::SpendUnits(std::int32_t a_costUnits)
+	{
+		return SpendRunes(a_costUnits);
+	}
+
 	RuneForge& RuneForge::Get()
 	{
 		static RuneForge singleton;

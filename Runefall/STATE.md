@@ -75,11 +75,11 @@ Implementation phase I1 (native core) is in progress:
    modular bootstrap. Build PASS (780,288 bytes, hash 7867ABEB...1ECB); deployed to the test env.
 2. DONE (I2 foundation): Runefall.Build generator PASS; 3 ESL plugins (184/40/38 records) +
    18 data CSVs + manifests + ini generated and deployed to J:\SkyrimTest\1.6.1170.
-3. IN-GAME + FIX-PLAN P1/P2/P3.1-3.2/P3.13-partial/P4.9/P4.13/P4.14: runtime loot/probe/
-   death drops pass; category FormIDs+validator; FOMOD SKSE payload; hunt first kill grants
-   material + unique item; soft cap/rune units fixed; self-tests 18/18. Batch harness core checks
-   pass (synthetic hotkeys still not delivered) and quest Papyrus scripts compile. Remaining:
-   P3.3-P3.7 pipeline, P4.2/P4.10/P4.12, P5 release gates.
+3. IN-GAME + FIX-PLAN P1/P2/P3.1-3.2/P3.13-partial/P4.9/P4.10-partial/P4.13/P4.14: runtime
+   loot/probe/death drops pass; category FormIDs+validator; FOMOD SKSE payload; hunt first kill
+   grants material + unique item; soft cap/rune units fixed; self-tests 18/18; quest Papyrus
+   scripts and native attunement bridge compile. Batch core harness passes (synthetic hotkeys
+   still not delivered). Remaining: boss-kill attunement gate, P3.3-P3.7 pipeline, P4.2/P4.12, P5.
 
 Already proven and kept as evidence: DLL build, plugin load, Papyrus/co-save registration and
 kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\evidence\phase0).

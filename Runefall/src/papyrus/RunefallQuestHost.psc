@@ -18,3 +18,7 @@ EndFunction
 string Function GetSnapshot() Global
     return RunefallNative.GetMenuSnapshot()
 EndFunction
+
+int Function TryAttune() Global
+    return RunefallNative.AttuneRuneTier()
+EndFunction

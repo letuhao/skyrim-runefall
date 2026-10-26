@@ -1,5 +1,7 @@
 #include "Progression.h"
 
+#include "RuneForge.h"
+
 #include "CoSave.h"
 
 namespace Runefall
@@ -125,6 +127,18 @@ namespace Runefall
 		if (a_raw <= 60)
 			return 30 + ((a_raw - 30) / 2);
 		return 60;
+	}
+
+	std::int32_t Progression::TryAttune()
+	{
+		if (runeTier >= 5)
+			return 2;
+		const auto cost = 25 * (runeTier + 1);
+		if (!RuneForge::SpendUnits(cost))
+			return 1;
+		++runeTier;
+		logger::info("progression: attuned to rune tier {} (cost {} units)", runeTier, cost);
+		return 0;
 	}
 
 	SelfTestResult Progression::SelfTest()

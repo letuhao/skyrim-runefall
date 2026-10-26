@@ -106,6 +106,18 @@ namespace Runefall
 			return 0;
 		}
 
+		std::int32_t AttuneRuneTier(RE::StaticFunctionTag*)
+		{
+			auto* tasks = SKSE::GetTaskInterface();
+			if (!tasks)
+				return 1;
+			tasks->AddTask([]() {
+				const auto result = Progression::Get().TryAttune();
+				logger::info("papyrus: AttuneRuneTier result={}", result);
+			});
+			return 0;
+		}
+
 		std::string GetMenuSnapshot(RE::StaticFunctionTag*)
 		{
 			return MenuApi::BuildSnapshotJson();
@@ -132,6 +144,7 @@ namespace Runefall
 		a_vm->RegisterFunction("SpendAttributePoint", "RunefallNative", SpendAttributePoint);
 		a_vm->RegisterFunction("SpendSkillPoint", "RunefallNative", SpendSkillPoint);
 		a_vm->RegisterFunction("GetMenuSnapshot", "RunefallNative", GetMenuSnapshot);
+		a_vm->RegisterFunction("AttuneRuneTier", "RunefallNative", AttuneRuneTier);
 		// RegisterFunction returns void in this CommonLibSSE-NG version; failures surface via the VM log.
 		logger::info("Papyrus bridge: functions registered (api {})", kApiVersion);
 		return true;

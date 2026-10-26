@@ -16,3 +16,4 @@ int Function GetHuntFirstKill(string a_group) Global Native
 int Function SpendAttributePoint(string a_attribute) Global Native
 int Function SpendSkillPoint(string a_skill) Global Native
 string Function GetMenuSnapshot() Global Native
+int Function AttuneRuneTier() Global Native

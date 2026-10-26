@@ -28,5 +28,8 @@ namespace Runefall
 		[[nodiscard]] static std::pair<std::int32_t, std::int32_t> SalvageYield(const ItemMetadata& a_item);
 
 		[[nodiscard]] static SelfTestResult SelfTest();
+
+		// Spends rune units from the highest rank down (R1=1, R2=5, R3=25, R4=125, R5=625).
+		[[nodiscard]] static bool SpendUnits(std::int32_t a_costUnits);
 	};
 }

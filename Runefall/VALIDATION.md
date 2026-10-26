@@ -128,6 +128,15 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## Attunement native path 2026-10-27 05:35-05:40
+
+- Added `Progression::TryAttune` (tier 0-5, cost 25*(tier+1) rune units via
+  `RuneForge::SpendUnits`) and `PapyrusBridge::AttuneRuneTier` (queued main-thread task).
+- Papyrus: `RunefallNative.AttuneRuneTier` and `RunefallQuestHost.TryAttune` added.
+- Static gates: 5/5 PASS (evidence static-gates-20261027-053639.md). Runtime Papyrus invocation
+  and the spec's boss-kill gate are not yet tested/implemented.
+- Artifact DLL 966144 B SHA-256 413D8A54F6D7716A68557DA15195B10FBBFEE00FC7B32CDEDA1F273E35606854; candidate zip 467958 B SHA-256 752A3672714FF91135047AEECAF9C470BA08A8464725FAD6A49BB58F63D67684.
+
 ## Papyrus quest scripts 2026-10-27 05:30-05:35
 
 - Added `RunefallQuestHost.psc` and `RunefallMenuBridge.psc`; attached them to the generated
