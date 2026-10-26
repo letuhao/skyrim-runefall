@@ -128,6 +128,22 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## Runtime loot crash + gate 2026-10-27 03:39-03:52
+
+- Probe item generation now retries until an enchanted item exists, and ESL affix MGEFs resolve
+  through a local-FormID fallback (Runefall.esp local IDs 0x848+n) because the global EditorID map
+  does not reliably contain light-plugin MGEFs.
+- **Crash reproduced:** at 03:39:18 the probe item was injected into the player inventory and the
+  game crashed immediately (VCRUNTIME140/SkyrimSE heap access violation; stack has no plugin
+  frame). The runtime EnchantmentItem + ExtraDataList + AddObjectToContainer path is not safe.
+- **Fix:** added bEnableRuntimeLoot (default 0) in runefall.ini; SpawnForActor and InjectProbeItem
+  fail closed with a log while disabled. Runtime form creation remains gated by gameplay-ready.
+- Verified after the gate: full load order with SkyUI/EngineFixes/SkyrimSoulsRE/SkyLink MCP,
+  CleanSave loaded, 18/18 self-tests, CoSave save+load (128 B schema 1), no crash.
+- Menu pages (F1), Papyrus native calls, input hotkeys and loot/death drops remain untested or
+  disabled; matrix in _context/mcp-probes/2026-10-27-runefall-matrix.md.
+- Artifact: Runefall.dll 949,760 B, SHA-256 74E47FA6459A9F6342709F1F10E2CFF4241505E04214F8B21660F83171102B3B.
+
 ## In-game MCP session 2026-10-27 03:12-03:17
 
 - Clean save loaded in the running test game through SkyLink AI MCP: newest save is character

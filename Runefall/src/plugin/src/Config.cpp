@@ -17,6 +17,8 @@ namespace Runefall
 				debugTrace = a_value == "1" || a_value == "true";
 			else if (a_key == "iGameplayDelaySeconds")
 				gameplayDelaySeconds = std::atoi(std::string{ a_value }.c_str());
+			else if (a_key == "bEnableRuntimeLoot")
+				enableRuntimeLoot = a_value == "1" || a_value == "true";
 			else if (a_key == "iLootAuthority")
 				lootAuthority = std::atoi(std::string{ a_value }.c_str());
 			else if (a_key == "bEnableMenu")

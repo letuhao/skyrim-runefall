@@ -75,10 +75,11 @@ Implementation phase I1 (native core) is in progress:
    modular bootstrap. Build PASS (780,288 bytes, hash 7867ABEB...1ECB); deployed to the test env.
 2. DONE (I2 foundation): Runefall.Build generator PASS; 3 ESL plugins (184/40/38 records) +
    18 data CSVs + manifests + ini generated and deployed to J:\SkyrimTest\1.6.1170.
-3. IN-GAME MCP TESTING ACTIVE: clean save CleanSave loads via SkyLink MCP (exterior Riverwood).
-   Runefall activation/probe path runs in-game; found and fixed zero-enhancement probe roll.
-   A post-MCP heap crash (SkyrimSE+0CD045C, no plugin frame) needs MCP/SkyLink vs Runefall
-   isolation. Skills are workspace-local; MCP control skill + clean-save manifest stored.
+3. IN-GAME MCP TESTING ACTIVE: CleanSave loads via SkyLink MCP (exterior Riverwood); 18/18
+   self-tests and CoSave save/load pass. Runtime loot/probe/death-drop path crashes at
+   AddObjectToContainer and is disabled by default (bEnableRuntimeLoot=0); runtime form creation
+   gated. Full load order with SkyUI/EngineFixes/SkyrimSoulsRE is stable. Menu/Papyrus/input
+   still untested. MCP skill and clean-save manifest stored in workspace.
 
 Already proven and kept as evidence: DLL build, plugin load, Papyrus/co-save registration and
 kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\evidence\phase0).

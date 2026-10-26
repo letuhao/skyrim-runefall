@@ -1,7 +1,7 @@
 Runefall 0.2.0-dev
 created: 2026-10-27
-stage: MCP in-game testing; clean save loaded; probe-generation fix
+stage: in-game MCP testing; runtime loot disabled after crash
 parent: 0.1.18
 target: Skyrim SE/AE 1.6.1170 + SKSE 1.6.1170 + Address Library 1.6.1170 (D-062)
-artifact: Runefall.dll 946176 bytes sha256 085DFB50A4AC3D7D92560FBA2632B9AB200E4FB5192C4F2AA0B9162B9CCEE6C0
-runtime: CleanSave loaded via MCP; activation fired; post-MCP crash under isolation
+artifact: Runefall.dll 949,760 bytes sha256 74E47FA6459A9F6342709F1F10E2CFF4241505E04214F8B21660F83171102B3B
+runtime: CleanSave load + CoSave + 18/18 probes stable; runtime loot gated off

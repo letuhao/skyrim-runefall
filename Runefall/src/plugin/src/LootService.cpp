@@ -8,6 +8,7 @@
 #include "LootEngine.h"
 #include "Progression.h"
 #include "TierEngine.h"
+#include "Config.h"
 
 #include <format>
 
@@ -125,6 +126,10 @@ namespace Runefall
 
 	bool LootService::SpawnForActor(RE::Actor* a_actor)
 	{
+		if (!Config::Get().EnableRuntimeLoot()) {
+			logger::info("loot: runtime loot disabled (bEnableRuntimeLoot=0)");
+			return false;
+		}
 		if (!a_actor || LootEngine::Get().HasData() == false)
 			return false;
 		if (!DynamicEnchantment::GameplayReady()) {
@@ -189,6 +194,10 @@ namespace Runefall
 
 	bool LootService::InjectProbeItem()
 	{
+		if (!Config::Get().EnableRuntimeLoot()) {
+			logger::warn("loot: probe item injection disabled (bEnableRuntimeLoot=0)");
+			return false;
+		}
 		if (!DynamicEnchantment::GameplayReady())
 			return false;
 		auto* player = RE::PlayerCharacter::GetSingleton();
