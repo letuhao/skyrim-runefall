@@ -79,13 +79,22 @@ internal static class PluginFactory
         foreach (var skill in content.SkillNames)
             mod.Globals.Add(new GlobalInt(mod) { EditorID = "RF_GLOB_Skill_" + ContentFactory.SlugPascal(skill), Data = 0 });
 
+        var miscByEditor = new Dictionary<string, FormKey>(StringComparer.Ordinal);
         for (int rank = 1; rank <= 5; rank++)
-            AddMisc(mod, keys, "RF_MISC_Rune_" + rank, "Runefall Rune R" + rank, (uint)(10 * rank), 0.1f);
+        {
+            var editor = "RF_MISC_Rune_" + rank;
+            miscByEditor[editor] = AddMisc(mod, keys, editor, "Runefall Rune R" + rank, (uint)(10 * rank), 0.1f);
+        }
 
         var tierNames = new[] { "Common", "Refined", "Exotic", "Mythic" };
         foreach (var tier in tierNames)
             foreach (var family in new[] { "Ore", "Essence", "Hide" })
-                AddMisc(mod, keys, "RF_MISC_Mat_" + tier + "_" + family, tier + " " + family, 5u, 0.2f);
+            {
+                var editor = "RF_MISC_Mat_" + tier + "_" + family;
+                miscByEditor[editor] = AddMisc(mod, keys, editor, tier + " " + family, 5u, 0.2f);
+            }
+
+        AddRecipes(mod, miscByEditor);
 
         foreach (var editor in content.BaseMgefEditors)
             AddEffect(mod, keys, editor);
@@ -158,15 +167,58 @@ internal static class PluginFactory
         mod.MagicEffects.Add(effect);
     }
 
-    private static void AddMisc(SkyrimMod mod, FormKeyAllocator keys, string editor, string name, uint value, float weight)
+    private static FormKey AddMisc(SkyrimMod mod, FormKeyAllocator keys, string editor, string name, uint value, float weight)
     {
-        mod.MiscItems.Add(new MiscItem(mod)
+        var item = new MiscItem(mod)
         {
             EditorID = editor,
             Name = name,
             Value = value,
             Weight = weight
-        });
+        };
+        mod.MiscItems.Add(item);
+        return item.FormKey;
+    }
+
+    private static void AddRecipes(SkyrimMod mod, Dictionary<string, FormKey> miscByEditor)
+    {
+        void AddCobj(string editor, FormKey output, IEnumerable<(string Editor, int Count)> inputs)
+        {
+            var cobj = new ConstructibleObject(mod)
+            {
+                EditorID = editor,
+                CreatedObject = new FormLinkNullable<IConstructibleGetter>(output),
+                CreatedObjectCount = 1,
+                Items = new Noggog.ExtendedList<ContainerEntry>()
+            };
+            foreach (var (inputEditor, count) in inputs)
+            {
+                if (!miscByEditor.TryGetValue(inputEditor, out var inputKey))
+                    throw new InvalidOperationException("missing COBJ input " + inputEditor);
+                cobj.Items!.Add(new ContainerEntry
+                {
+                    Item = new ContainerItem
+                    {
+                        Item = new FormLink<IItemGetter>(inputKey),
+                        Count = count
+                    }
+                });
+            }
+            mod.ConstructibleObjects.Add(cobj);
+        }
+
+        for (var rank = 1; rank <= 4; ++rank)
+            AddCobj("RF_COBJ_RuneConvert_" + rank, miscByEditor["RF_MISC_Rune_" + (rank + 1)],
+                new[] { ("RF_MISC_Rune_" + rank, 5), ("RF_MISC_Mat_Refined_Ore", 3) });
+
+        AddCobj("RF_COBJ_Socket_1", miscByEditor["RF_MISC_Rune_2"],
+            new[] { ("RF_MISC_Mat_Refined_Essence", 2), ("RF_MISC_Rune_1", 1) });
+        AddCobj("RF_COBJ_Socket_2", miscByEditor["RF_MISC_Rune_3"],
+            new[] { ("RF_MISC_Mat_Exotic_Essence", 2), ("RF_MISC_Rune_2", 1) });
+        AddCobj("RF_COBJ_Utility_Salvage", miscByEditor["RF_MISC_Mat_Common_Ore"],
+            new[] { ("RF_MISC_Mat_Refined_Ore", 2) });
+        AddCobj("RF_COBJ_Utility_Respec", miscByEditor["RF_MISC_Mat_Mythic_Essence"],
+            new[] { ("RF_MISC_Mat_Exotic_Essence", 2), ("RF_MISC_Rune_4", 1) });
     }
 
     private static void Write(SkyrimMod mod, string path, List<PluginOutput> outputs)

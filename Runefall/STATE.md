@@ -75,12 +75,11 @@ Implementation phase I1 (native core) is in progress:
    modular bootstrap. Build PASS (780,288 bytes, hash 7867ABEB...1ECB); deployed to the test env.
 2. DONE (I2 foundation): Runefall.Build generator PASS; 3 ESL plugins (184/40/38 records) +
    18 data CSVs + manifests + ini generated and deployed to J:\SkyrimTest\1.6.1170.
-3. T1 IN PROGRESS: two real runs captured and fixed light-plugin scanning, manifest mapping,
-   lazy-form resolution and probe assertions. Latest static gates 5/5 PASS; candidate
-   Runefall-0.2.0-dev.zip 448,398 B SHA-256 E312BC68...2C28; DLL 923,648 B A433CFB6...4652.
-   T1 run 3 was refused because the user's E: Skyrim 1.7.104 was running. NEXT: close all
-   Skyrim processes, rerun run-t1.ps1 (new game) and exercise probe item/death drop; COBJ/NPC
-   records still pending.
+3. T1 IN PROGRESS: light-plugin scan, manifest mapping and lazy-form fixes captured; COBJ
+   content complete (base plugin 254 records); static gates 5/5 PASS; candidate 448,604 B
+   SHA-256 E6230112...D6EC. T1 runs blocked while the user's E: Skyrim 1.7.104 runs. NEXT:
+   close all Skyrim processes, rerun run-t1.ps1 with a new game; only NPC/CLAS boss templates
+   remain unimplemented.
 
 Already proven and kept as evidence: DLL build, plugin load, Papyrus/co-save registration and
 kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\evidence\phase0).

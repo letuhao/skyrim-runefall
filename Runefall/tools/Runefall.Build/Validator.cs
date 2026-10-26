@@ -94,8 +94,9 @@ internal static class Validator
             Expect(baseOut.Mod.Perks.Count == 27, "base plugin has 27 skill perks", lines, ref failed);
             Expect(baseOut.Mod.Quests.Count == 3, "base plugin has 3 quest hosts", lines, ref failed);
             Expect(baseOut.Mod.FormLists.Count == 5, "base plugin has 5 form lists", lines, ref failed);
+            Expect(baseOut.Mod.ConstructibleObjects.Count == 8, "base plugin has 8 constructible objects", lines, ref failed);
         }
-        lines.Add("WARN COBJ/NPC records are not generated yet (next content phase)");
+        lines.Add("WARN NPC/CLAS boss templates are not generated yet (next content phase)");
 
         lines.Add(failed ? "RESULT: FAIL" : "RESULT: PASS");
         return string.Join(Environment.NewLine, lines);

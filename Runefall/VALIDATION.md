@@ -143,9 +143,12 @@ Three launch attempts were made with the safe runner. Key findings and fixes:
    base items by vanilla FormID (IronSword 0x12EB7 etc.) with EditorID fallback, make
    LootService a WARN when a lazy form is not loaded yet, and remove lazy-form assertions from
    the kDataLoaded FormResolver self-test.
-4. Latest static gates 5/5 PASS: DLL 923,648 bytes, SHA-256 A433CFB675C07482792F8CB95F62117981F073DF29729906F66DE76541AD4652; candidate
-   Runefall-0.2.0-dev.zip 448,398 bytes, SHA-256 E312BC686D8F8246E8D54367D24391D7B8A0CBD31073C33A92E8C1883E1B2C28.
-5. Run 3 blocked before launch: user's Steam Skyrim (E: 1.7.104) was running; runner refused.
+4. Content completion: 8 COBJ recipes added after fixing ConstructibleObject.Items
+   initialization (base plugin 254 records; validator checks 27 SPEL + 27 PERK + 3 QUST +
+   5 FLST + 8 COBJ). Remaining content gap: NPC/CLAS boss templates.
+5. Latest static gates 5/5 PASS: DLL 923,648 bytes, SHA-256 A433CFB6...4652; candidate
+   Runefall-0.2.0-dev.zip 448,604 bytes, SHA-256 E62301129A092463B77AC1241A720D1E727EDD96DE6D9D7AA85A4669104FD6EC.
+6. Run 3 blocked before launch: user's Steam Skyrim (E: 1.7.104) was running; runner refused.
    Next T1 attempt must run after that process closes and should start a new game so the
    gameplay probes (form resolution, probe item, death drop) execute.
 
