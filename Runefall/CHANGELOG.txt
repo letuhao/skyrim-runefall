@@ -2,6 +2,9 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- Spec consistency: D-003/D-015 superseded, D-010 closed, D-031 ranges updated, D-038 retitled,
+  unique total 59, boss budget 20, MGEF ~201, record totals ~465-495, hunt families 19.
+  Plugin README now documents hard requirements/build/safety/diagnostics.
 - FormID category windows implemented (L3 §1.1) with validator enforcement; ESL affix fallback
   updated to 0x900; runtime probe re-verified after renumbering. FOMOD/manifest versions aligned
   to 0.2.0-dev; release archive includes Data/SKSE plugin.

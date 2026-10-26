@@ -16,7 +16,13 @@ Status: **P1 safety fixes applied 2026-10-27** (runtime loot verified in-game). 
 - **P3.2 FIXED:** validator now enforces each category range and fails on violations; generator RUNEFALL PASS.
 - **P3.8 FIXED:** release archive now contains Data/SKSE/Plugins/Runefall.dll (verified in zip).
 - **P5.1 PARTIAL:** FOMOD info.xml and pack manifests now use 0.2.0-dev; CMake/DLL metadata still 0.2.0 until promotion.
-- Remaining work starts at P2 (spec consistency), P3.3-P3.7, and P4/P5.
+- **P2 FIXED (key items):** D-003/D-015 marked superseded by D-040; D-010 closed by D-022;
+  D-031 ranges updated to L3 §1.1; D-038 retitled 120 affixes/600 rows; unique totals standardized
+  to 59; boss budget 20; MGEF ~201; records reconciled to ~465-495; hunt families 19 in L3E.
+  Deeper cross-reference/open-question tables remain nice-to-have.
+- **P5.3/P5.8 PARTIAL:** src/plugin/README.md now documents runtime requirements, build, safety
+  and diagnostics; root README documents dependencies. Nexus media plan/credits still pending.
+- Remaining work: P3.3-P3.7/P3.9-P3.17 data pipeline, P4 feature gaps, P5 release gates.
 
 Audit sources:
 - Spec consistency audit (15 findings)

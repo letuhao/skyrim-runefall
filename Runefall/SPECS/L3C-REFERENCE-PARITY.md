@@ -18,7 +18,7 @@ per dimension - and derive any adjustment instead of guessing.
 | MGEF | ~170 | runtime effects inside DLL | 341 | 13 |
 | Attributes / skills | 9 attributes, 18 skills x 3 ranks | none | 7 attributes (28 AV slots) | none |
 | Enemy ranks | 5 ranks, 10 monster affix types, ~20 effects | none | none | 4-tier content, 108 boss NPC variants |
-| Hand-authored NPC records | 12-16 boss templates | 0 | 3 dummy NPCs | 108 |
+| Hand-authored NPC records | 20 boss templates | 0 | 3 dummy NPCs | 108 |
 | Data volume | ~90-110 KB | 27 KB + 30 KB = 57 KB | ~24 KB strings/translation | 27.5 KB configs |
 | Assets | 28 files, 0.5-3 MB | 0 | 241 files, 28 MB | 2 BSAs, 42.8 MB |
 | Scripts | 5-10 Papyrus | 0 | 46 | 0 |
@@ -69,7 +69,7 @@ N = 120 affixes gives:
     R5 loadouts = 23 x 24 x 24 x 24 x 23 = 7,312,896
     names = 120 x 120 = 14,400
     MGEF = 120 + 27 + 20 + 15 = 182
-    records = ~435-465
+    records = ~465-495
     affix CSV = ~72 KB
     build parity = 40/40/40
 
@@ -107,7 +107,7 @@ the only metric where the combined reference table is larger.
 | G6 localization | ~254-300 keys | closed |
 | G7 recipes | 20-25 | closed |
 | G8 drop tables | 6 container tiers / 5 quest bands / 5-6 boss tables | closed |
-| G9 unique boss/quest affixes | new content class; mined: 31 boss + 48 quest candidates -> U = 20 boss + 20 quest = 40 unique affixes (L3D) | closed |
+| G9 unique boss/quest affixes | new content class; mined: 31 boss + 48 quest candidates -> U = 20 boss + 20 quest + 19 hunt = 59 unique affixes (L3D) | closed |
 | G10 multi-ESL packaging | base + independent ESL packs with manifests | closed |
 | G11 general drop table | drops_general.csv: 6 ranks x 6 RF tiers = 36 rows, data-only | closed |
 | G12 race hunt tables | 19 qualifying families x (1 unique affix + 1 material); Hunt pack | closed |

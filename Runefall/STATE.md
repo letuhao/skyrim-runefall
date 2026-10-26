@@ -75,10 +75,10 @@ Implementation phase I1 (native core) is in progress:
    modular bootstrap. Build PASS (780,288 bytes, hash 7867ABEB...1ECB); deployed to the test env.
 2. DONE (I2 foundation): Runefall.Build generator PASS; 3 ESL plugins (184/40/38 records) +
    18 data CSVs + manifests + ini generated and deployed to J:\SkyrimTest\1.6.1170.
-3. IN-GAME TESTING ACTIVE: CleanSave+MCP, 18/18 self-tests, CoSave save/load, F1 menu and
-   hotkeys pass. Runtime loot fixed (EnchantObject) and enabled; probe item and enchanted death
-   drop verified. FormID category windows + validator (P3.1/P3.2) and SKSE-in-FOMOD (P3.8) done;
-   candidate archive rebuilt. Next: P2 spec consistency, P3.3-P3.7/P4 features, menu page check.
+3. IN-GAME + FIX-PLAN P1-P3.2: runtime loot/probe/death drops pass; category FormID windows and
+   validator enforce L3 §1.1; FOMOD ships SKSE payload; candidate rebuilt and re-tested after
+   renumbering. P2 key spec inconsistencies fixed and plugin README added. Remaining: P3.3-P3.7
+   data pipeline, P4 feature gaps/P5 release gates.
 
 Already proven and kept as evidence: DLL build, plugin load, Papyrus/co-save registration and
 kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\evidence\phase0).

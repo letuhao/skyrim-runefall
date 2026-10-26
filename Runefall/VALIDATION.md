@@ -128,6 +128,17 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## Spec consistency + docs 2026-10-27 04:45-04:55
+
+- P2 key fixes: D-003/D-015 superseded by D-040; D-010 closed by D-022; D-031 ranges updated
+  (KYWD 0x800, GLOB 0x880, MGEF 0x900, SPEL 0xA00, PERK 0xB00, MISC 0xB80, COBJ 0xC00,
+  QUST/FLST 0xC80, NPC 0xD00); D-038 retitled 120 affixes/600 rows; unique total standardized to
+  59 (20 boss + 20 quest + 19 hunt); boss budget 20; MGEF ~201; record totals ~465-495; L3E hunt
+  families 19.
+- P5.3/P5.8 partial: src/plugin/README.md rewritten with hard requirements, build, safety and
+  diagnostics; root README already documents dependencies.
+- No code artifact change from these doc edits; candidate from the previous gate run remains valid.
+
 ## FormID category windows + validator 2026-10-27 04:40-04:45
 
 - FormKeyAllocator now moves Mutagen's NextFormID to the L3 §1.1 category floors; generator

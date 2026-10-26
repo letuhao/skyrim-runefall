@@ -13,7 +13,7 @@ One DLL built from the active **alandtse fork v14.0.1** (commit 723cfda480ae, 20
 library, MIT-compatible linking. Multi-runtime capability remains, but the supported/tested v1
 target is 1.6.1170 with its SKSE 1.6.1170 and Address Library 1.6.1170 bins (D-062).
 
-## D-003 One ESL content plugin, new forms only (accepted)
+## D-003 One ESL content plugin, new forms only (accepted; **superseded by D-040 multi-ESL**)
 The rune currency, materials, keywords, affixes, recipes and effect records ship in
 Runefall.esp (ESL-flagged). No vanilla records, leveled lists, containers or cells edited.
 
@@ -41,7 +41,7 @@ Avoids double-loot and economy conflicts with OWL and similar mods in the target
 Release and test target: 1.6.1170 (Mantras of Mara MO2). 1.7.104 deferred/unsupported for v1.
 1.5.97 out of scope for v1.
 
-## D-010 UI framework (pending)
+## D-010 UI framework (closed: SKSE Menu Framework, D-022)
 Options: SKSE Menu Framework (installed in target list, C++ ImGui pages), Prisma UI
 (installed in target list, web UI), or MCM Helper only (fallback). Decide in M1.
 
@@ -63,7 +63,7 @@ and release. Mechanic IDs stay traceable across layers.
 The Rune is both the currency and the socketable, with ranks R1-R5 and a 5x value ladder.
 One resource keeps the economy legible; the spend-versus-socket trade-off is intentional.
 
-## D-015 New forms ship in one ESL plugin (accepted, user-confirmed)
+## D-015 New forms ship in one ESL plugin (accepted, user-confirmed; **superseded by D-040 multi-ESL**)
 All new forms (rune item, materials, keywords, effects, recipes) live in a single
 ESL-flagged Runefall.esp with our own FormIDs. One plugin, light slot, no vanilla overrides.
 The DLL applies behavior; SkyPatcher is not used to create forms.
@@ -247,7 +247,7 @@ confidence levels under SPECS\data\mining. No Bethesda assets, strings or record
 shipped; mined IDs are stored only as source references. Review gates: HIGH confidence first,
 manual acceptance, no duplicate source, drop rule required.
 
-## D-038 Math-derived affix matrix: 108 affixes, 540 rows (accepted, L3B 2026-10-26; revised to 120 by L3C/D-040 era audit)
+## D-038 Math-derived affix matrix: 120 affixes / 600 rows (accepted; 108 was the coverage-derived intermediate)
 Affix count was derived from coverage: 9 attributes x (5 categories x 2 choices + 2 skill
 synergies) = 108. L3C added the benchmark constraint (beat 113 combined reference families), so
 the accepted v1 budget is **120 affixes / 600 rows / ~182 MGEF / ~440-470 records**, category
@@ -277,10 +277,10 @@ v1 ships a minimum asset set: 17 item icons (5 runes + 12 materials), 6 rarity b
 5 rank markers; optional UI frame and boss VFX. Fallback if art is late: tinted vanilla icon
 paths plus UI rank badges, replaced before release. Assets load from Data\Runefall\assets.
 
-## D-031 Fixed ESL FormID category ranges and EditorID convention (accepted L3)
-Runefall.esp is ESL-flagged; FormIDs are allocated per category range (keywords 0x800, globals
-0x840, MGEF 0x880, spells 0x900, perks 0x940, MISC 0x980, COBJ 0x9C0, quests 0x9E0, FLST 0x9F0,
-boss NPCs 0xA00, rest reserved) and never renumbered. EditorIDs follow RF_<Type>_<Area>_<Name>.
+## D-031 Fixed ESL FormID category ranges and EditorID convention (accepted L3; ranges revised by D-035)
+Runefall.esp is ESL-flagged; FormIDs are allocated per category range and never renumbered:
+KYWD 0x800-0x87F, GLOB 0x880-0x8FF, MGEF 0x900-0x9FF, SPEL 0xA00-0xAFF, PERK 0xB00-0xB7F,
+MISC 0xB80-0xBFF, COBJ 0xC00-0xC7F, QUST/FLST 0xC80-0xCFF, NPC/CLAS 0xD00-0xD7F, reserved 0xD80-0xFFF. EditorIDs follow RF_<Type>_<Area>_<Name>.
 Data files reference records by EditorID, never by hardcoded FormID. The build validator
 enforces ranges, caps and uniqueness.
 

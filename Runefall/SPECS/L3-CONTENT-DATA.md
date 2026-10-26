@@ -24,7 +24,7 @@ Runefall ships as a **base plugin plus independent content expansion packs**, al
 
 | Plugin | Role | Required | Content |
 |---|---|---|---|
-| Runefall.esp | Base | yes | Core schema: keywords, globals, 120 affix MGEF templates (182 MGEF total), skills (SPEL/PERK), runes/materials (MISC), recipes (COBJ), quest hosts, boss templates, data files manifest |
+| Runefall.esp | Base | yes | Core schema: keywords, globals, 120 affix MGEF templates (~201 MGEF total), skills (SPEL/PERK), runes/materials (MISC), recipes (COBJ), quest hosts, boss templates, data files manifest |
 | Runefall - Unique.esp | Pack | no | Unique affixes sourced from boss/quest mining (40: 20 boss + 20 quest) |
 | Runefall - Hunt.esp | Pack | no | Race hunt content: 19 family unique affixes + 19 hunt materials + race tables (G12) |
 | Runefall - Crafting.esp | Expansion (reserved) | no | Crafting Table expansion: base-item recipes, targeted affix crafting, Affix Shards, craft UI (D-045). Not shipped in v1. |
@@ -127,7 +127,7 @@ a pack's declared records exist only in that pack.
 | COBJ | v1 deterministic recipes: rune conversion (4) + socket craft (1-2) + utilities (2) | ~8 |
 | QUST | Core host (events, mod-event bridge), debug host, attunement host | 3 |
 | FLST | Small pools for UI/validation (rarely used) | ~5-10 |
-| NPC_/CLAS | Mini-boss and boss templates across the five RF tiers | 12-16 |
+| NPC_/CLAS | Mini-boss and boss templates across the five RF tiers | 20 |
 
 Not generated: no ARMO/WEAP base items, no ENCH variants, no leveled lists, no cells or world
 edits, no dialogue. Boss templates are NPC records only and spawn through the native engine at

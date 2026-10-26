@@ -235,7 +235,7 @@ Deltas from the 108 plan:
 | Name combinations | 11,664 | **14,400** |
 | Affix MGEF | 108 | **120** |
 | Total MGEF estimate | ~170 | **~182** |
-| Total records | ~420-450 | **~440-470** |
+| Total records | ~420-450 | **~465-495** |
 | Build parity | 36/36/36 | **40/40/40** |
 
 The 120 target is the accepted budget (D-038 revised). It still uses the same coverage gates;
@@ -267,9 +267,9 @@ Mining result (L3D, 2026-10-26): 31 HIGH boss candidates, 48 reward-pattern ques
 
     B_unique = 20 (5 RF tiers x 4 boss templates)
     Q_unique = 20 (accepted from 48 quest candidates)
-    U = 40 unique affixes, no tiers
+    U = 59 unique affixes (40 base + 19 hunt), no tiers
 
-Rows: 40 unique_affixes.csv rows. Records: ~40 MGEF + 40 names in Runefall - Unique.esp.
+Rows: 59 unique_affixes.csv rows (40 base + 19 hunt). Base Unique pack: ~40 MGEF + names; hunt uniques live in Runefall - Hunt.esp.
 Unique affixes never enter drop tables; they are guaranteed first-kill / first-completion rewards
 with a source rule, validated by a build gate (every unique affix has exactly one source).
 
@@ -296,7 +296,7 @@ Budget deltas:
 | Unique affixes U | 40 | **59** (20 boss + 20 quest + 19 hunt) |
 | MISC items | ~20 | **~39** (5 runes + 12 base + 19 hunt + 3 spares) |
 | MGEF | ~182 | **~201** (+19 hunt unique effects) |
-| Records | ~440-470 | **~480-510** |
+| Records | ~440-470 | **~465-495** |
 | Packs | 5 | **6** (+ Runefall - Hunt.esp) |
 
 Hunt uniques never enter random pools; firstOnly flag in co-save; hunt materials repeatable.

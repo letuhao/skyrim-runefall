@@ -141,7 +141,7 @@ Table expansion later adds recipe-based uses (D-045).
 | Unique affixes | 40 (20 boss + 20 quest) | **59** (20 boss + 20 quest + 19 hunt) |
 | MISC items | ~20 | ~39 (12 base materials + 19 hunt materials + 5 runes + others) |
 | MGEF | ~182 | ~201 (adds 19 hunt unique effect templates) |
-| Records | ~440-470 | **~480-510** |
+| Records | ~440-470 | **~465-495** |
 | Data rows | - | +93 (36 general + 19 groups + 38 race rewards) |
 | Packs | Unique, Bosses, Affixes, Quests, Patches | + **Runefall - Hunt.esp** |
 

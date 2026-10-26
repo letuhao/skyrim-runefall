@@ -134,9 +134,9 @@ Quality notes (manual review required):
 
     B_unique = 20 boss templates (5 RF tiers x 4 templates, L3C)
     Q_unique = 20 accepted quest sources (from 48 mined candidates, ~40% acceptance)
-    U = B_unique + Q_unique = 40 unique affixes
+    U = B_unique + Q_unique + H_hunt = 59 unique affixes (20 boss + 20 quest + 19 hunt)
 
-This supersedes the earlier 20-40 placeholder: v1 ships exactly 40 unique affixes, 20 boss-bound
+This supersedes the earlier 20-40 placeholder: v1 ships exactly 59 unique affixes (20 boss-bound + 20 quest-bound + 19 hunt)
 and 20 quest-bound. Each is one record MGEF + one prefix + one suffix + one source rule; no
 tiers. Pack: Runefall - Unique.esp; ~40 MGEF + ~40 names + 40 data rows, far inside 2,048 IDs.
 Acceptance rule: a source is accepted only if the review confirms it is a unique boss encounter

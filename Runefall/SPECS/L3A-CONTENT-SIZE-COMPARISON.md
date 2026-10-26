@@ -75,7 +75,7 @@ Resolution: revise the map (section 4) to ~1,400 record capacity plus 640 reserv
 ### G4 - Enemy and boss roster too thin
 
 Problem: five ranks with ~10 NPC templates cannot fill five RF tiers with variety.
-Resolution: **12-16 boss/mini-boss templates** (one mini-boss + one boss per RF tier plus a few
+Resolution: **20 boss/mini-boss templates** (one mini-boss + one boss per RF tier plus a few
 variants) and rank data driven from enemy_ranks.csv; generic ranks stay runtime-applied (no NPC
 records). This matches the reference pattern: content packed into NPC/LVLN records only where
 hand-authored (Fortunate Foes), everything else distributed/runtime.
@@ -124,7 +124,7 @@ ranges in L3.
 | 0xD00-0xD7F | NPC_/CLAS boss templates | 128 | ~16 |
 | 0xD80-0xFFF | Reserved (patches, expansions, assets-only) | 640 | 0 |
 
-Total capacity 1,408 + 640 reserved; planned ~440-470 records for v1. Still inside one ESL
+Total capacity 1,408 + 640 reserved; planned ~465-495 records for v1. Still inside one ESL
 (2,048 IDs), and patch/expansion plugins can be separate ESLs.
 
 ## 5. Revised v1 content targets (input to L3 update)
@@ -138,7 +138,7 @@ Total capacity 1,408 + 640 reserved; planned ~440-470 records for v1. Still insi
 | Materials / recipes | 12 materials, 20-25 recipes | ~6 KB |
 | Skills / attributes | 18 skills, 9 attributes, 54 rank gates | ~5 KB |
 | Strings | 250-350 keys | ~25 KB |
-| ESL records | ~440-470 across the map | 80-140 KB |
+| ESL records | ~465-495 across the map (pre-revision figures below are historical) | 80-140 KB |
 | Assets | 17 icons + 6 rarity + 5 rank markers (min) | 0.5-3 MB |
 | Scripts | 5-10 Papyrus | 30-60 KB |
 | DLL | native core | 1-3 MB |
