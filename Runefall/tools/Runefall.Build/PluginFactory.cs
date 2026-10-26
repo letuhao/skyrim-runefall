@@ -99,6 +99,14 @@ internal static class PluginFactory
         foreach (var editor in content.BaseMgefEditors)
             AddEffect(mod, keys, editor);
 
+        var skillEffects = new Dictionary<string, FormKey>(StringComparer.OrdinalIgnoreCase);
+        foreach (var row in content.SkillRows)
+        {
+            var skill = row[1];
+            if (row[4] == "active" && !skillEffects.ContainsKey(skill))
+                skillEffects[skill] = AddEffect(mod, keys, "RF_MGEF_Skill_" + skill.Replace(' ', '_'));
+        }
+
         foreach (var row in content.SkillRows)
         {
             var skill = row[1];
@@ -109,7 +117,7 @@ internal static class PluginFactory
                 var name = skill + " Rank " + (rank + 1);
                 if (skillType == "active")
                 {
-                    mod.Spells.Add(new Spell(mod)
+                    var spell = new Spell(mod)
                     {
                         EditorID = editor,
                         Name = name,
@@ -118,8 +126,20 @@ internal static class PluginFactory
                         TargetType = TargetType.Self,
                         BaseCost = 0,
                         ChargeTime = 0,
-                        CastDuration = 0
+                        CastDuration = 0,
+                        Effects = new Noggog.ExtendedList<Effect>()
+                    };
+                    spell.Effects!.Add(new Effect
+                    {
+                        BaseEffect = new FormLinkNullable<IMagicEffectGetter>(skillEffects[skill]),
+                        Data = new EffectData
+                        {
+                            Magnitude = 1.0f,
+                            Area = 0,
+                            Duration = 0
+                        }
                     });
+                    mod.Spells.Add(spell);
                 }
                 else
                 {
@@ -150,7 +170,7 @@ internal static class PluginFactory
             mod.FormLists.Add(new FormList(mod) { EditorID = "RF_FLST_Pool_" + pool });
     }
 
-    private static void AddEffect(SkyrimMod mod, FormKeyAllocator keys, string editor)
+    private static FormKey AddEffect(SkyrimMod mod, FormKeyAllocator keys, string editor)
     {
         var effect = new MagicEffect(mod)
         {
@@ -165,6 +185,7 @@ internal static class PluginFactory
         effect.CastType = CastType.FireAndForget;
         effect.TargetType = TargetType.Self;
         mod.MagicEffects.Add(effect);
+        return effect.FormKey;
     }
 
     private static FormKey AddMisc(SkyrimMod mod, FormKeyAllocator keys, string editor, string name, uint value, float weight)

@@ -3,6 +3,7 @@
 param(
     [string]$TestEnv = "J:\SkyrimTest\1.6.1170",
     [int]$WaitSeconds = 90,
+    [switch]$StartNewGame,
     [switch]$KeepGameRunning
 )
 $ErrorActionPreference = "Stop"
@@ -25,6 +26,7 @@ if (Test-Path $plugins) { Copy-Item $plugins $backup -Force }
 $loadOrder = @(
     "# Runefall T1 temporary load order",
     "*Skyrim.esm", "*Update.esm", "*Dawnguard.esm", "*HearthFires.esm", "*Dragonborn.esm",
+    "*unofficial skyrim special edition patch.esp", "*alternate start - live another life.esp",
     "*Runefall.esp", "*Runefall - Unique.esp", "*Runefall - Hunt.esp"
 )
 
@@ -40,7 +42,18 @@ try {
     Remove-Item $probe, $runefallLog, $skseLog -Force -ErrorAction SilentlyContinue
     Write-Output "Starting T1 at $(Get-Date -Format o)"
     Start-Process -FilePath $loader -WorkingDirectory $TestEnv
-    Start-Sleep -Seconds $WaitSeconds
+    if ($StartNewGame) {
+        Write-Output "Waiting for main menu, then starting a new game..."
+        Start-Sleep -Seconds 30
+        $wshell = New-Object -ComObject WScript.Shell
+        $null = $wshell.AppActivate("Skyrim Special Edition")
+        Start-Sleep -Milliseconds 800
+        $wshell.SendKeys("{ENTER}")
+        Write-Output "New-game input sent; waiting $($WaitSeconds - 30) more seconds"
+        Start-Sleep -Seconds ($WaitSeconds - 30)
+    } else {
+        Start-Sleep -Seconds $WaitSeconds
+    }
 
     $testProcess = Get-CimInstance Win32_Process -Filter "name='SkyrimSE.exe'" -ErrorAction SilentlyContinue |
         Where-Object { $_.ExecutablePath -eq $exe }

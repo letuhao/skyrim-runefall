@@ -95,6 +95,20 @@ internal static class Validator
             Expect(baseOut.Mod.Quests.Count == 3, "base plugin has 3 quest hosts", lines, ref failed);
             Expect(baseOut.Mod.FormLists.Count == 5, "base plugin has 5 form lists", lines, ref failed);
             Expect(baseOut.Mod.ConstructibleObjects.Count == 8, "base plugin has 8 constructible objects", lines, ref failed);
+
+            var badSpells = 0;
+            foreach (var spell in baseOut.Mod.Spells)
+            {
+                if (spell.Effects == null || spell.Effects.Count == 0)
+                {
+                    ++badSpells;
+                    continue;
+                }
+                foreach (var effect in spell.Effects)
+                    if (effect.BaseEffect.IsNull)
+                        ++badSpells;
+            }
+            Expect(badSpells == 0, "base plugin spells have no null EFID effects", lines, ref failed);
         }
         lines.Add("WARN NPC/CLAS boss templates are not generated yet (next content phase)");
 

@@ -17,6 +17,18 @@ namespace Runefall
 				debugTrace = a_value == "1" || a_value == "true";
 			else if (a_key == "iLootAuthority")
 				lootAuthority = std::atoi(std::string{ a_value }.c_str());
+			else if (a_key == "bEnableMenu")
+				enableMenu = a_value == "1" || a_value == "true";
+			else if (a_key == "bEnableInput")
+				enableInput = a_value == "1" || a_value == "true";
+			else if (a_key == "bEnableLootHooks")
+				enableLootHooks = a_value == "1" || a_value == "true";
+			else if (a_key == "bEnablePapyrus")
+				enablePapyrus = a_value == "1" || a_value == "true";
+			else if (a_key == "bEnableCoSave")
+				enableCoSave = a_value == "1" || a_value == "true";
+			else if (a_key == "bEnableProbes")
+				enableProbes = a_value == "1" || a_value == "true";
 		} else if (a_section == "Paths") {
 			if (a_key == "sDataDir")
 				dataDirOverride = a_value;

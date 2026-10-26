@@ -128,6 +128,28 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## T1 crash root-cause pass 2026-10-27 01:20-01:45
+
+- xEdit error check supplied by the user found 27 SPEL errors in Runefall.esp:
+  "Effects \ Effect \ EFID - Base Effect -> found a NULL reference, expected MGEF".
+  Fix: the generator now creates 9 RF_MGEF_Skill_* effects and links every skill spell's
+  Effects[0] to one of them; validator rejects null EFID/empty effect lists. Base plugin is
+  now 263 records and the null-EFID check passes.
+- Remaining crash is an EXCEPTION_ACCESS_VIOLATION in SkyrimSE.exe+0CD045C (heap allocator),
+  no plugin frame; happens at kNewGame/kPostLoadGame right after the gameplay probe warning,
+  or ~15-19 s after launch. Evidence copied from CrashLogger: crash-2026-10-26-18-24-42.log.
+- Isolation results (direct launch, MO2 Default load order applied): ESPs-only ran, DLL-only ran,
+  both enabled crashed; MenuUI disabled did not stop the crash. This points at a DLL-side
+  heap/lifetime bug or at a kNewGame callback, not at the menu registration.
+- Suspects found in code review: DynamicEnchantment used `new RE::Effect()`, `new RE::ExtraDataList()`
+  and deleted an IFormFactory-created EnchantmentItem on failure. The delete is removed; the
+  `new` allocations are still untrusted and need a game-allocator/ownership fix or removal.
+- Added runtime kill switches in runefall.ini for bisection: bEnableMenu, bEnableInput,
+  bEnableLootHooks, bEnablePapyrus, bEnableCoSave, bEnableProbes (all default 1).
+- Added CMake preset debug-windows (debug DLL + PDB built) for symbol/side-effect bisection.
+- Next: bisect with the kill switches, then remove/replace the runtime enchantment/extra-list
+  creation path; retest new game before any further content work.
+
 ## T1 crash investigation 2026-10-27 00:19-00:42 - test env contaminated
 
 Repeated T1 launches crashed ~6 s after start, before kDataLoaded. CrashLogger reports the same

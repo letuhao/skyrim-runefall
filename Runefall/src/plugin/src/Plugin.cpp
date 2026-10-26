@@ -41,10 +41,13 @@ namespace
 	void OnDataLoaded()
 	{
 		logger::info("Runefall data loaded: bootstrap complete, API {}", Runefall::kApiVersion);
-		Runefall::LootService::Get().RegisterHooks();
-		Runefall::InputManager::Get().Register();
-		Runefall::MenuUI::Register();
-		if (Runefall::Config::Get().DebugSelfTest())
+		if (Runefall::Config::Get().EnableLootHooks())
+			Runefall::LootService::Get().RegisterHooks();
+		if (Runefall::Config::Get().EnableInput())
+			Runefall::InputManager::Get().Register();
+		if (Runefall::Config::Get().EnableMenu())
+			Runefall::MenuUI::Register();
+		if (Runefall::Config::Get().EnableProbes() && Runefall::Config::Get().DebugSelfTest())
 			Runefall::DebugHarness::RunAll();
 	}
 
@@ -56,7 +59,8 @@ namespace
 			break;
 		case SKSE::MessagingInterface::kNewGame:
 		case SKSE::MessagingInterface::kPostLoadGame:
-			Runefall::DebugHarness::RunGameplayProbes();
+			if (Runefall::Config::Get().EnableProbes())
+				Runefall::DebugHarness::RunGameplayProbes();
 			break;
 		default:
 			break;

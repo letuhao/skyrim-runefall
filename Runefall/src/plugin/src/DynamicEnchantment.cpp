@@ -36,8 +36,7 @@ namespace Runefall
 		}
 
 		if (created == 0) {
-			// An enchantment without effects is not useful.
-			delete enchantment;
+			// Never delete a form created by IFormFactory: the game owns it.
 			return nullptr;
 		}
 
