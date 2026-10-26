@@ -642,3 +642,16 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - Re-run the full suite on the release candidate; record hashes.
 - Ship gate: load-order docs, dependency list, uninstall note, supported-runtime statement (1.6.1170; 1.7.x unsupported).
+
+## Compatibility matrix status 2026-10-27
+
+- Tested environment: Skyrim SE 1.6.1170, SKSE 1.6.1170, Address Library 1.6.1170, full MO2
+  Default load order with USSEP, Alternate Start, CC, SkyUI_SE.esp, SKSE Menu Framework 3.18,
+  EngineFixes, SkyrimSoulsRE, SkyLink MCP.
+- UI stack: PASS in this environment (F1 Mod Control Panel opens; Runefall pages register;
+  runtime loot/hunt/batch probes do not crash).
+- OWL/OWL Randomized Special Loot, DiabloRim, Worlds Dawn, Fortunate Foes, perk/AV overhauls,
+  survival and boss overhauls: NOT TESTED in v1; must be disclosed as untested, not compatible.
+  Runefall edits no vanilla records/leveled lists, but that is design evidence, not a pass.
+- Known limitation: synthetic F10/F11/F12 input is not delivered when the batch harness launches
+  the game; hotkeys were manually verified separately.

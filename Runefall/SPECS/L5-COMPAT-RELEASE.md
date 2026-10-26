@@ -61,38 +61,29 @@ effort. Never claim 1.7.x compatibility without a full smoke test.
 
 Archive root (no extra folder, no nested Data):
 
-    Data      Runefall.esp
-      Runefall - Unique.esp      (optional)
-      Runefall - Hunt.esp        (optional)
-      Runefall - Bosses.esp      (optional)
-      Runefall - Affixes.esp     (optional)
-      Runefall - Quests.esp      (optional)
-      Runefall - Patches.esp     (optional)
-      Runefall...               data, ini, packs manifests, assets
-      Scripts...
-      SKSEPluginsRunefall.dll
-      Interface...              optional UI resources
-    fomod      info.xml
+    Data
+      Runefall.esp                 (required core ESL)
+      Runefall - Unique.esp        (optional unique-affix pack)
+      Runefall - Hunt.esp          (optional hunt pack)
+      Runefall/...                 data files, runefall.ini, pack manifests
+      Scripts/...                  RunefallNative.pex, RunefallProbe.pex, quest scripts
+      SKSE/Plugins/Runefall.dll
+    fomod
+      info.xml
       ModuleConfig.xml
 
-Module matrix:
+Actual v1 module matrix (reconciled 2026-10-27):
 
 | Module | Required | Depends on | Contents |
 |---|---|---|---|
-| Core | yes | SKSE + AL | base ESL, data, DLL, core scripts |
-| Hunt | no | Core | race tables, 19 family uniques/materials |
-| Unique | no | Core | 40 boss/quest uniques |
-| Bosses | no | Core | boss expansion pack |
-| Affixes | no | Core | additional affix pack |
-| Quests | no | Core | quest unique rewards |
-| Patches | no | named target mods | per-mod deltas |
-| UI | no | Core + SKSE Menu Framework | optional UI resources |
-| Balance | no | Core | data-only alternate tables |
+| Core | yes | SKSE 1.6.1170 + Address Library 1.6.1170 | base ESL, data, DLL, core scripts |
+| Unique | no | Core | 40 boss/quest unique affixes |
+| Hunt | no | Core | 19 race families, hunt uniques/materials |
 
-FOMOD rules (from the packaging skill): one canonical Core; packs contain deltas only; no
-duplicate destinations unless intentional and ordered; explicit option names/descriptions with
-dependencies and conflicts; UTF-8 XML with the explicit declaration; validate both XML files;
-simulate every dependency branch; verify the final archive root; hash the archive and member set.
+Reserved for later expansions (not shipped in v1): Bosses, Affixes, Quests, Patches, UI,
+Balance. They are described here as future modules only; the FOMOD must not offer them until
+their plugins/data exist. FOMOD rules still apply: one canonical Core, packs are deltas, explicit
+names/descriptions, UTF-8 XML, validate every branch, verify archive root, hash members.
 
 ## 5. Ship gates (adapted to available tooling)
 

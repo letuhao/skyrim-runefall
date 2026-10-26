@@ -1,78 +1,57 @@
-# Nexus Mods Page Content
+# Runefall — Nexus Mods page
 
-## Short Description
+## Short description
 
-<!-- One or two sentences describing what the mod does -->
+A Torchlight/Diablo-style loot and power overhaul for Skyrim SE/AE 1.6.1170: six rarity bands,
+600 affixes, rune tiers, RuneForge crafting, race hunt rewards, and skill/attribute progression —
+applied at runtime with a native SKSE DLL and ESL content.
 
----
+## Requirements
 
-## Tags
+- Skyrim SE/AE **1.6.1170** only (1.7.x is not supported in v1)
+- SKSE64 **1.6.1170**
+- Address Library for SKSE Plugins (**1.6.1170** bins)
+- SKSE Menu Framework **3.18 release** (Nexus 120352) for the Mod Control Panel pages
+- No SkyUI, MCM Helper, JContainers, PapyrusUtil, PO3 Extender or UILib dependency
 
-- SKSE
+## Installation
 
----
+1. Install with MO2/Vortex; the FOMOD installs Core and offers optional **Unique** and **Hunt**
+   packs.
+2. Ensure Runefall.esp, Runefall - Unique.esp and Runefall - Hunt.esp load after Skyrim.esm and
+   after USSEP if present.
+3. Start a new game or load a clean save made without Runefall; the co-save stores progression
+   and hunt state.
 
-## Long Description (BBCode)
+## Features (v1)
 
-<!-- The Requirements, Installation, and Compatibility sections below are generated.
-     Run `python3 scripts/generate-nexus-page.py` and copy the output to Nexus Mods.
-     Do not copy this file directly — the generated block markers are not valid BBCode. -->
+- Six rarity bands and 600 affixes generated from data into runtime enchantments.
+- Death-drop loot with rarity/rank/tier rolls and named enchanted items.
+- Race-family first kills grant material and a unique enchanted item.
+- Rune tiers, RuneForge spending, attributes/skills and native attunement.
+- Co-save schema for progression, runes, item registry and hunt first-kill state.
+- Debug hotkeys F10 snapshot, F11 self-tests, F12 probe item; F1 opens the Mod Control Panel.
+- Papyrus API for tier, attributes, skills, runes, first kills, snapshots and attunement.
 
-```bbcode
-[center][size=5][b]ExampleMod[/b][/size]
-[i]Tagline here[/i][/center]
+## Known limitations (0.2.0-dev)
 
-[line]
+- Runtime loot and hunt paths are verified; menu page interaction and Papyrus runtime calls still
+  need a full manual pass.
+- Boss-kill gating for attunement is not implemented; attunement spends runes only.
+- Enemy variants/monster affixes, extra hooks and the full compatibility matrix are incomplete.
+- Only Skyrim 1.6.1170 is tested; 1.7.x/SE/VR are unsupported in v1.
+- Batch harness core checks pass; synthetic keyboard input is a known harness limitation.
 
-[size=4][b][color=#B8953E]Overview[/color][/b][/size]
+## AI disclosure
 
-Describe what the mod does.
+Parts of this build (content-generation scripts, validation harness, docs and implementation
+scaffolding) were developed with AI coding assistance. Shipped binaries are built from the
+repository source; no third-party game assets are redistributed.
 
-[line]
+## Credits
 
-<!-- generated:start -->
-[size=4][b][color=#B8953E]Requirements[/color][/b][/size]
-
-[list]
-[*][url=https://skse.silverlock.org/]SKSE64[/url]
-[*][url=https://www.nexusmods.com/skyrimspecialedition/mods/32444]Address Library for SKSE Plugins[/url]
-[/list]
-
-[line]
-
-[size=4][b][color=#B8953E]Installation[/color][/b][/size]
-
-[b]Mod manager (recommended):[/b]
-[list=1]
-[*]Install the requirements above.
-[*]Install ExampleMod via your mod manager.
-[*]Launch Skyrim via SKSE.
-[/list]
-
-[b]Manual:[/b]
-[list=1]
-[*]Install the requirements above.
-[*]Copy [font=Courier New]ExampleMod.dll[/font] to [font=Courier New]Data\SKSE\Plugins\[/font].
-[*]Launch Skyrim via SKSE.
-[/list]
-
-[line]
-
-[size=4][b][color=#B8953E]Compatibility[/color][/b][/size]
-
-[list]
-[*]Compatible with Skyrim SE and AE.
-[*]No ESP/ESL required.
-[/list]
-<!-- generated:end -->
-
-[line]
-
-[size=4][b][color=#B8953E]Credits[/color][/b][/size]
-
-[list]
-[*][url=https://skse.silverlock.org/]SKSE[/url] by the SKSE Team
-[*][url=https://www.nexusmods.com/skyrimspecialedition/mods/32444]Address Library for SKSE Plugins[/url] by [url=https://www.nexusmods.com/profile/meh321]meh321[/url]
-[*][url=https://github.com/alandtse/CommonLibSSE-NG]CommonLibSSE-NG[/url] by [url=https://github.com/alandtse]alandtse[/url] and contributors
-[/list]
-```
+- CommonLibSSE-NG (alandtse fork) — MIT
+- SKSE team — SKSE64
+- Mutagen — plugin generation
+- SKSE Menu Framework (Thiago099) — menu API
+- Bethesda Game Studios — Skyrim SE/AE (no assets redistributed)

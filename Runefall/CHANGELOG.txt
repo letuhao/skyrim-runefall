@@ -2,6 +2,9 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- Release docs: FOMOD/L5 module matrix reconciled to Core/Unique/Hunt; Nexus page rewritten with
+  requirements, install, features, known limitations, AI disclosure and credits; compatibility
+  status recorded as tested-subset only.
 - Added native attunement path: Progression::TryAttune spends rune units and raises RF tier;
   Papyrus AttuneRuneTier/QuestHost.TryAttune bridge added.
 - Added RunefallQuestHost/RunefallMenuBridge Papyrus scripts and attached them to Debug/Attunement
