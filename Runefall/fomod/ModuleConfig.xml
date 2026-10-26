@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://qconsulting.ca/fo3/ModConfig5.0.xsd">
+  <moduleName>Runefall</moduleName>
+  <requiredInstallFiles>
+    <folder source="Data\Runefall" destination="Runefall" priority="0" />
+    <folder source="Data\Scripts" destination="Scripts" priority="0" />
+    <folder source="Data\SKSE" destination="SKSE" priority="0" />
+    <file source="Data\Runefall.esp" destination="Runefall.esp" priority="0" />
+  </requiredInstallFiles>
+  <installSteps order="Explicit">
+    <installStep name="Content packs">
+      <optionalFileGroups>
+        <group name="Runefall packs" type="SelectAny">
+          <plugins order="Explicit">
+            <plugin name="Unique affixes">
+              <description>Boss and quest unique affixes (Runefall - Unique.esp).</description>
+              <files>
+                <file source="Data\Runefall - Unique.esp" destination="Runefall - Unique.esp" priority="0" />
+              </files>
+            </plugin>
+            <plugin name="Hunt content">
+              <description>Race hunt uniques and materials (Runefall - Hunt.esp).</description>
+              <files>
+                <file source="Data\Runefall - Hunt.esp" destination="Runefall - Hunt.esp" priority="0" />
+              </files>
+            </plugin>
+          </plugins>
+        </group>
+      </optionalFileGroups>
+    </installStep>
+  </installSteps>
+</config>

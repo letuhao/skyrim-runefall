@@ -1,7 +1,10 @@
 #include "MenuUI.h"
 
 #ifdef RUNEFALL_MENU_FRAMEWORK
-#	include <imgui/imgui.h>
+// The fixed header calls GetModuleHandle(L"SKSEMenuFramework"); our PCH includes windows.h
+// without UNICODE, so force the wide variant just for this include.
+#	undef GetModuleHandle
+#	define GetModuleHandle GetModuleHandleW
 #	include "SKSEMenuFramework.h"
 #endif
 
@@ -21,66 +24,66 @@ namespace Runefall
 	{
 		bool labelValue(const char* a_label, std::int32_t a_value)
 		{
-			ImGui::TextUnformatted(a_label);
-			ImGui::SameLine(180.0f);
-			ImGui::Text("%d", a_value);
+			ImGuiMCP::TextUnformatted(a_label);
+			ImGuiMCP::SameLine(180.0f);
+			ImGuiMCP::Text("%d", a_value);
 			return true;
 		}
 
 		void RenderCharacter()
 		{
-			ImGui::TextUnformatted("Runefall - Character");
-			ImGui::Separator();
-			ImGui::Text("Attribute points: %d", Progression::Get().AttributePoints());
-			ImGui::Text("Skill points: %d", Progression::Get().SkillPoints());
-			ImGui::Text("RF tier: %d", Progression::Get().RuneTier());
-			ImGui::Separator();
+			ImGuiMCP::TextUnformatted("Runefall - Character");
+			ImGuiMCP::Separator();
+			ImGuiMCP::Text("Attribute points: %d", Progression::Get().AttributePoints());
+			ImGuiMCP::Text("Skill points: %d", Progression::Get().SkillPoints());
+			ImGuiMCP::Text("RF tier: %d", Progression::Get().RuneTier());
+			ImGuiMCP::Separator();
 
 			static const std::array<const char*, 9> kNames = { "Might", "Endurance", "Precision", "Agility", "Guile", "Cunning", "Intellect", "Wisdom", "Willpower" };
 			for (std::size_t i = 0; i < kNames.size(); ++i)
 				labelValue(kNames[i], Progression::Get().Attribute(i));
 
-			ImGui::Separator();
-			ImGui::TextUnformatted("Runes:");
+			ImGuiMCP::Separator();
+			ImGuiMCP::TextUnformatted("Runes:");
 			for (int rank = 1; rank <= 5; ++rank)
 				labelValue(("R" + std::to_string(rank)).c_str(), CoSave::Get().State().runes[static_cast<std::size_t>(rank - 1)]);
 		}
 
 		void RenderRuneForge()
 		{
-			ImGui::TextUnformatted("Runefall - Rune Forge");
-			ImGui::Separator();
-			ImGui::Text("Tracked items: %d", static_cast<int>(ItemRegistry::Get().Size()));
-			ImGui::Text("Affixes loaded: %d", static_cast<int>(LootEngine::Get().AffixCount()));
-			ImGui::Text("Probe: %s", DebugHarness::LastSummary().c_str());
-			ImGui::Separator();
-			ImGui::TextUnformatted("Transactions are exposed through the Rune Forge native API;");
-			ImGui::TextUnformatted("interactive item selection lands with the inventory integration.");
+			ImGuiMCP::TextUnformatted("Runefall - Rune Forge");
+			ImGuiMCP::Separator();
+			ImGuiMCP::Text("Tracked items: %d", static_cast<int>(ItemRegistry::Get().Size()));
+			ImGuiMCP::Text("Affixes loaded: %d", static_cast<int>(LootEngine::Get().AffixCount()));
+			ImGuiMCP::Text("Probe: %s", DebugHarness::LastSummary().c_str());
+			ImGuiMCP::Separator();
+			ImGuiMCP::TextUnformatted("Transactions are exposed through the Rune Forge native API;");
+			ImGuiMCP::TextUnformatted("interactive item selection lands with the inventory integration.");
 		}
 
 		void RenderHuntCodex()
 		{
-			ImGui::TextUnformatted("Runefall - Hunt Codex");
-			ImGui::Separator();
-			ImGui::Text("Hunt families: %d", static_cast<int>(HuntEngine::Get().FamilyCount()));
-			ImGui::Text("Affixes: %d   Ranks: %d", static_cast<int>(LootEngine::Get().AffixCount()), static_cast<int>(TierEngine::Get().RankCount()));
-			ImGui::Separator();
+			ImGuiMCP::TextUnformatted("Runefall - Hunt Codex");
+			ImGuiMCP::Separator();
+			ImGuiMCP::Text("Hunt families: %d", static_cast<int>(HuntEngine::Get().FamilyCount()));
+			ImGuiMCP::Text("Affixes: %d   Ranks: %d", static_cast<int>(LootEngine::Get().AffixCount()), static_cast<int>(TierEngine::Get().RankCount()));
+			ImGuiMCP::Separator();
 			for (const auto& family : HuntEngine::Get().Families()) {
-				ImGui::Text("%-20s first-kill: %s", family.group.c_str(), HuntEngine::Get().HasFirstKill(family.group) ? "yes" : "no");
+				ImGuiMCP::Text("%-20s first-kill: %s", family.group.c_str(), HuntEngine::Get().HasFirstKill(family.group) ? "yes" : "no");
 			}
 		}
 
 		void RenderItemDetail()
 		{
-			ImGui::TextUnformatted("Runefall - Item Detail");
-			ImGui::Separator();
+			ImGuiMCP::TextUnformatted("Runefall - Item Detail");
+			ImGuiMCP::Separator();
 			const auto& items = ItemRegistry::Get().All();
-			ImGui::Text("Tracked items: %d", static_cast<int>(items.size()));
-			ImGui::Separator();
+			ImGuiMCP::Text("Tracked items: %d", static_cast<int>(items.size()));
+			ImGuiMCP::Separator();
 			const std::size_t first = items.size() > 10 ? items.size() - 10 : 0;
 			for (std::size_t i = first; i < items.size(); ++i) {
 				const auto& item = items[i];
-				ImGui::Text("#%u  rarity=%u ilvl=%u sockets=%u enhancements=%u",
+				ImGuiMCP::Text("#%u  rarity=%u ilvl=%u sockets=%u enhancements=%u",
 					item.registryId, item.rarity, item.ilvl, item.socketCount, item.enhancementCount);
 			}
 		}

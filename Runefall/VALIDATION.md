@@ -130,6 +130,16 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
 
 ## I4 Menu Framework pages build (2026-10-26)
 
+- Switched to the framework's **fixed dynamic header** (SKSEMenuFramework.h, 563 KB): it resolves
+  AddSectionItem/AddWindow and the ImGui C API from SKSEMenuFramework.dll at runtime; no import
+  library and no imgui.lib/imgui.dll dependency in our DLL. Header needs GetModuleHandleW, handled
+  with a local macro in MenuUI.cpp (PCH has no UNICODE).
+- Pages: Character, Rune Forge, Hunt Codex, Item Detail; registered under "Runefall".
+- Artifact: Runefall.dll 914,432 bytes, SHA-256 B88B509A566E156D9B762306A542EA00CDE944C2D294FC398BE3EE143F295399. Build PASS.
+- Runtime menu open is a T1 check (F1 → Runefall section).
+
+## I4 Menu Framework pages (first build, superseded)
+
 - MenuUI.cpp compiles against the downloaded SDK (SKSEMenuFramework.h + ImGui 1.90.8 release
   libs); pages: Character, Rune Forge, Hunt Codex, Item Detail. Registered at kDataLoaded via
   SKSEMenuFramework::SetSection("Runefall") + AddSectionItem.

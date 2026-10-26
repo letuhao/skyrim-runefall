@@ -25,14 +25,6 @@ if (Test-Path $dist) {
     if ($LASTEXITCODE -ge 8) { throw "Content copy failed: $LASTEXITCODE" }
 }
 
-Write-Output "Installing ImGui runtime..."
-if (Test-Path $ImGuiDll) {
-    Copy-Item $ImGuiDll (Join-Path $TestEnv "imgui.dll") -Force
-    Copy-Item $ImGuiDll (Join-Path $data "SKSE\Plugins\imgui.dll") -Force
-} else {
-    Write-Warning "imgui.dll not found; UI menu will fail to load"
-}
-
 Write-Output "Installing native DLL..."
 $dll = Join-Path $Project "src\plugin\build\msvc\Runefall.dll"
 if (-not (Test-Path $dll)) { throw "Runefall.dll not built: $dll" }

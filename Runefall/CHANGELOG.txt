@@ -2,7 +2,10 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-26
-- I4 Menu Framework pages: SDK-linked MenuUI (Character, Rune Forge, Hunt Codex, Item Detail)
+- I4 Menu Framework pages switched to the fixed dynamic header: framework + ImGui functions are
+  resolved at runtime from SKSEMenuFramework.dll; imgui.lib/imgui.dll are no longer plugin
+  dependencies. DLL PASS, 914,432 bytes, SHA-256 B88B509A...5399.
+- I4 Menu Framework pages (first build, superseded): SDK-linked MenuUI (Character, Rune Forge, Hunt Codex, Item Detail)
   registered with SKSE Menu Framework 3.18; CMake auto-detects the SDK. DLL PASS, 913,408 bytes,
   SHA-256 927CF942...996D; imgui.dll runtime installed in the test env.
 - Required-mod install + docs: SKSE Menu Framework 3.18 (Nexus 120352) installed into the

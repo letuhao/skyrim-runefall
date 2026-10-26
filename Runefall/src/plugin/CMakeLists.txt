@@ -107,21 +107,15 @@ else()
 
     source_group("Resources" FILES "${CMAKE_CURRENT_BINARY_DIR}/src/version.rc")
 
-    # Optional SKSE Menu Framework integration (release SDK + ImGui from the downloaded package).
-    set(RUNEFALL_MENU_SDK "D:/Works/source/skyrim-moddings/rpg-mechanism/skyrim-menu-framework/SKSE-Menu-Framework-SDK-main" CACHE PATH "SKSE Menu Framework SDK root")
-    if(EXISTS "${RUNEFALL_MENU_SDK}/ImGui/release/lib/imgui.lib"
-       AND EXISTS "${RUNEFALL_MENU_SDK}/Mods/SKSE Menu Framework/SKSE/Plugins/SKSEMenuFramework.lib")
+    # Optional SKSE Menu Framework integration via the fixed dynamic header.
+    # No import library and no imgui.lib: the header resolves framework + ImGui functions at runtime.
+    set(RUNEFALL_MENU_HEADER_DIR "D:/Works/source/skyrim-moddings/rpg-mechanism/skyrim-menu-framework/SKSE Menu Framework 3 Header (Fixed) (For Modders)-120352-3-x-1764371489" CACHE PATH "SKSE Menu Framework fixed header directory")
+    if(EXISTS "${RUNEFALL_MENU_HEADER_DIR}/SKSEMenuFramework.h")
         target_compile_definitions(${PROJECT_NAME} PRIVATE RUNEFALL_MENU_FRAMEWORK)
-        target_include_directories(${PROJECT_NAME} PRIVATE
-            "${RUNEFALL_MENU_SDK}/ImGui/release/include"
-            "${RUNEFALL_MENU_SDK}/Mods/SKSE Menu Framework/SKSE/Plugins"
-            "${RUNEFALL_MENU_SDK}/Mods/SKSE Menu Framework DEV/SKSE/Plugins")
-        target_link_libraries(${PROJECT_NAME} PRIVATE
-            "${RUNEFALL_MENU_SDK}/ImGui/release/lib/imgui.lib"
-            "${RUNEFALL_MENU_SDK}/Mods/SKSE Menu Framework/SKSE/Plugins/SKSEMenuFramework.lib")
-        message(STATUS "Runefall: SKSE Menu Framework UI enabled")
+        target_include_directories(${PROJECT_NAME} PRIVATE "${RUNEFALL_MENU_HEADER_DIR}")
+        message(STATUS "Runefall: SKSE Menu Framework UI enabled (dynamic header)")
     else()
-        message(STATUS "Runefall: SKSE Menu Framework SDK not found; UI pages disabled")
+        message(STATUS "Runefall: SKSE Menu Framework fixed header not found; UI pages disabled")
     endif()
 
     # cmake_llvm_rc preprocesses RC files using the target's INCLUDE_DIRECTORIES, not CMAKE_C_FLAGS.
