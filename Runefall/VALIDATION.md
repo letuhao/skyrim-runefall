@@ -128,6 +128,21 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## I5 static gates + v1 candidate archive (2026-10-26)
+
+Command: Runefall\tools\run-static-gates.ps1
+Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-233442.md)
+
+- native DLL build: 914,432 bytes, SHA-256 B88B509A...5399
+- content generator: 3 plugins validated, RESULT: PASS (base 246 records, Unique 40, Hunt 38)
+- Papyrus compile: RunefallNative.pex + RunefallProbe.pex, 0 errors
+- FOMOD XML: info.xml + ModuleConfig.xml parsed
+- release tree: **Runefall-0.2.0-dev.zip**, 443,397 bytes,
+  SHA-256 13CFE91F83B72ADC7DE05EED8F0EBCD50D7596F193863111F5575C52247D8FB1
+  Archive contains Data/Runefall.esp, Unique/Hunt packs, full data tables/manifests/ini,
+  Scripts PEX, SKSE/Plugins/Runefall.dll and fomod/.
+- T1 (single in-game batch test) is still NOT run; the archive is the candidate to install for it.
+
 ## I4 Menu Framework pages build (2026-10-26)
 
 - Switched to the framework's **fixed dynamic header** (SKSEMenuFramework.h, 563 KB): it resolves

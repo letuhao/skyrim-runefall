@@ -1,8 +1,8 @@
 Runefall 0.2.0-dev
 created: 2026-10-26
-stage: implement-first (D-063); I4 menu pages use dynamic fixed header
+stage: implement-first (D-063); static gates 5/5 PASS; v1 candidate archive built; T1 pending
 parent: 0.1.18
 target: Skyrim SE/AE 1.6.1170 + SKSE 1.6.1170 + Address Library 1.6.1170 (D-062)
 artifact: Runefall.dll 914,432 bytes sha256 B88B509A566E156D9B762306A542EA00CDE944C2D294FC398BE3EE143F295399
-content: build/dist: Runefall.esp 246 records, Unique 40, Hunt 38; CSVs; manifests; Scripts/*.pex; fomod/
-runtime: not launched; batch probe at T1
+candidate: build/release/Runefall-0.2.0-dev.zip sha256 13CFE91F83B72ADC7DE05EED8F0EBCD50D7596F193863111F5575C52247D8FB1
+runtime: not launched; single batch probe at T1

@@ -18,11 +18,12 @@ function Gate($name, [scriptblock]$body) {
     Write-Output "GATE: $name"
     try {
         $result = & $body
-        $lines.Add("PASS  $name" + (if ($result) { ": $result" } else { "" }))
+        $detail = if ($result) { ": $result" } else { "" }
+        $lines.Add("PASS  $name$detail")
         return $true
     } catch {
         $script:failures++
-        $lines.Add("FAIL  $name: $($_.Exception.Message)")
+        $lines.Add("FAIL  ${name}: $($_.Exception.Message)")
         return $false
     }
 }
@@ -43,7 +44,8 @@ Gate "content generator" {
     $dll = Join-Path $proj "bin\Release\net8.0\Runefall.Build.dll"
     $out = & $dotnet $dll --out (Join-Path $Project "build\dist") 2>&1
     $out | Set-Content (Join-Path $evidence "generator-run-$stamp.log")
-    if ($out -notmatch "RESULT: PASS") { throw "generator validation did not PASS" }
+    $text = $out | Out-String
+    if (-not ($text -match "RESULT: PASS")) { throw "generator validation did not PASS" }
     ($out | Select-String "PASS plugin" | Measure-Object).Count.ToString() + " plugin checks"
 }
 

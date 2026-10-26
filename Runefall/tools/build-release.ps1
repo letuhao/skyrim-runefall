@@ -36,3 +36,4 @@ $hash = (Get-FileHash $zip -Algorithm SHA256).Hash
 $zip | Set-Content (Join-Path $releaseRoot "LAST-ARCHIVE.txt")
 Write-Output "archive=$zip"
 Write-Output "sha256=$hash"
+exit 0

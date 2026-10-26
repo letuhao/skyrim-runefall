@@ -2,6 +2,9 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-26
+- I5/I6 static gates + v1 candidate: run-static-gates.ps1 passes 5/5 (native build, generator,
+  Papyrus, FOMOD XML, release tree); candidate Runefall-0.2.0-dev.zip 443,397 bytes,
+  SHA-256 13CFE91F...8FB1, FOMOD + Data + PEX + DLL. T1 in-game batch test still pending.
 - I4 Menu Framework pages switched to the fixed dynamic header: framework + ImGui functions are
   resolved at runtime from SKSEMenuFramework.dll; imgui.lib/imgui.dll are no longer plugin
   dependencies. DLL PASS, 914,432 bytes, SHA-256 B88B509A...5399.
