@@ -10,6 +10,11 @@ namespace Runefall
 
 	std::uint32_t ItemRegistry::Add(ItemMetadata a_metadata)
 	{
+		constexpr std::size_t kMaxEntries = 10000;
+		if (entries.size() >= kMaxEntries) {
+			logger::warn("item-registry: cap {} reached; dropping new item", kMaxEntries);
+			return 0;
+		}
 		a_metadata.registryId = nextId++;
 		entries.push_back(std::move(a_metadata));
 		return entries.back().registryId;

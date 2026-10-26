@@ -27,19 +27,27 @@ namespace Runefall
 					if (button->GetDevice() != RE::INPUT_DEVICE::kKeyboard)
 						continue;
 					const auto code = button->GetIDCode();
-					if (code == kKeyF10) {
-						const auto snapshot = MenuApi::BuildSnapshotJson();
-						logger::info("input: menu snapshot {}", snapshot);
-						if (auto* console = RE::ConsoleLog::GetSingleton())
-							console->Print("[Runefall] %s", snapshot.c_str());
-					} else if (code == kKeyF11) {
-						DebugHarness::RunAll();
-						if (auto* console = RE::ConsoleLog::GetSingleton())
-							console->Print("[Runefall] probe rerun: %s", DebugHarness::LastSummary().c_str());
-					} else if (code == kKeyF12) {
-						const bool ok = LootService::Get().InjectProbeItem();
-						if (auto* console = RE::ConsoleLog::GetSingleton())
-							console->Print("[Runefall] probe item: %s", ok ? "injected" : "skipped");
+					if (auto* tasks = SKSE::GetTaskInterface()) {
+						if (code == kKeyF10) {
+							tasks->AddTask([]() {
+								const auto snapshot = MenuApi::BuildSnapshotJson();
+								logger::info("input: menu snapshot {}", snapshot);
+								if (auto* console = RE::ConsoleLog::GetSingleton())
+									console->Print("[Runefall] %s", snapshot.c_str());
+							});
+						} else if (code == kKeyF11) {
+							tasks->AddTask([]() {
+								DebugHarness::RunAll();
+								if (auto* console = RE::ConsoleLog::GetSingleton())
+									console->Print("[Runefall] probe rerun: %s", DebugHarness::LastSummary().c_str());
+							});
+						} else if (code == kKeyF12) {
+							tasks->AddTask([]() {
+								const bool ok = LootService::Get().InjectProbeItem();
+								if (auto* console = RE::ConsoleLog::GetSingleton())
+									console->Print("[Runefall] probe item: %s", ok ? "injected" : "skipped");
+							});
+						}
 					}
 				}
 				return RE::BSEventNotifyControl::kContinue;

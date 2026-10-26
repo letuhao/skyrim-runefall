@@ -75,13 +75,13 @@ Implementation phase I1 (native core) is in progress:
    modular bootstrap. Build PASS (780,288 bytes, hash 7867ABEB...1ECB); deployed to the test env.
 2. DONE (I2 foundation): Runefall.Build generator PASS; 3 ESL plugins (184/40/38 records) +
    18 data CSVs + manifests + ini generated and deployed to J:\SkyrimTest\1.6.1170.
-3. CRASH ROOT CAUSE FIXED + TIMING HARDENED: layer bisection showed layer 7 crashed because
-   DynamicEnchantment.SelfTest created/registered a runtime EnchantmentItem at kDataLoaded.
-   SelfTest is logic-only; runtime forms now activate only after a configurable delay
-   (default 300 s) from kNewGame/kPostLoadGame via one main-thread task; LootService refuses
-   spawns before that. Full plugin new-game runs are stable. Added null-EFID guard, missing
-   framework guard, and RunefallStage layer build. Independent safety audit (task-9) running.
-   Next: fold audit findings, test probe item/save-load, static gates/candidate.
+3. SAFETY HARDENED: root cause (runtime form at kDataLoaded) fixed; runtime forms activate only
+   after a configurable delay (default 300 s) plus player check; LootService refuses early spawns.
+   Independent audit task-9 delivered 20 findings; critical/high fixes applied (null EFIDs,
+   event-dispatch mutations queued to main thread, SelfTest state restored, PackManager guards,
+   co-save/registry caps, data load unconditional, config gates, scheduling race). Remaining:
+   extra-list ownership, full loading predicate, ESL FormID centralization, debug hotkeys. Full
+   plugin new-game runs stable; next is gameplay probe item/save-load and release gates.
 
 Already proven and kept as evidence: DLL build, plugin load, Papyrus/co-save registration and
 kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\evidence\phase0).

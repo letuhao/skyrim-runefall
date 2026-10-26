@@ -22,9 +22,13 @@ namespace Runefall
 			{
 				if (!a_event || !a_event->dead || !a_event->actorDying)
 					return RE::BSEventNotifyControl::kContinue;
-				auto* actor = a_event->actorDying->As<RE::Actor>();
-				if (actor) {
-					LootService::Get().OnActorDeath(actor);
+				const auto formId = a_event->actorDying->GetFormID();
+				if (auto* tasks = SKSE::GetTaskInterface()) {
+					tasks->AddTask([formId]() {
+						auto* actor = RE::TESForm::LookupByID<RE::Actor>(formId);
+						if (actor && !actor->IsDead(false))
+							LootService::Get().OnActorDeath(actor);
+					});
 				}
 				return RE::BSEventNotifyControl::kContinue;
 			}
@@ -54,6 +58,12 @@ namespace Runefall
 	{
 		static LootService singleton;
 		return singleton;
+	}
+
+	void LootService::ResetSessionState()
+	{
+		processedActors.clear();
+		logger::info("loot: session state reset");
 	}
 
 	void LootService::RegisterHooks()
@@ -154,7 +164,8 @@ namespace Runefall
 			return false;
 		}
 		extraList->SetEnchantment(enchantment, 100, false);
-		const std::string baseName{ base->GetName() };
+		const char* baseNameRaw = base->GetName();
+		const std::string baseName{ baseNameRaw && *baseNameRaw ? baseNameRaw : "item" };
 		const auto* rarityName = rarityNameFor(static_cast<int>(metadata->rarity));
 		extraList->SetOverrideName(BuildDisplayName(*metadata, baseName, rarityName).c_str());
 
@@ -203,7 +214,8 @@ namespace Runefall
 			return false;
 		}
 		extraList->SetEnchantment(enchantment, 100, false);
-		const std::string baseName{ base->GetName() };
+		const char* baseNameRaw = base->GetName();
+		const std::string baseName{ baseNameRaw && *baseNameRaw ? baseNameRaw : "item" };
 		extraList->SetOverrideName(BuildDisplayName(*metadata, baseName, rarityNameFor(static_cast<int>(metadata->rarity))).c_str());
 		player->AddObjectToContainer(base, extraList, 1, nullptr);
 		logger::info("loot: probe item injected into player inventory (rarity {})", metadata->rarity);

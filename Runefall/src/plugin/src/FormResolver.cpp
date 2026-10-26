@@ -6,7 +6,12 @@ namespace Runefall
 	{
 		if (a_editorID.empty())
 			return nullptr;
-		return RE::TESForm::LookupByEditorID(std::string_view{ a_editorID });
+		auto* form = RE::TESForm::LookupByEditorID(std::string_view{ a_editorID });
+		if (form && form->IsDeleted()) {
+			logger::warn("form-resolver: '{}' resolved to a deleted form", a_editorID);
+			return nullptr;
+		}
+		return form;
 	}
 
 	SelfTestResult FormResolver::SelfTest()

@@ -85,14 +85,25 @@ namespace Runefall
 
 		std::int32_t SpendAttributePoint(RE::StaticFunctionTag*, std::string a_attribute)
 		{
-			const auto& indices = AttributeIndices();
-			const auto  it = indices.find(a_attribute);
-			return it != indices.end() && Progression::Get().SpendAttributePoint(it->second) ? 0 : 1;
+			// Marshal state mutation onto the main thread; the VM caller gets an accepted result.
+			auto* tasks = SKSE::GetTaskInterface();
+			if (!tasks)
+				return 1;
+			tasks->AddTask([a_attribute]() {
+				const auto& indices = AttributeIndices();
+				if (const auto it = indices.find(a_attribute); it != indices.end())
+					Progression::Get().SpendAttributePoint(it->second);
+			});
+			return 0;
 		}
 
 		std::int32_t SpendSkillPoint(RE::StaticFunctionTag*, std::string a_skill)
 		{
-			return Progression::Get().SpendSkillPoint(a_skill) ? 0 : 1;
+			auto* tasks = SKSE::GetTaskInterface();
+			if (!tasks)
+				return 1;
+			tasks->AddTask([a_skill]() { Progression::Get().SpendSkillPoint(a_skill); });
+			return 0;
 		}
 
 		std::string GetMenuSnapshot(RE::StaticFunctionTag*)
@@ -121,6 +132,7 @@ namespace Runefall
 		a_vm->RegisterFunction("SpendAttributePoint", "RunefallNative", SpendAttributePoint);
 		a_vm->RegisterFunction("SpendSkillPoint", "RunefallNative", SpendSkillPoint);
 		a_vm->RegisterFunction("GetMenuSnapshot", "RunefallNative", GetMenuSnapshot);
+		// RegisterFunction returns void in this CommonLibSSE-NG version; failures surface via the VM log.
 		logger::info("Papyrus bridge: functions registered (api {})", kApiVersion);
 		return true;
 	}

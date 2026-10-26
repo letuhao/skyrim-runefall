@@ -11,6 +11,7 @@ namespace Runefall
 		static LootService& Get();
 
 		void RegisterHooks();
+		void ResetSessionState();
 		void OnActorDeath(RE::Actor* a_actor);
 
 		// Debug/probe path: rolls one item, attaches metadata + runtime enchantment and adds it

@@ -8,6 +8,10 @@
 #include "LootService.h"
 #include "DynamicEnchantment.h"
 #include "PapyrusBridge.h"
+#include "DataStore.h"
+#include "LootEngine.h"
+#include "TierEngine.h"
+#include "HuntEngine.h"
 
 #include <atomic>
 #include <chrono>
@@ -51,7 +55,7 @@ namespace
 	{
 		if (g_activationScheduled.exchange(true))
 			return;
-		const auto delaySeconds = Runefall::Config::Get().GameplayDelaySeconds();
+		const auto delaySeconds = (std::max)(5, Runefall::Config::Get().GameplayDelaySeconds());
 		const auto generation = ++g_activationGeneration;
 		Runefall::DynamicEnchantment::SetGameplayReady(false);
 		logger::info("gameplay activation scheduled in {} seconds (generation {})", delaySeconds, generation);
@@ -63,17 +67,26 @@ namespace
 				return;
 			if (auto* tasks = SKSE::GetTaskInterface()) {
 				tasks->AddTask([generation]() {
-					if (generation != g_activationGeneration.load())
+					if (generation != g_activationGeneration.load()) {
+						g_activationScheduled.store(false);
 						return;
+					}
+					auto* player = RE::PlayerCharacter::GetSingleton();
+					if (!player) {
+						logger::warn("gameplay activation: player still unavailable; delaying activation");
+						g_activationScheduled.store(false);
+						return;
+					}
 					Runefall::DynamicEnchantment::SetGameplayReady(true);
 					if (Runefall::Config::Get().EnableProbes())
 						Runefall::DebugHarness::RunGameplayProbes();
+					g_activationScheduled.store(false);
 				});
 			} else {
 				logger::error("gameplay activation: task interface unavailable");
+				g_activationScheduled.store(false);
 			}
 		});
-		g_activationScheduled.store(false);
 	}
 
 	void OnDataLoaded()
@@ -86,6 +99,11 @@ namespace
 			Runefall::InputManager::Get().Register();
 		if (Runefall::Config::Get().EnableMenu())
 			Runefall::MenuUI::Register();
+		// Data/engine tables are required by loot/hunt/tier even when probes are off.
+		Runefall::DataStore::Get().LoadAll(Runefall::RunefallDataDir());
+		Runefall::LootEngine::Get().Reload();
+		Runefall::TierEngine::Get().Reload();
+		Runefall::HuntEngine::Get().Reload();
 		if (Runefall::Config::Get().EnableProbes() && Runefall::Config::Get().DebugSelfTest())
 			Runefall::DebugHarness::RunAll();
 	}
@@ -101,6 +119,7 @@ namespace
 			// Never touch runtime forms/player here: even a loaded kNewGame/kPostLoadGame message can
 			// fire while the world is still streaming in. Wait the configured delay on a worker,
 			// then enqueue one main-thread activation task.
+			Runefall::LootService::Get().ResetSessionState();
 			ActivateGameplayAfterDelay();
 			break;
 		default:
@@ -125,12 +144,19 @@ SKSEPluginLoad(const SKSE::LoadInterface* a_skse)
 	const auto config = Runefall::Config::Get().Load();
 	logger::info("config: {} - {}", config.StatusText(), config.detail);
 
-	if (const auto* papyrus = SKSE::GetPapyrusInterface(); !papyrus || !papyrus->Register(Runefall::PapyrusBridge::Register)) {
-		logger::error("Failed to register Papyrus interface");
-		return false;
+	if (Runefall::Config::Get().EnablePapyrus()) {
+		if (const auto* papyrus = SKSE::GetPapyrusInterface(); !papyrus || !papyrus->Register(Runefall::PapyrusBridge::Register)) {
+			logger::error("Failed to register Papyrus interface");
+			return false;
+		}
+	} else {
+		logger::warn("Papyrus bridge disabled by config");
 	}
 
-	Runefall::CoSave::Get().Register();
+	if (Runefall::Config::Get().EnableCoSave())
+		Runefall::CoSave::Get().Register();
+	else
+		logger::warn("co-save disabled by config");
 
 	const auto* messaging = SKSE::GetMessagingInterface();
 	if (!messaging || !messaging->RegisterListener(OnMessage)) {

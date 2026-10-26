@@ -30,6 +30,32 @@ namespace Runefall
 			logger::warn("dynamic-enchantment: no TESDataHandler");
 			return nullptr;
 		}
+
+		struct ResolvedEffect
+		{
+			RE::EffectSetting* baseEffect;
+			float              magnitude;
+			std::int32_t       area;
+			std::int32_t       duration;
+		};
+
+		std::vector<ResolvedEffect> resolved;
+		for (std::uint8_t i = 0; i < a_metadata.enhancementCount && i < 5; ++i) {
+			const auto& enhancement = a_metadata.enhancements[i];
+			if (enhancement.effectEditorId.empty())
+				continue;
+			auto* baseEffect = FormResolver::ResolveAs<RE::EffectSetting>(enhancement.effectEditorId);
+			if (!baseEffect || baseEffect->IsDeleted()) {
+				logger::warn("dynamic-enchantment: effect template '{}' missing/deleted", enhancement.effectEditorId);
+				continue;
+			}
+			resolved.push_back({ baseEffect, enhancement.magnitude, enhancement.area, enhancement.duration });
+		}
+		if (resolved.empty()) {
+			logger::warn("dynamic-enchantment: no valid effects; refusing to create form");
+			return nullptr;
+		}
+
 		auto* factory = RE::IFormFactory::GetFormFactoryByType(RE::FormType::Enchantment);
 		if (!factory)
 			return nullptr;
@@ -44,34 +70,22 @@ namespace Runefall
 		enchantment->data.costOverride = 0;
 		enchantment->data.chargeOverride = 0;
 
-		std::uint8_t created = 0;
-		for (std::uint8_t i = 0; i < a_metadata.enhancementCount && i < 5; ++i) {
-			const auto& enhancement = a_metadata.enhancements[i];
-			if (enhancement.effectEditorId.empty())
-				continue;
-			auto* baseEffect = FormResolver::ResolveAs<RE::EffectSetting>(enhancement.effectEditorId);
-			if (!baseEffect) {
-				logger::warn("dynamic-enchantment: effect template '{}' not found; skipping", enhancement.effectEditorId);
-				continue;
-			}
+		for (const auto& entry : resolved) {
 			auto* effect = new RE::Effect();
-			effect->effectItem.magnitude = enhancement.magnitude;
-			effect->effectItem.area = static_cast<std::uint32_t>((std::max)(0, enhancement.area));
-			effect->effectItem.duration = static_cast<std::uint32_t>((std::max)(0, enhancement.duration));
-			effect->baseEffect = baseEffect;
+			effect->effectItem.magnitude = entry.magnitude;
+			effect->effectItem.area = static_cast<std::uint32_t>((std::max)(0, entry.area));
+			effect->effectItem.duration = static_cast<std::uint32_t>((std::max)(0, entry.duration));
+			effect->baseEffect = entry.baseEffect;
 			effect->cost = 0.0f;
 			enchantment->effects.push_back(effect);
-			++created;
 		}
 
-		if (created == 0) {
-			// Never delete a form created by IFormFactory: the game owns it.
-			return nullptr;
+		if (auto* dataHandler = RE::TESDataHandler::GetSingleton()) {
+			if (!dataHandler->AddFormToDataHandler(enchantment)) {
+				logger::error("dynamic-enchantment: AddFormToDataHandler failed; form left unregistered");
+				return nullptr;
+			}
 		}
-
-		if (auto* dataHandler = RE::TESDataHandler::GetSingleton())
-			dataHandler->AddFormToDataHandler(enchantment);
-
 		return enchantment;
 	}
 

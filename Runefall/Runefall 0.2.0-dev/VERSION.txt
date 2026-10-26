@@ -1,7 +1,7 @@
 Runefall 0.2.0-dev
 created: 2026-10-27
-stage: crash root cause fixed; full plugin stable at new game (18/18 probes)
+stage: safety audit fixes; 300s default gameplay delay; full plugin stable at new game
 parent: 0.1.18
 target: Skyrim SE/AE 1.6.1170 + SKSE 1.6.1170 + Address Library 1.6.1170 (D-062)
-artifact: Runefall.dll 925184 bytes sha256 E0A275DDF4EAF6BAECA502ACE01E75979DAD8D818D85568AAB5B62BAF049A2BD
-runtime: new-game launch stable; probe item injection still skipped at kNewGame (gated)
+artifact: Runefall.dll 944640 bytes sha256 A76D56235D3CABB70F209EB90E5023E3C07ED2174520C881B7694ECCAE99EBA5
+runtime: stable new-game launch; gameplay activation delayed/guarded

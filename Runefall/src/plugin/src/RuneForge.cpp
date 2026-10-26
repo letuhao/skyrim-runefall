@@ -7,6 +7,16 @@ namespace Runefall
 {
 	namespace
 	{
+		struct WalletRestore
+		{
+			std::array<std::int32_t, 5>* wallet = nullptr;
+			std::array<std::int32_t, 5>  saved{};
+			~WalletRestore() { if (wallet) *wallet = saved; }
+		};
+	}
+
+	namespace
+	{
 		std::array<std::int32_t, 5>& Wallet()
 		{
 			return CoSave::Get().State().runes;
@@ -139,7 +149,7 @@ namespace Runefall
 	SelfTestResult RuneForge::SelfTest()
 	{
 		auto& wallet = Wallet();
-		const auto saved = wallet;
+		WalletRestore restore{ &wallet, wallet };
 		wallet = { 100, 100, 100, 100, 100 };
 
 		ItemMetadata item;
@@ -183,7 +193,6 @@ namespace Runefall
 		if (salvage.first <= 0 || salvage.second <= 0)
 			return { "RuneForge.SelfTest", CheckStatus::Fail, "salvage yield invalid" };
 
-		wallet = saved;
 		return { "RuneForge.SelfTest", CheckStatus::Pass, "reroll/upgrade/socket/extract/convert/salvage" };
 	}
 }

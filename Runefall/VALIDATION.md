@@ -128,6 +128,30 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## Independent safety audit + fixes 2026-10-27 02:20-02:35
+
+Another agent audited the native plugin read-only (task-9), 20 ranked findings. Fixed in this pass:
+- CRITICAL null EffectSetting: effects are pre-resolved and validated before the factory form is created;
+  unresolved effects are skipped and an empty set refuses creation. AddFormToDataHandler result checked.
+- HIGH runtime-form creation in event dispatch: death-event sink and F10/F11/F12 input now capture a
+  FormID and enqueue a main-thread SKSE task; the actor is re-resolved and revalidated.
+- HIGH SelfTest state corruption: RuneForge wallet and HuntEngine first-kill map are restored with
+  RAII guards; probes no longer destroy player progression.
+- HIGH processedActors lifetime: LootService::ResetSessionState() runs on kNewGame/kPostLoadGame.
+- HIGH data loading: DataStore + Loot/Tier/Hunt engines load unconditionally at kDataLoaded.
+- HIGH PackManager: null loaded-array checks + directory scan wrapped in try/catch.
+- MEDIUM CoSave payload cap (16 MiB), ItemRegistry cap (10k), deleted-form rejection, config
+  Papyrus/CoSave gates, null base-name guard.
+- Scheduling: activation flag stays set until the main-thread task runs; player null check; delay
+  clamped to >=5 s (default 300 s).
+- Papyrus: mutating natives marshal to the main thread; RegisterFunction returns void in this
+  CommonLibSSE-NG version, so registration result checks are not possible (documented).
+Remaining known gaps: InventoryEntryData extra-list ownership path (#10), full loading-menu readiness
+predicate (#7), hardcoded vanilla FormIDs are master-only (#14), debug hotkeys still registered when
+input is enabled (#20).
+
+Latest artifact: 944640 bytes, SHA-256 A76D56235D3CABB70F209EB90E5023E3C07ED2174520C881B7694ECCAE99EBA5; full-plugin new-game runs stable.
+
 ## Timing + safety pass 2026-10-27 02:14-02:20
 
 - Root cause fix retained: no runtime form creation at kDataLoaded; DynamicEnchantment

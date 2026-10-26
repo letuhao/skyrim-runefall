@@ -369,6 +369,11 @@ namespace Runefall
 		std::uint32_t size = 0;
 		std::uint32_t version = 0;
 		while (a_intfc->GetNextRecordInfo(type, version, size)) {
+			constexpr std::uint32_t kMaxRecordBytes = 16u * 1024u * 1024u;
+			if (size > kMaxRecordBytes) {
+				logger::error("co-save: record {:08X} size {} exceeds cap; skipped", type, size);
+				continue;
+			}
 			std::vector<std::uint8_t> payload(size);
 			if (size > 0 && a_intfc->ReadRecordData(payload.data(), size) != size) {
 				logger::error("co-save: short read on record {:08X}", type);

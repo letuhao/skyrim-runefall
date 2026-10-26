@@ -47,17 +47,22 @@ namespace Runefall
 		std::vector<const RE::TESFile*> loadedFiles;
 		const auto* fullMods = dataHandler->GetLoadedMods();
 		const auto  fullCount = dataHandler->GetLoadedModCount();
+		if (!fullMods && fullCount > 0)
+			return { "PackManager.Scan", CheckStatus::Fail, "loaded mod array unavailable" };
 		for (std::uint8_t i = 0; i < fullCount; ++i) {
 			if (fullMods[i])
 				loadedFiles.push_back(fullMods[i]);
 		}
 		const auto* lightMods = dataHandler->GetLoadedLightMods();
 		const auto  lightCount = dataHandler->GetLoadedLightModCount();
+		if (!lightMods && lightCount > 0)
+			return { "PackManager.Scan", CheckStatus::Fail, "loaded light-mod array unavailable" };
 		for (std::uint16_t i = 0; i < lightCount; ++i) {
 			if (lightMods[i])
 				loadedFiles.push_back(lightMods[i]);
 		}
 		std::unordered_map<std::string, PackInfo> manifestByPlugin;
+		try {
 		if (fs::exists(RunefallPackDir())) {
 			for (const auto& entry : fs::directory_iterator(RunefallPackDir())) {
 				if (!entry.is_regular_file() || entry.path().extension() != ".json")
@@ -81,6 +86,9 @@ namespace Runefall
 					logger::warn("pack manifest {}: {}", entry.path().filename().string(), e.what());
 				}
 			}
+		}
+		} catch (const std::exception& e) {
+			logger::warn("pack manifest scan failed: {}", e.what());
 		}
 
 		for (const auto* file : loadedFiles) {

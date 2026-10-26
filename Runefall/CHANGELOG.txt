@@ -2,6 +2,10 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- Independent safety audit (task-9) fixes: null EffectSetting pre-validation, main-thread queuing for
+  death/input handlers, RAII restoration of SelfTest wallet/first-kill state, unconditional data
+  loading, PackManager exception/null guards, co-save/registry caps, deleted-form rejection, config
+  gates and scheduler race fix. Remaining minor ownership/readiness items documented in VALIDATION.
 - Timing hardening: gameplay/runtime forms activate 300 s (configurable iGameplayDelaySeconds)
   after kNewGame/kPostLoadGame, on a worker delay + main-thread task. No runtime form creation at
   kDataLoaded/kNewGame. Added null base-effect guard and missing-menu-framework guard; generated

@@ -7,6 +7,16 @@ namespace Runefall
 {
 	namespace
 	{
+		struct HuntRestore
+		{
+			std::unordered_map<std::string, std::uint8_t>* map = nullptr;
+			std::unordered_map<std::string, std::uint8_t>  saved;
+			~HuntRestore() { if (map) *map = std::move(saved); }
+		};
+	}
+
+	namespace
+	{
 		int FindColumn(const CsvTable& a_table, std::string_view a_name)
 		{
 			for (std::size_t i = 0; i < a_table.headers.size(); ++i) {
@@ -168,13 +178,13 @@ namespace Runefall
 		if (!material || material->firstOnly)
 			return { "HuntEngine.SelfTest", CheckStatus::Fail, "material reward lookup failed" };
 
-		CoSave::Get().State().huntFirstKill.clear();
+		auto& firstKill = CoSave::Get().State().huntFirstKill;
+		HuntRestore huntRestore{ &firstKill, firstKill };
+		firstKill.clear();
 		if (engine.HasFirstKill("Draugr") || !engine.MarkFirstKill("Draugr") || !engine.HasFirstKill("Draugr"))
 			return { "HuntEngine.SelfTest", CheckStatus::Fail, "first-kill state failed" };
 		if (engine.MarkFirstKill("Unknown"))
 			return { "HuntEngine.SelfTest", CheckStatus::Fail, "unknown family was marked" };
-		CoSave::Get().State().huntFirstKill.clear();
-
 		return { "HuntEngine.SelfTest", CheckStatus::Pass, "family mapping, rewards, first-kill state" };
 	}
 }
