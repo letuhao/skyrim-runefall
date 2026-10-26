@@ -92,6 +92,8 @@ else()
         src/ItemRegistry.cpp
         src/LootEngine.cpp
         src/TierEngine.cpp
+        src/HuntEngine.cpp
+        src/Progression.cpp
         src/DebugHarness.cpp
         src/PapyrusBridge.cpp
         "${CMAKE_CURRENT_BINARY_DIR}/src/version.rc"

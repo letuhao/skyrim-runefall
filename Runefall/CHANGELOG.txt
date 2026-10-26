@@ -2,6 +2,9 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-26
+- I3 hunt/progression: HuntEngine (race family lookup, reward tables, first-kill co-save state,
+  self-test) and Progression (9 attributes, points, skill ranks, respec, soft caps, co-save sync,
+  self-test), wired into the probe harness. DLL PASS, 857,600 bytes, SHA-256 83E50D9A...6A51.
 - I3 loot/tier engines: LootEngine (deterministic RNG, rank-biased rarity, category-unique affix
   selection, socket rolls, self-test) and TierEngine (weighted rank rolls, self-test), wired into
   the probe harness. DLL build PASS, 840,704 bytes, SHA-256 4DEDE109...1C16.

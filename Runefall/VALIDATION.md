@@ -128,6 +128,17 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## I3 hunt/progression engines build (2026-10-26, implement-first)
+
+- HuntEngine: parses race_groups.csv + drops_races.csv; race->family lookup, reward lookup,
+  firstOnly state via co-save hunt flags; self-test covers family mapping, reward types and
+  first-kill marking.
+- Progression: 9-attribute array, attribute/skill points, skill ranks 0-3, spend/add/respec,
+  soft-cap formula (30 full / 31-60 half / block above 60), co-save sync; self-test covers
+  accounting and respec.
+- Both wired into DebugHarness (Reload + self-tests at probe time).
+- Artifact: Runefall.dll 857,600 bytes, SHA-256 83E50D9A9BB14EAA00DF7E4CA939FB9CA7A987799D81E82DC28A1FD0B4956A51. Build PASS.
+
 ## I3 loot/tier engines build (2026-10-26, implement-first)
 
 - LootEngine: parses affixes/rarity/rarity_weights/drops_general from DataStore; deterministic
