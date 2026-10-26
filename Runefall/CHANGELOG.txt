@@ -2,6 +2,8 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-26
+- I2 record families: generator emits 27 skill SPEL, 27 skill PERK, 3 QUST hosts and 5 FLST pools;
+  base plugin now 246 records; validator checks 27/27/3/5 and PASSes. COBJ/NPC still pending.
 - I4 Papyrus bridge + menu API: attribute/point/rune/skill/hunt/spend functions and
   GetMenuSnapshot; MenuApi compact JSON snapshot with self-test; Progression co-save sync.
   DLL PASS, 903,680 bytes, SHA-256 AFBD033B...600D.

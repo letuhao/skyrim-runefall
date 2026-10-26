@@ -89,6 +89,49 @@ internal static class PluginFactory
 
         foreach (var editor in content.BaseMgefEditors)
             AddEffect(mod, keys, editor);
+
+        foreach (var row in content.SkillRows)
+        {
+            var skill = row[1];
+            var skillType = row[4];
+            for (var rank = 0; rank < 3; ++rank)
+            {
+                var editor = row[5 + rank];
+                var name = skill + " Rank " + (rank + 1);
+                if (skillType == "active")
+                {
+                    mod.Spells.Add(new Spell(mod)
+                    {
+                        EditorID = editor,
+                        Name = name,
+                        Type = SpellType.Ability,
+                        CastType = CastType.FireAndForget,
+                        TargetType = TargetType.Self,
+                        BaseCost = 0,
+                        ChargeTime = 0,
+                        CastDuration = 0
+                    });
+                }
+                else
+                {
+                    mod.Perks.Add(new Perk(mod)
+                    {
+                        EditorID = editor,
+                        Name = name,
+                        Description = string.Empty,
+                        NumRanks = 1,
+                        Playable = true,
+                        Hidden = false
+                    });
+                }
+            }
+        }
+
+        mod.Quests.Add(new Quest(mod) { EditorID = "RF_QUST_Core", Name = "Runefall Core" });
+        mod.Quests.Add(new Quest(mod) { EditorID = "RF_QUST_Debug", Name = "Runefall Debug" });
+        mod.Quests.Add(new Quest(mod) { EditorID = "RF_QUST_Attunement", Name = "Runefall Attunement" });
+        for (var pool = 1; pool <= 5; ++pool)
+            mod.FormLists.Add(new FormList(mod) { EditorID = "RF_FLST_Pool_" + pool });
     }
 
     private static void AddEffect(SkyrimMod mod, FormKeyAllocator keys, string editor)

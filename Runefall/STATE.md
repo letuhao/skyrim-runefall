@@ -75,10 +75,10 @@ Implementation phase I1 (native core) is in progress:
    modular bootstrap. Build PASS (780,288 bytes, hash 7867ABEB...1ECB); deployed to the test env.
 2. DONE (I2 foundation): Runefall.Build generator PASS; 3 ESL plugins (184/40/38 records) +
    18 data CSVs + manifests + ini generated and deployed to J:\SkyrimTest\1.6.1170.
-3. IN PROGRESS I4: expanded Papyrus bridge (attributes/points/runes/hunt/spend/menu snapshot),
-   MenuApi JSON snapshot, Progression co-save sync (DLL 903,680 bytes, hash AFBD033B...600D).
-   NEXT: SKSE Menu Framework pages + input hotkeys, I2 record families, probe suite/static gates,
-   package candidate, T1 (must verify death drops, probe item, extra-data persistence, save/load).
+3. IN PROGRESS I4 + I2 records: bridge/menu snapshot and Progression co-save sync build PASS;
+   generator now emits 27 SPEL + 27 PERK + 3 QUST + 5 FLST (base plugin 246 records) and
+   validator PASSes. NEXT: SKSE Menu Framework pages + input hotkeys, COBJ/NPC record families,
+   probe suite/static gates, package candidate, T1.
 
 Already proven and kept as evidence: DLL build, plugin load, Papyrus/co-save registration and
 kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\evidence\phase0).

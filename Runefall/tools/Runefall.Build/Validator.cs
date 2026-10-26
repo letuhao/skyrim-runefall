@@ -82,9 +82,20 @@ internal static class Validator
             }
         }
 
-        // Skill rank records are intentionally not generated yet; report as a warning.
-        lines.Add("WARN SPEL/PERK skill records are not generated yet (next content phase)");
-        lines.Add("WARN COBJ/QUST/NPC records are not generated yet (next content phase)");
+        var baseOut = plugins.FirstOrDefault(x => x.Name == "Runefall.esp");
+        if (baseOut is null)
+        {
+            lines.Add("FAIL base plugin Runefall.esp missing for record-family checks");
+            failed = true;
+        }
+        else
+        {
+            Expect(baseOut.Mod.Spells.Count == 27, "base plugin has 27 skill spells", lines, ref failed);
+            Expect(baseOut.Mod.Perks.Count == 27, "base plugin has 27 skill perks", lines, ref failed);
+            Expect(baseOut.Mod.Quests.Count == 3, "base plugin has 3 quest hosts", lines, ref failed);
+            Expect(baseOut.Mod.FormLists.Count == 5, "base plugin has 5 form lists", lines, ref failed);
+        }
+        lines.Add("WARN COBJ/NPC records are not generated yet (next content phase)");
 
         lines.Add(failed ? "RESULT: FAIL" : "RESULT: PASS");
         return string.Join(Environment.NewLine, lines);

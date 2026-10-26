@@ -128,6 +128,16 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## I2 record families build (2026-10-26, implement-first)
+
+- Generator now emits skill records: 27 SPEL (9 active skills x 3 ranks), 27 PERK (9 passive
+  skills x 3 ranks), 3 QUST hosts (Core/Debug/Attunement), 5 FLST pools.
+- Base plugin grew from 184 to 246 records; validator now checks 27/27/3/5 and PASSes.
+- Still pending: COBJ deterministic recipes and NPC/CLAS boss templates (need master FormKey
+  resolution for vanilla races/workbenches; next content phase).
+- Multi-ESL packs unchanged: Unique 40 records, Hunt 38 records.
+- Deployed to J:\SkyrimTest\1.6.1170\Data (T1 load-order enabling still required).
+
 ## I4 Papyrus bridge + menu API build (2026-10-26, implement-first)
 
 - Papyrus bridge expanded: GetAttribute, GetAttributePoints, GetSkillPoints, GetRuneTier,
