@@ -1,0 +1,4 @@
+Runefall 0.1.15
+created: 2026-10-26
+stage: layered specs - crafting table reserved as expansion; hunting primacy
+parent: 0.1.14

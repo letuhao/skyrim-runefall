@@ -1,0 +1,367 @@
+#include "CoSave.h"
+
+#include <format>
+
+namespace Runefall
+{
+	namespace
+	{
+		constexpr std::uint32_t kSerializationUniqueId = 'RNFL';
+		constexpr std::uint32_t kSerializationRecord = 'RNF2';
+		constexpr std::uint16_t kSectionProgression = 1;
+		constexpr std::uint16_t kSectionRunes = 2;
+		constexpr std::uint16_t kSectionHunt = 4;
+		constexpr std::uint16_t kSectionPackState = 7;
+		constexpr std::uint16_t kSectionConfigHash = 8;
+
+		void PutU16(std::vector<std::uint8_t>& a_out, std::uint16_t a_value)
+		{
+			a_out.push_back(static_cast<std::uint8_t>(a_value & 0xFF));
+			a_out.push_back(static_cast<std::uint8_t>((a_value >> 8) & 0xFF));
+		}
+
+		void PutU32(std::vector<std::uint8_t>& a_out, std::uint32_t a_value)
+		{
+			for (int i = 0; i < 4; ++i)
+				a_out.push_back(static_cast<std::uint8_t>((a_value >> (8 * i)) & 0xFF));
+		}
+
+		void PutI32(std::vector<std::uint8_t>& a_out, std::int32_t a_value)
+		{
+			PutU32(a_out, static_cast<std::uint32_t>(a_value));
+		}
+
+		void PutString(std::vector<std::uint8_t>& a_out, std::string_view a_value)
+		{
+			PutU16(a_out, static_cast<std::uint16_t>(a_value.size()));
+			a_out.insert(a_out.end(), a_value.begin(), a_value.end());
+		}
+
+		class Reader
+		{
+		public:
+			explicit Reader(const std::vector<std::uint8_t>& a_bytes) : bytes(a_bytes) {}
+
+			bool U8(std::uint8_t& a_value)
+			{
+				if (offset + 1 > bytes.size())
+					return false;
+				a_value = bytes[offset++];
+				return true;
+			}
+
+			bool U16(std::uint16_t& a_value)
+			{
+				if (offset + 2 > bytes.size())
+					return false;
+				a_value = static_cast<std::uint16_t>(bytes[offset]) | (static_cast<std::uint16_t>(bytes[offset + 1]) << 8);
+				offset += 2;
+				return true;
+			}
+
+			bool U32(std::uint32_t& a_value)
+			{
+				if (offset + 4 > bytes.size())
+					return false;
+				a_value = 0;
+				for (int i = 0; i < 4; ++i)
+					a_value |= static_cast<std::uint32_t>(bytes[offset + i]) << (8 * i);
+				offset += 4;
+				return true;
+			}
+
+			bool I32(std::int32_t& a_value)
+			{
+				std::uint32_t raw = 0;
+				if (!U32(raw))
+					return false;
+				a_value = static_cast<std::int32_t>(raw);
+				return true;
+			}
+
+			bool String(std::string& a_value)
+			{
+				std::uint16_t len = 0;
+				if (!U16(len) || offset + len > bytes.size())
+					return false;
+				a_value.assign(reinterpret_cast<const char*>(bytes.data() + offset), len);
+				offset += len;
+				return true;
+			}
+
+			bool Skip(std::uint32_t a_count)
+			{
+				if (offset + a_count > bytes.size())
+					return false;
+				offset += a_count;
+				return true;
+			}
+
+			[[nodiscard]] std::size_t Remaining() const noexcept { return bytes.size() - offset; }
+			[[nodiscard]] std::size_t Offset() const noexcept { return offset; }
+
+		private:
+			const std::vector<std::uint8_t>& bytes;
+			std::size_t                      offset = 0;
+		};
+
+		std::vector<std::uint8_t> BuildSection(std::uint16_t a_id, const std::vector<std::uint8_t>& a_payload)
+		{
+			std::vector<std::uint8_t> out;
+			PutU16(out, a_id);
+			PutU32(out, static_cast<std::uint32_t>(a_payload.size()));
+			out.insert(out.end(), a_payload.begin(), a_payload.end());
+			return out;
+		}
+	}
+
+	CoSave& CoSave::Get()
+	{
+		static CoSave singleton;
+		return singleton;
+	}
+
+	void CoSave::Reset()
+	{
+		state = CoSaveState{};
+	}
+
+	std::uint32_t CoSave::HashConfig()
+	{
+		// Placeholder stable hash until the real config/pack fingerprint lands.
+		return 0x52464C31;
+	}
+
+	std::vector<std::uint8_t> CoSave::Encode(const CoSaveState& a_state)
+	{
+		std::vector<std::uint8_t> out;
+		out.insert(out.end(), { 'R', 'N', 'F', 'S' });
+		PutU16(out, kSaveVersion);
+		PutU16(out, kSaveVersion);
+
+		std::vector<std::vector<std::uint8_t>> sections;
+
+		std::vector<std::uint8_t> progress;
+		for (const auto value : a_state.attributes)
+			PutI32(progress, value);
+		PutI32(progress, a_state.attributePoints);
+		PutI32(progress, a_state.skillPoints);
+		sections.push_back(BuildSection(kSectionProgression, progress));
+
+		std::vector<std::uint8_t> runes;
+		for (const auto value : a_state.runes)
+			PutI32(runes, value);
+		sections.push_back(BuildSection(kSectionRunes, runes));
+
+		std::vector<std::uint8_t> hunt;
+		PutU32(hunt, static_cast<std::uint32_t>(a_state.huntFirstKill.size()));
+		for (const auto& [id, flag] : a_state.huntFirstKill) {
+			PutString(hunt, id);
+			hunt.push_back(flag);
+		}
+		sections.push_back(BuildSection(kSectionHunt, hunt));
+
+		std::vector<std::uint8_t> packs;
+		PutU32(packs, static_cast<std::uint32_t>(a_state.packVersions.size()));
+		for (const auto& [id, version] : a_state.packVersions) {
+			PutString(packs, id);
+			PutString(packs, version);
+		}
+		sections.push_back(BuildSection(kSectionPackState, packs));
+
+		std::vector<std::uint8_t> hash;
+		PutU32(hash, a_state.configHash);
+		sections.push_back(BuildSection(kSectionConfigHash, hash));
+
+		PutU32(out, static_cast<std::uint32_t>(sections.size()));
+		for (const auto& section : sections)
+			out.insert(out.end(), section.begin(), section.end());
+		return out;
+	}
+
+	bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out)
+	{
+		a_out = CoSaveState{};
+		if (a_bytes.size() < 12)
+			return false;
+		if (!(a_bytes[0] == 'R' && a_bytes[1] == 'N' && a_bytes[2] == 'F' && a_bytes[3] == 'S'))
+			return false;
+
+		Reader reader{ a_bytes };
+		std::uint8_t magic[4];
+		for (auto& c : magic)
+			if (!reader.U8(c))
+				return false;
+
+		std::uint16_t schema = 0;
+		std::uint16_t saveVersion = 0;
+		std::uint32_t sectionCount = 0;
+		if (!reader.U16(schema) || schema > kSaveVersion)
+			return false;
+		if (!reader.U16(saveVersion) || !reader.U32(sectionCount))
+			return false;
+
+		for (std::uint32_t i = 0; i < sectionCount; ++i) {
+			std::uint16_t id = 0;
+			std::uint32_t len = 0;
+			if (!reader.U16(id) || !reader.U32(len) || len > reader.Remaining())
+				return false;
+
+			std::vector<std::uint8_t> payload(len);
+			for (std::uint32_t b = 0; b < len; ++b) {
+				std::uint8_t value = 0;
+				if (!reader.U8(value))
+					return false;
+				payload[b] = value;
+			}
+			Reader sectionReader{ payload };
+
+			switch (id) {
+			case kSectionProgression:
+				for (auto& value : a_out.attributes)
+					if (!sectionReader.I32(value))
+						return false;
+				if (!sectionReader.I32(a_out.attributePoints) || !sectionReader.I32(a_out.skillPoints))
+					return false;
+				break;
+			case kSectionRunes:
+				for (auto& value : a_out.runes)
+					if (!sectionReader.I32(value))
+						return false;
+				break;
+			case kSectionHunt: {
+				std::uint32_t count = 0;
+				if (!sectionReader.U32(count) || count > 10000)
+					return false;
+				for (std::uint32_t n = 0; n < count; ++n) {
+					std::string   key;
+					std::uint8_t  flag = 0;
+					if (!sectionReader.String(key) || !sectionReader.U8(flag))
+						return false;
+					a_out.huntFirstKill[std::move(key)] = flag;
+				}
+				break;
+			}
+			case kSectionPackState: {
+				std::uint32_t count = 0;
+				if (!sectionReader.U32(count) || count > 1000)
+					return false;
+				for (std::uint32_t n = 0; n < count; ++n) {
+					std::string key;
+					std::string version;
+					if (!sectionReader.String(key) || !sectionReader.String(version))
+						return false;
+					a_out.packVersions[std::move(key)] = std::move(version);
+				}
+				break;
+			}
+			case kSectionConfigHash:
+				if (!sectionReader.U32(a_out.configHash))
+					return false;
+				break;
+			default:
+				break;
+			}
+		}
+		return true;
+	}
+
+	void CoSave::OnSave(SKSE::SerializationInterface* a_intfc)
+	{
+		if (!a_intfc)
+			return;
+		auto& state = CoSave::Get().State();
+		state.configHash = HashConfig();
+		const auto bytes = Encode(state);
+		if (!a_intfc->OpenRecord(kSerializationRecord, kSaveVersion)) {
+			logger::error("co-save: failed to open record");
+			return;
+		}
+		if (!a_intfc->WriteRecordData(bytes.data(), static_cast<std::uint32_t>(bytes.size())))
+			logger::error("co-save: failed to write {} bytes", bytes.size());
+		else
+			logger::info("co-save: wrote {} bytes (schema {})", bytes.size(), kSaveVersion);
+	}
+
+	void CoSave::OnLoad(SKSE::SerializationInterface* a_intfc)
+	{
+		if (!a_intfc)
+			return;
+		CoSave::Get().Reset();
+
+		std::uint32_t type = 0;
+		std::uint32_t size = 0;
+		std::uint32_t version = 0;
+		while (a_intfc->GetNextRecordInfo(type, version, size)) {
+			std::vector<std::uint8_t> payload(size);
+			if (size > 0 && a_intfc->ReadRecordData(payload.data(), size) != size) {
+				logger::error("co-save: short read on record {:08X}", type);
+				continue;
+			}
+			if (type != kSerializationRecord)
+				continue;
+			if (version > kSaveVersion) {
+				logger::error("co-save: schema {} newer than supported {}", version, kSaveVersion);
+				continue;
+			}
+			if (Decode(payload, CoSave::Get().State()))
+				logger::info("co-save: loaded schema {} ({} bytes)", version, payload.size());
+			else
+				logger::error("co-save: malformed section payload, state reset");
+		}
+	}
+
+	void CoSave::OnRevert(SKSE::SerializationInterface*)
+	{
+		CoSave::Get().Reset();
+		logger::info("co-save: reverted");
+	}
+
+	void CoSave::Register()
+	{
+		auto* serialization = SKSE::GetSerializationInterface();
+		if (!serialization) {
+			logger::error("co-save: serialization interface unavailable");
+			return;
+		}
+		serialization->SetUniqueID(kSerializationUniqueId);
+		serialization->SetSaveCallback(OnSave);
+		serialization->SetLoadCallback(OnLoad);
+		serialization->SetRevertCallback(OnRevert);
+		logger::info("co-save: callbacks registered (record RNF2)");
+	}
+
+	SelfTestResult CoSave::SelfTest()
+	{
+		CoSaveState sample;
+		sample.attributes[0] = 7;
+		sample.attributes[8] = -3;
+		sample.attributePoints = 5;
+		sample.skillPoints = 2;
+		sample.runes[0] = 11;
+		sample.runes[4] = 1;
+		sample.huntFirstKill["Draugr"] = 1;
+		sample.huntFirstKill["Dragon"] = 0;
+		sample.packVersions["unique"] = "0.2.0";
+		sample.configHash = HashConfig();
+
+		const auto encoded = Encode(sample);
+		CoSaveState decoded;
+		if (!Decode(encoded, decoded))
+			return { "CoSave.SelfTest", CheckStatus::Fail, "round-trip decode failed" };
+		if (decoded.attributes != sample.attributes || decoded.attributePoints != sample.attributePoints ||
+			decoded.skillPoints != sample.skillPoints || decoded.runes != sample.runes ||
+			decoded.huntFirstKill != sample.huntFirstKill || decoded.packVersions != sample.packVersions ||
+			decoded.configHash != sample.configHash)
+			return { "CoSave.SelfTest", CheckStatus::Fail, "round-trip data mismatch" };
+
+		// Truncated input must be rejected, not crash.
+		auto truncated = encoded;
+		truncated.resize(truncated.size() / 2);
+		CoSaveState ignored;
+		if (Decode(truncated, ignored))
+			return { "CoSave.SelfTest", CheckStatus::Fail, "truncated payload was accepted" };
+
+		return { "CoSave.SelfTest", CheckStatus::Pass, std::format("round-trip {} bytes; truncation rejected", encoded.size()) };
+	}
+}

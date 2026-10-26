@@ -1,0 +1,4 @@
+Runefall 0.1.18
+created: 2026-10-26
+stage: layered specs complete - L5 compatibility and release drafted
+parent: 0.1.17

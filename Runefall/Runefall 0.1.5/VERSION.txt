@@ -1,0 +1,4 @@
+Runefall 0.1.5
+created: 2026-10-26
+stage: layered specs - actor value coverage audit and non-combat attribute anchors
+parent: 0.1.4

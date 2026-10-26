@@ -1,0 +1,4 @@
+Runefall 0.1.17
+created: 2026-10-26
+stage: layered specs - L4 runtime architecture drafted
+parent: 0.1.16

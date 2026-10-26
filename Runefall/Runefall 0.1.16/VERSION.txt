@@ -1,0 +1,4 @@
+Runefall 0.1.16
+created: 2026-10-26
+stage: layered specs - future gap register and v1 scope lock
+parent: 0.1.15

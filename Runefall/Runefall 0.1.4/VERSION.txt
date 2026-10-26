@@ -1,0 +1,4 @@
+Runefall 0.1.4
+created: 2026-10-26
+stage: layered specs - 9 attributes (3 per build) and 18 skills (6 per build, 3 ranks)
+parent: 0.1.3

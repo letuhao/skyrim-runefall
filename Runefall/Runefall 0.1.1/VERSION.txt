@@ -1,0 +1,4 @@
+Runefall 0.1.1
+created: 2026-10-26
+stage: layered specs - L1 gameplay model drafted (no build artifact yet)
+parent: 0.1.0

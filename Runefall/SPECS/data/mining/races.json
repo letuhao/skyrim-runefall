@@ -1,0 +1,1430 @@
+[
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013746:Skyrim.esm",
+    "editorId": "NordRace",
+    "name": "Nord",
+    "npcCount": 1147
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "013746:Skyrim.esm",
+    "editorId": "NordRace",
+    "name": "Nord",
+    "npcCount": 1147
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "109C7C:Skyrim.esm",
+    "editorId": "FoxRace",
+    "name": "Fox",
+    "npcCount": 816
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "000019:Skyrim.esm",
+    "editorId": "DefaultRace",
+    "name": "Default Race",
+    "npcCount": 609
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013742:Skyrim.esm",
+    "editorId": "DarkElfRace",
+    "name": "Dark Elf",
+    "npcCount": 507
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "013742:Skyrim.esm",
+    "editorId": "DarkElfRace",
+    "name": "Dark Elf",
+    "npcCount": 507
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013741:Skyrim.esm",
+    "editorId": "BretonRace",
+    "name": "Breton",
+    "npcCount": 471
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "013741:Skyrim.esm",
+    "editorId": "BretonRace",
+    "name": "Breton",
+    "npcCount": 471
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013744:Skyrim.esm",
+    "editorId": "ImperialRace",
+    "name": "Imperial",
+    "npcCount": 371
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "013744:Skyrim.esm",
+    "editorId": "ImperialRace",
+    "name": "Imperial",
+    "npcCount": 371
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "000D53:Skyrim.esm",
+    "editorId": "DraugrRace",
+    "name": "Draugr",
+    "npcCount": 315
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013743:Skyrim.esm",
+    "editorId": "HighElfRace",
+    "name": "High Elf",
+    "npcCount": 298
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "013743:Skyrim.esm",
+    "editorId": "HighElfRace",
+    "name": "High Elf",
+    "npcCount": 298
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013748:Skyrim.esm",
+    "editorId": "RedguardRace",
+    "name": "Redguard",
+    "npcCount": 261
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "013748:Skyrim.esm",
+    "editorId": "RedguardRace",
+    "name": "Redguard",
+    "npcCount": 261
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013747:Skyrim.esm",
+    "editorId": "OrcRace",
+    "name": "Orc",
+    "npcCount": 144
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "013747:Skyrim.esm",
+    "editorId": "OrcRace",
+    "name": "Orc",
+    "npcCount": 144
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "097A3D:Skyrim.esm",
+    "editorId": "DA13AfflictedRace",
+    "name": "Breton",
+    "npcCount": 115
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013749:Skyrim.esm",
+    "editorId": "WoodElfRace",
+    "name": "Wood Elf",
+    "npcCount": 81
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "013749:Skyrim.esm",
+    "editorId": "WoodElfRace",
+    "name": "Wood Elf",
+    "npcCount": 81
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "012E82:Skyrim.esm",
+    "editorId": "DragonRace",
+    "name": "Dragon Race",
+    "npcCount": 79
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "012E82:Skyrim.esm",
+    "editorId": "DragonRace",
+    "name": "Dragon Race",
+    "npcCount": 79
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "012E82:Skyrim.esm",
+    "editorId": "DragonRace",
+    "name": "Dragon Race",
+    "npcCount": 79
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013745:Skyrim.esm",
+    "editorId": "KhajiitRace",
+    "name": "Khajiit",
+    "npcCount": 77
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "013745:Skyrim.esm",
+    "editorId": "KhajiitRace",
+    "name": "Khajiit",
+    "npcCount": 77
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "088794:Skyrim.esm",
+    "editorId": "NordRaceVampire",
+    "name": "Nord",
+    "npcCount": 70
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "088794:Skyrim.esm",
+    "editorId": "NordRaceVampire",
+    "name": "Nord",
+    "npcCount": 70
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "088794:Skyrim.esm",
+    "editorId": "NordRaceVampire",
+    "name": "Nord",
+    "npcCount": 70
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013740:Skyrim.esm",
+    "editorId": "ArgonianRace",
+    "name": "Argonian",
+    "npcCount": 68
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "013740:Skyrim.esm",
+    "editorId": "ArgonianRace",
+    "name": "Argonian",
+    "npcCount": 68
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131F4:Skyrim.esm",
+    "editorId": "FalmerRace",
+    "name": "Falmer",
+    "npcCount": 66
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "0131F4:Skyrim.esm",
+    "editorId": "FalmerRace",
+    "name": "Falmer",
+    "npcCount": 66
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "067CD8:Skyrim.esm",
+    "editorId": "ElderRace",
+    "name": "Old People Race",
+    "npcCount": 64
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "02C65B:Skyrim.esm",
+    "editorId": "NordRaceChild",
+    "name": "Nord",
+    "npcCount": 47
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "08883C:Skyrim.esm",
+    "editorId": "BretonRaceVampire",
+    "name": "Breton",
+    "npcCount": 43
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "08883C:Skyrim.esm",
+    "editorId": "BretonRaceVampire",
+    "name": "Breton",
+    "npcCount": 43
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "08883C:Skyrim.esm",
+    "editorId": "BretonRaceVampire",
+    "name": "Breton",
+    "npcCount": 43
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0B7998:Skyrim.esm",
+    "editorId": "SkeletonRace",
+    "name": "Skeleton",
+    "npcCount": 41
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131FD:Skyrim.esm",
+    "editorId": "HorseRace",
+    "name": "Horse",
+    "npcCount": 41
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "0131FD:Skyrim.esm",
+    "editorId": "HorseRace",
+    "name": "Horse",
+    "npcCount": 41
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "08883D:Skyrim.esm",
+    "editorId": "DarkElfRaceVampire",
+    "name": "Dark Elf",
+    "npcCount": 40
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "08883D:Skyrim.esm",
+    "editorId": "DarkElfRaceVampire",
+    "name": "Dark Elf",
+    "npcCount": 40
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "08883D:Skyrim.esm",
+    "editorId": "DarkElfRaceVampire",
+    "name": "Dark Elf",
+    "npcCount": 40
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "088844:Skyrim.esm",
+    "editorId": "ImperialRaceVampire",
+    "name": "Imperial",
+    "npcCount": 32
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "088844:Skyrim.esm",
+    "editorId": "ImperialRaceVampire",
+    "name": "Imperial",
+    "npcCount": 32
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "088844:Skyrim.esm",
+    "editorId": "ImperialRaceVampire",
+    "name": "Imperial",
+    "npcCount": 32
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "088840:Skyrim.esm",
+    "editorId": "HighElfRaceVampire",
+    "name": "High Elf",
+    "npcCount": 31
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "088840:Skyrim.esm",
+    "editorId": "HighElfRaceVampire",
+    "name": "High Elf",
+    "npcCount": 31
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "088840:Skyrim.esm",
+    "editorId": "HighElfRaceVampire",
+    "name": "High Elf",
+    "npcCount": 31
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0CDD84:Skyrim.esm",
+    "editorId": "WerewolfBeastRace",
+    "name": "Werewolf",
+    "npcCount": 28
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "0CDD84:Skyrim.esm",
+    "editorId": "WerewolfBeastRace",
+    "name": "Werewolf",
+    "npcCount": 28
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "014449:Dragonborn.esm",
+    "editorId": "DLC2ExpSpiderBaseRace",
+    "name": "Frostbite Spider",
+    "npcCount": 26
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "01320A:Skyrim.esm",
+    "editorId": "WolfRace",
+    "name": "Wolf",
+    "npcCount": 25
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131F0:Skyrim.esm",
+    "editorId": "DremoraRace",
+    "name": "Dremora",
+    "npcCount": 25
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "0023E2:Dawnguard.esm",
+    "editorId": "SkeletonArmorRace",
+    "name": "Draugr",
+    "npcCount": 21
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "017F44:Dragonborn.esm",
+    "editorId": "DLC2RieklingRace",
+    "name": "",
+    "npcCount": 20
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131EF:Skyrim.esm",
+    "editorId": "DragonPriestRace",
+    "name": "Dragon Priest",
+    "npcCount": 19
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131FB:Skyrim.esm",
+    "editorId": "HagravenRace",
+    "name": "Hagraven",
+    "npcCount": 18
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131F6:Skyrim.esm",
+    "editorId": "AtronachFrostRace",
+    "name": "Frost Atronach",
+    "npcCount": 17
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131F2:Skyrim.esm",
+    "editorId": "DwarvenSphereRace",
+    "name": "Dwarven Sphere",
+    "npcCount": 15
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0EB872:Skyrim.esm",
+    "editorId": "SkeletonNecroRace",
+    "name": "Skeleton",
+    "npcCount": 14
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131F3:Skyrim.esm",
+    "editorId": "DwarvenSpiderRace",
+    "name": "Dwarven Spider",
+    "npcCount": 14
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "0EB872:Skyrim.esm",
+    "editorId": "SkeletonNecroRace",
+    "name": "Skeleton",
+    "npcCount": 14
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "01AACC:Dawnguard.esm",
+    "editorId": "FalmerFrozenVampRace",
+    "name": "Falmer",
+    "npcCount": 13
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "01DCB9:Dragonborn.esm",
+    "editorId": "DLC2SeekerRace",
+    "name": "HMDaedra",
+    "npcCount": 13
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0B9FD7:Skyrim.esm",
+    "editorId": "RigidSkeletonRace",
+    "name": "Skeleton",
+    "npcCount": 11
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131F9:Skyrim.esm",
+    "editorId": "GiantRace",
+    "name": "Giant",
+    "npcCount": 11
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131F5:Skyrim.esm",
+    "editorId": "AtronachFlameRace",
+    "name": "Flame Atronach",
+    "npcCount": 11
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131FF:Skyrim.esm",
+    "editorId": "MammothRace",
+    "name": "Mammoth",
+    "npcCount": 10
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131F8:Skyrim.esm",
+    "editorId": "FrostbiteSpiderRace",
+    "name": "Frostbite Spider",
+    "npcCount": 10
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131F7:Skyrim.esm",
+    "editorId": "AtronachStormRace",
+    "name": "Storm Atronach",
+    "npcCount": 10
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "01B637:Dragonborn.esm",
+    "editorId": "DLC2AshSpawnRace",
+    "name": "Draugr",
+    "npcCount": 10
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0BA545:Skyrim.esm",
+    "editorId": "MudcrabRace",
+    "name": "MudCrab",
+    "npcCount": 9
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "04E507:Skyrim.esm",
+    "editorId": "FrostbiteSpiderRaceGiant",
+    "name": "Frostbite Spider",
+    "npcCount": 9
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013201:Skyrim.esm",
+    "editorId": "SkeeverRace",
+    "name": "Skeever",
+    "npcCount": 9
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131F1:Skyrim.esm",
+    "editorId": "DwarvenCenturionRace",
+    "name": "Dwarven Centurion",
+    "npcCount": 9
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "10760A:Skyrim.esm",
+    "editorId": "ManakinRace",
+    "name": "Nord",
+    "npcCount": 8
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0F71DC:Skyrim.esm",
+    "editorId": "DraugrMagicRace",
+    "name": "Draugr",
+    "npcCount": 8
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013206:Skyrim.esm",
+    "editorId": "TrollFrostRace",
+    "name": "Snow Troll",
+    "npcCount": 8
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131EE:Skyrim.esm",
+    "editorId": "DogRace",
+    "name": "Dog",
+    "npcCount": 8
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "10760A:Skyrim.esm",
+    "editorId": "ManakinRace",
+    "name": "Nord",
+    "npcCount": 8
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "0179CF:Dragonborn.esm",
+    "editorId": "DLC2MountedRieklingRace",
+    "name": "",
+    "npcCount": 8
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "019FD3:Dawnguard.esm",
+    "editorId": "DLC1BlackSkeletonRace",
+    "name": "Skeleton",
+    "npcCount": 7
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "006AFA:Dawnguard.esm",
+    "editorId": "DLC1SoulCairnSkeletonNecroRace",
+    "name": "Skeleton",
+    "npcCount": 7
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "00377D:Dawnguard.esm",
+    "editorId": "SnowElfRace",
+    "name": "High Elf",
+    "npcCount": 7
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "02A6FD:Dragonborn.esm",
+    "editorId": "DLC2HulkingDraugrRace",
+    "name": "Draugr",
+    "npcCount": 7
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0E7713:Skyrim.esm",
+    "editorId": "AlduinRace",
+    "name": "Dragon Race",
+    "npcCount": 6
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "053477:Skyrim.esm",
+    "editorId": "FrostbiteSpiderRaceLarge",
+    "name": "Frostbite Spider",
+    "npcCount": 6
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "04E785:Skyrim.esm",
+    "editorId": "CowRace",
+    "name": "HighlandCow",
+    "npcCount": 6
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "02C65A:Skyrim.esm",
+    "editorId": "RedguardRaceChild",
+    "name": "Redguard",
+    "npcCount": 6
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "02C659:Skyrim.esm",
+    "editorId": "ImperialRaceChild",
+    "name": "Imperial",
+    "npcCount": 6
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013204:Skyrim.esm",
+    "editorId": "SprigganRace",
+    "name": "Spriggan",
+    "npcCount": 6
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131FA:Skyrim.esm",
+    "editorId": "GoatRace",
+    "name": "Goat",
+    "npcCount": 6
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "013204:Skyrim.esm",
+    "editorId": "SprigganRace",
+    "name": "Spriggan",
+    "npcCount": 6
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "015136:Dawnguard.esm",
+    "editorId": "DLC1_BF_ChaurusRace",
+    "name": "Chaurus",
+    "npcCount": 6
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "0E7713:Skyrim.esm",
+    "editorId": "AlduinRace",
+    "name": "Dragon Race",
+    "npcCount": 6
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "014495:Dragonborn.esm",
+    "editorId": "DLC2LurkerRace",
+    "name": "Giant",
+    "npcCount": 6
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "06DC99:Skyrim.esm",
+    "editorId": "HareRace",
+    "name": "Rabbit",
+    "npcCount": 5
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "02C65C:Skyrim.esm",
+    "editorId": "BretonRaceChild",
+    "name": "Breton",
+    "npcCount": 5
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131FC:Skyrim.esm",
+    "editorId": "HorkerRace",
+    "name": "Horker",
+    "npcCount": 5
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "027BFC:Dragonborn.esm",
+    "editorId": "dlc2AshGuardianRace",
+    "name": "Storm Atronach",
+    "npcCount": 5
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "024038:Dragonborn.esm",
+    "editorId": "DLC2BoarRace",
+    "name": "",
+    "npcCount": 5
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "106C10:Skyrim.esm",
+    "editorId": "C06WolfSpiritRace",
+    "name": "Wolf",
+    "npcCount": 4
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0CF89B:Skyrim.esm",
+    "editorId": "DeerRace",
+    "name": "Deer",
+    "npcCount": 4
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013200:Skyrim.esm",
+    "editorId": "SabreCatRace",
+    "name": "Sabre Cat",
+    "npcCount": 4
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131FE:Skyrim.esm",
+    "editorId": "IceWraithRace",
+    "name": "Ice Wraith",
+    "npcCount": 4
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "019D86:Dawnguard.esm",
+    "editorId": "DLC1GargoyleVariantGreenRace",
+    "name": "Gargoyle",
+    "npcCount": 4
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "00D0B6:Dawnguard.esm",
+    "editorId": "DLC1SabreCatGlowRace",
+    "name": "Sabre Cat",
+    "npcCount": 4
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "00C5F0:Dawnguard.esm",
+    "editorId": "DLC1DeathHoundRace",
+    "name": "Dog",
+    "npcCount": 4
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "00894D:Dawnguard.esm",
+    "editorId": "DLC1SoulCairnSkeletonArmorRace",
+    "name": "Draugr",
+    "npcCount": 4
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "0051FB:Dawnguard.esm",
+    "editorId": "DLC1ChaurusHunterRace",
+    "name": "Chaurusflyer",
+    "npcCount": 4
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "00283A:Dawnguard.esm",
+    "editorId": "DLC1VampireBeastRace",
+    "name": "Vampire Lord",
+    "npcCount": 4
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "02B014:Dragonborn.esm",
+    "editorId": "DLC2DwarvenBallistaRace",
+    "name": "Dwarven Sphere",
+    "npcCount": 4
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "01B658:Dragonborn.esm",
+    "editorId": "DLC2AshHopperRace",
+    "name": "Scrib",
+    "npcCount": 4
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "104F45:Skyrim.esm",
+    "editorId": "WhiteStagRace",
+    "name": "Deer",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0F1AC4:Skyrim.esm",
+    "editorId": "DogCompanionRace",
+    "name": "Dog",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0DE505:Skyrim.esm",
+    "editorId": "CartHorseRace",
+    "name": "Horse",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0B6F95:Skyrim.esm",
+    "editorId": "MagicAnomalyRace",
+    "name": "Essence of Magicka",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0A919D:Skyrim.esm",
+    "editorId": "ChickenRace",
+    "name": "Rabbit",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "088846:Skyrim.esm",
+    "editorId": "RedguardRaceVampire",
+    "name": "Redguard",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013208:Skyrim.esm",
+    "editorId": "WispRace",
+    "name": "Wisp",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013205:Skyrim.esm",
+    "editorId": "TrollRace",
+    "name": "Troll",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013202:Skyrim.esm",
+    "editorId": "SabreCatSnowyRace",
+    "name": "Snowy Sabre Cat",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131ED:Skyrim.esm",
+    "editorId": "ElkRace",
+    "name": "Deer",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131E9:Skyrim.esm",
+    "editorId": "BearSnowRace",
+    "name": "Snow Bear",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131E8:Skyrim.esm",
+    "editorId": "BearBlackRace",
+    "name": "Cave Bear",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "0DE505:Skyrim.esm",
+    "editorId": "CartHorseRace",
+    "name": "Horse",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "088846:Skyrim.esm",
+    "editorId": "RedguardRaceVampire",
+    "name": "Redguard",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "015C34:Dawnguard.esm",
+    "editorId": "DLC1LD_ForgemasterRace",
+    "name": "The Forgemaster",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "007AF3:Dawnguard.esm",
+    "editorId": "DLC1SoulCairnKeeperRace",
+    "name": "Draugr",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "088846:Skyrim.esm",
+    "editorId": "RedguardRaceVampire",
+    "name": "Redguard",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "03911A:Dragonborn.esm",
+    "editorId": "DLC2AcolyteDragonPriestRace",
+    "name": "Dragon Priest",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "01FEB8:Dragonborn.esm",
+    "editorId": "DLC2NetchRace",
+    "name": "Netch",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "01CAD8:Dragonborn.esm",
+    "editorId": "DLC2GhostFrostGiantRace",
+    "name": "Ghost Giant",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "01B644:Dragonborn.esm",
+    "editorId": "DLC2SprigganBurntRace",
+    "name": "Spriggan",
+    "npcCount": 3
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "1052A3:Skyrim.esm",
+    "editorId": "UndeadDragonRace",
+    "name": "Dragon Race",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0C3EDF:Skyrim.esm",
+    "editorId": "SkeeverWhiteRace",
+    "name": "Skeever",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0A82BA:Skyrim.esm",
+    "editorId": "ElderRaceVampire",
+    "name": "Old People Race",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0A82B9:Skyrim.esm",
+    "editorId": "OrcRaceVampire",
+    "name": "Orc",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "071E6A:Skyrim.esm",
+    "editorId": "InvisibleRace",
+    "name": "Invisible Race",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013203:Skyrim.esm",
+    "editorId": "SlaughterfishRace",
+    "name": "Slaughterfish",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131EB:Skyrim.esm",
+    "editorId": "ChaurusRace",
+    "name": "Chaurus",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0131E7:Skyrim.esm",
+    "editorId": "BearBrownRace",
+    "name": "Bear",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "1052A3:Skyrim.esm",
+    "editorId": "UndeadDragonRace",
+    "name": "Dragon Race",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "0A82B9:Skyrim.esm",
+    "editorId": "OrcRaceVampire",
+    "name": "Orc",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "010D00:Dawnguard.esm",
+    "editorId": "DLC1GargoyleVariantBossRace",
+    "name": "Gargoyle",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "003D02:Dawnguard.esm",
+    "editorId": "DLC1DeathHoundCompanionRace",
+    "name": "Deathhound",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "003D01:Dawnguard.esm",
+    "editorId": "DLC1HuskyArmoredCompanionRace",
+    "name": "Dog",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "002AE0:Dawnguard.esm",
+    "editorId": "DLC1SoulCairnSoulWispRace",
+    "name": "Witchlight",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "018B36:Dawnguard.esm",
+    "editorId": "DLC1HuskyBareRace",
+    "name": "Dog",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "013B77:Dawnguard.esm",
+    "editorId": "SprigganEarthMotherRace",
+    "name": "Spriggan",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "0117F5:Dawnguard.esm",
+    "editorId": "DLC1TrollRaceArmored",
+    "name": "Troll",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "0117F4:Dawnguard.esm",
+    "editorId": "DLC1TrollFrostRaceArmored",
+    "name": "Snow Troll",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "0117DE:Dawnguard.esm",
+    "editorId": "DLC1UndeadDragonRace",
+    "name": "Dragon Race",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "00D0B2:Dawnguard.esm",
+    "editorId": "DLC1DeerGlowRace",
+    "name": "Deer",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "0A82B9:Skyrim.esm",
+    "editorId": "OrcRaceVampire",
+    "name": "Orc",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "035538:Dragonborn.esm",
+    "editorId": "DLC2DremoraRace",
+    "name": "Dremora",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "029EE7:Dragonborn.esm",
+    "editorId": "DLC2dunKarstaagIceWraithRace",
+    "name": "Ice Wraith",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "01F98F:Dragonborn.esm",
+    "editorId": "dlc2SpectralDragonRace",
+    "name": "Spectral Dragon",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "01E17B:Dragonborn.esm",
+    "editorId": "DLC2WerebearBeastRace",
+    "name": "Werewolf",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "1052A3:Skyrim.esm",
+    "editorId": "UndeadDragonRace",
+    "name": "Dragon Race",
+    "npcCount": 2
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "108272:Skyrim.esm",
+    "editorId": "BretonRaceChildVampire",
+    "name": "Breton",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0F905F:Skyrim.esm",
+    "editorId": "MG07DogRace",
+    "name": "Dog",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0F3903:Skyrim.esm",
+    "editorId": "SprigganMatronRace",
+    "name": "Spriggan",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0EBE18:Skyrim.esm",
+    "editorId": "SkeletonNecroPriestRace",
+    "name": "Dragon Priest",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0F1182:Skyrim.esm",
+    "editorId": "WispShadeRace",
+    "name": "Wisp",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0CD657:Skyrim.esm",
+    "editorId": "DA03BarbasDogRace",
+    "name": "Dog",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "07EAF3:Skyrim.esm",
+    "editorId": "NordRaceAstrid",
+    "name": "Nord",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0CAE13:Skyrim.esm",
+    "editorId": "C00GiantOutsideWhiterunRace",
+    "name": "Giant",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "088884:Skyrim.esm",
+    "editorId": "WoodElfRaceVampire",
+    "name": "Wood Elf",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0A5601:Skyrim.esm",
+    "editorId": "ChaurusReaperRace",
+    "name": "Chaurus",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "09AA44:Skyrim.esm",
+    "editorId": "SprigganSwarmRace",
+    "name": "Witchlight",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "06FC4A:Skyrim.esm",
+    "editorId": "GoatDomesticsRace",
+    "name": "Goat",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "013209:Skyrim.esm",
+    "editorId": "WitchlightRace",
+    "name": "Witchlight",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "088884:Skyrim.esm",
+    "editorId": "WoodElfRaceVampire",
+    "name": "Wood Elf",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "018B33:Dawnguard.esm",
+    "editorId": "DLC1HuskyArmoredRace",
+    "name": "Dog",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "0F3903:Skyrim.esm",
+    "editorId": "SprigganMatronRace",
+    "name": "Spriggan",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "09AA44:Skyrim.esm",
+    "editorId": "SprigganSwarmRace",
+    "name": "Witchlight",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "00A2C6:Dawnguard.esm",
+    "editorId": "DLC1GargoyleRace",
+    "name": "Gargoyle",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "088884:Skyrim.esm",
+    "editorId": "WoodElfRaceVampire",
+    "name": "Wood Elf",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "03CECB:Dragonborn.esm",
+    "editorId": "DLC2RigidSkeletonRace",
+    "name": "Skeleton",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "03CA97:Dragonborn.esm",
+    "editorId": "DLC2MiraakRace",
+    "name": "Nord",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "03C35F:Dragonborn.esm",
+    "editorId": "DLC2FakeCoffinRace",
+    "name": "",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "029EFC:Dragonborn.esm",
+    "editorId": "DLC2dunInstrumentsRace",
+    "name": "Witchlight",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "028580:Dragonborn.esm",
+    "editorId": "DLC2NetchCalfRace",
+    "name": "Netch",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "027483:Dragonborn.esm",
+    "editorId": "DLC2ExpSpiderPackmuleRace",
+    "name": "Frostbite Spider",
+    "npcCount": 1
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "088845:Skyrim.esm",
+    "editorId": "KhajiitRaceVampire",
+    "name": "Khajiit",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "08883A:Skyrim.esm",
+    "editorId": "ArgonianRaceVampire",
+    "name": "Argonian",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "0B214B:Skyrim.esm",
+    "editorId": "dunMiddenEmptyRace",
+    "name": "",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Skyrim.esm",
+    "formKey": "09AA3C:Skyrim.esm",
+    "editorId": "SwarmRace",
+    "name": "Witchlight",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "002F93:Update.esm",
+    "editorId": "ccBGSSSE036_BoneWolfCompanionRace",
+    "name": "Dog",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "002F74:Update.esm",
+    "editorId": "ccBGSSSE035_NixHoundCompanionRace",
+    "name": "Dog",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "08883A:Skyrim.esm",
+    "editorId": "ArgonianRaceVampire",
+    "name": "Argonian",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Update.esm",
+    "formKey": "088845:Skyrim.esm",
+    "editorId": "KhajiitRaceVampire",
+    "name": "Khajiit",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "0122B7:Dawnguard.esm",
+    "editorId": "DLC1HuskyBareCompanionRace",
+    "name": "Dog",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "088845:Skyrim.esm",
+    "editorId": "KhajiitRaceVampire",
+    "name": "Khajiit",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "00E88A:Dawnguard.esm",
+    "editorId": "DLC1NordRace",
+    "name": "Nord",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "00A94B:Dawnguard.esm",
+    "editorId": "DLC01SoulCairnBonemanRace",
+    "name": "Skeleton",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "004D31:Dawnguard.esm",
+    "editorId": "TestRace",
+    "name": "Nord",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Dawnguard.esm",
+    "formKey": "00483B:Dawnguard.esm",
+    "editorId": "testDraugrRace",
+    "name": "Draugr",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "02C88C:Dragonborn.esm",
+    "editorId": "DLC2DragonBlackRace",
+    "name": "Dragon Race",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "02C88B:Dragonborn.esm",
+    "editorId": "DragonBlackRace",
+    "name": "Dragon Race",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "01B647:Dragonborn.esm",
+    "editorId": "DLC2MudcrabSolstheimRace",
+    "name": "MudCrab",
+    "npcCount": 0
+  },
+  {
+    "plugin": "Dragonborn.esm",
+    "formKey": "01A50A:Dragonborn.esm",
+    "editorId": "DLC2ThirskRieklingRace",
+    "name": "",
+    "npcCount": 0
+  }
+]

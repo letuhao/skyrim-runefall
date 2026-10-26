@@ -1,0 +1,4 @@
+Runefall 0.1.9
+created: 2026-10-26
+stage: layered specs - L3 content and data architecture drafted
+parent: 0.1.8

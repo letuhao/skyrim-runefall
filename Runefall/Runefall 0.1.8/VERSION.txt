@@ -1,0 +1,4 @@
+Runefall 0.1.8
+created: 2026-10-26
+stage: layered specs - cut-list audit; dynamic loot confirmed mandatory
+parent: 0.1.7

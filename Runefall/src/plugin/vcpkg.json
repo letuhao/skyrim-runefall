@@ -1,0 +1,23 @@
+{
+    "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
+    "name": "runefall",
+    "version-string": "0.2.0",
+    "builtin-baseline": "ee12231b20c95013c6638d845d04c91559a1d1ff",
+    "dependencies": [
+        "spdlog",
+        "directxtk",
+        "rapidcsv",
+        "directxmath",
+        "fmt",
+        "nlohmann-json",
+        "simpleini",
+        "toml11",
+        "xbyak"
+    ],
+    "features": {
+        "tests": {
+            "description": "Catch2 unit tests",
+            "dependencies": [ "catch2" ]
+        }
+    }
+}

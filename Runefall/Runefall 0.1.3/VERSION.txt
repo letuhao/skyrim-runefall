@@ -1,0 +1,4 @@
+Runefall 0.1.3
+created: 2026-10-26
+stage: layered specs - six rarity bands with rarity index = enhancement count
+parent: 0.1.2

@@ -1,0 +1,4 @@
+Runefall 0.1.13
+created: 2026-10-26
+stage: layered specs - DataMiner run, unique affixes derived (U=40), gaps G1-G10 closed
+parent: 0.1.12

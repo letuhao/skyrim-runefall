@@ -1,0 +1,4 @@
+Runefall 0.1.12
+created: 2026-10-26
+stage: layered specs - multi-ESL packs, unique affixes gap, mining plan
+parent: 0.1.11

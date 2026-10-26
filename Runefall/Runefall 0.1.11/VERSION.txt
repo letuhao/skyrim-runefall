@@ -1,0 +1,4 @@
+Runefall 0.1.11
+created: 2026-10-26
+stage: layered specs - math-derived content plan (108 affixes, coverage gates)
+parent: 0.1.10

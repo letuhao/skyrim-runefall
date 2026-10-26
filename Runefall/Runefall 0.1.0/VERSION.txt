@@ -1,0 +1,4 @@
+Runefall 0.1.0
+created: 2026-10-26
+stage: context/design baseline (no build artifact yet)
+parent: none

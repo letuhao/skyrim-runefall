@@ -66,3 +66,19 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+
+# Runefall project additions
+Runefall/src/plugin/lib/
+Runefall/src/plugin/.git
+Runefall/src/plugin/CMakeUserPresets.json
+Runefall/build/
+Runefall 0.*/build/
+**/bin/
+**/obj/
+.vs/
+.vscode/
+*.user
+.env
+*.zip
+*.7z

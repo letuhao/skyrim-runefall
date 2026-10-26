@@ -1,0 +1,4 @@
+Runefall 0.1.2
+created: 2026-10-26
+stage: layered specs - L1 revised to event-driven economy (no time-based pacing)
+parent: 0.1.1

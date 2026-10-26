@@ -1,0 +1,218 @@
+Runefall CHANGELOG
+==================
+
+0.2.0-dev - 2026-10-26
+- Repository initialized: project moved to D:\Works\source\skyrim-moddings\skyrim-runefall
+  (GitHub letuhao/skyrim-runefall) under the Runefall/ folder; README and .gitignore updated;
+  third-party toolchain and build outputs excluded; initial commit created.
+- I2 content generator implemented and PASSed: Runefall\tools\Runefall.Build (Mutagen 0.50.2)
+  writes Runefall.esp (184 records), Runefall - Unique.esp (40), Runefall - Hunt.esp (38),
+  18 data CSVs (600 affix rows, 59 unique rows, 19 hunt families, 36 general-drop rows),
+  formats.json, two pack manifests and runefall.ini. Output: Runefall\build\dist; deployed to
+  J:\SkyrimTest\1.6.1170. WARN: SPEL/PERK/COBJ/QUST/NPC records next phase.
+- I1 native core implemented and builds: modular Config, DataStore (18 CSV tables + formats.json),
+  PackManager (plugin/manifest validation), FormResolver (EditorID lookup), CoSave (versioned TLV,
+  round-trip + truncation self-test), DebugHarness (RunefallProbe.log PASS/WARN/FAIL), PapyrusBridge
+  (4 functions), plugin bootstrap. Artifact 780,288 bytes,
+  SHA-256 7867ABEB...1ECB; deployed to the 1.6.1170 test env. Runtime batch test deferred to T1
+  per D-063.
+- Strategy changed on user direction: **implement v1 fully before manual testing** (D-063).
+  Static gates + an automated in-DLL probe harness run during implementation; manual game
+  testing is batched into T1 (one launch: full probe suite + scripted walkthrough) and T2
+  (fix confirmation). PLAN.md rewritten into I1-I6 implementation phases and T1/T2 test phases.
+- Release target changed on user direction: **Skyrim 1.6.1170 only** (Mantras of Mara, SKSE
+  1.6.1170, Address Library 1.6.1170). Skyrim 1.7.104 is deferred/unsupported until the modding
+  ecosystem supports it; the 1.7.104 clone was removed (D-062). L4/L5, GAME-DESIGN, PLAN,
+  AGENTS.md and STATE updated accordingly.
+- Design phase complete (L1-L5 + gap register). Phase 0 starts: CommonLibSSE-NG plugin spike.
+- Pinned library corrected to the active fork: alandtse/CommonLibSSE-NG v14.0.1 (2026-10-25),
+  which carries 1.7.99+ runtime support; the older CharmedBaryon repo is not the build target.
+- Project scaffold: C++ plugin under Runefall\src\plugin (template-derived CMake + vcpkg),
+  minimal Plugin.cpp with logging, Papyrus bridge stub and kDataLoaded message.
+- Build SUCCESS: Runefall.dll (613,376 bytes, SHA-256 00F206D5...32B2A), MSVC 14.44,
+  CommonLibSSE-NG v14.0.1, vcpkg triplet x64-windows-static-md; exports SKSEPlugin_Load/
+  Query/Version verified. Scaffold: spdlog log, Papyrus stubs, co-save callbacks, kDataLoaded.
+- Staged test mod: Runefall\build\phase0-mod; in-game load test pending (user-side, copied
+  profile).
+- Phase 0 runtime PASS on J:\SkyrimTest\1.6.1170 (built from Mantras Stock Game + SKSE 1.6.1170 +
+  Address Library 1.6.1170): SKSE loaded Runefall.dll; log confirms plugin load, AE 1.6.1170
+  detection, co-save callbacks, Papyrus registration and kDataLoaded. Evidence logs copied to
+  Runefall\build\phase0-evidence. Game process stopped after verification.
+- Test environment: J:\SkyrimTest\1.6.1170 built from Mantras Stock Game + SKSE 1.6.1170 +
+  Address Library 1.6.1170 + Runefall.dll (ready to launch). The 1.7.104 clone was removed after
+  the target was deferred; SKSE 2.3.1 / AL v13 are no longer requirements (D-062).
+
+0.1.18 - 2026-10-26
+- Drafted SPECS\L5-COMPAT-RELEASE.md: dependency matrix, compatibility pass matrix, version
+  matrix and game-patch policy, FOMOD module matrix and packaging rules, adapted ship gates,
+  test plan, uninstall/pack-disable matrix, release/version policy, Nexus deliverables, risks.
+- Decisions D-056..D-061 recorded.
+- All five design layers (L1-L5) now drafted; next is the Phase 0 CommonLibSSE-NG spike.
+
+0.1.17 - 2026-10-26
+- Drafted SPECS\L4-RUNTIME.md: single-DLL module layout, 11-hook map with budgets, pack/data
+  runtime contract, item metadata + identity design (primary/fallback), co-save TLV format with
+  nine sections, versioned Papyrus bridge, SKSE Menu Framework UI integration, failure modes,
+  multi-runtime build, extension points, N-01..N-10 acceptance mapping, and a 12-item Phase 0
+  spike checklist.
+- Decisions D-049..D-055 recorded.
+
+0.1.16 - 2026-10-26
+- Added SPECS\GAP-REGISTER-FUTURE.md: brainstormed future gaps split into RESERVE (32 items
+  across gameplay, presentation, compatibility/platform), NOW hooks (10) and WATCH risks (8),
+  plus a derived expansion roadmap (1.1 Crafting, 1.2 Hunt II + Unique II, 1.3 UI/QoL, 1.4
+  endgame/modes, 2.0 rune families/sets/procs).
+- Reserve counts derived from mined content: 10 sub-threshold hunt families, 11 boss and 28
+  quest unique candidates held back from v1.
+- Decisions D-047 (future register + v1 scope lock) and D-048 (cheap-now hooks) recorded.
+
+0.1.15 - 2026-10-26
+- Crafting scope split on user direction: the full Crafting Table (base-item crafting, targeted
+  affix crafting, Affix Shards, recipe chains, socket-add, craft UI) is reserved as the
+  Runefall - Crafting.esp expansion. v1 keeps Rune Forge basics only (salvage, socket/extract,
+  reroll, rarity upgrade, rune conversion, material hunting).
+- Hunting becomes the primary v1 progression mechanism: gear comes from general/race/boss/quest
+  hunting; hunt materials feed Rune Forge costs until the crafting expansion ships.
+- Budgets adjusted: v1 COBJ ~8 (was 20-25), records ~465-495, recipes.csv ~8 rows; expansion
+  later adds ~17 COBJ + craft records.
+- L1 C-03/C-09, L2 crafting mapping, L3 pack lineup/COBJ/recipes, L3B section 13, L3E note updated.
+- Decisions D-045 (crafting expansion) and D-046 (hunting primacy) recorded.
+
+0.1.14 - 2026-10-26
+- New gaps covered on user direction: G11 general drop table and G12 race hunt tables.
+- Added SPECS\L3E-HUNT-AND-DROP-TABLES.md: purpose-hunting design, family threshold rule,
+  general table (36 rows), race rewards (19 families x 2 rows), drop rates, schemas, validation.
+- DataMiner extended to mine RACE records and NPC race usage: 204 RACE records, 161 merged,
+  29 families, 19 qualifying (>=10 NPC actors). races.json added to mining outputs.
+- Budgets updated: unique affixes 59 (20 boss + 20 quest + 19 hunt), MGEF ~201, records
+  ~480-510, MISC ~39; new optional Runefall - Hunt.esp pack.
+- Decisions D-043/D-044; L1 L-10/L-11, L2 loot mapping, L3 schemas, L3B math updated.
+
+0.1.13 - 2026-10-26
+- Built Runefall\tools\DataMiner (C#, Mutagen, read-only) and ran it over the five official
+  masters from the target game folder. Mined: 3,293 weapons, 3,835 armors, 752 enchantments,
+  6,525 NPCs, 2,391 quests; candidates: 1,453 HIGH named items, 31 HIGH boss NPCs, 48
+  reward-pattern quests.
+- Derived unique-affix count U = 20 boss + 20 quest = 40 (L3D); added unique_affixes.csv and
+  unique_sources.csv schemas; Unique pack budget fixed.
+- Gaps G1-G10 now closed (L3C status table).
+- Decisions: D-041 updated with the mined U=40; D-040 multi-ESL architecture; D-042 mining tool.
+
+0.1.12 - 2026-10-26
+- Plugin architecture changed to a base ESL plugin plus independent content expansion packs
+  (Unique, Bosses, Affixes, Quests, Patches), each with its own FormID window, pack manifest and
+  EditorID-based cross-plugin data links (D-040).
+- New content class: unique affixes from boss fights and quests (D-041); count derived after
+  mining; shipped in Runefall - Unique.esp.
+- Added SPECS\L3D-UNIQUE-AFFIXES-MINING.md: official-DLC data-mining plan, tool specification,
+  detection/confidence rules, provenance policy, unique-affix mapping pipeline.
+- L3B revised to the 120-affix benchmark budget; L3C now carries the G1-G10 gap closure table.
+- Decisions D-040, D-041, D-042 recorded.
+
+0.1.11 - 2026-10-26
+- Added SPECS\L3B-CONTENT-MATH.md: affix, naming, skill, slot and record budgets derived from the
+  3 builds x 9 attributes x 18 skills model. 108 affixes (9 x 12 = 18 x 6), 540 tier rows,
+  21-22 per category, 108 prefixes/suffixes (11,664 names), 4.7M rarity-5 enhancement sets,
+  ~170 MGEF and ~420-450 records.
+- L3 updated to the math-derived budget; L3A marked as reference-volume comparison only.
+- Decisions D-038 (math-derived affix matrix) and D-039 (coverage validation gates).
+
+0.1.10 - 2026-10-26
+- Added SPECS\L3A-CONTENT-SIZE-COMPARISON.md: measured reference volumes (DiabloRim,
+  Summermyst, Worlds Dawn, Fortunate Foes, PROTEUS, Grid Inventory) versus Runefall's planned
+  volume; per-area gaps and resolutions.
+- Revised L3 budgets: FormID map expanded and record plan raised to ~440-470; affixes 40 -> 60
+  (12/category, 300 rows); MGEF ~50 -> ~150; bosses 10 -> 12-16; recipes 20-25; localization
+  250-350 keys; v1 asset minimum (17 icons, 6 rarity badges, 5 rank markers).
+- Decisions D-035 (FormID map/record budget), D-036 (v1 content targets), D-037 (assets).
+
+0.1.9 - 2026-10-26
+- Drafted SPECS\L3-CONTENT-DATA.md: ESL record set and fixed FormID category ranges, EditorID
+  convention, data file layout (affixes, rarity, ranks, drop tables, materials, recipes,
+  skills, attributes, strings), CSV schemas, deterministic Mutagen build + validator, module
+  split, localization staging, and the L1/L2 -> L3 mapping.
+- Recorded decisions D-031..D-034 (FormID ranges/EditorIDs, versioned data schemas, deterministic
+  build, Core/UI/Patches/Balance module split).
+
+0.1.8 - 2026-10-26
+- Cut-list audit on user direction: dynamic loot and drop tables are required, not cut.
+  Combinatorial item space cannot be records; generation is per-instance at runtime.
+- L2 section 3 rewritten: dynamic enchantment (ObjectReference/WornObject CreateEnchantment),
+  display name, tempering, co-save registry; drop tables are CSV/JSON data; container path uses
+  native inventory-entry first with the Worlds Dawn dummy-actor fallback.
+- L2 section 9 replaced by an audited verdict table; the pre-generated variant fallback removed.
+- Decisions: D-023 rewritten (dynamic generation mandatory), D-029 (drop tables are data),
+  D-030 (container mutation path). Phase 0 list expanded to 12 items including 1,000-item
+  breadth and container-path proof.
+
+0.1.7 - 2026-10-26
+- Analysed PROTEUS 3.4.0 (Nexus 46620) as the runtime actor/record editing reference:
+  _context\rpg-mechanism\10-PROTEUS.md.
+- L2 gained section 13: PROTEUS findings (SKSE native Papyrus record-edit methods, keyword
+  mutation, JContainers preset re-application, session-scope caveat, dependency/UI costs) and
+  their consequences for Runefall.
+- Decisions D-027 (no vanilla/shared record mutation; own forms only) and D-028 (co-save is
+  authoritative; external files are content/config only).
+
+0.1.6 - 2026-10-26
+- Drafted SPECS\L2-SKYRIM-MAPPING.md: attribute channel map, native hotkey cast model,
+  loot/tier/salvage hooks, per-item metadata approach, co-save/uninstall rules, UI surfaces,
+  native/Papyrus split, honest cut list, and 10 Phase 0 validation items.
+- Recorded decisions D-021..D-026 (cast model, SKSE Menu Framework UI, per-item metadata,
+  container loot roll, rank assignment, boss content).
+
+0.1.5 - 2026-10-26
+- (Removed afterwards as redundant: tool and dumps deleted; see D-020 - AVs already exist in
+  the Mutagen/Synthesis model, no engine re-investigation. Design output kept in L2A.)
+- Added SPECS\L2A-ACTOR-VALUE-COVERAGE.md: domain classification of the 149 values, a
+  9-attribute x 8-domain coverage matrix, and the finding that Endurance, Wisdom and Willpower
+  were combat/magic-only.
+- Added one non-combat anchor to every attribute (gather yield, stamina/regen, crafting
+  efficiency, fall reduction, sneak detection, persuasion, spell learning, potion
+  effectiveness, intimidation) and the P-11 rule requiring it.
+- Classified actor values for L2: safe to modify, read-only gates, and avoid (physics,
+  combat multipliers, AI, quest, unused variables). Added L2 questions 11-13.
+
+0.1.4 - 2026-10-26
+- Progression expanded on user direction: 9 attributes in three build groups (Warrior: Might,
+  Endurance, Precision; Thief: Agility, Guile, Cunning; Mage: Intellect, Wisdom, Willpower),
+  each gating exactly two skills, with per-point effect tables.
+- Added the skill system to L1: 18 skill lines (6 per build), 3 ranks each (54 nodes), 9 active
+  + 9 passive, gated by Skyrim skill 20/50/75 and paired attribute 10/20/30.
+- Attribute points changed to 2 per character level (1 skill point per level separately);
+  soft cap 30 / hard cap 60; separate respec costs; build freedom without class lock.
+
+0.1.3 - 2026-10-26
+- Item rarity changed from five to six bands (0-5) on user direction: the rarity index is
+  now the enhancement count (0 enhancements at Common, 5 at Runeforged). Five enhancement
+  categories therefore cap an item at five enhancements; rarity 5 optionally carries one
+  unique runeforged effect that is not an enhancement.
+- Updated rarity weights (55/25/11/6/2.5/0.5), socket table, pity ladder (20/80/400 kills),
+  rarity-upgrade costs, boss wording and GAME-DESIGN balance table.
+
+0.1.2 - 2026-10-26
+- L1 economy rewritten as event-driven (E-00..E-07): income and costs are measured per
+  combat encounter, loot event, discovery and boss kill instead of per hour; no idle or
+  passive generation; exploration has its own faucet (locations, nodes, caches) and is
+  allowed to be quiet.
+- L1 player-experience targets reframed from minutes to encounter counts; pacing section
+  renumbered (E-08..E-11).
+- GAME-DESIGN anti-exploit wording aligned with the event-driven rule.
+
+0.1.1 - 2026-10-26
+- Established the layered spec process (SPECS\00-SPEC-PROCESS.md): L1 gameplay, L2 Skyrim
+  mapping, L3 content/data, L4 runtime, L5 compatibility/release.
+- Drafted L1 gameplay model (SPECS\L1-GAMEPLAY-MODEL.md): rune resource and ladder, four
+  attributes with derived stats, five rarity bands and affix model, loot pipeline with pity
+  protection, five enemy ranks with monster affixes, crafting/salvage/material tiers,
+  economy faucets and sinks, pacing bands, and open questions for the Skyrim mapping.
+- Confirmed (user): the rune is a new item, shipped in one ESL-flagged plugin; code work is
+  deferred until the spec layers are reviewed.
+
+0.1.0 - 2026-10-26
+- Created the versioned workspace and design baseline (GAME-DESIGN.md).
+- Defined the four pillars: progression attributes, loot, enemy tiers, crafting & material hunting.
+- Defined the Rune Rank economy shared by player, equipment and enemies.
+- Chosen architecture: one native CommonLibSSE-NG DLL + one ESL content plugin + optional UI/patch modules.
+- Recorded the compatibility strategy: new FormIDs only, runtime application, no vanilla record edits, optional SkyPatcher patches only.
+- Open decisions listed in GAME-DESIGN.md section 8 and DECISIONS.md.

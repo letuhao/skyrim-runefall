@@ -1,0 +1,4 @@
+Runefall 0.1.10
+created: 2026-10-26
+stage: layered specs - reference data-size audit; L3 budgets revised
+parent: 0.1.9
