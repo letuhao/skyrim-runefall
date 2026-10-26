@@ -128,6 +128,25 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## T1 crash investigation 2026-10-27 00:19-00:42 - test env contaminated
+
+Repeated T1 launches crashed ~6 s after start, before kDataLoaded. CrashLogger reports the same
+C++ exception stack: KERNELBASE -> VCRUNTIME140 -> MSVCP140 -> SkyrimSE.exe+1235AE9. Runefall.dll
+is loaded but is not in the faulting stack.
+
+Critical environment evidence from the crash logs:
+- Loaded plugin counts are Light: 68 Regular: 15 Total: 83, including 10 CC .esm masters
+  (ccasvsse001-almsivi.esm, ccbgssse001-fish.esm, ...) and 65 CC .esl files, plus Runefall's
+  three ESLs. The T1 runner writes only 5 official masters + the 3 Runefall ESLs to Plugins.txt,
+  so the game is not using the runner's list (MO2/Mantras state or another plugin list wins).
+- One run's SKSE log had handle 139 for SKSEMenuFramework, i.e. ~160 SKSE plugins loaded, which
+  is the user's Mantras environment, not this test env.
+- Crash logs report SKSEMenuFramework v3.14 even after we reinstalled the 3.18 package
+  (file SHA-256 0C107AD4...D55A2); removing imgui.dll and CrashLogger did not change the crash.
+- Verdict: the test environment was externally modified (CC content, framework copy, extra SKSE
+  plugins) and is no longer a controlled 5-master workspace. T1 results from it are not a valid
+  test of Runefall. A fresh isolated test env must be built before the next T1 attempt.
+
 ## T1 batch runs 2026-10-26/27 (in progress)
 
 Three launch attempts were made with the safe runner. Key findings and fixes:

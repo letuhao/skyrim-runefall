@@ -75,11 +75,11 @@ Implementation phase I1 (native core) is in progress:
    modular bootstrap. Build PASS (780,288 bytes, hash 7867ABEB...1ECB); deployed to the test env.
 2. DONE (I2 foundation): Runefall.Build generator PASS; 3 ESL plugins (184/40/38 records) +
    18 data CSVs + manifests + ini generated and deployed to J:\SkyrimTest\1.6.1170.
-3. T1 IN PROGRESS: light-plugin scan, manifest mapping and lazy-form fixes captured; COBJ
-   content complete (base plugin 254 records); static gates 5/5 PASS; candidate 448,604 B
-   SHA-256 E6230112...D6EC. T1 runs blocked while the user's E: Skyrim 1.7.104 runs. NEXT:
-   close all Skyrim processes, rerun run-t1.ps1 with a new game; only NPC/CLAS boss templates
-   remain unimplemented.
+3. T1 BLOCKED by contaminated environment: newer runs crash in SkyrimSE+1235AE9 with 15
+   regular / 68 light plugins loaded (CC content + Mantras SKSE state), despite the runner's
+   5-master list; framework reports 3.14, imgui/CrashLogger removal did not help. COBJ content
+   is restored (254 records, validator PASS). NEXT: rebuild a clean isolated test env from the
+   Stock Game, then run run-t1.ps1 there; only NPC/CLAS boss templates remain unimplemented.
 
 Already proven and kept as evidence: DLL build, plugin load, Papyrus/co-save registration and
 kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\evidence\phase0).

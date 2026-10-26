@@ -2,6 +2,9 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- T1 blocked: repeated runs crash in SkyrimSE data load (SkyrimSE+1235AE9) while the test env
+  shows 15 regular/68 light plugins and SKSEMenuFramework 3.14 despite a 3.18 install; environment
+  was externally modified, so results are invalid. Rebuilding a clean isolated test env is next.
 - COBJ content: 8 constructible recipes (rune conversion/socket/utility) after initializing
   ConstructibleObject.Items; base plugin 254 records; validator passes COBJ + skill/quest/
   formlist checks. Candidate archive 448,604 B, SHA-256 E6230112...D6EC.
