@@ -12,7 +12,11 @@ Status: **P1 safety fixes applied 2026-10-27** (runtime loot verified in-game). 
   data-handler logs; Core/DataStore filesystem error_code guards; explicit loot failure logs.
 - **P1.9 N/A:** `AddObjectToContainer` returns void in this CommonLibSSE-NG version; documented.
 - Runtime loot default is now **enabled** (`bEnableRuntimeLoot=1`) and both probe/death paths pass.
-- Remaining work starts at P2 (spec consistency) and P3.1/P3.2 (FormID allocation + validator).
+- **P3.1 FIXED:** FormKeyAllocator now moves ModHeader.Stats.NextFormID to the L3 §1.1 category floors (KYWD 0x800, GLOB 0x880, MGEF 0x900, SPEL 0xA00, PERK 0xB00, MISC 0xB80, COBJ 0xC00, QUST/FLST 0xC80; packs start MGEF at 0x900 and hunt MISC at 0xB80).
+- **P3.2 FIXED:** validator now enforces each category range and fails on violations; generator RUNEFALL PASS.
+- **P3.8 FIXED:** release archive now contains Data/SKSE/Plugins/Runefall.dll (verified in zip).
+- **P5.1 PARTIAL:** FOMOD info.xml and pack manifests now use 0.2.0-dev; CMake/DLL metadata still 0.2.0 until promotion.
+- Remaining work starts at P2 (spec consistency), P3.3-P3.7, and P4/P5.
 
 Audit sources:
 - Spec consistency audit (15 findings)

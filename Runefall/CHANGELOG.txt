@@ -2,6 +2,9 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- FormID category windows implemented (L3 §1.1) with validator enforcement; ESL affix fallback
+  updated to 0x900; runtime probe re-verified after renumbering. FOMOD/manifest versions aligned
+  to 0.2.0-dev; release archive includes Data/SKSE plugin.
 - Runtime loot fixed: use InventoryChanges::EnchantObject instead of manual ExtraDataList;
   probe item and enchanted death drop verified in-game (Mythic Iron Mace, 4 affixes), no crash.
   Death task keeps NiPointer; dead-actor guard corrected; runtime loot enabled by default.

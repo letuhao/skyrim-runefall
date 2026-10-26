@@ -128,6 +128,18 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## FormID category windows + validator 2026-10-27 04:40-04:45
+
+- FormKeyAllocator now moves Mutagen's NextFormID to the L3 §1.1 category floors; generator
+  reordered to create ranges monotonically (KYWD/GLOB/MGEF/SPEL/PERK/MISC/COBJ/QUST-FLST).
+- Validator enforces each category range for all three plugins; RESULT PASS.
+- Reference fallback for ESL affix MGEFs updated from 0x848 to 0x900 + index.
+- Runtime re-test after renumbering: CleanSave loaded, gameplay activation fired, probe item
+  injected ("RF_MGEF_Affix_019" via local FormID), no crash, game running.
+- Release archive includes Data/SKSE/Plugins/Runefall.dll; FOMOD/manifest versions now 0.2.0-dev.
+- Artifacts: DLL 955904 B SHA-256 9E425F30F514727684CBD2DF944F8D5DC37C1B7C1C22E4523AFCEC960024D68F; candidate Runefall-0.2.0-dev.zip 462,412 B
+  SHA-256 43ADC548...F378.
+
 ## Runtime loot fixed 2026-10-27 04:20-04:36
 
 - Root cause: manually allocated ExtraDataList + SetEnchantment + AddObjectToContainer crashed.

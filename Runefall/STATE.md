@@ -76,9 +76,9 @@ Implementation phase I1 (native core) is in progress:
 2. DONE (I2 foundation): Runefall.Build generator PASS; 3 ESL plugins (184/40/38 records) +
    18 data CSVs + manifests + ini generated and deployed to J:\SkyrimTest\1.6.1170.
 3. IN-GAME TESTING ACTIVE: CleanSave+MCP, 18/18 self-tests, CoSave save/load, F1 menu and
-   F10/F11/F12 hotkeys pass. Runtime loot FIXED via InventoryChanges::EnchantObject and enabled
-   by default; probe item + enchanted death drop verified on a Bandit corpse with no crash.
-   FIX-PLAN P1 safety items applied; next work is P2/P3.1-P3.2 and menu page interaction.
+   hotkeys pass. Runtime loot fixed (EnchantObject) and enabled; probe item and enchanted death
+   drop verified. FormID category windows + validator (P3.1/P3.2) and SKSE-in-FOMOD (P3.8) done;
+   candidate archive rebuilt. Next: P2 spec consistency, P3.3-P3.7/P4 features, menu page check.
 
 Already proven and kept as evidence: DLL build, plugin load, Papyrus/co-save registration and
 kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\evidence\phase0).

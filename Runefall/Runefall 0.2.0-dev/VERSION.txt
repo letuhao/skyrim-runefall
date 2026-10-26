@@ -1,7 +1,8 @@
 Runefall 0.2.0-dev
 created: 2026-10-27
-stage: runtime loot fixed and verified in-game; P1 safety fixes applied
+stage: runtime loot fixed; category FormIDs + validator; candidate rebuilt
 parent: 0.1.18
 target: Skyrim SE/AE 1.6.1170 + SKSE 1.6.1170 + Address Library 1.6.1170 (D-062)
-artifact: Runefall.dll 955904 bytes sha256 15B53797BD804C0C84859952F8C224AD7FAF6E8C982A9AAE1FB3F720A316FA01
-runtime: probe item + death drop PASS with EnchantObject; no crash
+artifact: Runefall.dll 955904 bytes sha256 9E425F30F514727684CBD2DF944F8D5DC37C1B7C1C22E4523AFCEC960024D68F
+candidate: build/release/Runefall-0.2.0-dev.zip 462,412 bytes sha256 43ADC5482830C6144BE6276B5A87104414C0123050C96D8732A73757267BF378
+runtime: probe item + enchanted death drop PASS; no crash

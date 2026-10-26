@@ -138,7 +138,7 @@ internal static class Program
                    $"  \"packId\": {JsonString(packId)},\n" +
                    $"  \"plugin\": {JsonString(plugin)},\n" +
                    "  \"format\": 1,\n" +
-                   "  \"minBaseVersion\": \"0.2.0\",\n" +
+                   "  \"minBaseVersion\": \"0.2.0-dev\",\n" +
                    $"  \"contentFiles\": [{filesJson}],\n" +
                    $"  \"recordCount\": {count},\n" +
                    $"  \"recordEditors\": [{editorsJson}],\n" +

@@ -14,6 +14,20 @@ internal static class Validator
         var allEditors = new HashSet<string>(StringComparer.Ordinal);
         var counts = new Dictionary<string, int>();
 
+        void CheckRange<T>(string pluginName, string category, IEnumerable<T> records, uint min, uint max) where T : IFormKeyGetter
+        {
+            foreach (var record in records)
+            {
+                var id = record.FormKey.ID;
+                if (id < min || id > max)
+                {
+                    lines.Add($"FAIL plugin {pluginName}: {category} FormID 0x{id:X} outside 0x{min:X}-0x{max:X}");
+                    failed = true;
+                    return;
+                }
+            }
+        }
+
         foreach (var plugin in plugins)
         {
             var loaded = SkyrimMod.CreateFromBinary(plugin.Path, SkyrimRelease.SkyrimSE);
@@ -24,6 +38,15 @@ internal static class Validator
                 lines.Add($"FAIL plugin {plugin.Name}: ESL flag missing");
                 failed = true;
             }
+            CheckRange(plugin.Name, "KYWD", loaded.Keywords, 0x800, 0x87F);
+            CheckRange(plugin.Name, "GLOB", loaded.Globals, 0x880, 0x8FF);
+            CheckRange(plugin.Name, "MGEF", loaded.MagicEffects, 0x900, 0x9FF);
+            CheckRange(plugin.Name, "SPEL", loaded.Spells, 0xA00, 0xAFF);
+            CheckRange(plugin.Name, "PERK", loaded.Perks, 0xB00, 0xB7F);
+            CheckRange(plugin.Name, "MISC", loaded.MiscItems, 0xB80, 0xBFF);
+            CheckRange(plugin.Name, "COBJ", loaded.ConstructibleObjects, 0xC00, 0xC7F);
+            CheckRange(plugin.Name, "QUST/FLST", loaded.Quests, 0xC80, 0xCFF);
+            CheckRange(plugin.Name, "QUST/FLST", loaded.FormLists, 0xC80, 0xCFF);
             var masters = loaded.ModHeader.MasterReferences.Select(m => m.Master.Name).ToHashSet(StringComparer.OrdinalIgnoreCase);
             if (!masters.Contains("Skyrim"))
             {

@@ -16,6 +16,10 @@ internal sealed class FormKeyAllocator
     public FormKeyAllocator(SkyrimMod mod) => this.mod = mod;
 
     public FormKey Next() => new(mod.ModKey, next++);
+
+    // Mutagen allocates new records from ModHeader.Stats.NextFormID; moving the floor before a
+    // category creates the fixed L3 §1.1 FormID windows.
+    public void StartAt(uint a_id) => mod.ModHeader.Stats.NextFormID = a_id;
 }
 
 internal static class PluginFactory
@@ -31,14 +35,17 @@ internal static class PluginFactory
 
         var uniqueMod = NewMod("Runefall - Unique.esp");
         var uniqueKeys = new FormKeyAllocator(uniqueMod);
+        uniqueKeys.StartAt(0x900);
         foreach (var editor in content.UniqueNames.Where(e => e.StartsWith("RF_MGEF_Unique_", StringComparison.Ordinal)))
             AddEffect(uniqueMod, uniqueKeys, editor);
         Write(uniqueMod, Path.Combine(dataDir, "Runefall - Unique.esp"), outputs);
 
         var huntMod = NewMod("Runefall - Hunt.esp");
         var huntKeys = new FormKeyAllocator(huntMod);
+        huntKeys.StartAt(0x900);
         foreach (var editor in content.HuntNames)
             AddEffect(huntMod, huntKeys, editor);
+        huntKeys.StartAt(0xB80);
         foreach (var (group, _, _) in content.RaceFamilyNames.Select(g => (g, 0, 0)))
         {
             var editor = "RF_MISC_Mat_Hunt_" + ContentFactory.SlugPascal(group);
@@ -59,6 +66,7 @@ internal static class PluginFactory
 
     private static void AddBaseRecords(SkyrimMod mod, FormKeyAllocator keys, Content content)
     {
+        keys.StartAt(0x800);
         var rarity = new[] { "Common", "Refined", "Exquisite", "Radiant", "Mythic", "Runeforged" };
         foreach (var name in rarity)
             mod.Keywords.Add(new Keyword(mod) { EditorID = "RF_KW_Rarity_" + name });
@@ -72,6 +80,7 @@ internal static class PluginFactory
         foreach (var tier in new[] { "Common", "Refined", "Exotic", "Mythic" })
             mod.Keywords.Add(new Keyword(mod) { EditorID = "RF_KW_MatTier_" + tier });
 
+        keys.StartAt(0x880);
         foreach (var (build, attribute) in new[] { ("Warrior", "Might"), ("Warrior", "Endurance"), ("Warrior", "Precision"), ("Thief", "Agility"), ("Thief", "Guile"), ("Thief", "Cunning"), ("Mage", "Intellect"), ("Mage", "Wisdom"), ("Mage", "Willpower") })
             mod.Globals.Add(new GlobalFloat(mod) { EditorID = "RF_GLOB_Attr_" + attribute, Data = 0f });
         mod.Globals.Add(new GlobalFloat(mod) { EditorID = "RF_GLOB_State_RuneTier", Data = 0f });
@@ -79,6 +88,77 @@ internal static class PluginFactory
         foreach (var skill in content.SkillNames)
             mod.Globals.Add(new GlobalInt(mod) { EditorID = "RF_GLOB_Skill_" + ContentFactory.SlugPascal(skill), Data = 0 });
 
+        keys.StartAt(0x900);
+        foreach (var editor in content.BaseMgefEditors)
+            AddEffect(mod, keys, editor);
+
+        var skillEffects = new Dictionary<string, FormKey>(StringComparer.OrdinalIgnoreCase);
+        foreach (var row in content.SkillRows)
+        {
+            var skill = row[1];
+            if (row[4] == "active" && !skillEffects.ContainsKey(skill))
+                skillEffects[skill] = AddEffect(mod, keys, "RF_MGEF_Skill_" + skill.Replace(' ', '_'));
+        }
+
+        keys.StartAt(0xA00);
+        foreach (var row in content.SkillRows)
+        {
+            if (row[4] != "active")
+                continue;
+            var skill = row[1];
+            for (var rank = 0; rank < 3; ++rank)
+            {
+                var editor = row[5 + rank];
+                var name = skill + " Rank " + (rank + 1);
+                var spell = new Spell(mod)
+                {
+                    EditorID = editor,
+                    Name = name,
+                    Type = SpellType.Ability,
+                    CastType = CastType.FireAndForget,
+                    TargetType = TargetType.Self,
+                    BaseCost = 0,
+                    ChargeTime = 0,
+                    CastDuration = 0,
+                    Effects = new Noggog.ExtendedList<Effect>()
+                };
+                spell.Effects!.Add(new Effect
+                {
+                    BaseEffect = new FormLinkNullable<IMagicEffectGetter>(skillEffects[skill]),
+                    Data = new EffectData
+                    {
+                        Magnitude = 1.0f,
+                        Area = 0,
+                        Duration = 0
+                    }
+                });
+                mod.Spells.Add(spell);
+            }
+        }
+
+        keys.StartAt(0xB00);
+        foreach (var row in content.SkillRows)
+        {
+            if (row[4] == "active")
+                continue;
+            var skill = row[1];
+            for (var rank = 0; rank < 3; ++rank)
+            {
+                var editor = row[5 + rank];
+                var name = skill + " Rank " + (rank + 1);
+                mod.Perks.Add(new Perk(mod)
+                {
+                    EditorID = editor,
+                    Name = name,
+                    Description = string.Empty,
+                    NumRanks = 1,
+                    Playable = true,
+                    Hidden = false
+                });
+            }
+        }
+
+        keys.StartAt(0xB80);
         var miscByEditor = new Dictionary<string, FormKey>(StringComparer.Ordinal);
         for (int rank = 1; rank <= 5; rank++)
         {
@@ -94,68 +174,10 @@ internal static class PluginFactory
                 miscByEditor[editor] = AddMisc(mod, keys, editor, tier + " " + family, 5u, 0.2f);
             }
 
+        keys.StartAt(0xC00);
         AddRecipes(mod, miscByEditor);
 
-        foreach (var editor in content.BaseMgefEditors)
-            AddEffect(mod, keys, editor);
-
-        var skillEffects = new Dictionary<string, FormKey>(StringComparer.OrdinalIgnoreCase);
-        foreach (var row in content.SkillRows)
-        {
-            var skill = row[1];
-            if (row[4] == "active" && !skillEffects.ContainsKey(skill))
-                skillEffects[skill] = AddEffect(mod, keys, "RF_MGEF_Skill_" + skill.Replace(' ', '_'));
-        }
-
-        foreach (var row in content.SkillRows)
-        {
-            var skill = row[1];
-            var skillType = row[4];
-            for (var rank = 0; rank < 3; ++rank)
-            {
-                var editor = row[5 + rank];
-                var name = skill + " Rank " + (rank + 1);
-                if (skillType == "active")
-                {
-                    var spell = new Spell(mod)
-                    {
-                        EditorID = editor,
-                        Name = name,
-                        Type = SpellType.Ability,
-                        CastType = CastType.FireAndForget,
-                        TargetType = TargetType.Self,
-                        BaseCost = 0,
-                        ChargeTime = 0,
-                        CastDuration = 0,
-                        Effects = new Noggog.ExtendedList<Effect>()
-                    };
-                    spell.Effects!.Add(new Effect
-                    {
-                        BaseEffect = new FormLinkNullable<IMagicEffectGetter>(skillEffects[skill]),
-                        Data = new EffectData
-                        {
-                            Magnitude = 1.0f,
-                            Area = 0,
-                            Duration = 0
-                        }
-                    });
-                    mod.Spells.Add(spell);
-                }
-                else
-                {
-                    mod.Perks.Add(new Perk(mod)
-                    {
-                        EditorID = editor,
-                        Name = name,
-                        Description = string.Empty,
-                        NumRanks = 1,
-                        Playable = true,
-                        Hidden = false
-                    });
-                }
-            }
-        }
-
+        keys.StartAt(0xC80);
         mod.Quests.Add(new Quest(mod) { EditorID = "RF_QUST_Core", Name = "Runefall Core" });
         var debugQuest = new Quest(mod) { EditorID = "RF_QUST_Debug", Name = "Runefall Debug" };
         debugQuest.VirtualMachineAdapter = new QuestAdapter();

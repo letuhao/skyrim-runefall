@@ -9,11 +9,11 @@ namespace Runefall
 		auto* form = RE::TESForm::LookupByEditorID(std::string_view{ a_editorID });
 		if (!form) {
 			// Light-plugin (ESL) EditorIDs are not reliably present in the global editor-ID map.
-			// Runefall affix MGEFs are allocated from local FormID 0x848 in Runefall.esp.
+			// Runefall affix MGEFs are allocated from local FormID 0x900 in Runefall.esp (L3 §1.1).
 			if (a_editorID.starts_with("RF_MGEF_Affix_")) {
 				const auto index = std::atoi(std::string{ a_editorID.substr(a_editorID.size() - 3) }.c_str());
 				if (auto* dataHandler = RE::TESDataHandler::GetSingleton()) {
-					if (auto* effect = dataHandler->LookupForm<RE::EffectSetting>(static_cast<RE::FormID>(0x848 + index), "Runefall.esp")) {
+					if (auto* effect = dataHandler->LookupForm<RE::EffectSetting>(static_cast<RE::FormID>(0x900 + index), "Runefall.esp")) {
 						logger::info("form-resolver: '{}' resolved via Runefall.esp local FormID", a_editorID);
 						return effect;
 					}
