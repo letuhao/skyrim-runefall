@@ -128,6 +128,17 @@ is maintained; the supported test environment is J:\SkyrimTest\1.6.1170.
   Runefall.log.
 - Deployed to J:\SkyrimTest\1.6.1170 and runefall\build\phase0-mod for the T1 session.
 
+## T1 attempt 2026-10-26 23:37 - BLOCKED by live user game
+
+- A first T1 launch was attempted and immediately detected the user's Mantras game already
+  running (H:\Skyrim\MantrasOfMara\Stock Game\SkyrimSE.exe). The temporary Plugins.txt was
+  restored from backup; no user game process was touched.
+- Partial evidence: our test plugin loaded into a process and wrote Runefall.log lines
+  (version, AE 1.6.1170, config PASS, co-save callbacks) before the attempt was stopped; no
+  kDataLoaded/Papyrus/probe log was reached. Evidence: Runefall\build\evidence\t1.
+- New guard script Runefall\tools\run-t1.ps1 refuses to launch while any other Skyrim process
+  exists and backs up/restores Plugins.txt; it must be re-run after the user closes the game.
+
 ## I5 static gates + v1 candidate archive (2026-10-26)
 
 Command: Runefall\tools\run-static-gates.ps1

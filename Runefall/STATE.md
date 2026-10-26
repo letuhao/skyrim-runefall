@@ -75,11 +75,11 @@ Implementation phase I1 (native core) is in progress:
    modular bootstrap. Build PASS (780,288 bytes, hash 7867ABEB...1ECB); deployed to the test env.
 2. DONE (I2 foundation): Runefall.Build generator PASS; 3 ESL plugins (184/40/38 records) +
    18 data CSVs + manifests + ini generated and deployed to J:\SkyrimTest\1.6.1170.
-3. IN PROGRESS I5/I6: Menu Framework pages use the dynamic fixed header; DLL 914,432 bytes
-   hash B88B509A...5399. Static gates 5/5 PASS and v1 candidate archive
-   Runefall-0.2.0-dev.zip built (443,397 bytes, SHA-256 13CFE91F...8FB1, FOMOD included).
-   NEXT: install the candidate into the test env, enable the three ESLs, run the single T1
-   batch game test; COBJ/NPC records still pending.
+3. T1 BLOCKED: the first T1 launch found the user's Mantras game already running; Plugins.txt
+   was restored and no user process touched. Static gates 5/5 PASS and candidate
+   Runefall-0.2.0-dev.zip (443,397 B, SHA-256 13CFE91F...8FB1) are ready. Added safe runner
+   Runefall/tools/run-t1.ps1 (refuses while another Skyrim runs). NEXT: close the live game,
+   run run-t1.ps1 for the single batch test; COBJ/NPC records still pending.
 
 Already proven and kept as evidence: DLL build, plugin load, Papyrus/co-save registration and
 kDataLoaded on J:\SkyrimTest\1.6.1170 (Runefall\evidence\phase0).
