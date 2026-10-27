@@ -783,10 +783,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 
 
-## Player item-added counter 2026-10-27 11:03
+## Candidate re-verification after item hook 2026-10-27 11:04
 
-- HookManager increments a player item-added counter when TESContainerChangedEvent targets FormID 0x14;
-  MenuApi diagnostics expose it alongside container/menu/cell/object counts.
-- Static gates 5/5 PASS (static-gates-20261027-110226.md); full batch PASS, 18/18 self-tests,
-  hunt unique PASS, no crash (batch-test-20261027-110306.md).
-- Artifact DLL 1021440 B SHA-256 055950B21D91930871D794B79508871AF640712A83D7149EAE6D1EF48F48702C; candidate zip 495667 B SHA-256 BAC5B815F8467F1EA4BC618D460556B56F1D86A0210ADA5672D8D286DF36A346.
+- release verifier 21/21 PASS (release-verify-20261027-110455.md).
+- DLL 1,021,440 B sha256 055950B21D91930871D794B79508871AF640712A83D7149EAE6D1EF48F48702C;
+  zip 495,667 B sha256 BAC5B815F8467F1EA4BC618D460556B56F1D86A0210ADA5672D8D286DF36A346.
+- Batch evidence batch-test-20261027-110306.md (all checks PASS).
