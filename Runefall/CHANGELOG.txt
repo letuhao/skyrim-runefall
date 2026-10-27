@@ -2,6 +2,7 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- Compatibility evidence recorded for the tested 86-plugin baseline; remaining targets disclosed.
 - Final validation pass: static gates 5/5, full batch (with TapKey hotkeys) PASS, release archive
   verifier 21/21.
 - Batch harness hotkeys fixed via MCP Input.TapKey; full in-game run passes including F10/F11/F12.

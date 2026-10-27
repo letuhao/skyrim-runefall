@@ -34,7 +34,10 @@ boxes; compatibility patches live in the Patches pack, never in Core.
 | Enchanting/alchemy/armor overhauls | stacking | percentage caps; additive bonuses | NOT TESTED (disclose) |
 | Survival mods | food/rest, damage | no AV repurposing; caps | NOT TESTED (disclose) |
 | Boss overhauls | rank stacking | caps and density config | NOT TESTED (disclose) |
-| UI stacks (SKSE Menu Framework, SkyUI, Prisma UI) | menus | framework pages coexist; no vanilla UI replacement | PASS on 1.6.1170 test list |
+| UI stacks (SKSE Menu Framework, SkyUI, Prisma UI) | menus | framework pages coexist; no vanilla UI replacement | PASS on 1.6.1170 test list (F1 pages, batch) |
+| USSEP + Alternate Start | load-order baseline | no vanilla record edits | PASS on 1.6.1170 test list (CleanSave load/run) |
+| Official/CC content (15 ESM/ESL) | masters/records | additive ESL records only | PASS on 1.6.1170 test list |
+| EngineFixes + SkyrimSoulsRE + CrashLogger | SKSE plugin stack | no conflict observed | PASS on 1.6.1170 test list |
 | Leveled-list/container mods (LLOS, CDF) | loot routing | runtime injection only | NOT TESTED (disclose) |
 | DynDOLOD/Occlusion/world mods | world edits | none in our mods | n/a (expected safe) |
 
@@ -185,3 +188,10 @@ Uninstall and pack-disable matrix (N-10):
 - D-060 Ship-gate adaptation to available tooling, with the Forge/houseCARL gap disclosed and our
   Mutagen validator substituting; completion report required per release.
 - D-061 Nexus publishing deliverables, media plan, credits/AI disclosure and evidence-only claims.
+
+## 2.1 Tested compatibility evidence (2026-10-27)
+
+- Test load order: 86 plugins (loadorder.txt SHA-256 4A88FC153496B801817763049A04C7B6E457B3D491DFB2A04A4581A6C8AC051D), Skyrim SE 1.6.1170.
+- SKSE plugins: CrashLogger, EngineFixes, Runefall, SKSEMenuFramework, SkyrimMCPPlugin, SkyrimSoulsRE.
+- Evidence: batch-test-20261027-103519.md and release-verify-20261027-103628.md; F1 pages captured in docs/media.
+- Targets not installed in the test environment (OWL, DiabloRim, Worlds Dawn, Fortunate Foes, perk/survival/boss overhauls) remain NOT TESTED and must not be published as compatible.
