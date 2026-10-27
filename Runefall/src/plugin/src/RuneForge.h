@@ -46,6 +46,7 @@ namespace Runefall
 			std::int32_t runeCost = 0;
 		};
 		std::unordered_map<std::int32_t, SocketCostDef> socketRecipes;
+		std::unordered_map<std::int32_t, SocketCostDef> convertRecipes;
 
 	};
 }

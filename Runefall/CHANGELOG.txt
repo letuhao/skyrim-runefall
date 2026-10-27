@@ -2,6 +2,7 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- Rune-convert recipes consume material costs; RuneForge self-test updated.
 - Socket recipes consume materials + rune cost via MaterialRegistry; MaterialRegistry::Consume.
 - unique_sources.csv consumed by HuntEngine; unique grants log their source.
 - Derived attribute stats: attribute_effects consumer, MenuApi derived object, Papyrus GetDerivedStat.

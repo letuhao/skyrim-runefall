@@ -774,11 +774,11 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 ## Unique sources consumer 2026-10-27 10:07
 
 
-## Socket recipe consumption 2026-10-27 10:11
 
-- RuneForge loads socket_craft rows from recipes.csv; Socket consumes the recipe material via
-  MaterialRegistry and the recipe rune cost, refunding material if rune spend fails.
-- RuneForge self-test seeds required materials and passes in the 18/18 probe run.
-- Static gates 5/5 PASS (static-gates-20261027-101112.md); batch 17/17 PASS, 18/18 self-tests
-  (batch-test-20261027-101145.md).
-- Artifact DLL 1014272 B SHA-256 8701022A1A1923922428F3CC5B976EFB79A02D17766CE251A36DC9A9164B0441; candidate zip 492519 B SHA-256 6FF80D894E617F98A54AF83BE58DACC60B5D7B563174DD470007B9D6A8B1DAFE.
+## Rune-convert recipe consumption 2026-10-27 10:17
+
+- RuneForge loads rune_convert recipes and consumes their material cost before converting 5 lower
+  runes; self-test updated and batch re-verified 18/18.
+- Static gates 5/5 PASS (static-gates-20261027-101723.md); batch 17/17 PASS
+  (batch-test-20261027-101801.md).
+- Artifact DLL 1015808 B SHA-256 D2973FADA447C56B26196CE3F81F7B2502FB539AE1AE9EB4D59261494067D6FC; candidate zip 493106 B SHA-256 A03EF8859358DAD52F7949CFA83CDBA524AB2C7F6E7D9757043136586554F1C9.

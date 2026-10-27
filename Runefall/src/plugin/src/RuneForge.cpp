@@ -70,6 +70,7 @@ namespace Runefall
 	void RuneForge::ReloadSocketRecipes()
 	{
 		socketRecipes.clear();
+		convertRecipes.clear();
 		const auto* table = DataStore::Get().GetTable("recipes.csv");
 		if (!table)
 			return;
@@ -83,12 +84,13 @@ namespace Runefall
 		for (const auto& row : table->rows) {
 			if (cType < 0 || cMaterials < 0 || static_cast<std::size_t>(cType) >= row.size() || static_cast<std::size_t>(cMaterials) >= row.size())
 				continue;
-			if (row[static_cast<std::size_t>(cType)] != "socket_craft")
+			const auto outputType = row[static_cast<std::size_t>(cType)];
+			if (outputType != "socket_craft" && outputType != "rune_convert")
 				continue;
 			const auto& recipe = row[static_cast<std::size_t>(cId)];
 			const auto rankChar = recipe.empty() ? '0' : recipe.back();
 			const auto rank = rankChar - '0';
-			if (rank < 1 || rank > 3)
+			if (rank < 1 || rank > 4)
 				continue;
 			const auto materialText = row[static_cast<std::size_t>(cMaterials)];
 			const auto split = materialText.find(':');
@@ -96,9 +98,12 @@ namespace Runefall
 			def.materialId = split == std::string::npos ? materialText : materialText.substr(0, split);
 			def.materialCount = split == std::string::npos ? 1 : std::atoi(materialText.substr(split + 1).c_str());
 			def.runeCost = cRune >= 0 && static_cast<std::size_t>(cRune) < row.size() ? std::atoi(row[static_cast<std::size_t>(cRune)].c_str()) : rank * 10;
-			socketRecipes[rank] = std::move(def);
+			if (outputType == "socket_craft")
+				socketRecipes[rank] = std::move(def);
+			else
+				convertRecipes[rank] = std::move(def);
 		}
-		logger::info("rune-forge: loaded {} socket recipes", socketRecipes.size());
+		logger::info("rune-forge: loaded {} socket / {} convert recipes", socketRecipes.size(), convertRecipes.size());
 	}
 
 	RuneForge& RuneForge::Get()
@@ -206,6 +211,10 @@ namespace Runefall
 		auto& from = wallet[static_cast<std::size_t>(a_fromRank - 1)];
 		if (from < 5)
 			return { false, 1 };
+		if (const auto it = convertRecipes.find(a_fromRank); it != convertRecipes.end()) {
+			if (!MaterialRegistry::Get().Consume(it->second.materialId, it->second.materialCount))
+				return { false, 8 };
+		}
 		from -= 5;
 		wallet[static_cast<std::size_t>(a_fromRank)] += 1;
 		return { true, 0 };
@@ -219,6 +228,7 @@ namespace Runefall
 		auto& materials = CoSave::Get().State().materials;
 		materials["rf_mat_refined_essence"] = 10;
 		materials["rf_mat_exotic_essence"] = 10;
+		materials["rf_mat_refined_ore"] = 10;
 
 		ItemMetadata item;
 		item.rarity = 1;
