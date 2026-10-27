@@ -783,11 +783,10 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 
 
-## Derived GLOB records 2026-10-27 10:55
+## Candidate re-verification 2026-10-27 10:59
 
-- Generator emits RF_GLOB_Derived_* records for every attribute effect key (36 globals at
-  0x8A8+), inside the GLOB range; validator PASS.
-- Progression writes computed derived values plus attribute/RF-tier mirrors on load/save/spend.
-- Static gates 5/5 PASS (static-gates-20261027-105544.md); full batch PASS, self-tests 18/18,
-  hunt unique PASS, no crash (batch-test-20261027-105625.md).
-- Artifact DLL 1021440 B SHA-256 5A0B8D0A711736D0A0B38B2BB06C34FBC4F02ED709AC6B3591BD9D8778329EFB; candidate zip 495544 B SHA-256 DBD397E1297568A5DD8EB0283BB4B08691112E9BC3516D11C072413CDB0246A1.
+- Current candidate after derived-GLOB changes: release verifier 21/21 PASS
+  (release-verify-20261027-105921.md).
+- DLL 1,021,440 B sha256 5A0B8D0A711736D0A0B38B2BB06C34FBC4F02ED709AC6B3591BD9D8778329EFB;
+  zip 495,544 B sha256 DBD397E1297568A5DD8EB0283BB4B08691112E9BC3516D11C072413CDB0246A1.
+- Batch evidence batch-test-20261027-105625.md (all checks PASS).
