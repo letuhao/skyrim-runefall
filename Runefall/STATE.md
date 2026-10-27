@@ -86,8 +86,8 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
   decisions; ARCHITECTURE rule 10 makes balance data-only.
 - F0.1 in progress (2026-10-28): StageEngine full ABI/validation, co-save v3 ladder section,
   old tier keyword retirement, generator validator; batch 20/20 PASS and static gates 6/6.
-  Remaining: wire StageEngine into loot/rank path, host core/benchmark, then F0.2 JSON schema.
-- Next: finish F0.1 integration/tests, then freeze JSON schema and start JSON pipeline.
+  F0.1 PASS. F0.2 PASS: 28 JSON schemas, base pack 7 entities, validator and static gate.
+- Next: F0.3 JSON content pipeline (generator reads JSON, emits runtime data/ESP), then JSON DataStore.
 
 ## Next step
 

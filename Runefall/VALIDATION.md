@@ -854,3 +854,13 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
   build/evidence/batch-test-20261028-050132.md.
 - Static gates 6/6 PASS: build/evidence/static-gates-20261028-050307.md.
 - Remaining F0.1: wire StageEngine into loot/rank path and add host core/benchmark gate.
+
+
+## F0.2 JSON schema freeze (2026-10-28 05:10-05:18)
+
+- 28 JSON Schema files under content/schema/v1 + pack manifest schema.
+- Base pack content/base with 7 ladder entity files converted from CSV.
+- Python validator validates all schemas, the pack manifest and all entity files: PASS.
+- Static gates now 7/7 PASS including JSON schemas:
+  build/evidence/static-gates-20261028-051731.md.
+- F0.3 JSON content pipeline is next; runtime still reads legacy CSV until F0.3/F0.9.
