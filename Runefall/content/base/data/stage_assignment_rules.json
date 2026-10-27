@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "rules": [
+    {
+      "ruleId": 1,
+      "source": "worldband",
+      "appliesTo": "any",
+      "minStage": 1,
+      "maxStage": 100,
+      "offsetMin": 0,
+      "offsetMax": 0,
+      "jitter": 0,
+      "seedSalt": "w",
+      "priority": 100,
+      "enabled": true,
+      "notes": "world band default"
+    },
+    {
+      "ruleId": 2,
+      "source": "encounter",
+      "appliesTo": "any",
+      "minStage": 1,
+      "maxStage": 100,
+      "offsetMin": 0,
+      "offsetMax": 2,
+      "jitter": 1,
+      "seedSalt": "e",
+      "priority": 200,
+      "enabled": true,
+      "notes": "encounter offset"
+    },
+    {
+      "ruleId": 3,
+      "source": "override",
+      "appliesTo": "any",
+      "minStage": 1,
+      "maxStage": 100,
+      "offsetMin": 0,
+      "offsetMax": 0,
+      "jitter": 0,
+      "seedSalt": "o",
+      "priority": 1000,
+      "enabled": true,
+      "notes": "explicit override"
+    },
+    {
+      "ruleId": 4,
+      "source": "playerrank",
+      "appliesTo": "player",
+      "minStage": 1,
+      "maxStage": 100,
+      "offsetMin": 0,
+      "offsetMax": 0,
+      "jitter": 0,
+      "seedSalt": "p",
+      "priority": 150,
+      "enabled": true,
+      "notes": "player rank input"
+    },
+    {
+      "ruleId": 5,
+      "source": "default",
+      "appliesTo": "any",
+      "minStage": 1,
+      "maxStage": 100,
+      "offsetMin": 0,
+      "offsetMax": 0,
+      "jitter": 0,
+      "seedSalt": "d",
+      "priority": 0,
+      "enabled": true,
+      "notes": "fallback"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "spawn-rule.schema.json",
+  "title": "Spawn rule",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "key"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "key": {
+      "$ref": "common.schema.json#/$defs/contentKey"
+    },
+    "regionRef": {
+      "type": "string"
+    },
+    "cellRef": {
+      "type": "string"
+    },
+    "encounterZoneRef": {
+      "$ref": "common.schema.json#/$defs/formRef"
+    },
+    "stageBand": {
+      "type": "string"
+    },
+    "rate": {
+      "type": "number",
+      "minimum": 0
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/conditionRef"
+      }
+    },
+    "maxPerCell": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "maxActive": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": true
+}

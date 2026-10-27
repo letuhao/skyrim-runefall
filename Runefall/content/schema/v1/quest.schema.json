@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "quest.schema.json",
+  "title": "Quest or hunt contract",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "key",
+    "type"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "key": {
+      "$ref": "common.schema.json#/$defs/contentKey"
+    },
+    "type": {
+      "enum": [
+        "quest",
+        "hunt",
+        "raid",
+        "bounty"
+      ]
+    },
+    "stages": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "objectives": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "rewards": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "encounterRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "unlockRequirements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

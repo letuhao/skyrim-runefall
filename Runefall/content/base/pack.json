@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "runefall-base",
+  "version": "0.1.0",
+  "name": "Runefall base content",
+  "description": "Base ladder and balance content migrated from the POC CSV tables.",
+  "content": [
+    {
+      "entity": "stageLadder",
+      "file": "data/stage_ladder.json"
+    },
+    {
+      "entity": "tierDefinitions",
+      "file": "data/tier_definitions.json"
+    },
+    {
+      "entity": "curveProfiles",
+      "file": "data/curve_profiles.json"
+    },
+    {
+      "entity": "difficultyProfiles",
+      "file": "data/difficulty_profiles.json"
+    },
+    {
+      "entity": "assignmentRules",
+      "file": "data/stage_assignment_rules.json"
+    },
+    {
+      "entity": "contentBands",
+      "file": "data/stage_content_bands.json"
+    },
+    {
+      "entity": "legacyTierMap",
+      "file": "data/legacy_rf_tier_map.json"
+    }
+  ],
+  "localization": []
+}

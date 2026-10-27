@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "encounter-template.schema.json",
+  "title": "Encounter template",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "key",
+    "class",
+    "stageRange"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "key": {
+      "$ref": "common.schema.json#/$defs/contentKey"
+    },
+    "class": {
+      "type": "string"
+    },
+    "roleWeights": {
+      "type": "object"
+    },
+    "stageRange": {
+      "$ref": "common.schema.json#/$defs/stageRange"
+    },
+    "actorCount": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "caps": {
+      "type": "object"
+    },
+    "cooldown": {
+      "type": "number",
+      "minimum": 0
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/conditionRef"
+      }
+    },
+    "rewardTable": {
+      "type": "string"
+    },
+    "identityPolicy": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

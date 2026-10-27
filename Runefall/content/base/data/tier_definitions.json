@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "tiers": [
+    {
+      "tier": 1,
+      "name": "Runetouched",
+      "nameKey": "RF_TIER_01_NAME",
+      "stageMin": 1,
+      "stageMax": 10,
+      "keywordEditorId": "RF_KW_Tier_01",
+      "breakpointTag": "RF_TIER_01",
+      "budgetStep": 100,
+      "unlockTag": "RF_TIER_01",
+      "description": "Runefall power tier 1"
+    },
+    {
+      "tier": 2,
+      "name": "Runebound",
+      "nameKey": "RF_TIER_02_NAME",
+      "stageMin": 11,
+      "stageMax": 20,
+      "keywordEditorId": "RF_KW_Tier_02",
+      "breakpointTag": "RF_TIER_02",
+      "budgetStep": 100,
+      "unlockTag": "RF_TIER_02",
+      "description": "Runefall power tier 2"
+    },
+    {
+      "tier": 3,
+      "name": "Runeforged",
+      "nameKey": "RF_TIER_03_NAME",
+      "stageMin": 21,
+      "stageMax": 30,
+      "keywordEditorId": "RF_KW_Tier_03",
+      "breakpointTag": "RF_TIER_03",
+      "budgetStep": 100,
+      "unlockTag": "RF_TIER_03",
+      "description": "Runefall power tier 3"
+    },
+    {
+      "tier": 4,
+      "name": "Runecrowned",
+      "nameKey": "RF_TIER_04_NAME",
+      "stageMin": 31,
+      "stageMax": 40,
+      "keywordEditorId": "RF_KW_Tier_04",
+      "breakpointTag": "RF_TIER_04",
+      "budgetStep": 100,
+      "unlockTag": "RF_TIER_04",
+      "description": "Runefall power tier 4"
+    },
+    {
+      "tier": 5,
+      "name": "Runelord",
+      "nameKey": "RF_TIER_05_NAME",
+      "stageMin": 41,
+      "stageMax": 50,
+      "keywordEditorId": "RF_KW_Tier_05",
+      "breakpointTag": "RF_TIER_05",
+      "budgetStep": 100,
+      "unlockTag": "RF_TIER_05",
+      "description": "Runefall power tier 5"
+    },
+    {
+      "tier": 6,
+      "name": "Runebreaker",
+      "nameKey": "RF_TIER_06_NAME",
+      "stageMin": 51,
+      "stageMax": 60,
+      "keywordEditorId": "RF_KW_Tier_06",
+      "breakpointTag": "RF_TIER_06",
+      "budgetStep": 100,
+      "unlockTag": "RF_TIER_06",
+      "description": "Runefall power tier 6"
+    },
+    {
+      "tier": 7,
+      "name": "Runefall Cataclysm",
+      "nameKey": "RF_TIER_07_NAME",
+      "stageMin": 61,
+      "stageMax": 70,
+      "keywordEditorId": "RF_KW_Tier_07",
+      "breakpointTag": "RF_TIER_07",
+      "budgetStep": 100,
+      "unlockTag": "RF_TIER_07",
+      "description": "Runefall power tier 7"
+    },
+    {
+      "tier": 8,
+      "name": "Runewarden",
+      "nameKey": "RF_TIER_08_NAME",
+      "stageMin": 71,
+      "stageMax": 80,
+      "keywordEditorId": "RF_KW_Tier_08",
+      "breakpointTag": "RF_TIER_08",
+      "budgetStep": 100,
+      "unlockTag": "RF_TIER_08",
+      "description": "Runefall power tier 8"
+    },
+    {
+      "tier": 9,
+      "name": "Runesovereign",
+      "nameKey": "RF_TIER_09_NAME",
+      "stageMin": 81,
+      "stageMax": 90,
+      "keywordEditorId": "RF_KW_Tier_09",
+      "breakpointTag": "RF_TIER_09",
+      "budgetStep": 100,
+      "unlockTag": "RF_TIER_09",
+      "description": "Runefall power tier 9"
+    },
+    {
+      "tier": 10,
+      "name": "Runefall Ascendant",
+      "nameKey": "RF_TIER_10_NAME",
+      "stageMin": 91,
+      "stageMax": 100,
+      "keywordEditorId": "RF_KW_Tier_10",
+      "breakpointTag": "RF_TIER_10",
+      "budgetStep": 100,
+      "unlockTag": "RF_TIER_10",
+      "description": "Runefall power tier 10"
+    }
+  ]
+}

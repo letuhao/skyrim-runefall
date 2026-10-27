@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "actor-template.schema.json",
+  "title": "Actor template",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "key",
+    "role"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "key": {
+      "$ref": "common.schema.json#/$defs/contentKey"
+    },
+    "baseActorRef": {
+      "$ref": "common.schema.json#/$defs/formRef"
+    },
+    "role": {
+      "type": "string"
+    },
+    "stageRange": {
+      "$ref": "common.schema.json#/$defs/stageRange"
+    },
+    "levelBand": {
+      "type": "string"
+    },
+    "packages": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "equipmentSet": {
+      "type": "string"
+    },
+    "lootTable": {
+      "type": "string"
+    },
+    "tags": {
+      "$ref": "common.schema.json#/$defs/tagList"
+    },
+    "exclusions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "archetypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

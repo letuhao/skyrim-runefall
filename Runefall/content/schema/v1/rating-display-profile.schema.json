@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rating-display-profile.schema.json",
+  "title": "Rating display profile",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "profileId",
+    "numberVisible",
+    "labelVisible"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "profileId": {
+      "type": "string"
+    },
+    "numberVisible": {
+      "type": "boolean"
+    },
+    "labelVisible": {
+      "type": "boolean"
+    },
+    "decimals": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2
+    },
+    "colorTokens": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

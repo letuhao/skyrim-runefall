@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ability.schema.json",
+  "title": "Ability or effect",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "key",
+    "effects"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "key": {
+      "$ref": "common.schema.json#/$defs/contentKey"
+    },
+    "trigger": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string"
+    },
+    "effects": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/effectRef"
+      }
+    },
+    "conditions": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/conditionRef"
+      }
+    },
+    "cooldown": {
+      "type": "number",
+      "minimum": 0
+    },
+    "budgetCost": {
+      "type": "number",
+      "minimum": 0
+    },
+    "localizationKey": {
+      "$ref": "common.schema.json#/$defs/localizationKey"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "curves": [
+    {
+      "curveId": 1,
+      "powerBase": 15,
+      "healthExp": 0.65,
+      "damageExp": 0.45,
+      "regenExp": 0.3,
+      "armorExp": 0.25,
+      "maxStage": 100,
+      "enabled": true,
+      "notes": "Runefall host curve (D-065/D-068)"
+    }
+  ]
+}

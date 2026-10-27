@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "content-bands.schema.json",
+  "title": "Stage content bands",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "bands"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "bands": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": [
+          "stageMin",
+          "stageMax",
+          "tier",
+          "playerLevelMin",
+          "playerLevelMax",
+          "itemLevelMin",
+          "itemLevelMax",
+          "gearCheckBand",
+          "unlockTag",
+          "v1Populated"
+        ],
+        "properties": {
+          "stageMin": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "stageMax": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "tier": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "playerLevelMin": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "playerLevelMax": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "itemLevelMin": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "itemLevelMax": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "gearCheckBand": {
+            "type": "string"
+          },
+          "unlockTag": {
+            "type": "string"
+          },
+          "v1Populated": {
+            "type": "boolean"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": true
+}

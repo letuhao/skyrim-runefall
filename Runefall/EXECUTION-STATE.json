@@ -1,0 +1,523 @@
+{
+  "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
+  "planVersion": "v2",
+  "overallStatus": "IN_PROGRESS",
+  "currentSlice": "F0.3",
+  "updatedAt": "2026-10-27T22:18:10.389Z",
+  "slices": {
+    "F0.1": {
+      "id": "F0.1",
+      "layer": "L0",
+      "slice": "Ladder audit fixes (first slice)",
+      "status": "PASS",
+      "acceptance": "audit blockers closed, 20+ self-tests, batch PASS, no dual system, no crash",
+      "depends": "current",
+      "evidence": [
+        "build/evidence/batch-test-20261028-050132.md",
+        "build/evidence/static-gates-20261028-050307.md",
+        "build/evidence/f0.1-evidence-20261028.md",
+        "build/evidence/batch-test-20261028-050606.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "request-abi": "PASS",
+        "default-difficulty": "PASS",
+        "curve-legacy-load": "PASS",
+        "table-validation": "PASS",
+        "co-save-v3": "PASS",
+        "tier-keyword-retirement": "PASS",
+        "generator-validator": "PASS",
+        "batch-no-crash": "PASS",
+        "static-gates": "PASS",
+        "wire-into-loot-rank": "PASS_BRIDGE",
+        "host-core-tests-benchmark": "PASS"
+      }
+    },
+    "F0.2": {
+      "id": "F0.2",
+      "layer": "L0",
+      "slice": "Freeze JSON schema",
+      "status": "PASS",
+      "acceptance": "all current content represented; schema validation passes; no CSV authoring",
+      "depends": "F0.1",
+      "evidence": [
+        "build/evidence/static-gates-20261028-051731.md",
+        "content/schema/validate_content.py"
+      ],
+      "notes": "",
+      "checklist": {
+        "schemas": "PASS_28",
+        "base-pack": "PASS_7_entities",
+        "validation": "PASS",
+        "static-gate": "PASS"
+      }
+    },
+    "F0.3": {
+      "id": "F0.3",
+      "layer": "L0",
+      "slice": "JSON content pipeline",
+      "status": "PENDING",
+      "acceptance": "base pack builds from JSON; invalid pack fails with path/line",
+      "depends": "F0.2",
+      "evidence": [],
+      "notes": ""
+    },
+    "F0.4": {
+      "id": "F0.4",
+      "layer": "L0",
+      "slice": "JSON runtime loader",
+      "status": "PENDING",
+      "acceptance": "runtime loads JSON; missing/corrupt table fails closed",
+      "depends": "F0.3",
+      "evidence": [],
+      "notes": ""
+    },
+    "F0.5": {
+      "id": "F0.5",
+      "layer": "L0",
+      "slice": "Co-save v3",
+      "status": "PENDING",
+      "acceptance": "old save loads; corruption rejected; save size budget",
+      "depends": "F0.4",
+      "evidence": [],
+      "notes": ""
+    },
+    "F0.6": {
+      "id": "F0.6",
+      "layer": "L0",
+      "slice": "Host core and tests",
+      "status": "PENDING",
+      "acceptance": "host CI PASS; load/lookup budgets measured",
+      "depends": "F0.3-F0.5",
+      "evidence": [],
+      "notes": ""
+    },
+    "F0.7": {
+      "id": "F0.7",
+      "layer": "L0",
+      "slice": "Runtime content resolver",
+      "status": "PENDING",
+      "acceptance": "unknown race resolves; repeatable; cache reload; no crash",
+      "depends": "F0.4/F0.6",
+      "evidence": [],
+      "notes": ""
+    },
+    "F0.8": {
+      "id": "F0.8",
+      "layer": "L0",
+      "slice": "Diagnostics and rescan",
+      "status": "PENDING",
+      "acceptance": "manual and automatic rescan work; no load spike",
+      "depends": "F0.7",
+      "evidence": [],
+      "notes": ""
+    },
+    "F0.9": {
+      "id": "F0.9",
+      "layer": "L0",
+      "slice": "POC JSON migration",
+      "status": "PENDING",
+      "acceptance": "generator and runtime both use JSON only; regression PASS",
+      "depends": "F0.3/F0.4",
+      "evidence": [],
+      "notes": ""
+    },
+    "C1.1": {
+      "id": "C1.1",
+      "layer": "L1",
+      "slice": "Protection spike",
+      "status": "PENDING",
+      "acceptance": "spike covers direct/DoT/reflected/environmental; no crash",
+      "depends": "F0.4",
+      "evidence": [],
+      "notes": ""
+    },
+    "C1.2": {
+      "id": "C1.2",
+      "layer": "L1",
+      "slice": "Roles and race classification",
+      "status": "PENDING",
+      "acceptance": "vanilla/DLC mapped; modded race defaults; no content gap",
+      "depends": "F0.7",
+      "evidence": [],
+      "notes": ""
+    },
+    "C1.3": {
+      "id": "C1.3",
+      "layer": "L1",
+      "slice": "Threat protection",
+      "status": "PENDING",
+      "acceptance": "staged fights respect gap; apply-once; no crash",
+      "depends": "C1.1/C1.2",
+      "evidence": [],
+      "notes": ""
+    },
+    "C1.4": {
+      "id": "C1.4",
+      "layer": "L1",
+      "slice": "NPC packages",
+      "status": "PENDING",
+      "acceptance": "humanoid/creature packages apply once; gear remains vanilla-lootable",
+      "depends": "C1.3",
+      "evidence": [],
+      "notes": ""
+    },
+    "C1.5": {
+      "id": "C1.5",
+      "layer": "L1",
+      "slice": "Actor equipment distribution",
+      "status": "PENDING",
+      "acceptance": "selected actors get gear/perks; toggle safe; save/load safe",
+      "depends": "C1.4",
+      "evidence": [],
+      "notes": ""
+    },
+    "C1.6": {
+      "id": "C1.6",
+      "layer": "L1",
+      "slice": "Player attributes",
+      "status": "PENDING",
+      "acceptance": "attribute budget data-driven; PCR follows gear/class",
+      "depends": "F0.4",
+      "evidence": [],
+      "notes": ""
+    },
+    "C1.7": {
+      "id": "C1.7",
+      "layer": "L1",
+      "slice": "Combat ratings",
+      "status": "PENDING",
+      "acceptance": "ratings reproducible; formulas match data; display profiles",
+      "depends": "C1.3/C1.6",
+      "evidence": [],
+      "notes": ""
+    },
+    "C1.8": {
+      "id": "C1.8",
+      "layer": "L1",
+      "slice": "Player attacker/penetration",
+      "status": "PENDING",
+      "acceptance": "warrior/mage both penetrate; player no protection default",
+      "depends": "C1.3/C1.6",
+      "evidence": [],
+      "notes": ""
+    },
+    "W2.1": {
+      "id": "W2.1",
+      "layer": "L2",
+      "slice": "World bands",
+      "status": "PENDING",
+      "acceptance": "data drives area stage; vanilla zones respected",
+      "depends": "C1.4",
+      "evidence": [],
+      "notes": ""
+    },
+    "W2.2": {
+      "id": "W2.2",
+      "layer": "L2",
+      "slice": "Spawn and encounter system",
+      "status": "PENDING",
+      "acceptance": "spawns follow data; reload-safe; no city/quest leaks",
+      "depends": "W2.1",
+      "evidence": [],
+      "notes": ""
+    },
+    "W2.3": {
+      "id": "W2.3",
+      "layer": "L2",
+      "slice": "Rare high-stage spawns",
+      "status": "PENDING",
+      "acceptance": "low-level zone can rarely spawn high stage; rate tunable",
+      "depends": "W2.2",
+      "evidence": [],
+      "notes": ""
+    },
+    "W2.4": {
+      "id": "W2.4",
+      "layer": "L2",
+      "slice": "Hunt contracts",
+      "status": "PENDING",
+      "acceptance": "hunts work end-to-end; no duplicate rewards",
+      "depends": "W2.2",
+      "evidence": [],
+      "notes": ""
+    },
+    "W2.5": {
+      "id": "W2.5",
+      "layer": "L2",
+      "slice": "Bosses and unique actors",
+      "status": "PENDING",
+      "acceptance": "authored bosses at designed stage; unique refs resolve",
+      "depends": "W2.2/W2.4",
+      "evidence": [],
+      "notes": ""
+    },
+    "W2.6": {
+      "id": "W2.6",
+      "layer": "L2",
+      "slice": "Anomaly ladder",
+      "status": "PENDING",
+      "acceptance": "anomaly content works without host protection",
+      "depends": "C1.2/W2.2",
+      "evidence": [],
+      "notes": ""
+    },
+    "W2.7": {
+      "id": "W2.7",
+      "layer": "L2",
+      "slice": "Runtime cache lifecycle",
+      "status": "PENDING",
+      "acceptance": "cache correct after pack change; rescan safe",
+      "depends": "F0.7/W2.2",
+      "evidence": [],
+      "notes": ""
+    },
+    "A3.1": {
+      "id": "A3.1",
+      "layer": "L3",
+      "slice": "Ladder-driven loot",
+      "status": "PENDING",
+      "acceptance": "loot follows stage and data; no hardcoded values",
+      "depends": "W2.2/C1.4",
+      "evidence": [],
+      "notes": ""
+    },
+    "A3.2": {
+      "id": "A3.2",
+      "layer": "L3",
+      "slice": "Materials and tokens",
+      "status": "PENDING",
+      "acceptance": "materials are items; unknown roles get tokens",
+      "depends": "C1.2",
+      "evidence": [],
+      "notes": ""
+    },
+    "A3.3": {
+      "id": "A3.3",
+      "layer": "L3",
+      "slice": "Runtime item generation",
+      "status": "PENDING",
+      "acceptance": "generated item persists; visuals/name correct; no crash",
+      "depends": "A3.2/F0.7",
+      "evidence": [],
+      "notes": ""
+    },
+    "A3.4": {
+      "id": "A3.4",
+      "layer": "L3",
+      "slice": "Crafting system",
+      "status": "PENDING",
+      "acceptance": "full crafting loop; transaction-safe",
+      "depends": "A3.3",
+      "evidence": [],
+      "notes": ""
+    },
+    "A3.5": {
+      "id": "A3.5",
+      "layer": "L3",
+      "slice": "Rune equipment and inventory",
+      "status": "PENDING",
+      "acceptance": "rune gear works; inventory data stable",
+      "depends": "A3.4",
+      "evidence": [],
+      "notes": ""
+    },
+    "A3.6": {
+      "id": "A3.6",
+      "layer": "L3",
+      "slice": "Rune economy and attunement",
+      "status": "PENDING",
+      "acceptance": "progression with ladder; save-safe",
+      "depends": "A3.1",
+      "evidence": [],
+      "notes": ""
+    },
+    "A3.7": {
+      "id": "A3.7",
+      "layer": "L3",
+      "slice": "Loot authority compat",
+      "status": "PENDING",
+      "acceptance": "compatibility smoke PASS; no crash",
+      "depends": "A3.1",
+      "evidence": [],
+      "notes": ""
+    },
+    "P4.1": {
+      "id": "P4.1",
+      "layer": "L4",
+      "slice": "Rune Level progression",
+      "status": "PENDING",
+      "acceptance": "40-hour targets data-driven; breakthrough works",
+      "depends": "C1.6/F0.5",
+      "evidence": [],
+      "notes": ""
+    },
+    "P4.2": {
+      "id": "P4.2",
+      "layer": "L4",
+      "slice": "9 classes",
+      "status": "PENDING",
+      "acceptance": "9 classes data-driven; class build differs",
+      "depends": "P4.1",
+      "evidence": [],
+      "notes": ""
+    },
+    "P4.3": {
+      "id": "P4.3",
+      "layer": "L4",
+      "slice": "Skills and passives",
+      "status": "PENDING",
+      "acceptance": "builds playable; no NPC skill contamination",
+      "depends": "P4.2",
+      "evidence": [],
+      "notes": ""
+    },
+    "P4.4": {
+      "id": "P4.4",
+      "layer": "L4",
+      "slice": "Prisma UI foundation",
+      "status": "PENDING",
+      "acceptance": "UI loads; read-only snapshot works; no gameplay in UI",
+      "depends": "F0.8",
+      "evidence": [],
+      "notes": ""
+    },
+    "P4.5": {
+      "id": "P4.5",
+      "layer": "L4",
+      "slice": "Character/HUD/indicators",
+      "status": "PENDING",
+      "acceptance": "ratings display correct; HUD optional/low cost",
+      "depends": "P4.4/C1.7",
+      "evidence": [],
+      "notes": ""
+    },
+    "P4.6": {
+      "id": "P4.6",
+      "layer": "L4",
+      "slice": "Breakthrough/class menus",
+      "status": "PENDING",
+      "acceptance": "menus complete; no Papyrus polling",
+      "depends": "P4.4/P4.2",
+      "evidence": [],
+      "notes": ""
+    },
+    "P4.7": {
+      "id": "P4.7",
+      "layer": "L4",
+      "slice": "Codex/inspect/tooltip",
+      "status": "PENDING",
+      "acceptance": "pages work; data from registry only",
+      "depends": "A3.5/P4.4",
+      "evidence": [],
+      "notes": ""
+    },
+    "R5.1": {
+      "id": "R5.1",
+      "layer": "L5",
+      "slice": "Pack tooling",
+      "status": "PENDING",
+      "acceptance": "base + test pack; no load-order language",
+      "depends": "F0.3/F0.9",
+      "evidence": [],
+      "notes": ""
+    },
+    "R5.2": {
+      "id": "R5.2",
+      "layer": "L5",
+      "slice": "Base content packs",
+      "status": "PENDING",
+      "acceptance": "base world fully staged; no gaps",
+      "depends": "R5.1/A3.7",
+      "evidence": [],
+      "notes": ""
+    },
+    "R5.3": {
+      "id": "R5.3",
+      "layer": "L5",
+      "slice": "Famous-mod packs",
+      "status": "PENDING",
+      "acceptance": "supported mod smoke PASS",
+      "depends": "R5.1/C1.2",
+      "evidence": [],
+      "notes": ""
+    },
+    "R5.4": {
+      "id": "R5.4",
+      "layer": "L5",
+      "slice": "Agent skills and criteria",
+      "status": "PENDING",
+      "acceptance": "agent pack produced, validated, built, tested",
+      "depends": "R5.1/F0.6",
+      "evidence": [],
+      "notes": ""
+    },
+    "R5.5": {
+      "id": "R5.5",
+      "layer": "L5",
+      "slice": "Endgame, raids, quests",
+      "status": "PENDING",
+      "acceptance": "endgame loop complete",
+      "depends": "W2.5/W2.6/A3.6",
+      "evidence": [],
+      "notes": ""
+    },
+    "R5.6": {
+      "id": "R5.6",
+      "layer": "L5",
+      "slice": "Localization structure",
+      "status": "PENDING",
+      "acceptance": "all player text localized by key; no unsupported language claim",
+      "depends": "R5.1",
+      "evidence": [],
+      "notes": ""
+    },
+    "R6.1": {
+      "id": "R6.1",
+      "layer": "L6",
+      "slice": "Compatibility matrix",
+      "status": "PENDING",
+      "acceptance": "target smoke PASS; conflicts documented",
+      "depends": "all gameplay",
+      "evidence": [],
+      "notes": ""
+    },
+    "R6.2": {
+      "id": "R6.2",
+      "layer": "L6",
+      "slice": "Save/upgrade/uninstall",
+      "status": "PENDING",
+      "acceptance": "all uninstall modes PASS",
+      "depends": "F0.5/A3.7",
+      "evidence": [],
+      "notes": ""
+    },
+    "R6.3": {
+      "id": "R6.3",
+      "layer": "L6",
+      "slice": "Balance calibration",
+      "status": "PENDING",
+      "acceptance": "targets met or documented",
+      "depends": "C1.7/P4.1/P4.2",
+      "evidence": [],
+      "notes": ""
+    },
+    "R6.4": {
+      "id": "R6.4",
+      "layer": "L6",
+      "slice": "Release packaging",
+      "status": "PENDING",
+      "acceptance": "ship gate PASS; archive verified",
+      "depends": "R6.1-R6.3",
+      "evidence": [],
+      "notes": ""
+    }
+  },
+  "currentWork": {
+    "slice": "F0.3",
+    "step": "JSON content pipeline",
+    "nextAction": "implement generator CLI that reads content/base JSON, validates, emits runtime JSON+ESP+form_ids; preserve POC behavior"
+  },
+  "blockers": [],
+  "finalRelease": null
+}

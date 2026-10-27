@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "player-progression.schema.json",
+  "title": "Player progression",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "pointsPerLevel",
+    "maxRuneLevel",
+    "breakthroughBonuses"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "pointsPerLevel": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "maxRuneLevel": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "breakthroughBonuses": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "minItems": 10,
+      "maxItems": 10
+    },
+    "rankCurve": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "attributeDefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "classRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "skillTreeRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

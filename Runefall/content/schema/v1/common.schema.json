@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "common.schema.json",
+  "title": "Runefall common schema definitions",
+  "type": "object",
+  "$defs": {
+    "contentKey": {
+      "type": "string",
+      "pattern": "^rf:[a-z][a-z0-9-]*/[a-z0-9][a-z0-9_-]*$"
+    },
+    "packId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "localizationKey": {
+      "type": "string",
+      "pattern": "^RF_[A-Z0-9_]+$"
+    },
+    "formRef": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "plugin",
+            "editorId"
+          ],
+          "properties": {
+            "kind": {
+              "const": "editorId"
+            },
+            "plugin": {
+              "type": "string",
+              "minLength": 1
+            },
+            "editorId": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "plugin",
+            "formId"
+          ],
+          "properties": {
+            "kind": {
+              "const": "masterForm"
+            },
+            "plugin": {
+              "type": "string",
+              "minLength": 1
+            },
+            "formId": {
+              "type": "string",
+              "pattern": "^[0-9A-Fa-f]{8}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "contentKey"
+          ],
+          "properties": {
+            "kind": {
+              "const": "content"
+            },
+            "contentKey": {
+              "$ref": "#/$defs/contentKey"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "tagList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stageRange": {
+      "type": "object",
+      "required": [
+        "min",
+        "max"
+      ],
+      "properties": {
+        "min": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "max": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "additionalProperties": false
+    },
+    "effectRef": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/$defs/contentKey"
+        },
+        "magnitude": {
+          "type": "number"
+        },
+        "duration": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": true
+    },
+    "conditionRef": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "ref": {
+          "$ref": "#/$defs/contentKey"
+        },
+        "value": {}
+      },
+      "additionalProperties": true
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 2000
+    }
+  }
+}

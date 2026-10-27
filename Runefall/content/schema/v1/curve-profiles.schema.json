@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "curve-profiles.schema.json",
+  "title": "Curve profiles",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "curves"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "curves": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "curveId",
+          "powerBase",
+          "healthExp",
+          "damageExp",
+          "regenExp",
+          "armorExp",
+          "maxStage",
+          "enabled"
+        ],
+        "properties": {
+          "curveId": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "powerBase": {
+            "type": "number",
+            "exclusiveMinimum": 1
+          },
+          "healthExp": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 2
+          },
+          "damageExp": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 2
+          },
+          "regenExp": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 2
+          },
+          "armorExp": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 2
+          },
+          "maxStage": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": true
+}

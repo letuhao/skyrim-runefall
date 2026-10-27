@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "loot-table.schema.json",
+  "title": "Loot table",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "key",
+    "entries"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "key": {
+      "$ref": "common.schema.json#/$defs/contentKey"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "ref",
+          "weight"
+        ],
+        "properties": {
+          "ref": {
+            "$ref": "common.schema.json#/$defs/contentKey"
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "stageBudget": {
+            "type": "number"
+          },
+          "firstOnly": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "stageBudget": {
+      "type": "number"
+    },
+    "luckBias": {
+      "type": "number"
+    },
+    "authority": {
+      "enum": [
+        "runefall",
+        "additive",
+        "native"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

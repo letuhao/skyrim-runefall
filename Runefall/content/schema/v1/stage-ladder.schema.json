@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "stage-ladder.schema.json",
+  "title": "Stage ladder",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "curveId",
+    "stages"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "curveId": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "stages": {
+      "type": "array",
+      "minItems": 100,
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "required": [
+          "stage",
+          "tier",
+          "powerIndex",
+          "healthMult",
+          "damageMult",
+          "regenMult",
+          "armorMult",
+          "statCapacity",
+          "offenseCapacity",
+          "defenseCapacity",
+          "utilityCapacity",
+          "abilityCapacity",
+          "lootCapacity",
+          "rewardCapacity",
+          "encounterCost",
+          "curveId"
+        ],
+        "properties": {
+          "stage": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "tier": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "powerIndex": {
+            "type": "number",
+            "minimum": 1
+          },
+          "healthMult": {
+            "type": "number",
+            "minimum": 1
+          },
+          "damageMult": {
+            "type": "number",
+            "minimum": 1
+          },
+          "regenMult": {
+            "type": "number",
+            "minimum": 1
+          },
+          "armorMult": {
+            "type": "number",
+            "minimum": 1
+          },
+          "statCapacity": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "offenseCapacity": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "defenseCapacity": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "utilityCapacity": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "abilityCapacity": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "lootCapacity": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "rewardCapacity": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "encounterCost": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "curveId": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": true
+}

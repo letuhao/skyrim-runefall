@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rating-profile.schema.json",
+  "title": "Rating profile",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "profileId",
+    "baseDPS",
+    "baseEHP"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "profileId": {
+      "type": "string"
+    },
+    "baseDPS": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "baseEHP": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "offenseWeight": {
+      "type": "number"
+    },
+    "defenseWeight": {
+      "type": "number"
+    },
+    "utilityWeight": {
+      "type": "number"
+    },
+    "mitigationCap": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "sustainCap": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "ratingStageSource": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

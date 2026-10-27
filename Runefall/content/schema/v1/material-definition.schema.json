@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "material-definition.schema.json",
+  "title": "Material definition",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "key",
+    "family",
+    "grade"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "key": {
+      "$ref": "common.schema.json#/$defs/contentKey"
+    },
+    "itemRef": {
+      "$ref": "common.schema.json#/$defs/formRef"
+    },
+    "family": {
+      "type": "string"
+    },
+    "grade": {
+      "type": "string"
+    },
+    "tags": {
+      "$ref": "common.schema.json#/$defs/tagList"
+    },
+    "tierBand": {
+      "type": "string"
+    },
+    "tokenFallback": {
+      "type": "boolean"
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

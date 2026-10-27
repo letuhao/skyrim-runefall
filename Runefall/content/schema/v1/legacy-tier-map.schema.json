@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "legacy-tier-map.schema.json",
+  "title": "Legacy RF tier map",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "tiers"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "tiers": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "required": [
+          "rfTier",
+          "stageMin",
+          "stageMax",
+          "playerRankStage"
+        ],
+        "properties": {
+          "rfTier": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "stageMin": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "stageMax": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "playerRankStage": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": true
+}

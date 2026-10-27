@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "tiers": [
+    {
+      "rfTier": 0,
+      "stageMin": 1,
+      "stageMax": 15,
+      "playerRankStage": 1,
+      "notes": "POC RF tier 0"
+    },
+    {
+      "rfTier": 1,
+      "stageMin": 16,
+      "stageMax": 30,
+      "playerRankStage": 20,
+      "notes": "POC RF tier 1"
+    },
+    {
+      "rfTier": 2,
+      "stageMin": 31,
+      "stageMax": 45,
+      "playerRankStage": 40,
+      "notes": "POC RF tier 2"
+    },
+    {
+      "rfTier": 3,
+      "stageMin": 46,
+      "stageMax": 60,
+      "playerRankStage": 60,
+      "notes": "POC RF tier 3"
+    },
+    {
+      "rfTier": 4,
+      "stageMin": 61,
+      "stageMax": 80,
+      "playerRankStage": 80,
+      "notes": "POC RF tier 4"
+    },
+    {
+      "rfTier": 5,
+      "stageMin": 81,
+      "stageMax": 100,
+      "playerRankStage": 100,
+      "notes": "POC RF tier 5"
+    }
+  ]
+}

@@ -49,6 +49,13 @@ Gate "content generator" {
     ($out | Select-String "PASS plugin" | Measure-Object).Count.ToString() + " plugin checks"
 }
 
+Gate "JSON schemas and base pack" {
+    $out = & python (Join-Path $Project "content\schema\validate_content.py") 2>&1
+    $out | Set-Content (Join-Path $evidence "json-schemas-$stamp.log")
+    if ($LASTEXITCODE -ne 0) { throw "JSON schema validation failed: $($out -join '; ')" }
+    ($out | Select-Object -Last 1)
+}
+
 Gate "Papyrus policy" {
     $policy = & (Join-Path $Project "tools\check-papyrus-policy.ps1") -Project $Project 2>&1
     $policy | Set-Content (Join-Path $evidence "papyrus-policy-$stamp.log")

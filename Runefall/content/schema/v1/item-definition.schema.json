@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "item-definition.schema.json",
+  "title": "Item definition",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "key",
+    "baseItemRef",
+    "slot"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "key": {
+      "$ref": "common.schema.json#/$defs/contentKey"
+    },
+    "baseItemRef": {
+      "$ref": "common.schema.json#/$defs/formRef"
+    },
+    "slot": {
+      "type": "string"
+    },
+    "tags": {
+      "$ref": "common.schema.json#/$defs/tagList"
+    },
+    "rarityBand": {
+      "type": "string"
+    },
+    "ilvlBand": {
+      "type": "string"
+    },
+    "affixPool": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sockets": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3
+    },
+    "stats": {
+      "type": "object"
+    },
+    "value": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "recipeRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

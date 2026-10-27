@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "race-profile.schema.json",
+  "title": "Race profile",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "key",
+    "roles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "key": {
+      "$ref": "common.schema.json#/$defs/contentKey"
+    },
+    "raceRef": {
+      "$ref": "common.schema.json#/$defs/formRef"
+    },
+    "raceDescriptor": {
+      "type": "object",
+      "properties": {
+        "plugin": {
+          "type": "string"
+        },
+        "localFormId": {
+          "type": "string"
+        },
+        "editorId": {
+          "type": "string"
+        }
+      }
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "family": {
+      "type": "string"
+    },
+    "hostEligible": {
+      "type": "boolean"
+    },
+    "protectionEligible": {
+      "type": "boolean"
+    },
+    "priority": {
+      "type": "integer"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

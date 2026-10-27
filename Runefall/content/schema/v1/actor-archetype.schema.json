@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "actor-archetype.schema.json",
+  "title": "Actor archetype",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "key",
+    "role"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "key": {
+      "$ref": "common.schema.json#/$defs/contentKey"
+    },
+    "role": {
+      "type": "string"
+    },
+    "packagePool": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "gearPool": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "statBias": {
+      "type": "object"
+    },
+    "abilityPool": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "weight": {
+      "type": "number",
+      "minimum": 0
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pack.schema.json",
+  "title": "Content pack manifest",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "version",
+    "content"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "dependencies": {
+      "type": "array"
+    },
+    "conflicts": {
+      "type": "array"
+    },
+    "loadPriority": {
+      "type": "integer"
+    },
+    "content": {
+      "type": "array"
+    },
+    "localization": {
+      "type": "array"
+    }
+  },
+  "additionalProperties": true
+}

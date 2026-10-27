@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "combat-pace-profile.schema.json",
+  "title": "Combat pace profile",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "profileId",
+    "bands"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "profileId": {
+      "enum": [
+        "skyrim",
+        "action"
+      ]
+    },
+    "nameKey": {
+      "type": "string"
+    },
+    "bands": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "additionalProperties": true
+}

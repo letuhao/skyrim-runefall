@@ -1,0 +1,54 @@
+{
+  "updatedAt": "2026-10-27T22:18:10.393Z",
+  "entries": [
+    {
+      "slice": "F0.1",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-050132.md",
+      "result": "PASS",
+      "detail": "20/20 self-tests, stage ladder loaded, co-save v3, no crash"
+    },
+    {
+      "slice": "F0.1",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-050307.md",
+      "result": "PASS",
+      "detail": "6/6 gates"
+    },
+    {
+      "slice": "F0.1",
+      "kind": "generator",
+      "path": "build/dist/BUILD-REPORT.md",
+      "result": "PASS",
+      "detail": "ladder validator accepted generated tables"
+    },
+    {
+      "slice": "F0.1",
+      "kind": "host-test",
+      "path": "src/plugin/build/msvc/RunefallLadderHost.exe",
+      "result": "PASS",
+      "detail": "100 stages/formulas; 1.59 ns lookup"
+    },
+    {
+      "slice": "F0.1",
+      "kind": "summary",
+      "path": "build/evidence/f0.1-evidence-20261028.md",
+      "result": "PASS",
+      "detail": "F0.1 complete with legacy rank shim documented for A3.1"
+    },
+    {
+      "slice": "F0.2",
+      "kind": "schemas",
+      "path": "content/schema/v1",
+      "result": "PASS",
+      "detail": "28 schemas; base pack 7 entity files; validator PASS"
+    },
+    {
+      "slice": "F0.2",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-051731.md",
+      "result": "PASS",
+      "detail": "7/7 gates including JSON schema"
+    }
+  ]
+}

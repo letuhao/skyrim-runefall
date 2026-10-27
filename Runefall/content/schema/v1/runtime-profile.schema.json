@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "runtime-profile.schema.json",
+  "title": "Runtime fallback profile",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "raceDescriptor",
+    "role",
+    "generatorVersion",
+    "cacheKey"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "raceDescriptor": {
+      "type": "object",
+      "required": [
+        "plugin",
+        "localFormId"
+      ],
+      "properties": {
+        "plugin": {
+          "type": "string"
+        },
+        "localFormId": {
+          "type": "string"
+        },
+        "editorId": {
+          "type": "string"
+        }
+      }
+    },
+    "role": {
+      "type": "string"
+    },
+    "stageRange": {
+      "type": "object"
+    },
+    "family": {
+      "type": "string"
+    },
+    "materialRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "itemRefs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "lootTable": {
+      "type": "string"
+    },
+    "generatorVersion": {
+      "type": "string"
+    },
+    "cacheKey": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

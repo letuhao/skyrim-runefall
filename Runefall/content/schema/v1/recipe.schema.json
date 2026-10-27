@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "recipe.schema.json",
+  "title": "Crafting recipe",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "key",
+    "opType",
+    "inputs",
+    "outputs"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "key": {
+      "$ref": "common.schema.json#/$defs/contentKey"
+    },
+    "opType": {
+      "type": "string"
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "ref",
+          "count"
+        ],
+        "properties": {
+          "ref": {
+            "$ref": "common.schema.json#/$defs/contentKey"
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "ref",
+          "count"
+        ],
+        "properties": {
+          "ref": {
+            "$ref": "common.schema.json#/$defs/contentKey"
+          },
+          "count": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    "currencyCost": {
+      "type": "object"
+    },
+    "station": {
+      "type": "string"
+    },
+    "skillGate": {
+      "type": "string"
+    },
+    "levelGate": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "additionalProperties": true
+}

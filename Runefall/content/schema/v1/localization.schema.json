@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "localization.schema.json",
+  "title": "Localization entry",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "key",
+    "language",
+    "text"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "key": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "context": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

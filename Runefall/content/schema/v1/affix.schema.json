@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "affix.schema.json",
+  "title": "Affix or runeword modifier",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "key",
+    "kind",
+    "effectRef"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "key": {
+      "$ref": "common.schema.json#/$defs/contentKey"
+    },
+    "kind": {
+      "enum": [
+        "prefix",
+        "suffix",
+        "runeword"
+      ]
+    },
+    "tier": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "slots": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "weight": {
+      "type": "number",
+      "minimum": 0
+    },
+    "effectRef": {
+      "type": "string"
+    },
+    "magnitudeRange": {
+      "type": "object",
+      "properties": {
+        "min": {
+          "type": "number"
+        },
+        "max": {
+          "type": "number"
+        }
+      }
+    },
+    "prerequisites": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "exclusionGroup": {
+      "type": "string"
+    },
+    "runes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}
