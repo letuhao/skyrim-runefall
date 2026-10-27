@@ -782,8 +782,11 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 
 
-## Compatibility evidence 2026-10-27 10:38
 
-- Test list: 86 plugins, hash 4A88FC15...C051D; USSEP, Alternate Start, CC content, SkyUI, EngineFixes, SkyrimSoulsRE and SKSE Menu Framework all load and run with Runefall.
-- Batch/UI evidence recorded; uninstalled compatibility targets remain NOT TESTED.
-- No code change; static/batch/archive gates unchanged.
+## Drop table consumers 2026-10-27 10:43
+
+- LootEngine loads drops_containers.csv and drops_quests.csv; MenuApi diagnostics expose their
+  definition counts. Runtime application to container/quest hooks remains pending.
+- Static gates 5/5 PASS (static-gates-20261027-103946.md); batch re-run passed after one startup
+  flake (batch-test-20261027-104301.md), self-tests 18/18.
+- Artifact DLL 1019392 B SHA-256 97EEC2CBEED5BC75D1383414BB55D242DAD77A8D568998EFCF526AE8DBF0E2CC; candidate zip 494227 B SHA-256 E1D647E2029C5C5C5B598298DA5EEC845A508C2C3536CE9FDB4F4AAAC98EFE9E.

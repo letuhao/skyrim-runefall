@@ -38,6 +38,27 @@ namespace Runefall
 		float        weight = 1.0f;
 	};
 
+	struct ContainerDropDef
+	{
+		std::int32_t containerTier = 0;
+		float        itemChancePct = 0.0f;
+		std::int32_t rarityBias = 0;
+		std::int32_t itemCountMin = 1;
+		std::int32_t itemCountMax = 1;
+		std::int32_t runeMin = 0;
+		std::int32_t runeMax = 0;
+		float        extraRollChancePct = 0.0f;
+	};
+
+	struct QuestDropDef
+	{
+		std::int32_t questBand = 0;
+		std::int32_t itemCount = 1;
+		std::int32_t minRarity = 0;
+		std::int32_t runeMin = 0;
+		std::int32_t runeMax = 0;
+	};
+
 	struct BossDropDef
 	{
 		std::string  bossId;
@@ -84,6 +105,8 @@ namespace Runefall
 		[[nodiscard]] bool HasData() const noexcept { return loaded; }
 		[[nodiscard]] std::size_t AffixCount() const noexcept { return data.affixes.size(); }
 		[[nodiscard]] std::size_t RarityCount() const noexcept { return data.rarities.size(); }
+		[[nodiscard]] std::size_t ContainerDropCount() const noexcept { return data.containerDrops.size(); }
+		[[nodiscard]] std::size_t QuestDropCount() const noexcept { return data.questDrops.size(); }
 
 		bool RerollEnhancements(ItemMetadata& a_item, std::int32_t a_lockedIndex, std::string_view a_slotGroup, Rng& a_rng);
 
@@ -105,6 +128,8 @@ namespace Runefall
 			std::vector<RarityWeightDef> weights;
 			std::vector<GeneralDropDef>  generalDrops;
 			std::vector<BossDropDef>     bossDrops;
+			std::vector<ContainerDropDef> containerDrops;
+			std::vector<QuestDropDef>     questDrops;
 		};
 
 		[[nodiscard]] std::optional<ItemMetadata> GenerateFrom(
