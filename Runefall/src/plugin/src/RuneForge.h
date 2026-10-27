@@ -30,9 +30,22 @@ namespace Runefall
 		// Grants materials/runes from an item and clears its registry id; caller removes the item.
 		ForgeResult Salvage(ItemMetadata& a_item);
 
-		[[nodiscard]] static SelfTestResult SelfTest();
+		// Loads socket recipes (material + rune costs) from recipes.csv.
+		void ReloadSocketRecipes();
 
 		// Spends rune units from the highest rank down (R1=1, R2=5, R3=25, R4=125, R5=625).
 		[[nodiscard]] static bool SpendUnits(std::int32_t a_costUnits);
+
+		[[nodiscard]] static SelfTestResult SelfTest();
+
+	private:
+		struct SocketCostDef
+		{
+			std::string materialId;
+			std::int32_t materialCount = 0;
+			std::int32_t runeCost = 0;
+		};
+		std::unordered_map<std::int32_t, SocketCostDef> socketRecipes;
+
 	};
 }

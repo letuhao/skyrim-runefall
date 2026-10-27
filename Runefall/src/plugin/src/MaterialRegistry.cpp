@@ -99,6 +99,18 @@ namespace Runefall
 		return true;
 	}
 
+	bool MaterialRegistry::Consume(std::string_view a_id, std::int32_t a_amount)
+	{
+		if (a_amount <= 0 || !Has(a_id))
+			return false;
+		auto& map = CoSave::Get().State().materials;
+		auto it = map.find(std::string{ a_id });
+		if (it == map.end() || it->second < a_amount)
+			return false;
+		it->second -= a_amount;
+		return true;
+	}
+
 	bool MaterialRegistry::AddDefaultForTier(std::int32_t a_tier, std::int32_t a_amount)
 	{
 		for (const auto& def : definitions) {

@@ -773,9 +773,12 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 ## Unique sources consumer 2026-10-27 10:07
 
-- HuntEngine loads unique_sources.csv, exposes FindUniqueSource/UniqueSourceCount; unique grants log
-  their source (verified: "hunt: unique source 'DraugrRace' (race)").
-- MenuApi diagnostics report the unique-source count.
-- Static gates 5/5 PASS (static-gates-20261027-100654.md); batch 17/17 PASS, 18/18 self-tests,
-  hunt unique PASS (batch-test-20261027-100732.md).
-- Artifact DLL 1005568 B SHA-256 2A4F27D8B67A1FAA835A995FA65CCD7694E9AADC4EE35D35727DCC8822510861; candidate zip 487625 B SHA-256 74EE8D0FDE3A9B46E2457536C137A0583582D894D7937CB262A2C8D72912B05E.
+
+## Socket recipe consumption 2026-10-27 10:11
+
+- RuneForge loads socket_craft rows from recipes.csv; Socket consumes the recipe material via
+  MaterialRegistry and the recipe rune cost, refunding material if rune spend fails.
+- RuneForge self-test seeds required materials and passes in the 18/18 probe run.
+- Static gates 5/5 PASS (static-gates-20261027-101112.md); batch 17/17 PASS, 18/18 self-tests
+  (batch-test-20261027-101145.md).
+- Artifact DLL 1014272 B SHA-256 8701022A1A1923922428F3CC5B976EFB79A02D17766CE251A36DC9A9164B0441; candidate zip 492519 B SHA-256 6FF80D894E617F98A54AF83BE58DACC60B5D7B563174DD470007B9D6A8B1DAFE.

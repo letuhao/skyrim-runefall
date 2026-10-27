@@ -27,6 +27,7 @@ namespace Runefall
 		[[nodiscard]] std::size_t DefinitionCount() const noexcept { return definitions.size(); }
 
 		bool Add(std::string_view a_id, std::int32_t a_amount);
+		bool Consume(std::string_view a_id, std::int32_t a_amount);
 		bool AddDefaultForTier(std::int32_t a_tier, std::int32_t a_amount);
 
 		[[nodiscard]] static SelfTestResult SelfTest();

@@ -4,6 +4,7 @@
 #include "LootEngine.h"
 #include "MaterialRegistry.h"
 #include "ItemRegistry.h"
+#include "DataStore.h"
 
 namespace Runefall
 {
@@ -64,6 +65,40 @@ namespace Runefall
 	bool RuneForge::SpendUnits(std::int32_t a_costUnits)
 	{
 		return SpendRunes(a_costUnits);
+	}
+
+	void RuneForge::ReloadSocketRecipes()
+	{
+		socketRecipes.clear();
+		const auto* table = DataStore::Get().GetTable("recipes.csv");
+		if (!table)
+			return;
+		int cId = -1, cType = -1, cMaterials = -1, cRune = -1;
+		for (std::size_t i = 0; i < table->headers.size(); ++i) {
+			if (table->headers[i] == "recipeId") cId = static_cast<int>(i);
+			else if (table->headers[i] == "outputType") cType = static_cast<int>(i);
+			else if (table->headers[i] == "materials") cMaterials = static_cast<int>(i);
+			else if (table->headers[i] == "runeCost") cRune = static_cast<int>(i);
+		}
+		for (const auto& row : table->rows) {
+			if (cType < 0 || cMaterials < 0 || static_cast<std::size_t>(cType) >= row.size() || static_cast<std::size_t>(cMaterials) >= row.size())
+				continue;
+			if (row[static_cast<std::size_t>(cType)] != "socket_craft")
+				continue;
+			const auto& recipe = row[static_cast<std::size_t>(cId)];
+			const auto rankChar = recipe.empty() ? '0' : recipe.back();
+			const auto rank = rankChar - '0';
+			if (rank < 1 || rank > 3)
+				continue;
+			const auto materialText = row[static_cast<std::size_t>(cMaterials)];
+			const auto split = materialText.find(':');
+			SocketCostDef def;
+			def.materialId = split == std::string::npos ? materialText : materialText.substr(0, split);
+			def.materialCount = split == std::string::npos ? 1 : std::atoi(materialText.substr(split + 1).c_str());
+			def.runeCost = cRune >= 0 && static_cast<std::size_t>(cRune) < row.size() ? std::atoi(row[static_cast<std::size_t>(cRune)].c_str()) : rank * 10;
+			socketRecipes[rank] = std::move(def);
+		}
+		logger::info("rune-forge: loaded {} socket recipes", socketRecipes.size());
 	}
 
 	RuneForge& RuneForge::Get()
@@ -137,8 +172,16 @@ namespace Runefall
 	{
 		if (a_socketIndex < 0 || a_socketIndex >= a_item.socketCount || a_socketIndex >= 3)
 			return { false, 5 };
-		if (!SpendRunes(SocketCost(a_runeRank)))
+		if (const auto it = socketRecipes.find(a_runeRank); it != socketRecipes.end()) {
+			if (!MaterialRegistry::Get().Consume(it->second.materialId, it->second.materialCount))
+				return { false, 8 };
+			if (!SpendRunes(it->second.runeCost)) {
+				MaterialRegistry::Get().Add(it->second.materialId, it->second.materialCount);
+				return { false, 1 };
+			}
+		} else if (!SpendRunes(SocketCost(a_runeRank))) {
 			return { false, 1 };
+		}
 		a_item.socketRunes[static_cast<std::size_t>(a_socketIndex)] = a_runeRank;
 		return { true, 0 };
 	}
@@ -173,6 +216,9 @@ namespace Runefall
 		auto& wallet = Wallet();
 		WalletRestore restore{ &wallet, wallet };
 		wallet = { 100, 100, 100, 100, 100 };
+		auto& materials = CoSave::Get().State().materials;
+		materials["rf_mat_refined_essence"] = 10;
+		materials["rf_mat_exotic_essence"] = 10;
 
 		ItemMetadata item;
 		item.rarity = 1;
