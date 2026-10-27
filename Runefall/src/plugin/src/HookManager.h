@@ -16,5 +16,6 @@ namespace Runefall
 		[[nodiscard]] std::uint32_t MenuEvents() const noexcept;
 		[[nodiscard]] std::uint32_t CellEvents() const noexcept;
 		[[nodiscard]] std::uint32_t ObjectEvents() const noexcept;
+		[[nodiscard]] std::uint32_t PlayerItemEvents() const noexcept;
 	};
 }

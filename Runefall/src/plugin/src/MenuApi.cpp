@@ -119,7 +119,8 @@ namespace Runefall
 		out += std::to_string(HookManager::Get().ContainerEvents());
 		out += ",\"menu\":" + std::to_string(HookManager::Get().MenuEvents());
 		out += ",\"cell\":" + std::to_string(HookManager::Get().CellEvents());
-		out += ",\"object\":" + std::to_string(HookManager::Get().ObjectEvents()) + '}';
+		out += ",\"object\":" + std::to_string(HookManager::Get().ObjectEvents());
+		out += ",\"playerItems\":" + std::to_string(HookManager::Get().PlayerItemEvents()) + '}';
 		out += ",\"probeFailures\":";
 		out += std::to_string(DebugHarness::LastFailures());
 		out += ",\"probeSummary\":\"" + DebugHarness::LastSummary() + "\"";

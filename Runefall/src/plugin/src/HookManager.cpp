@@ -17,6 +17,7 @@ namespace Runefall
 		std::atomic<std::uint32_t> g_menuEvents{ 0 };
 		std::atomic<std::uint32_t> g_cellEvents{ 0 };
 		std::atomic<std::uint32_t> g_objectEvents{ 0 };
+		std::atomic<std::uint32_t> g_playerItemEvents{ 0 };
 		std::atomic_bool           g_registered{ false };
 
 		class ContainerSink : public RE::BSTEventSink<RE::TESContainerChangedEvent>
@@ -27,6 +28,8 @@ namespace Runefall
 				if (!a_event)
 					return RE::BSEventNotifyControl::kContinue;
 				const auto count = g_containerEvents.fetch_add(1) + 1;
+				if (a_event->newContainer == 0x14)
+					g_playerItemEvents.fetch_add(1);
 				if (count <= 3 || count % 1000 == 0)
 					logger::debug("hooks: container change #{} old={:08X} new={:08X} base={:08X} count={}",
 						count, a_event->oldContainer, a_event->newContainer, a_event->baseObj, a_event->itemCount);
@@ -108,4 +111,5 @@ namespace Runefall
 	std::uint32_t HookManager::MenuEvents() const noexcept { return g_menuEvents.load(); }
 	std::uint32_t HookManager::CellEvents() const noexcept { return g_cellEvents.load(); }
 	std::uint32_t HookManager::ObjectEvents() const noexcept { return g_objectEvents.load(); }
+	std::uint32_t HookManager::PlayerItemEvents() const noexcept { return g_playerItemEvents.load(); }
 }
