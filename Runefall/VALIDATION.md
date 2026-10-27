@@ -704,3 +704,13 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Static gates 5/5 PASS (static-gates-20261027-092703.md).
 - Artifact DLL 977920 B SHA-256 3908021558D066BD62297BAC2652EC832933EA53659172A4509A8B3807352852; candidate zip 474300 B SHA-256 355195AD4AF1E193FF199D2933C7368D472878FD4DA36F3EB0987AE3B0C78446.
 - Content-only change; runtime batch not re-run after this edit.
+
+## Attributes schema split 2026-10-27 09:30
+
+- attributes.csv split to a numeric primary effect row and new attribute_effects.csv (36
+  compound effects with unit flat/pct). DataStore expected-table list is 19.
+- Progression loads attribute_effects.csv and exposes AttributeEffectCount; MenuApi diagnostics
+  include it. Runtime application of derived stats is still pending (P3.4).
+- Static gates 5/5 PASS (static-gates-20261027-093032.md); batch session 17/17 PASS with
+  18/18 self-tests after deploying the new data file correctly (batch-test-20261027-093337.md).
+- Artifact DLL 978432 B SHA-256 9804B4AD85F51E3C3D3A953A96E559388446AC9A419024094537478E86EF2E05; candidate zip 474932 B SHA-256 04FD9036883BDC3166C05F51A9516F0AAB5E746B458D8D765088F811567B8C33.

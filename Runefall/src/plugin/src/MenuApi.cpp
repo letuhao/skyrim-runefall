@@ -95,6 +95,8 @@ namespace Runefall
 		out += cfg.EnableInput() ? "true" : "false";
 		out += ",\"coSave\":";
 		out += cfg.EnableCoSave() ? "true" : "false";
+		out += ",\"attributeEffects\":";
+		out += std::to_string(Progression::Get().AttributeEffectCount());
 		out += ",\"probeFailures\":";
 		out += std::to_string(DebugHarness::LastFailures());
 		out += ",\"probeSummary\":\"" + DebugHarness::LastSummary() + "\"";

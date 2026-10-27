@@ -67,6 +67,7 @@ internal static class Program
         WriteCsv(Path.Combine(dir, "recipes.csv"), content.RecipeColumns, content.RecipeRows);
         WriteCsv(Path.Combine(dir, "skills.csv"), content.SkillColumns, content.SkillRows);
         WriteCsv(Path.Combine(dir, "attributes.csv"), content.AttributeColumns, content.AttributeRows);
+        WriteCsv(Path.Combine(dir, "attribute_effects.csv"), content.AttributeEffectColumns, content.AttributeEffectRows);
         WriteCsv(Path.Combine(dir, "unique_affixes.csv"), content.UniqueColumns, content.UniqueRows);
         WriteCsv(Path.Combine(dir, "unique_sources.csv"), content.UniqueSourceColumns, content.UniqueSourceRows);
         WriteCsv(Path.Combine(dir, "strings.csv"), content.StringColumns, content.StringRows);
@@ -84,7 +85,7 @@ internal static class Program
             ("drops_bosses.csv", content.BossDropColumns), ("race_groups.csv", content.RaceGroupColumns),
             ("drops_races.csv", content.RaceDropColumns), ("materials.csv", content.MaterialColumns),
             ("recipes.csv", content.RecipeColumns), ("skills.csv", content.SkillColumns),
-            ("attributes.csv", content.AttributeColumns), ("unique_affixes.csv", content.UniqueColumns),
+            ("attributes.csv", content.AttributeColumns), ("attribute_effects.csv", content.AttributeEffectColumns), ("unique_affixes.csv", content.UniqueColumns),
             ("unique_sources.csv", content.UniqueSourceColumns), ("strings.csv", content.StringColumns),
         };
         for (int i = 0; i < tables.Length; i++)

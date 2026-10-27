@@ -23,6 +23,7 @@ namespace Runefall
 			"recipes.csv",
 			"skills.csv",
 			"attributes.csv",
+	"attribute_effects.csv",
 			"unique_affixes.csv",
 			"unique_sources.csv",
 			"strings.csv",

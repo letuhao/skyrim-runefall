@@ -113,6 +113,8 @@ internal static class Validator
         }
         else
         {
+            Expect(content.AttributeRows.Count == 9, "attributes.csv has 9 rows", lines, ref failed);
+            Expect(content.AttributeEffectRows.Count >= 30, "attribute_effects.csv has >=30 rows", lines, ref failed);
             Expect(baseOut.Mod.Keywords.Count >= 60, "base plugin has >=60 keywords", lines, ref failed);
             Expect(baseOut.Mod.Globals.Count >= 39, "base plugin has >=39 globals", lines, ref failed);
             Expect(baseOut.Mod.MagicEffects.Count >= 200, "base plugin has >=200 MGEF", lines, ref failed);

@@ -1,6 +1,7 @@
 #include "Progression.h"
 
 #include "RuneForge.h"
+#include "DataStore.h"
 
 #include "CoSave.h"
 
@@ -20,8 +21,15 @@ namespace Runefall
 		return singleton;
 	}
 
+	void Progression::LoadAttributeDefinitions()
+	{
+		const auto* table = DataStore::Get().GetTable("attribute_effects.csv");
+		attributeEffectCount = table ? table->rows.size() : 0;
+	}
+
 	void Progression::LoadFromCoSave()
 	{
+		LoadAttributeDefinitions();
 		const auto& state = CoSave::Get().State();
 		attributes = state.attributes;
 		attributePoints = state.attributePoints;

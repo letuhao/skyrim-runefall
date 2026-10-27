@@ -48,8 +48,10 @@ internal sealed class Content
     public string[] SkillColumns { get; } = { "build", "skillName", "skyrimSkill", "attribute", "type", "rank1", "rank2", "rank3", "gateSkill", "gateAttribute", "description" };
     public List<string[]> SkillRows { get; } = new();
 
-    public string[] AttributeColumns { get; } = { "attribute", "build", "effectKey", "perPoint", "cap", "softCap" };
+    public string[] AttributeColumns { get; } = { "attributeId", "name", "build", "effectKey", "perPoint", "softCap", "hardCap" };
     public List<string[]> AttributeRows { get; } = new();
+    public string[] AttributeEffectColumns { get; } = { "attributeId", "effectKey", "perPoint", "unit" };
+    public List<string[]> AttributeEffectRows { get; } = new();
 
     public string[] UniqueColumns { get; } = { "uniqueId", "name", "prefix", "suffix", "category", "effectEditorId", "minValue", "maxValue", "duration", "area", "slots", "description" };
     public List<string[]> UniqueRows { get; } = new();
@@ -182,13 +184,26 @@ internal static class ContentFactory
             ["Wisdom"] = "restorationMagnitudePct:1.5;wardArmorPct:1;magickaRegenPct:0.5;potionEffectivenessPct:1",
             ["Willpower"] = "conjurationIllusionPct:1.5;summonDurationPct:1;cooldownReductionPct:0.5;intimidationPct:0.5",
         };
+        var flatStats = new HashSet<string> { "health", "stamina", "magicka", "carryWeight" };
         foreach (var (build, attribute) in Attributes)
         {
             c.AttributeNames.Add(attribute);
+            var effects = effectKeys[attribute].Split(';', StringSplitOptions.RemoveEmptyEntries);
+            var first = effects[0].Split(':');
             c.AttributeRows.Add(new[]
             {
-                attribute, build, "attr." + attribute.ToLowerInvariant(), effectKeys[attribute], "60", "30"
+                attribute, attribute, build, "attr." + attribute.ToLowerInvariant(), first[1], "30", "60"
             });
+            foreach (var effect in effects)
+            {
+                var parts = effect.Split(':');
+                if (parts.Length != 2)
+                    continue;
+                c.AttributeEffectRows.Add(new[]
+                {
+                    attribute, parts[0], parts[1], flatStats.Contains(parts[0]) ? "flat" : "pct"
+                });
+            }
         }
     }
 

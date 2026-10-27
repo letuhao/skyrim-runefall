@@ -22,6 +22,7 @@ namespace Runefall
 		[[nodiscard]] std::int32_t SkillPoints() const noexcept { return skillPoints; }
 		[[nodiscard]] std::int32_t RuneTier() const noexcept { return runeTier; }
 		[[nodiscard]] std::int32_t SkillRank(std::string_view a_skill) const;
+		[[nodiscard]] std::size_t AttributeEffectCount() const noexcept { return attributeEffectCount; }
 
 		bool SpendAttributePoint(std::size_t a_index);
 		bool SpendSkillPoint(std::string_view a_skill);
@@ -40,10 +41,13 @@ namespace Runefall
 		[[nodiscard]] static SelfTestResult SelfTest();
 
 	private:
+		void LoadAttributeDefinitions();
+
 		std::array<std::int32_t, 9>   attributes{};
 		std::int32_t                  attributePoints = 0;
 		std::int32_t                  skillPoints = 0;
 		std::int32_t                  runeTier = 0;
 		std::vector<SkillProgress>    skills;
+		std::size_t                   attributeEffectCount = 0;
 	};
 }
