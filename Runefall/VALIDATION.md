@@ -779,10 +779,8 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 ## Boss drop table 2026-10-27 10:21
 
 
-## Nexus publication docs 2026-10-27 10:24
+## Batch harness hotkeys fixed 2026-10-27 10:29
 
-- NEXUS-MEDIA-PLAN.md (shot list/requirements), NEXUS-CREDITS.md (licenses/AI disclosure) and
-  NEXUS-PUBLICATION-CHECKLIST.md added. L5 UI-stack status marked PASS on the 1.6.1170 test list;
-  other compatibility rows explicitly NOT TESTED.
-- tools/verify-release.ps1 re-run: 21/21 PASS (release-verify-20261027-102429.md).
-- No code artifact change; DLL/candidate hashes unchanged.
+OS-level SendInput/keybd_event/PostMessage are not delivered to this Skyrim process even when it is foregrounded. The harness now calls SkyLink's Input Papyrus script through MCP: call_papyrus_function with className Input, functionName TapKey, args "[68]" (F10; F11=87, F12=88). The args field must be a JSON string, not an array.
+
+Full harness run: MCP connect/save/player/cell/inventory/plugin/menu, self-tests 18/18, F10 menu snapshot, F11 selftest rerun, F12 probe path, Draugr spawn/kill, hunt material, hunt unique item, no crash, game running. Exit 0. Evidence: batch-test-20261027-102930.md. MCP skill updated with the verified TapKey recipe.

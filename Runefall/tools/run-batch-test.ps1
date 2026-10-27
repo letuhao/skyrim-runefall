@@ -153,23 +153,20 @@ Add-Check 'Gameplay activation scheduled' ($activation -ge 0) "delay=$activation
 if (-not $NoInputHotkeys) {
     try {
         $logBefore = if (Test-Path $runefallLog) { (Get-Content $runefallLog -Raw).Length } else { 0 }
-        $wshell = New-Object -ComObject WScript.Shell
-        $activated = $wshell.AppActivate('Skyrim Special Edition')
-        Focus-Game
-        Add-Check 'Game window activated' ([bool]$activated) ''
+        # SkyLink's Input Papyrus script (TapKey) delivers DirectInput codes through the game VM;
+        # OS-level SendInput/keybd_event are not delivered in this test environment.
+        $tapF10 = Invoke-Mcp 'call_papyrus_function' @{ className = 'Input'; functionName = 'TapKey'; args = '[68]' }
+        Add-Check 'MCP Input.TapKey available' ($tapF10 -match 'TapKey') ''
         Start-Sleep -Seconds 2
-        Send-Key 0x79  # F10 snapshot
+        $tapF11 = Invoke-Mcp 'call_papyrus_function' @{ className = 'Input'; functionName = 'TapKey'; args = '[87]' }
         Start-Sleep -Seconds 2
-        Send-Key 0x7A  # F11 self-tests
-        Start-Sleep -Seconds 2
-        Send-Key 0x7B  # F12 probe injection
+        $tapF12 = Invoke-Mcp 'call_papyrus_function' @{ className = 'Input'; functionName = 'TapKey'; args = '[88]' }
         Start-Sleep -Seconds 3
         $logText = Get-Content $runefallLog -Raw
         $newLog = if ($logText.Length -gt $logBefore) { $logText.Substring($logBefore) } else { '' }
         Add-Check 'F10 menu snapshot' ($newLog -match 'input: menu snapshot') ''
         Add-Check 'F11 selftest rerun' ($newLog -match 'probe: pass=') ''
         Add-Check 'F12 probe path' ($newLog -match 'probe item injected|probe item injection disabled') ''
-        if ($newLog.Length -eq 0) { Add-Check 'New hotkey log lines' $false 'no log growth after SendInput' }
     } catch {
         Add-Check 'Input hotkeys' $false $_.Exception.Message
     }
