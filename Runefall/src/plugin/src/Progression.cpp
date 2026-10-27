@@ -2,6 +2,7 @@
 
 #include "RuneForge.h"
 #include "DataStore.h"
+#include "FormResolver.h"
 
 #include "CoSave.h"
 
@@ -73,6 +74,27 @@ namespace Runefall
 		return keys;
 	}
 
+	void Progression::SyncGlobals()
+	{
+		auto* dataHandler = RE::TESDataHandler::GetSingleton();
+		if (!dataHandler)
+			return;
+		static const char* kGlobals[9] = {
+			"RF_GLOB_Attr_Might", "RF_GLOB_Attr_Endurance", "RF_GLOB_Attr_Precision",
+			"RF_GLOB_Attr_Agility", "RF_GLOB_Attr_Guile", "RF_GLOB_Attr_Cunning",
+			"RF_GLOB_Attr_Intellect", "RF_GLOB_Attr_Wisdom", "RF_GLOB_Attr_Willpower"
+		};
+		for (std::size_t i = 0; i < attributes.size() && i < 9; ++i) {
+			auto* global = dataHandler->LookupForm<RE::TESGlobal>(static_cast<RE::FormID>(0x880 + i), "Runefall.esp");
+			if (!global)
+				global = FormResolver::ResolveAs<RE::TESGlobal>(kGlobals[i]);
+			if (global)
+				global->value = static_cast<float>(attributes[i]);
+		}
+		if (auto* tier = dataHandler->LookupForm<RE::TESGlobal>(0x889, "Runefall.esp"))
+			tier->value = static_cast<float>(runeTier);
+	}
+
 	void Progression::LoadFromCoSave()
 	{
 		LoadAttributeDefinitions();
@@ -82,6 +104,7 @@ namespace Runefall
 		skillPoints = state.skillPoints;
 		runeTier = std::clamp(state.runeTier, 0, 5);
 		bossKillTier = state.bossKillTier;
+		SyncGlobals();
 	}
 
 	void Progression::SaveToCoSave()
@@ -92,6 +115,7 @@ namespace Runefall
 		state.skillPoints = skillPoints;
 		state.runeTier = runeTier;
 		state.bossKillTier = bossKillTier;
+		SyncGlobals();
 	}
 
 	std::int32_t Progression::Attribute(std::size_t a_index) const

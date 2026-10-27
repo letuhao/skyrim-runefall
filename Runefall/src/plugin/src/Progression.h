@@ -47,6 +47,7 @@ namespace Runefall
 
 	private:
 		void LoadAttributeDefinitions();
+		void SyncGlobals();
 
 		std::array<std::int32_t, 9>   attributes{};
 		std::int32_t                  attributePoints = 0;
