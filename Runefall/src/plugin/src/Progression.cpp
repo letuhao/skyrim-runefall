@@ -93,6 +93,11 @@ namespace Runefall
 		}
 		if (auto* tier = dataHandler->LookupForm<RE::TESGlobal>(0x889, "Runefall.esp"))
 			tier->value = static_cast<float>(runeTier);
+		const auto keys = DerivedKeys();
+		for (std::size_t i = 0; i < keys.size(); ++i) {
+			if (auto* derived = dataHandler->LookupForm<RE::TESGlobal>(static_cast<RE::FormID>(0x8A8 + i), "Runefall.esp"))
+				derived->value = DerivedValue(keys[i]);
+		}
 	}
 
 	void Progression::LoadFromCoSave()

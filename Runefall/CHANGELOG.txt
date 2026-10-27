@@ -2,6 +2,7 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- Derived GLOB records: 36 RF_GLOB_Derived_* mirrors computed and written on load/save/spend.
 - Progression syncs attribute/RF-tier GLOB condition mirrors on load/save/spend.
 - drops_containers/drops_quests tables loaded and exposed in diagnostics.
 - Compatibility evidence recorded for the tested 86-plugin baseline; remaining targets disclosed.

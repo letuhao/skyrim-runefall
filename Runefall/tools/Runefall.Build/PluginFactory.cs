@@ -103,6 +103,13 @@ internal static class PluginFactory
         foreach (var skill in content.SkillNames)
             mod.Globals.Add(new GlobalInt(mod) { EditorID = "RF_GLOB_Skill_" + ContentFactory.SlugPascal(skill), Data = 0 });
 
+        var derivedKeys = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var row in content.AttributeEffectRows)
+        {
+            if (row.Length > 1 && derivedKeys.Add(row[1]))
+                mod.Globals.Add(new GlobalFloat(mod) { EditorID = "RF_GLOB_Derived_" + ContentFactory.SlugPascal(row[1]), Data = 0f });
+        }
+
         keys.StartAt(0x900);
         foreach (var editor in content.BaseMgefEditors)
             AddEffect(mod, keys, editor);

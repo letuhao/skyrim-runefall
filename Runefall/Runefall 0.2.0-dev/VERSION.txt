@@ -1,8 +1,8 @@
 Runefall 0.2.0-dev
 created: 2026-10-27
-stage: final candidate gates; runtime loot/hunt unique; data consumers; menu media captured
+stage: derived GLOB application; runtime loot/hunt; final candidate gates
 parent: 0.1.18
 target: Skyrim SE/AE 1.6.1170 + SKSE 1.6.1170 + Address Library 1.6.1170 (D-062)
-artifact: Runefall.dll 1020928 bytes sha256 280DF266D433A24E9AED4CADB93F7772C40BA441DE70FA646D0B2B1FD511288E
-candidate: build/release/Runefall-0.2.0-dev.zip 494606 bytes sha256 5956A8F7E76208FE9E39519D33DD2E95B4BB36829A58796741B654F25191B63E
-runtime: full batch PASS; probe 18/18; hunt unique item + material PASS; menu pages captured
+artifact: Runefall.dll 1021440 bytes sha256 5A0B8D0A711736D0A0B38B2BB06C34FBC4F02ED709AC6B3591BD9D8778329EFB
+candidate: build/release/Runefall-0.2.0-dev.zip 495544 bytes sha256 DBD397E1297568A5DD8EB0283BB4B08691112E9BC3516D11C072413CDB0246A1
+runtime: full batch PASS; probe 18/18; hunt unique PASS
