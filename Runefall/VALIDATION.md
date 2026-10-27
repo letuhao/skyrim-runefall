@@ -767,4 +767,12 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - MenuApi diagnostics report total materials. Co-save section is optional for old saves.
 - Static gates 5/5 PASS (static-gates-20261027-095948.md); batch 17/17 PASS, self-tests 18/18,
   no crash (batch-test-20261027-100026.md).
-- Artifact DLL 996352 B SHA-256 D741EECE93297960B502DE5ECE2FD4B92EE212DDFBCF161D29CB587067A0EF3D; candidate zip 483303 B SHA-256 81C6FE74842B7DEA5A3A9C9DDDA57805F96D856093639E2BC2E5059DD362320A.
+
+## Derived attribute stats 2026-10-27 10:03
+
+- Progression consumes attribute_effects.csv and computes DerivedValue(effectKey) from spent
+  attribute points; DerivedKeys enumerates all effect keys.
+- MenuApi snapshot adds a derived object; Papyrus GetDerivedStat exposes the values.
+- Actor-value application remains pending. Static gates 5/5 PASS; batch 17/17 PASS, self-tests
+  18/18, no crash (batch-test-20261027-100409.md).
+- Artifact DLL 1001984 B SHA-256 CE5781C5D95D2ABC7983627839B5EC9616575E59F787A930D501F6A4451A5A99; candidate zip 486595 B SHA-256 4BD513D525E342A558616ADFC109D8BAC8D14EE65313892EC3D48E224CC25C43.

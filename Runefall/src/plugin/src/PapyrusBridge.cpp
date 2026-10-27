@@ -128,6 +128,11 @@ namespace Runefall
 			return MenuApi::BuildItemDetailJson(a_registryId > 0 ? static_cast<std::uint32_t>(a_registryId) : 0);
 		}
 
+		float GetDerivedStat(RE::StaticFunctionTag*, std::string a_key)
+		{
+			return Progression::Get().DerivedValue(a_key);
+		}
+
 		std::string GetMenuSnapshot(RE::StaticFunctionTag*)
 		{
 			return MenuApi::BuildSnapshotJson();
@@ -154,6 +159,7 @@ namespace Runefall
 		a_vm->RegisterFunction("SpendAttributePoint", "RunefallNative", SpendAttributePoint);
 		a_vm->RegisterFunction("SpendSkillPoint", "RunefallNative", SpendSkillPoint);
 		a_vm->RegisterFunction("GetMenuSnapshot", "RunefallNative", GetMenuSnapshot);
+		a_vm->RegisterFunction("GetDerivedStat", "RunefallNative", GetDerivedStat);
 		a_vm->RegisterFunction("GetDiagnostics", "RunefallNative", GetDiagnostics);
 		a_vm->RegisterFunction("GetItemDetail", "RunefallNative", GetItemDetail);
 		a_vm->RegisterFunction("AttuneRuneTier", "RunefallNative", AttuneRuneTier);

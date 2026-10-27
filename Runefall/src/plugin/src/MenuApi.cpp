@@ -97,6 +97,16 @@ namespace Runefall
 		out += cfg.EnableInput() ? "true" : "false";
 		out += ",\"coSave\":";
 		out += cfg.EnableCoSave() ? "true" : "false";
+		out += ",\"derived\":{";
+		{
+			bool first = true;
+			for (const auto& key : Progression::Get().DerivedKeys()) {
+				if (!first) out += ',';
+				first = false;
+				out += "\"" + key + "\":" + std::to_string(Progression::Get().DerivedValue(key));
+			}
+		}
+		out += '}';
 		out += ",\"attributeEffects\":";
 		out += std::to_string(Progression::Get().AttributeEffectCount());
 		out += ",\"hookEvents\":{\"container\":";

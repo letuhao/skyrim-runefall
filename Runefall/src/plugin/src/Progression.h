@@ -24,6 +24,8 @@ namespace Runefall
 		[[nodiscard]] bool         BossKillReady() const noexcept { return bossKillTier >= runeTier; }
 		[[nodiscard]] std::int32_t SkillRank(std::string_view a_skill) const;
 		[[nodiscard]] std::size_t AttributeEffectCount() const noexcept { return attributeEffectCount; }
+		[[nodiscard]] float       DerivedValue(std::string_view a_effectKey) const;
+		[[nodiscard]] std::vector<std::string> DerivedKeys() const;
 
 		bool SpendAttributePoint(std::size_t a_index);
 		bool SpendSkillPoint(std::string_view a_skill);
@@ -52,6 +54,14 @@ namespace Runefall
 		std::int32_t                  runeTier = 0;
 		std::int32_t                  bossKillTier = -1;
 		std::vector<SkillProgress>    skills;
+		struct AttributeEffect
+		{
+			std::size_t   attributeIndex = 0;
+			std::string   effectKey;
+			float         perPoint = 0.0f;
+		};
+
+		std::vector<AttributeEffect>  attributeEffects;
 		std::size_t                   attributeEffectCount = 0;
 	};
 }

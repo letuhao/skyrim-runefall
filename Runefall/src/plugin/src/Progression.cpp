@@ -23,8 +23,54 @@ namespace Runefall
 
 	void Progression::LoadAttributeDefinitions()
 	{
+		attributeEffects.clear();
 		const auto* table = DataStore::Get().GetTable("attribute_effects.csv");
-		attributeEffectCount = table ? table->rows.size() : 0;
+		if (table) {
+			int cId = -1, cKey = -1, cPer = -1;
+			for (std::size_t i = 0; i < table->headers.size(); ++i) {
+				if (table->headers[i] == "attributeId") cId = static_cast<int>(i);
+				else if (table->headers[i] == "effectKey") cKey = static_cast<int>(i);
+				else if (table->headers[i] == "perPoint") cPer = static_cast<int>(i);
+			}
+			for (const auto& row : table->rows) {
+				if (cId < 0 || cKey < 0 || cPer < 0)
+					break;
+				auto cell = [&](int col) -> std::string_view {
+					return static_cast<std::size_t>(col) < row.size() ? row[static_cast<std::size_t>(col)] : std::string_view{};
+				};
+				const auto id = std::string{ cell(cId) };
+				auto it = std::find(kAttributeNames.begin(), kAttributeNames.end(), id);
+				if (it == kAttributeNames.end())
+					continue;
+				AttributeEffect effect;
+				effect.attributeIndex = static_cast<std::size_t>(std::distance(kAttributeNames.begin(), it));
+				effect.effectKey = std::string{ cell(cKey) };
+				effect.perPoint = std::strtof(std::string{ cell(cPer) }.c_str(), nullptr);
+				attributeEffects.push_back(std::move(effect));
+			}
+		}
+		attributeEffectCount = attributeEffects.size();
+	}
+
+	float Progression::DerivedValue(std::string_view a_effectKey) const
+	{
+		float total = 0.0f;
+		for (const auto& effect : attributeEffects) {
+			if (effect.effectKey != a_effectKey || effect.attributeIndex >= attributes.size())
+				continue;
+			total += static_cast<float>(attributes[effect.attributeIndex]) * effect.perPoint;
+		}
+		return total;
+	}
+
+	std::vector<std::string> Progression::DerivedKeys() const
+	{
+		std::vector<std::string> keys;
+		for (const auto& effect : attributeEffects) {
+			if (std::find(keys.begin(), keys.end(), effect.effectKey) == keys.end())
+				keys.push_back(effect.effectKey);
+		}
+		return keys;
 	}
 
 	void Progression::LoadFromCoSave()
