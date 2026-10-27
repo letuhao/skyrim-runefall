@@ -686,3 +686,12 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Generator RESULT PASS; "data cross-reference EditorIDs resolve" PASS.
 - Static gates: 5/5 PASS (evidence static-gates-20261027-090952.md).
 - Artifact DLL 966144 B SHA-256 413D8A54F6D7716A68557DA15195B10FBBFEE00FC7B32CDEDA1F273E35606854; candidate zip 467961 B SHA-256 4D938D457078790DC73853D40062BAE3C12FF761BF33F78AD7C047C75B16471B.
+
+## MenuApi detail/diagnostics 2026-10-27 09:15
+
+- MenuApi adds BuildItemDetailJson(registryId) and BuildDiagnosticsJson() (data-loaded, table count,
+  runtime loot/menu/input/co-save flags, probe summary/failures); DataStore gains IsLoaded/TableCount.
+- Papyrus bridge exposes GetItemDetail and GetDiagnostics.
+- Static gates 5/5 PASS (static-gates-20261027-091642.md); batch session 17/17 PASS with
+  18/18 self-tests (batch-test-20261027-091716.md).
+- Artifact DLL 977920 B SHA-256 3908021558D066BD62297BAC2652EC832933EA53659172A4509A8B3807352852; candidate zip 472838 B SHA-256 8A173CACDE00EB09F1C2DCCE307C900293E8DC937F13B8941FF5CF98671F0B86.

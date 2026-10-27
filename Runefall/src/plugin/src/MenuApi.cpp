@@ -6,6 +6,9 @@
 #include "LootEngine.h"
 #include "Progression.h"
 #include "TierEngine.h"
+#include "DebugHarness.h"
+#include "Config.h"
+#include "DataStore.h"
 
 namespace Runefall
 {
@@ -46,12 +49,71 @@ namespace Runefall
 		return out;
 	}
 
+	std::string MenuApi::BuildItemDetailJson(std::uint32_t a_registryId)
+	{
+		const auto* item = ItemRegistry::Get().Find(a_registryId);
+		if (!item)
+			return "{}";
+		std::string out;
+		out.reserve(512);
+		out += "{\"registryId\":" + std::to_string(item->registryId);
+		out += ",\"baseFormId\":" + std::to_string(item->baseFormId);
+		out += ",\"rarity\":" + std::to_string(item->rarity);
+		out += ",\"ilvl\":" + std::to_string(item->ilvl);
+		out += ",\"socketCount\":" + std::to_string(item->socketCount);
+		out += ",\"tags\":" + std::to_string(item->tags);
+		out += ",\"enhancements\":[";
+		for (std::uint8_t i = 0; i < item->enhancementCount && i < 5; ++i) {
+			const auto& enhancement = item->enhancements[i];
+			if (i)
+				out += ',';
+			out += "{\"affixId\":\"" + enhancement.affixId + "\",\"effectEditorId\":\"" + enhancement.effectEditorId + "\"";
+			out += ",\"magnitude\":" + std::to_string(enhancement.magnitude);
+			out += ",\"duration\":" + std::to_string(enhancement.duration);
+			out += ",\"area\":" + std::to_string(enhancement.area) + '}';
+		}
+		out += "]}";
+		return out;
+	}
+
+	std::string MenuApi::BuildDiagnosticsJson()
+	{
+		const auto& cfg = Config::Get();
+		std::string out;
+		out.reserve(512);
+		out += "{\"pluginVersion\":";
+		out += std::to_string(kApiVersion);
+		out += ",\"dataLoaded\":";
+		out += DataStore::Get().IsLoaded() ? "true" : "false";
+		out += ",\"tables\":";
+		out += std::to_string(DataStore::Get().TableCount());
+		out += ",\"runtimeLoot\":";
+		out += cfg.EnableRuntimeLoot() ? "true" : "false";
+		out += ",\"menu\":";
+		out += cfg.EnableMenu() ? "true" : "false";
+		out += ",\"input\":";
+		out += cfg.EnableInput() ? "true" : "false";
+		out += ",\"coSave\":";
+		out += cfg.EnableCoSave() ? "true" : "false";
+		out += ",\"probeFailures\":";
+		out += std::to_string(DebugHarness::LastFailures());
+		out += ",\"probeSummary\":\"" + DebugHarness::LastSummary() + "\"";
+		out += '}';
+		return out;
+	}
+
 	SelfTestResult MenuApi::SelfTest()
 	{
 		const auto json = BuildSnapshotJson();
 		if (json.size() < 20 || json.front() != '{' || json.back() != '}')
 			return { "MenuApi.SelfTest", CheckStatus::Fail, "snapshot JSON is malformed" };
 		if (json.find("\"api\":") == std::string::npos || json.find("\"attributes\":") == std::string::npos)
+			return { "MenuApi.SelfTest", CheckStatus::Fail, "snapshot JSON is missing required keys" };
+		const auto detail = BuildItemDetailJson(0);
+		if (detail.empty() || detail.front() != '{' || detail.back() != '}')
+			return { "MenuApi.SelfTest", CheckStatus::Fail, "item detail JSON is malformed" };
+		const auto diagnostics = BuildDiagnosticsJson();
+		if (diagnostics.find("\"dataLoaded\":") == std::string::npos || diagnostics.find("\"probeSummary\":") == std::string::npos)
 			return { "MenuApi.SelfTest", CheckStatus::Fail, "snapshot JSON is missing required keys" };
 		return { "MenuApi.SelfTest", CheckStatus::Pass, std::to_string(json.size()) + " byte snapshot" };
 	}

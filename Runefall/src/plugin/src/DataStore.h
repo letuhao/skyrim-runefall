@@ -22,6 +22,8 @@ namespace Runefall
 
 		[[nodiscard]] const CsvTable* GetTable(std::string_view a_name) const;
 		[[nodiscard]] std::size_t    TotalRows() const;
+		[[nodiscard]] bool           IsLoaded() const noexcept { return !tables.empty(); }
+		[[nodiscard]] std::size_t    TableCount() const noexcept { return tables.size(); }
 		[[nodiscard]] fs::path       DataDirectory() const { return dataDir; }
 		[[nodiscard]] int            FormatVersion() const { return formatVersion; }
 
