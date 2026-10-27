@@ -9,7 +9,7 @@ Capture on the 1.6.1170 test environment (CleanSave, exterior Riverwood is suffi
 | 3 | Player inventory showing Refined Iron Sword (enchanted) | runtime item appears in inventory | CAPTURED: docs/media/inventory.png (tooltip shot pending) |
 | 4 | Bandit corpse with Mythic Iron Mace + four affix effects | death-drop loot works | not captured |
 | 5 | Draugr corpse with Runed Draugr Draugr Hunt + Draugr Essence | hunt first-kill reward | not captured |
-| 6 | Rune Forge page with rune/material counts | RuneForge data path and costs | not captured |
+| 6 | Rune Forge page with tracked items/affix count | RuneForge data path | CAPTURED: docs/media/menu-rune-forge.png |
 | 7 | Rarity comparison strip (Common to Runeforged) | six rarity bands are visually distinct | not captured |
 
 Rules:
@@ -19,3 +19,4 @@ Rules:
 - Keep the DLL version/hash visible in the gallery description.
 
 Additional captured page: docs/media/menu-character.png (Character page).
+Additional captured page: docs/media/menu-hunt-codex.png (19 families, Draugr first-kill yes).

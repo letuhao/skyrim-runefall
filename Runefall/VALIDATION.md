@@ -783,9 +783,8 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 
 
-## Inventory media capture 2026-10-27 10:50
+## Rune Forge and Hunt Codex verified 2026-10-27 10:51
 
-- Opened inventory via MCP Input.TapKey (I) after closing F1; captured docs/media/inventory.png.
-  The list includes Refined Iron Sword (2) with the enchantment marker, proving runtime items
-  appear in the vanilla inventory. Tooltip close-up still pending.
-- No code change; gates from the prior build remain valid.
+- Captured docs/media/menu-rune-forge.png (3 items tracked, 600 affixes, probe 18/18) and
+  docs/media/menu-hunt-codex.png (19 families, Draugr first-kill yes).
+- All four Runefall menu pages are now visually verified; no code change.
