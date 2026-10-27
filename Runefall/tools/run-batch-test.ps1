@@ -207,7 +207,7 @@ if ($ExerciseDeathDrops) {
     }
 }
 
-# Co-save round-trip: schema 2 must persist the generated-container/quest sets and not re-roll.
+# Co-save round-trip: schema 3 must persist the generated-container/quest sets and not re-roll.
 $null = Tap-Key 68
 $null = Wait-LogPattern '"generatedContainers":[1-9][0-9]*' 10
 $snapshotBefore = Get-LogText
@@ -217,7 +217,7 @@ if ($snapshotBeforeMatches.Count -gt 0) { $generatedBefore = [int]$snapshotBefor
 Add-Check 'Co-save tracked containers' ($generatedBefore -gt 0) "count=$generatedBefore"
 $saveProbe = Invoke-Mcp 'save_game' @{ saveName = 'RF_LOOT_PROBE' }
 Add-Check 'Save probe session' ($saveProbe -match '"success":true') ''
-Add-Check 'Co-save schema 2 written' (Wait-LogPattern 'co-save: wrote .*schema 2' 12) ''
+Add-Check 'Co-save schema 3 written' (Wait-LogPattern 'co-save: wrote .*schema 3' 12) ''
 $loadProbe = Invoke-Mcp 'load_save' @{ saveName = 'RF_LOOT_PROBE' }
 Add-Check 'Reload probe session' ($loadProbe -match '"loading":true') ''
 $reloadDeadline = (Get-Date).AddSeconds($LoadTimeoutSeconds)
@@ -227,7 +227,7 @@ while ((Get-Date) -lt $reloadDeadline) {
     if ($who -match '"name":"([^"]+)"') { break }
 }
 Start-Sleep -Seconds 12
-Add-Check 'Co-save schema 2 loaded' (Wait-LogPattern 'co-save: loaded schema 2' 15) ''
+Add-Check 'Co-save schema 3 loaded' (Wait-LogPattern 'co-save: loaded schema 3' 15) ''
 $null = Tap-Key 68
 Start-Sleep -Seconds 2
 $snapshotText = Get-LogText

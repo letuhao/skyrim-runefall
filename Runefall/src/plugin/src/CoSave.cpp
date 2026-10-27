@@ -22,8 +22,15 @@ namespace Runefall
 		constexpr std::uint16_t kSectionConfigHash = 8;
 		constexpr std::uint16_t kSectionContainers = 9;
 		constexpr std::uint16_t kSectionQuests = 10;
+		constexpr std::uint16_t kSectionLadder = 11;
 		constexpr std::uint32_t kMaxPersistedRefs = 4096;
 		constexpr std::uint32_t kMaxPersistedQuests = 1024;
+		constexpr std::uint32_t kMaxLadderOverrides = 256;
+
+		void PutU8(std::vector<std::uint8_t>& a_out, std::uint8_t a_value)
+		{
+			a_out.push_back(a_value);
+		}
 
 		void PutU16(std::vector<std::uint8_t>& a_out, std::uint16_t a_value)
 		{
@@ -34,6 +41,12 @@ namespace Runefall
 		void PutU32(std::vector<std::uint8_t>& a_out, std::uint32_t a_value)
 		{
 			for (int i = 0; i < 4; ++i)
+				a_out.push_back(static_cast<std::uint8_t>((a_value >> (8 * i)) & 0xFF));
+		}
+
+		void PutU64(std::vector<std::uint8_t>& a_out, std::uint64_t a_value)
+		{
+			for (int i = 0; i < 8; ++i)
 				a_out.push_back(static_cast<std::uint8_t>((a_value >> (8 * i)) & 0xFF));
 		}
 
@@ -85,6 +98,17 @@ namespace Runefall
 				for (int i = 0; i < 4; ++i)
 					a_value |= static_cast<std::uint32_t>(bytes[offset + i]) << (8 * i);
 				offset += 4;
+				return true;
+			}
+
+			bool U64(std::uint64_t& a_value)
+			{
+				if (offset + 8 > bytes.size())
+					return false;
+				a_value = 0;
+				for (int i = 0; i < 8; ++i)
+					a_value |= static_cast<std::uint64_t>(bytes[offset + i]) << (8 * i);
+				offset += 8;
 				return true;
 			}
 
@@ -199,6 +223,7 @@ namespace Runefall
 		std::vector<std::uint8_t> out;
 		out.insert(out.end(), { 'R', 'N', 'F', 'S' });
 		PutU16(out, kSaveVersion);
+		PutU32(out, 0);  // flags, reserved
 		PutU16(out, kSaveVersion);
 
 		std::vector<std::vector<std::uint8_t>> sections;
@@ -282,6 +307,20 @@ namespace Runefall
 			PutU32(quests, id);
 		sections.push_back(BuildSection(kSectionQuests, quests));
 
+		std::vector<std::uint8_t> ladder;
+		PutU8(ladder, 1);  // ladder section schema
+		PutU8(ladder, a_state.playerRank);
+		PutU8(ladder, a_state.playerStage);
+		PutU8(ladder, a_state.difficultyProfile);
+		PutU8(ladder, a_state.curveId);
+		PutU16(ladder, static_cast<std::uint16_t>(a_state.ladderOverrides.size()));
+		for (const auto& entry : a_state.ladderOverrides) {
+			PutU64(ladder, entry.key);
+			PutU8(ladder, entry.stage);
+			PutU8(ladder, entry.flags);
+		}
+		sections.push_back(BuildSection(kSectionLadder, ladder));
+
 		PutU32(out, static_cast<std::uint32_t>(sections.size()));
 		for (const auto& section : sections)
 			out.insert(out.end(), section.begin(), section.end());
@@ -304,8 +343,11 @@ namespace Runefall
 
 		std::uint16_t schema = 0;
 		std::uint16_t saveVersion = 0;
+		std::uint32_t flags = 0;
 		std::uint32_t sectionCount = 0;
 		if (!reader.U16(schema) || schema > kSaveVersion)
+			return false;
+		if (schema >= 3 && !reader.U32(flags))
 			return false;
 		if (!reader.U16(saveVersion) || !reader.U32(sectionCount))
 			return false;
@@ -449,11 +491,46 @@ namespace Runefall
 				}
 				break;
 			}
+			case kSectionLadder: {
+				std::uint8_t version = 0;
+				if (!sectionReader.U8(version) || version != 1)
+					return false;
+				if (!sectionReader.U8(a_out.playerRank) || !sectionReader.U8(a_out.playerStage) ||
+					!sectionReader.U8(a_out.difficultyProfile) || !sectionReader.U8(a_out.curveId))
+					return false;
+				std::uint16_t count = 0;
+				if (!sectionReader.U16(count) || count > kMaxLadderOverrides)
+					return false;
+				a_out.ladderOverrides.reserve(count);
+				for (std::uint16_t n = 0; n < count; ++n) {
+					LadderOverride entry;
+					if (!sectionReader.U64(entry.key) || !sectionReader.U8(entry.stage) || !sectionReader.U8(entry.flags))
+						return false;
+					if (entry.key == 0 || entry.stage < 1 || entry.stage > 100)
+						return false;
+					a_out.ladderOverrides.push_back(entry);
+				}
+				break;
+			}
 			default:
 				break;
 			}
 		}
+		MigrateLegacy(a_out, schema);
 		return true;
+	}
+
+	void CoSave::MigrateLegacy(CoSaveState& a_state, std::uint16_t a_schema)
+	{
+		if (a_schema >= 3)
+			return;
+		static constexpr std::uint8_t kLegacyRankStages[6] = { 1, 20, 40, 60, 80, 100 };
+		const auto legacyTier = (std::clamp)(a_state.runeTier, 0, 5);
+		a_state.playerRank = kLegacyRankStages[legacyTier];
+		a_state.playerStage = kLegacyRankStages[legacyTier];
+		a_state.difficultyProfile = 255;
+		a_state.curveId = 1;
+		logger::info("co-save: migrated schema {} runeTier {} to player rank/stage {}", a_schema, legacyTier, a_state.playerRank);
 	}
 
 	void CoSave::OnSave(SKSE::SerializationInterface* a_intfc)
@@ -560,6 +637,11 @@ namespace Runefall
 		sample.configHash = HashConfig();
 		sample.generatedContainers = { 0x000ABCDE, 0x00012345 };
 		sample.rewardedQuests = { 0x000F00D1 };
+		sample.playerRank = 42;
+		sample.playerStage = 42;
+		sample.difficultyProfile = 2;
+		sample.curveId = 1;
+		sample.ladderOverrides.push_back({ 0x00000000000F00D1ull, 50, 1 });
 
 		const auto encoded = Encode(sample);
 		CoSaveState decoded;
@@ -571,7 +653,11 @@ namespace Runefall
 			decoded.configHash != sample.configHash || decoded.items.size() != 1 ||
 			decoded.items[0].registryId != item.registryId || decoded.items[0].enhancements[0].affixId != item.enhancements[0].affixId ||
 			decoded.items[0].enhancements[0].magnitude != item.enhancements[0].magnitude || decoded.items[0].tags != item.tags ||
-			decoded.generatedContainers != sample.generatedContainers || decoded.rewardedQuests != sample.rewardedQuests)
+			decoded.generatedContainers != sample.generatedContainers || decoded.rewardedQuests != sample.rewardedQuests ||
+			decoded.playerRank != sample.playerRank || decoded.playerStage != sample.playerStage ||
+			decoded.difficultyProfile != sample.difficultyProfile || decoded.curveId != sample.curveId ||
+			decoded.ladderOverrides.size() != 1 || decoded.ladderOverrides[0].key != sample.ladderOverrides[0].key ||
+			decoded.ladderOverrides[0].stage != sample.ladderOverrides[0].stage)
 			return { "CoSave.SelfTest", CheckStatus::Fail, "round-trip data mismatch" };
 
 		// Truncated input must be rejected, not crash.

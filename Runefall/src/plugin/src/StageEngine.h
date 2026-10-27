@@ -10,6 +10,13 @@ namespace Runefall
 	enum class StageSource : std::uint8_t {
 		Default = 0, WorldBand = 1, Encounter = 2, Override = 3, PlayerRank = 4
 	};
+	enum StageProfileFlags : std::uint16_t {
+		kStageProfileNone = 0,
+		kStageProfileRejected = 1 << 0,
+		kStageProfileClamped = 1 << 1,
+		kStageProfileRuleApplied = 1 << 2,
+		kStageProfileDifficultyApplied = 1 << 3
+	};
 
 	struct StageRow
 	{
@@ -29,6 +36,19 @@ namespace Runefall
 		std::uint32_t lootCapacity = 100;
 		std::uint32_t rewardCapacity = 100;
 		std::uint32_t encounterCost = 10;
+	};
+
+	struct CurveDefinition
+	{
+		std::uint8_t curveId = 1;
+		float        powerBase = 15.0f;
+		float        healthExp = 0.65f;
+		float        damageExp = 0.45f;
+		float        regenExp = 0.30f;
+		float        armorExp = 0.25f;
+		std::uint8_t maxStage = 100;
+		bool         enabled = true;
+		std::string  notes;
 	};
 
 	struct TierDefinition
@@ -88,14 +108,23 @@ namespace Runefall
 		bool          enabled = true;
 	};
 
+	struct LegacyTierMap
+	{
+		std::uint8_t rfTier = 0;
+		std::uint8_t stageMin = 1;
+		std::uint8_t stageMax = 15;
+		std::uint8_t playerRankStage = 1;
+	};
+
 	struct StageRequest
 	{
 		StageSource   source = StageSource::Default;
 		std::uint8_t  requestedStage = 0;
 		std::uint8_t  band = 0;
 		std::uint8_t  category = 0;
-		std::uint8_t  difficultyProfile = 0;
+		std::uint8_t  difficultyProfile = 255;  // 255 = no difficulty overlay
 		std::uint8_t  overrideStage = 0;
+		std::uint8_t  playerRank = 0;
 		std::uint16_t ruleId = 0;
 		std::uint64_t seed = 0;
 	};
@@ -106,7 +135,7 @@ namespace Runefall
 		std::uint8_t  tier = 1;
 		std::uint8_t  curve = 1;
 		StageSource   source = StageSource::Default;
-		std::uint16_t flags = 0;
+		std::uint16_t flags = kStageProfileNone;
 	};
 
 	class StageEngine
@@ -118,6 +147,8 @@ namespace Runefall
 		[[nodiscard]] bool Loaded() const noexcept { return loaded; }
 		[[nodiscard]] std::size_t StageCount() const noexcept { return stages.size(); }
 		[[nodiscard]] std::size_t TierCount() const noexcept { return tiers.size(); }
+		[[nodiscard]] std::size_t CurveCount() const noexcept { return curves.size(); }
+		[[nodiscard]] std::size_t LegacyTierCount() const noexcept { return legacyTiers.size(); }
 
 		[[nodiscard]] const StageRow* Stage(std::uint8_t a_stage) const;
 		[[nodiscard]] float          Power(std::uint8_t a_stage) const;
@@ -126,23 +157,37 @@ namespace Runefall
 		[[nodiscard]] std::uint32_t  Capacity(std::uint8_t a_stage, CapacityKind a_kind) const;
 		[[nodiscard]] std::uint8_t   StageGap(std::uint8_t a_target, std::uint8_t a_attacker) const;
 		[[nodiscard]] float          PowerRatio(std::uint8_t a_target, std::uint8_t a_attacker) const;
+		[[nodiscard]] const CurveDefinition*      Curve(std::uint8_t a_curve) const;
 		[[nodiscard]] const TierDefinition*       Tier(std::uint8_t a_tier) const;
 		[[nodiscard]] const DifficultyDefinition* Difficulty(std::uint8_t a_profile) const;
 		[[nodiscard]] const ContentBand*          ContentBandFor(std::uint8_t a_stage) const;
+		[[nodiscard]] const LegacyTierMap*        LegacyTier(std::uint8_t a_rfTier) const;
 
 		[[nodiscard]] StageProfile RequestStage(const StageRequest& a_request) const;
 
 		[[nodiscard]] static SelfTestResult SelfTest();
 
 	private:
+		[[nodiscard]] bool LoadCurves();
+		[[nodiscard]] bool LoadStages();
+		[[nodiscard]] bool LoadTiers();
+		[[nodiscard]] bool LoadDifficulties();
+		[[nodiscard]] bool LoadBands();
+		[[nodiscard]] bool LoadRules();
+		[[nodiscard]] bool LoadLegacyTiers();
+		[[nodiscard]] bool ValidateTables() const;
+
 		[[nodiscard]] std::uint64_t MixSeed(std::uint64_t a_seed) const;
+		[[nodiscard]] const AssignmentRule* FindRuleById(std::uint16_t a_ruleId) const;
 		[[nodiscard]] const AssignmentRule* FindRule(StageSource a_source) const;
 
 		std::vector<StageRow>              stages;
+		std::vector<CurveDefinition>       curves;
 		std::vector<TierDefinition>        tiers;
 		std::vector<DifficultyDefinition>  difficulties;
 		std::vector<ContentBand>           bands;
 		std::vector<AssignmentRule>        rules;
+		std::vector<LegacyTierMap>         legacyTiers;
 		bool                               loaded = false;
 	};
 }

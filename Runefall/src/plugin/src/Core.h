@@ -20,7 +20,7 @@ namespace Runefall
 {
 	inline constexpr std::uint32_t    kApiVersion = 1;
 	inline constexpr std::string_view kPluginName = "Runefall";
-	inline constexpr std::uint32_t    kSaveVersion = 2;
+	inline constexpr std::uint32_t    kSaveVersion = 3;
 
 	namespace fs = std::filesystem;
 

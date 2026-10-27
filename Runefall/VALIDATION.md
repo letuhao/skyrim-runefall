@@ -841,3 +841,16 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Archive verifier PASS: build/evidence/release-verify-20261028-020119.md.
 - Artifacts: DLL 1,120,256 B sha256 A0B56A129994ED49792FCF459E31849C64079EE24E2F3F190D50C30956C3CEA2;
   candidate zip 548,467 B sha256 2C8422FD0001773D2AE83941B66EB0B917E616E6F262C190C48EC53C24352078.
+
+
+## F0.1 ladder audit fixes (2026-10-28 04:50-05:05)
+
+- StageEngine rewritten: full request ABI (source/ruleId/category/player rank/override/difficulty/seed),
+  fail-closed validation, curve_profiles + legacy_rf_tier_map loaded, tier/band/difficulty/rule checks.
+- Co-save schema 3: ladder section (player rank/stage, difficulty, curve, 256 overrides), v2 migration.
+- Old tier keywords renamed RF_KW_LegacyTier_0..5 at their original FormIDs; live keywords RF_KW_Tier_01..10.
+- Generator now validates all seven ladder tables and form_ids tier keywords; LADDER PASS.
+- In-game batch PASS 20/20 self-tests, stage ladder loaded, co-save v3 written/loaded, no crash:
+  build/evidence/batch-test-20261028-050132.md.
+- Static gates 6/6 PASS: build/evidence/static-gates-20261028-050307.md.
+- Remaining F0.1: wire StageEngine into loot/rank path and add host core/benchmark gate.

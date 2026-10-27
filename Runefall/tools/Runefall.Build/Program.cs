@@ -35,6 +35,17 @@ internal static class Program
 
         var plugins = PluginFactory.Create(content, dataDir);
         WriteFormIds(plugins, runefallData);
+        var ladderErrors = LadderContent.Validate(runefallData);
+        if (ladderErrors.Count > 0)
+        {
+            foreach (var error in ladderErrors)
+                Console.WriteLine($"LADDER FAIL: {error}");
+            Environment.ExitCode = 1;
+        }
+        else
+        {
+            Console.WriteLine("LADDER PASS: generated tables validated");
+        }
         var report = Validator.Validate(plugins, content, runefallData);
         Console.WriteLine(report);
 

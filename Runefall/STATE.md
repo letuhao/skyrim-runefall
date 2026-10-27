@@ -84,10 +84,10 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
   x15 curve, StageProfile/RequestStage). All other systems are registered in
   `SPECS/DEFERRED-MODULES.md` and must not be added to the ladder. D-065/D-066/D-067 record the
   decisions; ARCHITECTURE rule 10 makes balance data-only.
-- Ladder implementation DONE (2026-10-28): seven generated tables, StageEngine + deterministic
-  RequestStage, 20/20 self-tests, in-game batch PASS, static gates 6/6, archive verifier PASS.
-  Next: host-core unit tests/benchmarks, co-save v3 ladder section, POC tier/rank migration, then
-  the threat-protection damage spike.
+- F0.1 in progress (2026-10-28): StageEngine full ABI/validation, co-save v3 ladder section,
+  old tier keyword retirement, generator validator; batch 20/20 PASS and static gates 6/6.
+  Remaining: wire StageEngine into loot/rank path, host core/benchmark, then F0.2 JSON schema.
+- Next: finish F0.1 integration/tests, then freeze JSON schema and start JSON pipeline.
 
 ## Next step
 

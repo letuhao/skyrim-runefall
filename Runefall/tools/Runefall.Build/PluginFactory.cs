@@ -88,8 +88,10 @@ internal static class PluginFactory
             mod.Keywords.Add(new Keyword(mod) { EditorID = "RF_KW_Slot_" + slot });
         for (var socket = 1; socket <= 3; ++socket)
             mod.Keywords.Add(new Keyword(mod) { EditorID = "RF_KW_Socket_" + socket });
+        // Legacy six-tier records stay allocated for FormID stability but are no longer
+        // part of the live tier namespace. New tier keywords are RF_KW_Tier_01..10.
         for (var tier = 0; tier <= 5; ++tier)
-            mod.Keywords.Add(new Keyword(mod) { EditorID = "RF_KW_Tier_" + tier });
+            mod.Keywords.Add(new Keyword(mod) { EditorID = "RF_KW_LegacyTier_" + tier });
         for (var tier = 1; tier <= 10; ++tier)
             mod.Keywords.Add(new Keyword(mod) { EditorID = "RF_KW_Tier_" + tier.ToString("00") });
 

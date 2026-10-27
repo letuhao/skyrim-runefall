@@ -184,4 +184,90 @@ internal static class LadderContent
         value.Contains(',') || value.Contains('"') || value.Contains('\n')
             ? "\"" + value.Replace("\"", "\"\"") + "\""
             : value;
+
+    public static List<string> Validate(string dir)
+    {
+        var errors = new List<string>();
+        var stage = ReadCsv(Path.Combine(dir, "stage_ladder.csv"));
+        if (stage is null || stage.Rows.Count != 100)
+        {
+            errors.Add("stage_ladder.csv must have exactly 100 rows");
+            return errors;
+        }
+        var stageRows = stage;
+        for (var i = 0; i < stageRows.Rows.Count; i++)
+        {
+            var row = stageRows.Rows[i];
+            var rowNumber = i + 2;
+            if (Int(stageRows, row, "stage") != i + 1) { errors.Add($"stage_ladder row {rowNumber}: stage is not contiguous"); break; }
+            var tier = Int(stageRows, row, "tier");
+            if (tier != i / 10 + 1) errors.Add($"stage_ladder row {rowNumber}: tier does not match stage");
+            var power = Double(stageRows, row, "powerIndex");
+            if (Math.Abs(power - Math.Pow(15.0, i / 99.0)) > 0.003) errors.Add($"stage_ladder row {rowNumber}: power endpoint mismatch");
+            if (Math.Abs(Double(stageRows, row, "healthMult") - Math.Pow(power, 0.65)) > 0.003) errors.Add($"stage_ladder row {rowNumber}: health mismatch");
+            if (Math.Abs(Double(stageRows, row, "damageMult") - Math.Pow(power, 0.45)) > 0.003) errors.Add($"stage_ladder row {rowNumber}: damage mismatch");
+            if (Math.Abs(Double(stageRows, row, "regenMult") - Math.Pow(power, 0.30)) > 0.003) errors.Add($"stage_ladder row {rowNumber}: regen mismatch");
+            if (Math.Abs(Double(stageRows, row, "armorMult") - Math.Pow(power, 0.25)) > 0.003) errors.Add($"stage_ladder row {rowNumber}: armor mismatch");
+            CheckCapacity(errors, stageRows, row, rowNumber, "statCapacity", 100.0 * power);
+            CheckCapacity(errors, stageRows, row, rowNumber, "offenseCapacity", 100.0 * Math.Pow(power, 0.45));
+            CheckCapacity(errors, stageRows, row, rowNumber, "defenseCapacity", 100.0 * Math.Pow(power, 0.65));
+            CheckCapacity(errors, stageRows, row, rowNumber, "utilityCapacity", 100.0 * Math.Pow(power, 0.30));
+            CheckCapacity(errors, stageRows, row, rowNumber, "abilityCapacity", 100.0 * Math.Pow(power, 0.25));
+            CheckCapacity(errors, stageRows, row, rowNumber, "lootCapacity", 100.0 * Math.Pow(power, 0.50));
+            CheckCapacity(errors, stageRows, row, rowNumber, "rewardCapacity", 100.0 * Math.Pow(power, 0.40));
+            CheckCapacity(errors, stageRows, row, rowNumber, "encounterCost", 10.0 * Math.Pow(power, 0.35));
+        }
+        var tiers = ReadCsv(Path.Combine(dir, "tier_definitions.csv"));
+        if (tiers is null || tiers.Rows.Count != 10) errors.Add("tier_definitions.csv must have exactly 10 rows");
+        else
+        {
+            for (var i = 0; i < 10; i++)
+            {
+                var row = tiers.Rows[i];
+                if (Int(tiers, row, "tier") != i + 1) errors.Add($"tier_definitions row {i + 2}: tier is not contiguous");
+                if (Int(tiers, row, "stageMin") != i * 10 + 1 || Int(tiers, row, "stageMax") != (i + 1) * 10) errors.Add($"tier_definitions row {i + 2}: stage range invalid");
+                var expected = "RF_KW_Tier_" + (i + 1).ToString("00", CultureInfo.InvariantCulture);
+                if (String(tiers, row, "keywordEditorId") != expected) errors.Add($"tier_definitions row {i + 2}: keyword must be {expected}");
+            }
+        }
+        var bands = ReadCsv(Path.Combine(dir, "stage_content_bands.csv"));
+        if (bands is null || bands.Rows.Count != 10) errors.Add("stage_content_bands.csv must have exactly 10 rows");
+        else for (var i = 0; i < 10; i++) if (Int(bands, bands.Rows[i], "stageMin") != i * 10 + 1 || Int(bands, bands.Rows[i], "stageMax") != (i + 1) * 10) errors.Add("stage_content_bands does not cover stages 1-100");
+        if ((ReadCsv(Path.Combine(dir, "curve_profiles.csv"))?.Rows.Count ?? 0) == 0) errors.Add("curve_profiles.csv has no rows");
+        if ((ReadCsv(Path.Combine(dir, "difficulty_profiles.csv"))?.Rows.Count ?? 0) < 2) errors.Add("difficulty_profiles.csv must have at least two profiles");
+        if ((ReadCsv(Path.Combine(dir, "stage_assignment_rules.csv"))?.Rows.Count ?? 0) < 5) errors.Add("stage_assignment_rules.csv must cover all sources");
+        if ((ReadCsv(Path.Combine(dir, "legacy_rf_tier_map.csv"))?.Rows.Count ?? 0) != 6) errors.Add("legacy_rf_tier_map.csv must have six rows");
+        var formIds = ReadCsv(Path.Combine(dir, "form_ids.csv"));
+        if (formIds is null) errors.Add("form_ids.csv missing");
+        else
+        {
+            var ids = formIds.Rows.Select(r => String(formIds, r, "editorId")).ToHashSet(StringComparer.Ordinal);
+            for (var i = 1; i <= 10; i++) if (!ids.Contains("RF_KW_Tier_" + i.ToString("00", CultureInfo.InvariantCulture))) errors.Add("form_ids missing RF_KW_Tier_" + i.ToString("00", CultureInfo.InvariantCulture));
+            for (var i = 0; i <= 5; i++) if (ids.Contains("RF_KW_Tier_" + i)) errors.Add("form_ids still contains retired RF_KW_Tier_" + i);
+        }
+        return errors;
+    }
+
+    private static void CheckCapacity(List<string> errors, CsvFile file, string[] row, int rowNumber, string column, double expected)
+    {
+        var actual = Int(file, row, column);
+        if (Math.Abs(actual - expected) > 1.0) errors.Add($"stage_ladder row {rowNumber}: {column} {actual} != {expected:0.00}");
+    }
+
+    private sealed record CsvFile(string[] Headers, List<string[]> Rows);
+
+    private static CsvFile? ReadCsv(string path)
+    {
+        if (!File.Exists(path)) return null;
+        var lines = File.ReadAllLines(path);
+        if (lines.Length == 0) return null;
+        var headers = lines[0].Split(',');
+        var rows = lines.Skip(1).Where(l => l.Length > 0).Select(l => l.Split(',')).ToList();
+        return new CsvFile(headers, rows);
+    }
+
+    private static int Column(CsvFile file, string name) => Array.FindIndex(file.Headers, h => h == name);
+    private static string String(CsvFile file, string[] row, string name) { var i = Column(file, name); return i >= 0 && i < row.Length ? row[i] : ""; }
+    private static int Int(CsvFile file, string[] row, string name) { var v = String(file, row, name); return int.TryParse(v, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsed) ? parsed : 0; }
+    private static double Double(CsvFile file, string[] row, string name) { var v = String(file, row, name); return double.TryParse(v, NumberStyles.Float, CultureInfo.InvariantCulture, out var parsed) ? parsed : 0.0; }
 }

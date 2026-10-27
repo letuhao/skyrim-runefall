@@ -4,6 +4,13 @@
 
 namespace Runefall
 {
+	struct LadderOverride
+	{
+		std::uint64_t key = 0;
+		std::uint8_t  stage = 1;
+		std::uint8_t  flags = 0;
+	};
+
 	struct CoSaveState
 	{
 		std::array<std::int32_t, 9> attributes{};
@@ -21,6 +28,11 @@ namespace Runefall
 		std::vector<std::uint32_t>                    generatedContainers;
 		std::vector<std::uint32_t>                    rewardedQuests;
 		std::uint32_t                                 configHash = 0;
+		std::uint8_t                                  playerRank = 1;
+		std::uint8_t                                  playerStage = 1;
+		std::uint8_t                                  difficultyProfile = 255;
+		std::uint8_t                                  curveId = 1;
+		std::vector<LadderOverride>                   ladderOverrides;
 	};
 
 	class CoSave
@@ -48,6 +60,7 @@ namespace Runefall
 
 		static std::vector<std::uint8_t> Encode(const CoSaveState& a_state);
 		static bool                      Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out);
+		static void                      MigrateLegacy(CoSaveState& a_state, std::uint16_t a_schema);
 		static std::uint32_t             HashConfig();
 
 		CoSaveState state;
