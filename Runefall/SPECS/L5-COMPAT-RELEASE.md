@@ -26,16 +26,16 @@ boxes; compatibility patches live in the Patches pack, never in Core.
 
 | Target | Risk | Pass | Status |
 |---|---|---|---|
-| OWL + OWL Randomized Special Loot | loot double-application | additive mode; no leveled-list edits; test loot volume | to test |
-| DiabloRim | two loot engines | loot authority mode; optional patch disables its distribution | to test |
-| Worlds Dawn | overlapping RPG loot/procs | no AV hijack; additive loot; patch for proc overlap | to test |
-| Fortunate Foes | boss density/unique overlap | spawn rank caps; density config; patch | to test |
-| Perk overhauls (Adamant, etc.) | skill/AV interactions | abilities only; no perk tree edits | to test |
-| Enchanting/alchemy/armor overhauls | stacking | percentage caps; additive bonuses | to test |
-| Survival mods | food/rest, damage | no AV repurposing; caps | to test |
-| Boss overhauls | rank stacking | caps and density config | to test |
-| UI stacks (SKSE Menu Framework, SkyUI, Prisma UI) | menus | framework pages coexist; no vanilla UI replacement | to test |
-| Leveled-list/container mods (LLOS, CDF) | loot routing | runtime injection only | to test |
+| OWL + OWL Randomized Special Loot | loot double-application | additive mode; no leveled-list edits; test loot volume | NOT TESTED (disclose) |
+| DiabloRim | two loot engines | loot authority mode; optional patch disables its distribution | NOT TESTED (disclose) |
+| Worlds Dawn | overlapping RPG loot/procs | no AV hijack; additive loot; patch for proc overlap | NOT TESTED (disclose) |
+| Fortunate Foes | boss density/unique overlap | spawn rank caps; density config; patch | NOT TESTED (disclose) |
+| Perk overhauls (Adamant, etc.) | skill/AV interactions | abilities only; no perk tree edits | NOT TESTED (disclose) |
+| Enchanting/alchemy/armor overhauls | stacking | percentage caps; additive bonuses | NOT TESTED (disclose) |
+| Survival mods | food/rest, damage | no AV repurposing; caps | NOT TESTED (disclose) |
+| Boss overhauls | rank stacking | caps and density config | NOT TESTED (disclose) |
+| UI stacks (SKSE Menu Framework, SkyUI, Prisma UI) | menus | framework pages coexist; no vanilla UI replacement | PASS on 1.6.1170 test list |
+| Leveled-list/container mods (LLOS, CDF) | loot routing | runtime injection only | NOT TESTED (disclose) |
 | DynDOLOD/Occlusion/world mods | world edits | none in our mods | n/a (expected safe) |
 
 Compatibility status values: PASS, PASS WITH PATCH, KNOWN LIMITATION, FAIL (must be resolved or
