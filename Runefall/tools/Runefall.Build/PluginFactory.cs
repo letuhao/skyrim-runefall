@@ -222,6 +222,37 @@ internal static class PluginFactory
         mod.Quests.Add(attunementQuest);
         for (var pool = 1; pool <= 5; ++pool)
             mod.FormLists.Add(new FormList(mod) { EditorID = "RF_FLST_Pool_" + pool });
+
+        AddBossTemplates(mod, keys);
+    }
+
+    private static void AddBossTemplates(SkyrimMod mod, FormKeyAllocator keys)
+    {
+        keys.StartAt(0xD00);
+        var classKeys = new List<FormKey>();
+        for (var i = 1; i <= 20; ++i)
+        {
+            var cls = new Class(mod)
+            {
+                EditorID = "RF_CLAS_Boss_" + i.ToString("00"),
+                Name = "Runefall Boss Class " + i
+            };
+            mod.Classes.Add(cls);
+            classKeys.Add(cls.FormKey);
+        }
+
+        var race = new FormLink<IRaceGetter>(new FormKey(ModKey.FromNameAndExtension("Skyrim.esm"), 0x00013746));
+        for (var i = 0; i < 20; ++i)
+        {
+            var npc = new Npc(mod)
+            {
+                EditorID = "RF_NPC_Boss_" + (i + 1).ToString("00"),
+                Name = "Runefall Boss " + (i + 1),
+                Race = race,
+                Class = new FormLink<IClassGetter>(classKeys[i])
+            };
+            mod.Npcs.Add(npc);
+        }
     }
 
     private static FormKey AddEffect(SkyrimMod mod, FormKeyAllocator keys, string editor)

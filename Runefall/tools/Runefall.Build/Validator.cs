@@ -47,6 +47,8 @@ internal static class Validator
             CheckRange(plugin.Name, "COBJ", loaded.ConstructibleObjects, 0xC00, 0xC7F);
             CheckRange(plugin.Name, "QUST/FLST", loaded.Quests, 0xC80, 0xCFF);
             CheckRange(plugin.Name, "QUST/FLST", loaded.FormLists, 0xC80, 0xCFF);
+            CheckRange(plugin.Name, "NPC/CLAS", loaded.Npcs, 0xD00, 0xD7F);
+            CheckRange(plugin.Name, "NPC/CLAS", loaded.Classes, 0xD00, 0xD7F);
             var masters = loaded.ModHeader.MasterReferences.Select(m => m.Master.Name).ToHashSet(StringComparer.OrdinalIgnoreCase);
             if (!masters.Contains("Skyrim"))
             {
@@ -118,6 +120,8 @@ internal static class Validator
             Expect(baseOut.Mod.Keywords.Count >= 60, "base plugin has >=60 keywords", lines, ref failed);
             Expect(baseOut.Mod.Globals.Count >= 39, "base plugin has >=39 globals", lines, ref failed);
             Expect(baseOut.Mod.MagicEffects.Count >= 200, "base plugin has >=200 MGEF", lines, ref failed);
+            Expect(baseOut.Mod.Npcs.Count == 20, "base plugin has 20 boss NPC templates", lines, ref failed);
+            Expect(baseOut.Mod.Classes.Count == 20, "base plugin has 20 boss class templates", lines, ref failed);
             Expect(baseOut.Mod.Spells.Count == 27, "base plugin has 27 skill spells", lines, ref failed);
             Expect(baseOut.Mod.Perks.Count == 27, "base plugin has 27 skill perks", lines, ref failed);
             Expect(baseOut.Mod.Quests.Count == 3, "base plugin has 3 quest hosts", lines, ref failed);
@@ -228,8 +232,6 @@ internal static class Validator
             }
         }
         Expect(missingRefs == 0, "data cross-reference EditorIDs resolve", lines, ref failed);
-
-        lines.Add("WARN NPC/CLAS boss templates are not generated yet (next content phase)");
 
         lines.Add(failed ? "RESULT: FAIL" : "RESULT: PASS");
         return string.Join(Environment.NewLine, lines);

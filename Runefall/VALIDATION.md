@@ -714,3 +714,12 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Static gates 5/5 PASS (static-gates-20261027-093032.md); batch session 17/17 PASS with
   18/18 self-tests after deploying the new data file correctly (batch-test-20261027-093337.md).
 - Artifact DLL 978432 B SHA-256 9804B4AD85F51E3C3D3A953A96E559388446AC9A419024094537478E86EF2E05; candidate zip 474932 B SHA-256 04FD9036883BDC3166C05F51A9516F0AAB5E746B458D8D765088F811567B8C33.
+
+## Boss templates generated 2026-10-27 09:35
+
+- Generated 20 boss NPC templates and 20 matching classes at local FormIDs 0xD00+, with the
+  validator enforcing the NPC/CLAS category range and count floors.
+- Generator PASS; base plugin 430 records, still one ESL.
+- Static gates 5/5 PASS (static-gates-20261027-093658.md); runtime batch 17/17 PASS, self-tests
+  18/18, hunt unique item + material PASS, no crash (batch-test-20261027-093737.md).
+- Artifact DLL 978432 B SHA-256 9804B4AD85F51E3C3D3A953A96E559388446AC9A419024094537478E86EF2E05; candidate zip 475554 B SHA-256 FE5E118861960037848B689982F1A7FDEE3DE9A52FD566997E63B09BA6C5F50A.

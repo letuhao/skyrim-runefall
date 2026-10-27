@@ -2,6 +2,8 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- Boss content: 20 NPC templates + 20 classes generated at 0xD00 with validator range/count gates;
+  runtime load/batch verified.
 - Attributes data split (attributes.csv + attribute_effects.csv); Progression/MenuApi consume
   the effect table; DataStore expected tables 19. Batch re-verified 18/18 self-tests.
 - Content counts completed: 60+ keywords, 39 globals, 201 MGEF in the base ESL; validator floors.
