@@ -211,6 +211,7 @@ internal static class Program
                    "bDebugTrace=0\n" +
                    "iLootAuthority=0\n" +
             "iGameplayDelaySeconds=15\n" +
+            "iRuntimeScanDelaySeconds=600\n" +
             "bEnableRuntimeLoot=1\n" +
             "bEnableContainerLoot=1\n" +
             "bEnableActorRanks=1\n" +

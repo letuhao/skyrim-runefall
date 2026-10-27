@@ -19,6 +19,7 @@ namespace Runefall
 {
 	std::string MenuApi::BuildSnapshotJson()
 	{
+		RuntimeContentResolver::Get().MaybeStartupScan();
 		const auto& state = CoSave::Get().State();
 		std::string out;
 		out.reserve(768);

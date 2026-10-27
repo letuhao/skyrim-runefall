@@ -92,8 +92,8 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
 - F0.4 PASS: DataStore reads runtime JSON only; F0.5 PASS: co-save v3 migration verified in-game.
 - F0.6 PASS: RunefallCoreHost JSON test, 0 allocations, 1.53 ns lookup; static gates 9/9.
 - F0.7 PASS: 15 roles/19 race profiles, unknown provisional + known NordRace, JSON cache; batch 21/21.
-- F0.8 partial: auto cache invalidation, manual F6 rescan, diagnostics; delayed startup scan pending.
-- Next: add delayed startup scan then finish F0.8; F0.9 POC JSON migration after.
+- F0.8 PASS: manual/automatic cache rescan + delayed startup scan (configurable, 600s prod/1s test).
+- Next: F0.9 POC JSON migration.
 
 ## Next step
 

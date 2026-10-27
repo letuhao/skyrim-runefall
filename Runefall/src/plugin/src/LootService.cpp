@@ -13,6 +13,7 @@
 #include "RuneForge.h"
 #include "TierEngine.h"
 #include "StageEngine.h"
+#include "RuntimeContentResolver.h"
 
 #include "RE/C/ContainerMenu.h"
 
@@ -358,6 +359,7 @@ namespace Runefall
 
 	std::uint8_t LootService::ResolveActorStage(RE::Actor* a_actor)
 	{
+		RuntimeContentResolver::Get().MaybeStartupScan();
 		if (!a_actor)
 			return 1;
 		const auto formID = a_actor->GetFormID();

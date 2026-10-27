@@ -21,6 +21,7 @@ namespace Runefall
 		[[nodiscard]] bool        EnableDebugNatives() const noexcept { return enableDebugNatives; }
 		[[nodiscard]] bool        DebugTrace() const noexcept { return debugTrace; }
 		[[nodiscard]] int         GameplayDelaySeconds() const noexcept { return gameplayDelaySeconds; }
+		[[nodiscard]] int         RuntimeScanDelaySeconds() const noexcept { return runtimeScanDelaySeconds; }
 		[[nodiscard]] bool        EnableRuntimeLoot() const noexcept { return enableRuntimeLoot; }
 		[[nodiscard]] bool        EnableContainerLoot() const noexcept { return enableContainerLoot; }
 		[[nodiscard]] bool        EnableActorRanks() const noexcept { return enableActorRanks; }
@@ -36,6 +37,7 @@ namespace Runefall
 		bool        debugSelfTest = true;
 		bool        debugTrace = false;
 		int         gameplayDelaySeconds = 300;
+		int         runtimeScanDelaySeconds = 600;
 		bool        enableRuntimeLoot = true;
 		bool        enableContainerLoot = true;
 		bool        enableActorRanks = true;

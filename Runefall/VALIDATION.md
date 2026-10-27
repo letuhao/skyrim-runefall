@@ -913,3 +913,13 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Batch 21/21 PASS, no crash: build/evidence/batch-test-20261028-060628.md.
 - Static gates 9/9 PASS: build/evidence/static-gates-20261028-060803.md.
 - PENDING: delayed startup scan (10 min) requires the race registry scan path; F0.8 not marked PASS yet.
+
+
+## F0.8 complete - cache lifecycle/rescan/delayed scan (2026-10-28 06:10-06:20)
+
+- Added configurable iRuntimeScanDelaySeconds (default 600) and delayed startup scan triggered on
+  snapshot/actor paths; batch test config 1s.
+- Manual F6 rescan and automatic stale-cache invalidation verified.
+- Batch 21/21 PASS, including "Runtime content rescan" and "Delayed runtime scan":
+  build/evidence/batch-test-20261028-061918.md.
+- Static gates 9/9 PASS: build/evidence/static-gates-20261028-062043.md.

@@ -34,6 +34,13 @@ $reportPath = Join-Path $evidenceDir ("batch-test-{0}.md" -f $stamp)
 $skseDir = Join-Path $env:USERPROFILE 'Documents\My Games\Skyrim Special Edition\SKSE'
 $runefallLog = Join-Path $skseDir 'Runefall.log'
 $probeLog = Join-Path $GameRoot 'Data\SKSE\Plugins\RunefallProbe.log'
+$iniPath = Join-Path $GameRoot 'Data\Runefall\runefall.ini'
+if (Test-Path $iniPath) {
+    $ini = Get-Content $iniPath -Raw
+    $ini = $ini -replace 'iGameplayDelaySeconds=\d+', 'iGameplayDelaySeconds=8'
+    $ini = $ini -replace 'iRuntimeScanDelaySeconds=\d+', 'iRuntimeScanDelaySeconds=1'
+    Set-Content -Path $iniPath -Value $ini -NoNewline
+}
 
 function Add-Check([string]$name, [bool]$ok, [string]$detail = '') {
     $mark = if ($ok) { 'PASS' } else { 'FAIL' }
@@ -165,6 +172,7 @@ if (-not $NoInputHotkeys) {
 Start-Sleep -Milliseconds 700
 Add-Check 'Runtime content rescan' (Wait-LogPattern 'runtime-resolver: manual rescan removed' 10) ''
 Add-Check 'F10 menu snapshot' $okF10 ''
+Add-Check 'Delayed runtime scan' (Wait-LogPattern 'runtime-resolver: delayed startup scan complete' 15) ''
     Add-Check 'F11 selftest rerun' $okF11 ''
     Add-Check 'F12 probe path' $okF12 ''
 }

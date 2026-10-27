@@ -1,6 +1,8 @@
 #pragma once
 #include "Core.h"
 
+#include <chrono>
+
 namespace Runefall
 {
 	struct RaceDescriptor
@@ -35,6 +37,7 @@ namespace Runefall
 		[[nodiscard]] std::size_t RaceProfileCount() const noexcept { return raceProfiles.size(); }
 		[[nodiscard]] std::size_t CachedProfileCount() const noexcept { return cache.size(); }
 		void Rescan();
+		void MaybeStartupScan();
 		[[nodiscard]] std::string_view DataVersion() const noexcept { return dataVersion; }
 		[[nodiscard]] static SelfTestResult SelfTest();
 
@@ -70,5 +73,7 @@ namespace Runefall
 		std::unordered_map<std::string, RuntimeRaceProfile> cache;
 		bool loaded = false;
 		std::string dataVersion;
+		bool startupScanDone = false;
+		std::chrono::steady_clock::time_point startupStart = std::chrono::steady_clock::now();
 	};
 }

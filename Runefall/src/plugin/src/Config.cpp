@@ -17,6 +17,8 @@ namespace Runefall
 				debugTrace = a_value == "1" || a_value == "true";
 			else if (a_key == "iGameplayDelaySeconds")
 				gameplayDelaySeconds = std::atoi(std::string{ a_value }.c_str());
+			else if (a_key == "iRuntimeScanDelaySeconds")
+				runtimeScanDelaySeconds = std::atoi(std::string{ a_value }.c_str());
 			else if (a_key == "bEnableRuntimeLoot")
 				enableRuntimeLoot = a_value == "1" || a_value == "true";
 			else if (a_key == "bEnableContainerLoot")
@@ -87,6 +89,8 @@ namespace Runefall
 			return { "Config.SelfTest", CheckStatus::Fail, "iLootAuthority out of range" };
 		if (gameplayDelaySeconds < 0 || gameplayDelaySeconds > 3600)
 			return { "Config.SelfTest", CheckStatus::Fail, "iGameplayDelaySeconds out of range" };
+		if (runtimeScanDelaySeconds < 0 || runtimeScanDelaySeconds > 3600)
+			return { "Config.SelfTest", CheckStatus::Fail, "iRuntimeScanDelaySeconds out of range" };
 		if (containerLootPerCell < 0 || containerLootPerCell > 64)
 			return { "Config.SelfTest", CheckStatus::Fail, "iContainerLootPerCell out of range" };
 		return { "Config.SelfTest", CheckStatus::Pass, "debug=" + std::string{ debugSelfTest ? "1" : "0" } + " authority=" + std::to_string(lootAuthority) };

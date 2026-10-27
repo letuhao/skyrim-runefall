@@ -1,6 +1,7 @@
 #include "RuntimeContentResolver.h"
 
 #include "DataStore.h"
+#include "Config.h"
 
 #include <algorithm>
 #include <fstream>
@@ -105,6 +106,8 @@ namespace Runefall
 		if (loaded) {
 			dataVersion = ComputeDataVersion();
 			RescanIfNeeded();
+			startupScanDone = false;
+			startupStart = std::chrono::steady_clock::now();
 		}
 		if (!loaded)
 			logger::error("runtime-resolver: tables loaded but no roles/race profiles (or missing unknown role)");
@@ -200,6 +203,23 @@ namespace Runefall
 					logger::info("runtime-resolver: removed stale cache {}", entry.path().filename().string());
 			}
 		}
+	}
+
+	void RuntimeContentResolver::MaybeStartupScan()
+	{
+		if (!loaded || startupScanDone)
+			return;
+		const auto delay = Config::Get().RuntimeScanDelaySeconds();
+		if (delay <= 0) {
+			startupScanDone = true;
+			return;
+		}
+		const auto elapsed = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - startupStart).count();
+		if (elapsed < delay)
+			return;
+		RescanIfNeeded();
+		startupScanDone = true;
+		logger::info("runtime-resolver: delayed startup scan complete ({}s, dataVersion={})", elapsed, dataVersion);
 	}
 
 	void RuntimeContentResolver::Rescan()
