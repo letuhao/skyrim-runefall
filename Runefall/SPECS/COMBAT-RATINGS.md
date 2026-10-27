@@ -109,6 +109,25 @@ All formulas use these data values. Changing balance is a data change.
 - Normal creatures have NCR only; they do not gain rune protection. Modded normal creatures fall back by role and rating level.
 - Player has PCR and Rune Level separate. Gear changes PCR, never Rune Level.
 
+## 7.1 Pace profiles (choice)
+
+Balance targets are selected by a data-driven pace profile, not hardcoded:
+
+| Profile | Normal trash TTK | Normal elite TTK | Same-stage rune TTK | Boss TTK |
+|---|---:|---:|---:|---:|
+| Skyrim pace | 5-10 s | 15-30 s | 30-60 s | 3-6 min |
+| Action/ARPG pace | 2-4 s | 8-15 s | 15-25 s | 2-4 min |
+
+`combat_pace_profiles.json` stores per-profile TTK/TTD/Q bands. The selected profile is a
+setting; it changes only the target data and calibration expectations, never the rating formula.
+
+## 7.2 Display profiles
+
+The default display shows both the rating number and the threat label. HUD/indicator rendering
+is a future UI program; the data model exposes rating, label, color and source so any UI can use
+it. `rating_display_profiles.json` controls number visibility, label visibility, decimals and color
+tokens; `both` is the default.
+
 ## 8. Open calibration inputs
 
 - Base DPS/EHP per stage; initial 10/150 at stage 1 is a placeholder.

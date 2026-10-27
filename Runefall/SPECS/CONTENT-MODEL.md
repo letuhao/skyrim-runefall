@@ -107,6 +107,8 @@ Entity schemaVersion, pack schemaVersion and generatorVersion. Pack manifest lis
 | Map / Raid | endgame content | key, region, waves, bosses, rewards, difficulty | future module |
 | ChallengeBand / TTKTarget | balance | key, class, ttk/ttd/q ranges, weight | core later |
 | RatingProfile / ActorThreatProfile | PCR/NCR/RCR | key, formulas, weights, fallbackGroup | core later |
+| CombatPaceProfile | balance target bands | key, normal/elite/rune/boss TTK/TTD/Q ranges | core later |
+| RatingDisplayProfile | rating presentation | key, numberVisible, labelVisible, colorTokens, decimals | future UI |
 
 ## 9. Deferred entity extensions
 
