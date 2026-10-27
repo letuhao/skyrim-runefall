@@ -779,8 +779,12 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 ## Boss drop table 2026-10-27 10:21
 
 
-## Batch harness hotkeys fixed 2026-10-27 10:29
 
-OS-level SendInput/keybd_event/PostMessage are not delivered to this Skyrim process even when it is foregrounded. The harness now calls SkyLink's Input Papyrus script through MCP: call_papyrus_function with className Input, functionName TapKey, args "[68]" (F10; F11=87, F12=88). The args field must be a JSON string, not an array.
+## Menu page interaction verified 2026-10-27 10:33
 
-Full harness run: MCP connect/save/player/cell/inventory/plugin/menu, self-tests 18/18, F10 menu snapshot, F11 selftest rerun, F12 probe path, Draugr spawn/kill, hunt material, hunt unique item, no crash, game running. Exit 0. Evidence: batch-test-20261027-102930.md. MCP skill updated with the verified TapKey recipe.
+- Used MCP Input.TapKey (F1) plus a mouse click to open the Skyrim section, then captured:
+  docs/media/menu-runefall.png, menu-character.png, menu-item-detail.png.
+- Menu pages render real state: Character (attribute/skill points, RF tier, attributes) and Item
+  Detail (3 tracked items with rarity/ilvl/sockets/enhancements).
+- This closes the F1 page-interaction gap; death loot/hunt shots still need capture.
+- No code change; artifacts unchanged.
