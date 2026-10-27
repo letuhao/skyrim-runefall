@@ -80,11 +80,26 @@ internal static class PluginFactory
         foreach (var tier in new[] { "Common", "Refined", "Exotic", "Mythic" })
             mod.Keywords.Add(new Keyword(mod) { EditorID = "RF_KW_MatTier_" + tier });
 
+        foreach (var attribute in content.AttributeNames)
+            mod.Keywords.Add(new Keyword(mod) { EditorID = "RF_KW_Attr_" + attribute });
+        foreach (var skill in content.SkillNames)
+            mod.Keywords.Add(new Keyword(mod) { EditorID = "RF_KW_Skill_" + ContentFactory.SlugPascal(skill) });
+        foreach (var slot in new[] { "WEAPON", "HEAD", "CHEST", "HANDS", "FEET", "SHIELD", "AMULET", "RING" })
+            mod.Keywords.Add(new Keyword(mod) { EditorID = "RF_KW_Slot_" + slot });
+        for (var socket = 1; socket <= 3; ++socket)
+            mod.Keywords.Add(new Keyword(mod) { EditorID = "RF_KW_Socket_" + socket });
+        for (var tier = 0; tier <= 5; ++tier)
+            mod.Keywords.Add(new Keyword(mod) { EditorID = "RF_KW_Tier_" + tier });
+
         keys.StartAt(0x880);
         foreach (var (build, attribute) in new[] { ("Warrior", "Might"), ("Warrior", "Endurance"), ("Warrior", "Precision"), ("Thief", "Agility"), ("Thief", "Guile"), ("Thief", "Cunning"), ("Mage", "Intellect"), ("Mage", "Wisdom"), ("Mage", "Willpower") })
             mod.Globals.Add(new GlobalFloat(mod) { EditorID = "RF_GLOB_Attr_" + attribute, Data = 0f });
         mod.Globals.Add(new GlobalFloat(mod) { EditorID = "RF_GLOB_State_RuneTier", Data = 0f });
         mod.Globals.Add(new GlobalInt(mod) { EditorID = "RF_GLOB_State_LootAuthority", Data = 0 });
+        foreach (var feature in new[] { "Menu", "Loot", "Input", "CoSave", "Papyrus", "Probes", "LootHooks" })
+            mod.Globals.Add(new GlobalInt(mod) { EditorID = "RF_GLOB_Feature_" + feature, Data = 1 });
+        foreach (var state in new[] { "Pity", "MagicFind", "BossKillTier", "Attunement" })
+            mod.Globals.Add(new GlobalInt(mod) { EditorID = "RF_GLOB_State_" + state, Data = 0 });
         foreach (var skill in content.SkillNames)
             mod.Globals.Add(new GlobalInt(mod) { EditorID = "RF_GLOB_Skill_" + ContentFactory.SlugPascal(skill), Data = 0 });
 
@@ -99,6 +114,11 @@ internal static class PluginFactory
             if (row[4] == "active" && !skillEffects.ContainsKey(skill))
                 skillEffects[skill] = AddEffect(mod, keys, "RF_MGEF_Skill_" + skill.Replace(' ', '_'));
         }
+
+        foreach (var utility in new[] { "Pity", "MagicFind", "SmartDrop", "BossKill", "HuntFirstKill", "AttunementReady", "RuneFind", "MaterialYield", "CraftPower", "FallReduction", "SneakReduction", "Movement", "Cooldown", "MonsterAffix1", "MonsterAffix2", "MonsterAffix3", "MonsterAffix4", "MonsterAffix5", "Utility1", "Utility2", "Utility3", "Utility4", "Utility5", "Utility6", "Utility7", "Utility8", "Utility9", "Utility10" })
+            AddEffect(mod, keys, "RF_MGEF_Utility_" + utility);
+        for (var extra = 1; extra <= 44; ++extra)
+            AddEffect(mod, keys, "RF_MGEF_Utility_Extra" + extra.ToString("00"));
 
         keys.StartAt(0xA00);
         foreach (var row in content.SkillRows)

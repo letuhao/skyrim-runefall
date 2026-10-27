@@ -695,3 +695,12 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Static gates 5/5 PASS (static-gates-20261027-091642.md); batch session 17/17 PASS with
   18/18 self-tests (batch-test-20261027-091716.md).
 - Artifact DLL 977920 B SHA-256 3908021558D066BD62297BAC2652EC832933EA53659172A4509A8B3807352852; candidate zip 472838 B SHA-256 8A173CACDE00EB09F1C2DCCE307C900293E8DC937F13B8941FF5CF98671F0B86.
+
+## Content-count completion 2026-10-27 09:25
+
+- Base plugin expanded to **336+ records** with the missing keyword/global/MGEF categories:
+  60+ KYWD, 39 GLOB, 201 MGEF, while staying inside the ESL FormID windows.
+- Validator enforces the floors; generator RESULT PASS.
+- Static gates 5/5 PASS (static-gates-20261027-092703.md).
+- Artifact DLL 977920 B SHA-256 3908021558D066BD62297BAC2652EC832933EA53659172A4509A8B3807352852; candidate zip 474300 B SHA-256 355195AD4AF1E193FF199D2933C7368D472878FD4DA36F3EB0987AE3B0C78446.
+- Content-only change; runtime batch not re-run after this edit.

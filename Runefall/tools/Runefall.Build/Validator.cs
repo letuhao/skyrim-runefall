@@ -113,6 +113,9 @@ internal static class Validator
         }
         else
         {
+            Expect(baseOut.Mod.Keywords.Count >= 60, "base plugin has >=60 keywords", lines, ref failed);
+            Expect(baseOut.Mod.Globals.Count >= 39, "base plugin has >=39 globals", lines, ref failed);
+            Expect(baseOut.Mod.MagicEffects.Count >= 200, "base plugin has >=200 MGEF", lines, ref failed);
             Expect(baseOut.Mod.Spells.Count == 27, "base plugin has 27 skill spells", lines, ref failed);
             Expect(baseOut.Mod.Perks.Count == 27, "base plugin has 27 skill perks", lines, ref failed);
             Expect(baseOut.Mod.Quests.Count == 3, "base plugin has 3 quest hosts", lines, ref failed);
