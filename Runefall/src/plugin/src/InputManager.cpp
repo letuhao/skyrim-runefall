@@ -9,6 +9,9 @@ namespace Runefall
 	namespace
 	{
 		// DirectInput scan codes for the default debug/UI hotkeys.
+		constexpr std::uint32_t kKeyF7 = 0x41;
+		constexpr std::uint32_t kKeyF8 = 0x42;
+		constexpr std::uint32_t kKeyF9 = 0x43;
 		constexpr std::uint32_t kKeyF10 = 0x44;
 		constexpr std::uint32_t kKeyF11 = 0x57;
 		constexpr std::uint32_t kKeyF12 = 0x58;
@@ -28,7 +31,26 @@ namespace Runefall
 						continue;
 					const auto code = button->GetIDCode();
 					if (auto* tasks = SKSE::GetTaskInterface()) {
-						if (code == kKeyF10) {
+						if (code == kKeyF7) {
+							tasks->AddTask([]() {
+								const auto diagnostics = MenuApi::BuildDiagnosticsJson();
+								logger::info("input: diagnostics {}", diagnostics);
+								if (auto* console = RE::ConsoleLog::GetSingleton())
+									console->Print("[Runefall] diagnostics: %s", diagnostics.c_str());
+							});
+						} else if (code == kKeyF8) {
+							tasks->AddTask([]() {
+								const bool ok = LootService::Get().DebugGiveRuneItem(3);
+								if (auto* console = RE::ConsoleLog::GetSingleton())
+									console->Print("[Runefall] debug rune item: %s", ok ? "queued" : "skipped");
+							});
+						} else if (code == kKeyF9) {
+							tasks->AddTask([]() {
+								const bool ok = LootService::Get().GrantQuestReward(4, "debug");
+								if (auto* console = RE::ConsoleLog::GetSingleton())
+									console->Print("[Runefall] debug quest reward: %s", ok ? "granted" : "skipped");
+							});
+						} else if (code == kKeyF10) {
 							tasks->AddTask([]() {
 								const auto snapshot = MenuApi::BuildSnapshotJson();
 								logger::info("input: menu snapshot {}", snapshot);
@@ -74,7 +96,7 @@ namespace Runefall
 		}
 		deviceManager->AddEventSink<RE::InputEvent*>(&g_inputSink);
 		registered = true;
-		logger::info("input: hotkeys registered (F10 snapshot, F11 probe, F12 probe item)");
+		logger::info("input: hotkeys registered (F7 diagnostics, F8 rune debug, F9 quest debug, F10 snapshot, F11 probe, F12 probe item)");
 	}
 
 	SelfTestResult InputManager::SelfTest()

@@ -196,6 +196,53 @@ namespace Runefall
 			data.generalDrops.push_back(def);
 		}
 
+		// P3.7: container/quest tables are consumed by LootService's runtime paths. A missing
+		// table degrades the feature (warned) instead of failing the whole loot engine.
+		if (const auto* containerTable = DataStore::Get().GetTable("drops_containers.csv")) {
+			const int cTier = FindColumn(*containerTable, "containerTier");
+			const int cChance = FindColumn(*containerTable, "itemChancePct");
+			const int cBias = FindColumn(*containerTable, "rarityBias");
+			const int cMin = FindColumn(*containerTable, "itemCountMin");
+			const int cMax = FindColumn(*containerTable, "itemCountMax");
+			const int cRuneMin = FindColumn(*containerTable, "runeMin");
+			const int cRuneMax = FindColumn(*containerTable, "runeMax");
+			const int cExtra = FindColumn(*containerTable, "extraRollChancePct");
+			for (const auto& row : containerTable->rows) {
+				ContainerDropDef def;
+				def.containerTier = CellInt(row, cTier);
+				def.itemChancePct = CellFloat(row, cChance);
+				def.rarityBias = CellInt(row, cBias);
+				def.itemCountMin = CellInt(row, cMin, 1);
+				def.itemCountMax = CellInt(row, cMax, 1);
+				def.runeMin = CellInt(row, cRuneMin);
+				def.runeMax = CellInt(row, cRuneMax);
+				def.extraRollChancePct = CellFloat(row, cExtra);
+				if (def.containerTier >= 0 && def.containerTier <= 5)
+					data.containerDrops.push_back(def);
+			}
+		} else {
+			logger::warn("loot: drops_containers.csv missing; container loot disabled");
+		}
+		if (const auto* questTable = DataStore::Get().GetTable("drops_quests.csv")) {
+			const int qBand = FindColumn(*questTable, "questBand");
+			const int qCount = FindColumn(*questTable, "itemCount");
+			const int qMinRarity = FindColumn(*questTable, "minRarity");
+			const int qRuneMin = FindColumn(*questTable, "runeMin");
+			const int qRuneMax = FindColumn(*questTable, "runeMax");
+			for (const auto& row : questTable->rows) {
+				QuestDropDef def;
+				def.questBand = CellInt(row, qBand);
+				def.itemCount = CellInt(row, qCount, 1);
+				def.minRarity = CellInt(row, qMinRarity);
+				def.runeMin = CellInt(row, qRuneMin);
+				def.runeMax = CellInt(row, qRuneMax);
+				if (def.questBand >= 0 && def.questBand <= 4)
+					data.questDrops.push_back(def);
+			}
+		} else {
+			logger::warn("loot: drops_quests.csv missing; quest rewards disabled");
+		}
+
 		loaded = !data.affixes.empty() && data.rarities.size() == 6 && !data.weights.empty();
 	}
 
@@ -206,17 +253,21 @@ namespace Runefall
 		std::int32_t a_ilvl,
 		std::uint16_t a_tags,
 		std::string_view a_slotGroup,
-		Rng& a_rng) const
+		Rng& a_rng,
+		float a_rarityBiasOverride) const
 	{
 		if (a_data.rarities.empty() || a_data.weights.empty() || a_data.affixes.empty())
 			return std::nullopt;
 
-		// Rank bias shifts weight toward higher rarities.
-		float bias = 0.0f;
-		for (const auto& drop : a_data.generalDrops) {
-			if (drop.rank == a_rank && drop.rfTier == a_rfTier) {
-				bias = drop.rarityBias;
-				break;
+		// Rank bias shifts weight toward higher rarities; dedicated tables may override it.
+		float bias = a_rarityBiasOverride;
+		if (bias < 0.0f) {
+			bias = 0.0f;
+			for (const auto& drop : a_data.generalDrops) {
+				if (drop.rank == a_rank && drop.rfTier == a_rfTier) {
+					bias = drop.rarityBias;
+					break;
+				}
 			}
 		}
 
@@ -369,11 +420,30 @@ namespace Runefall
 		std::int32_t a_ilvl,
 		std::uint16_t a_tags,
 		std::string_view a_slotGroup,
-		Rng& a_rng)
+		Rng& a_rng,
+		float a_rarityBiasOverride)
 	{
 		if (!loaded)
 			return std::nullopt;
-		return GenerateFrom(data, a_rank, a_rfTier, a_ilvl, a_tags, a_slotGroup, a_rng);
+		return GenerateFrom(data, a_rank, a_rfTier, a_ilvl, a_tags, a_slotGroup, a_rng, a_rarityBiasOverride);
+	}
+
+	const ContainerDropDef* LootEngine::ContainerDrop(std::int32_t a_containerTier) const
+	{
+		for (const auto& def : data.containerDrops) {
+			if (def.containerTier == a_containerTier)
+				return &def;
+		}
+		return nullptr;
+	}
+
+	const QuestDropDef* LootEngine::QuestDrop(std::int32_t a_questBand) const
+	{
+		for (const auto& def : data.questDrops) {
+			if (def.questBand == a_questBand)
+				return &def;
+		}
+		return nullptr;
 	}
 
 	SelfTestResult LootEngine::SelfTest()

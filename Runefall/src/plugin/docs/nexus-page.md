@@ -33,7 +33,7 @@ applied at runtime with a native SKSE DLL and ESL content.
 - Debug hotkeys F10 snapshot, F11 self-tests, F12 probe item; F1 opens the Mod Control Panel.
 - Papyrus API for tier, attributes, skills, runes, first kills, snapshots and attunement.
 
-## Known limitations (0.2.0-dev)
+## Known limitations (0.1.0)
 
 - Runtime loot and hunt paths are verified; menu page interaction and Papyrus runtime calls still
   need a full manual pass.

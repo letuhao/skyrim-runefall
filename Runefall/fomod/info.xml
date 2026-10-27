@@ -2,7 +2,7 @@
 <fomod>
   <Name>Runefall</Name>
   <Author>Runefall contributors</Author>
-  <Version>0.2.0-dev</Version>
+  <Version>0.1.0</Version>
   <Description>Runefall - a Torchlight/Diablo-style four-pillar RPG overhaul for Skyrim SE/AE 1.6.1170. Requires SKSE 1.6.1170, Address Library 1.6.1170 and SKSE Menu Framework 3.18.</Description>
   <Website>https://github.com/letuhao/skyrim-runefall</Website>
 </fomod>

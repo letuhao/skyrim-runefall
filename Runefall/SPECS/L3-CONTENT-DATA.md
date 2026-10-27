@@ -103,7 +103,7 @@ Each pack ships Data\Runefall\packs\<packId>.json:
       "packId": "unique",
       "plugin": "Runefall - Unique.esp",
       "format": 1,
-      "minBaseVersion": "0.2.0",
+      "minBaseVersion": "0.1.0",
       "contentFiles": ["data/unique_affixes.csv", "data/unique_sources.csv"],
       "recordEditors": { "MGEF": ["RF_U_MGEF_..."], "ENCH": ["..."] },
       "conflicts": []

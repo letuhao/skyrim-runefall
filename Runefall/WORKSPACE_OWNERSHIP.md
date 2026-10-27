@@ -3,7 +3,7 @@
 - Workspace root: D:\Works\source\skyrim-moddings
 - Git repository: D:\Works\source\skyrim-moddings\skyrim-runefall (GitHub letuhao/skyrim-runefall, branch main)
 - Project root inside the repo: D:\Works\source\skyrim-moddings\skyrim-runefall\Runefall
-- Active version: Runefall 0.2.0-dev (Phase 0/I1/I2 implementation in progress)
+- Active version: Runefall 0.1.0 (POC base frozen for real-mod development)
 - Created: 2026-10-26
 - Parent version: 0.1.18
 - Project owner: the user (mod author). Executing agent: DSH (DeepSeek Harness) lead, with teammates as recorded in task history.

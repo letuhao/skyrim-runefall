@@ -34,6 +34,7 @@ internal static class Program
         WriteIni(Path.Combine(dataDir, "Runefall", "runefall.ini"));
 
         var plugins = PluginFactory.Create(content, dataDir);
+        WriteFormIds(plugins, runefallData);
         var report = Validator.Validate(plugins, content, runefallData);
         Console.WriteLine(report);
 
@@ -87,6 +88,7 @@ internal static class Program
             ("recipes.csv", content.RecipeColumns), ("skills.csv", content.SkillColumns),
             ("attributes.csv", content.AttributeColumns), ("attribute_effects.csv", content.AttributeEffectColumns), ("unique_affixes.csv", content.UniqueColumns),
             ("unique_sources.csv", content.UniqueSourceColumns), ("strings.csv", content.StringColumns),
+            ("form_ids.csv", new[] { "editorId", "plugin", "localFormId", "recordType" }),
         };
         for (int i = 0; i < tables.Length; i++)
         {
@@ -117,6 +119,30 @@ internal static class Program
         return value;
     }
 
+    private static void WriteFormIds(List<PluginOutput> plugins, string dir)
+    {
+        var rows = new List<string[]>();
+        foreach (var output in plugins)
+        {
+            foreach (var record in output.Mod.EnumerateMajorRecords())
+            {
+                var editorID = record.EditorID;
+                if (string.IsNullOrEmpty(editorID))
+                    continue;
+                rows.Add(new[]
+                {
+                    editorID,
+                    output.Name,
+                    record.FormKey.ID.ToString("X6", CultureInfo.InvariantCulture),
+                    record.GetType().Name
+                });
+            }
+        }
+        rows.Sort((a, b) => string.CompareOrdinal(a[0], b[0]));
+        WriteCsv(Path.Combine(dir, "form_ids.csv"),
+            new[] { "editorId", "plugin", "localFormId", "recordType" }, rows);
+    }
+
     private static void WriteManifests(string packDir, Content content)
     {
         var uniqueEditors = content.UniqueNames
@@ -139,7 +165,7 @@ internal static class Program
                    $"  \"packId\": {JsonString(packId)},\n" +
                    $"  \"plugin\": {JsonString(plugin)},\n" +
                    "  \"format\": 1,\n" +
-                   "  \"minBaseVersion\": \"0.2.0-dev\",\n" +
+                   "  \"minBaseVersion\": \"0.1.0\",\n" +
                    $"  \"contentFiles\": [{filesJson}],\n" +
                    $"  \"recordCount\": {count},\n" +
                    $"  \"recordEditors\": [{editorsJson}],\n" +
@@ -155,8 +181,12 @@ internal static class Program
                    "bDebugSelfTest=1\n" +
                    "bDebugTrace=0\n" +
                    "iLootAuthority=0\n" +
-            "iGameplayDelaySeconds=300\n" +
-            "bEnableRuntimeLoot=1\n\n" +
+            "iGameplayDelaySeconds=15\n" +
+            "bEnableRuntimeLoot=1\n" +
+            "bEnableContainerLoot=1\n" +
+            "bEnableActorRanks=1\n" +
+            "bEnableQuestDrops=1\n" +
+            "iContainerLootPerCell=8\n\n" +
                    "[Paths]\n" +
                    "sDataDir=\n" +
                    "sPackDir=\n";

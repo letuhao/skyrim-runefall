@@ -21,6 +21,10 @@ namespace Runefall
 		[[nodiscard]] bool        DebugTrace() const noexcept { return debugTrace; }
 		[[nodiscard]] int         GameplayDelaySeconds() const noexcept { return gameplayDelaySeconds; }
 		[[nodiscard]] bool        EnableRuntimeLoot() const noexcept { return enableRuntimeLoot; }
+		[[nodiscard]] bool        EnableContainerLoot() const noexcept { return enableContainerLoot; }
+		[[nodiscard]] bool        EnableActorRanks() const noexcept { return enableActorRanks; }
+		[[nodiscard]] bool        EnableQuestDrops() const noexcept { return enableQuestDrops; }
+		[[nodiscard]] int         ContainerLootPerCell() const noexcept { return containerLootPerCell; }
 		[[nodiscard]] int         LootAuthority() const noexcept { return lootAuthority; }
 		[[nodiscard]] std::string DataDirOverride() const { return dataDirOverride; }
 		[[nodiscard]] std::string PackDirOverride() const { return packDirOverride; }
@@ -32,6 +36,10 @@ namespace Runefall
 		bool        debugTrace = false;
 		int         gameplayDelaySeconds = 300;
 		bool        enableRuntimeLoot = true;
+		bool        enableContainerLoot = true;
+		bool        enableActorRanks = true;
+		bool        enableQuestDrops = true;
+		int         containerLootPerCell = 8;
 		bool        enableMenu = true;
 		bool        enableInput = true;
 		bool        enableLootHooks = true;

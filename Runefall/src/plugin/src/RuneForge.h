@@ -36,6 +36,12 @@ namespace Runefall
 		// Spends rune units from the highest rank down (R1=1, R2=5, R3=25, R4=125, R5=625).
 		[[nodiscard]] static bool SpendUnits(std::int32_t a_costUnits);
 
+		// Runtime currency grants: rank items aggregate into the rank wallet; drop tables
+		// express their reward in R1-equivalent units.
+		static void AddRunesToWallet(std::int32_t a_rank, std::int32_t a_amount);
+		static void AddRuneUnits(std::int32_t a_units);
+		[[nodiscard]] static std::int32_t WalletUnits();
+
 		[[nodiscard]] static SelfTestResult SelfTest();
 
 	private:

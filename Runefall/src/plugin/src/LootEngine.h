@@ -110,13 +110,18 @@ namespace Runefall
 
 		bool RerollEnhancements(ItemMetadata& a_item, std::int32_t a_lockedIndex, std::string_view a_slotGroup, Rng& a_rng);
 
+		// Dedicated drop tables consumed by the container/quest runtime paths (P3.7).
+		[[nodiscard]] const ContainerDropDef* ContainerDrop(std::int32_t a_containerTier) const;
+		[[nodiscard]] const QuestDropDef*     QuestDrop(std::int32_t a_questBand) const;
+
 		[[nodiscard]] std::optional<ItemMetadata> Generate(
 			std::int32_t  a_rank,
 			std::int32_t  a_rfTier,
 			std::int32_t  a_ilvl,
 			std::uint16_t a_tags,
 			std::string_view a_slotGroup,
-			Rng&          a_rng);
+			Rng&          a_rng,
+			float         a_rarityBiasOverride = -1.0f);
 
 		[[nodiscard]] static SelfTestResult SelfTest();
 
@@ -139,7 +144,8 @@ namespace Runefall
 			std::int32_t   a_ilvl,
 			std::uint16_t  a_tags,
 			std::string_view a_slotGroup,
-			Rng&           a_rng) const;
+			Rng&           a_rng,
+			float          a_rarityBiasOverride = -1.0f) const;
 
 		Dataset     data;
 		bool        loaded = false;

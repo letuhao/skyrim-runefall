@@ -1,4 +1,4 @@
-# Runefall — Nexus media plan (0.2.0-dev)
+# Runefall — Nexus media plan (0.1.0)
 
 Capture on the 1.6.1170 test environment (CleanSave, exterior Riverwood is sufficient).
 

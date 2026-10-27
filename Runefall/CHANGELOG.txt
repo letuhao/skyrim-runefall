@@ -1,6 +1,29 @@
 Runefall CHANGELOG
 ==================
 
+0.1.0 - 2026-10-27 (first public release)
+- Public release of the Runefall four-pillar RPG overhaul for Skyrim SE/AE 1.6.1170.
+- Native SKSE plugin (CommonLibSSE-NG), three ESL plugins, 19 data tables, Papyrus bridge and
+  SKSE Menu Framework pages (Character, Rune Forge, Hunt Codex, Item Detail).
+- P4.2 runtime mutation paths: Load3D vtable hooks for container loot generation and actor-rank
+  buffs, menu-open catch-up path, rune-item wallet aggregation, quest-completion drops, per-cell
+  density budget and TESResetEvent handling.
+- P3.7: drops_containers.csv and drops_quests.csv are now consumed at runtime; five rank
+  ability spells + three constant-effect buff MGEFs generated; rank is shared by buff and death loot.
+- Co-save schema 2: generated-container and rewarded-quest sets persist across save/load.
+- Compatibility smoke PASS (target verified loaded): OWL + Randomized Special Loot, Worlds Dawn,
+  Fortunate Foes (+SPID/KID/SkyPatcher), DiabloRim. Uninstall matrix PASS: optional-pack disable,
+  DLL removal, full removal; no crash in any mode.
+- Batch PASS: 30 checks covering container/actor/quest/rune paths, co-save round-trip, death drop,
+  hunt first-kill and hotkeys; 18/18 self-tests; no new crash log.
+- Static gates 5/5 and release archive verifier PASS; local git history contains the full
+  pre-release line.
+- Known limitations: inventory/tooltip gallery shots remain user-side; Grid Inventory base and
+  Summermyst compatibility are not shipped/tested; Skyrim 1.7.x is unsupported (D-062).
+
+NOTE: the "0.2.0-dev" entries below are the internal pre-release line that became this public
+0.1.0 release; they were never published. Download/version metadata now uses 0.1.0.
+
 0.2.0-dev - 2026-10-27
 - HookManager player item-added counter exposed in diagnostics.
 - Derived GLOB records: 36 RF_GLOB_Derived_* mirrors computed and written on load/save/spend.

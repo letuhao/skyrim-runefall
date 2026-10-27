@@ -27,6 +27,7 @@ namespace Runefall
 			"unique_affixes.csv",
 			"unique_sources.csv",
 			"strings.csv",
+			"form_ids.csv",
 		};
 	}
 

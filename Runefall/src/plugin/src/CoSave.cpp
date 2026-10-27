@@ -20,6 +20,10 @@ namespace Runefall
 		constexpr std::uint16_t kSectionMaterials = 5;
 		constexpr std::uint16_t kSectionPackState = 7;
 		constexpr std::uint16_t kSectionConfigHash = 8;
+		constexpr std::uint16_t kSectionContainers = 9;
+		constexpr std::uint16_t kSectionQuests = 10;
+		constexpr std::uint32_t kMaxPersistedRefs = 4096;
+		constexpr std::uint32_t kMaxPersistedQuests = 1024;
 
 		void PutU16(std::vector<std::uint8_t>& a_out, std::uint16_t a_value)
 		{
@@ -149,6 +153,41 @@ namespace Runefall
 		state = CoSaveState{};
 	}
 
+	bool CoSave::HasGeneratedContainer(std::uint32_t a_formID) const
+	{
+		return std::find(state.generatedContainers.begin(), state.generatedContainers.end(), a_formID) != state.generatedContainers.end();
+	}
+
+	bool CoSave::RememberGeneratedContainer(std::uint32_t a_formID)
+	{
+		if (a_formID == 0 || HasGeneratedContainer(a_formID))
+			return false;
+		if (state.generatedContainers.size() >= 4096)
+			state.generatedContainers.erase(state.generatedContainers.begin());
+		state.generatedContainers.push_back(a_formID);
+		return true;
+	}
+
+	void CoSave::ForgetGeneratedContainer(std::uint32_t a_formID)
+	{
+		std::erase(state.generatedContainers, a_formID);
+	}
+
+	bool CoSave::HasRewardedQuest(std::uint32_t a_questFormID) const
+	{
+		return std::find(state.rewardedQuests.begin(), state.rewardedQuests.end(), a_questFormID) != state.rewardedQuests.end();
+	}
+
+	bool CoSave::RememberRewardedQuest(std::uint32_t a_questFormID)
+	{
+		if (a_questFormID == 0 || HasRewardedQuest(a_questFormID))
+			return false;
+		if (state.rewardedQuests.size() >= 1024)
+			state.rewardedQuests.erase(state.rewardedQuests.begin());
+		state.rewardedQuests.push_back(a_questFormID);
+		return true;
+	}
+
 	std::uint32_t CoSave::HashConfig()
 	{
 		// Placeholder stable hash until the real config/pack fingerprint lands.
@@ -230,6 +269,18 @@ namespace Runefall
 		std::vector<std::uint8_t> hash;
 		PutU32(hash, a_state.configHash);
 		sections.push_back(BuildSection(kSectionConfigHash, hash));
+
+		std::vector<std::uint8_t> containers;
+		PutU32(containers, static_cast<std::uint32_t>(a_state.generatedContainers.size()));
+		for (const auto id : a_state.generatedContainers)
+			PutU32(containers, id);
+		sections.push_back(BuildSection(kSectionContainers, containers));
+
+		std::vector<std::uint8_t> quests;
+		PutU32(quests, static_cast<std::uint32_t>(a_state.rewardedQuests.size()));
+		for (const auto id : a_state.rewardedQuests)
+			PutU32(quests, id);
+		sections.push_back(BuildSection(kSectionQuests, quests));
 
 		PutU32(out, static_cast<std::uint32_t>(sections.size()));
 		for (const auto& section : sections)
@@ -372,6 +423,32 @@ namespace Runefall
 				if (!sectionReader.U32(a_out.configHash))
 					return false;
 				break;
+			case kSectionContainers: {
+				std::uint32_t count = 0;
+				if (!sectionReader.U32(count) || count > kMaxPersistedRefs)
+					return false;
+				a_out.generatedContainers.reserve(count);
+				for (std::uint32_t n = 0; n < count; ++n) {
+					std::uint32_t id = 0;
+					if (!sectionReader.U32(id) || id == 0)
+						return false;
+					a_out.generatedContainers.push_back(id);
+				}
+				break;
+			}
+			case kSectionQuests: {
+				std::uint32_t count = 0;
+				if (!sectionReader.U32(count) || count > kMaxPersistedQuests)
+					return false;
+				a_out.rewardedQuests.reserve(count);
+				for (std::uint32_t n = 0; n < count; ++n) {
+					std::uint32_t id = 0;
+					if (!sectionReader.U32(id) || id == 0)
+						return false;
+					a_out.rewardedQuests.push_back(id);
+				}
+				break;
+			}
 			default:
 				break;
 			}
@@ -481,6 +558,8 @@ namespace Runefall
 		item.tags = static_cast<std::uint16_t>(ItemTag::ContainerLoot);
 		sample.items.push_back(item);
 		sample.configHash = HashConfig();
+		sample.generatedContainers = { 0x000ABCDE, 0x00012345 };
+		sample.rewardedQuests = { 0x000F00D1 };
 
 		const auto encoded = Encode(sample);
 		CoSaveState decoded;
@@ -491,7 +570,8 @@ namespace Runefall
 			decoded.huntFirstKill != sample.huntFirstKill || decoded.packVersions != sample.packVersions ||
 			decoded.configHash != sample.configHash || decoded.items.size() != 1 ||
 			decoded.items[0].registryId != item.registryId || decoded.items[0].enhancements[0].affixId != item.enhancements[0].affixId ||
-			decoded.items[0].enhancements[0].magnitude != item.enhancements[0].magnitude || decoded.items[0].tags != item.tags)
+			decoded.items[0].enhancements[0].magnitude != item.enhancements[0].magnitude || decoded.items[0].tags != item.tags ||
+			decoded.generatedContainers != sample.generatedContainers || decoded.rewardedQuests != sample.rewardedQuests)
 			return { "CoSave.SelfTest", CheckStatus::Fail, "round-trip data mismatch" };
 
 		// Truncated input must be rejected, not crash.

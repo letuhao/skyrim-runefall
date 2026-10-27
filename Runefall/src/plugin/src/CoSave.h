@@ -16,6 +16,10 @@ namespace Runefall
 		std::unordered_map<std::string, std::int32_t> materials;
 		std::unordered_map<std::string, std::string>  packVersions;
 		std::vector<ItemMetadata>                     items;
+		// P4.3: references already processed by the runtime loot paths. Persisted so a
+		// save/load cannot roll the same container a second time.
+		std::vector<std::uint32_t>                    generatedContainers;
+		std::vector<std::uint32_t>                    rewardedQuests;
 		std::uint32_t                                 configHash = 0;
 	};
 
@@ -28,6 +32,12 @@ namespace Runefall
 		[[nodiscard]] CoSaveState&       State() noexcept { return state; }
 		[[nodiscard]] const CoSaveState& State() const noexcept { return state; }
 		void Reset();
+
+		[[nodiscard]] bool HasGeneratedContainer(std::uint32_t a_formID) const;
+		bool               RememberGeneratedContainer(std::uint32_t a_formID);
+		void               ForgetGeneratedContainer(std::uint32_t a_formID);
+		[[nodiscard]] bool HasRewardedQuest(std::uint32_t a_questFormID) const;
+		bool               RememberRewardedQuest(std::uint32_t a_questFormID);
 
 		[[nodiscard]] static SelfTestResult SelfTest();
 

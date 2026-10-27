@@ -20,4 +20,4 @@ vanilla records are read, never overridden.
 
 Content-generation scripts, validation harnesses, documentation and parts of the implementation
 were developed with AI coding assistance. Shipped binaries are built from this repository source;
-artifact hashes are recorded in Runefall 0.2.0-dev/VERSION.txt.
+artifact hashes are recorded in Runefall 0.1.0/VERSION.txt.

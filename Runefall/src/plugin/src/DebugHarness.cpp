@@ -2,6 +2,7 @@
 #include "CoSave.h"
 #include "Config.h"
 #include "DataStore.h"
+#include "FormCatalog.h"
 #include "FormResolver.h"
 #include "ItemRegistry.h"
 #include "HuntEngine.h"
@@ -67,7 +68,9 @@ namespace Runefall
 
 		results.push_back(Config::Get().SelfTest());
 		results.push_back(DataStore::Get().LoadAll(RunefallDataDir()));
+		FormCatalog::Get().Load();
 		results.push_back(DataStore::Get().SelfTest());
+		results.push_back(FormCatalog::SelfTest());
 		LootEngine::Get().Reload();
 		TierEngine::Get().Reload();
 		HuntEngine::Get().Reload();

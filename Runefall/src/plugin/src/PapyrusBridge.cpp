@@ -3,6 +3,7 @@
 #include "CoSave.h"
 #include "DebugHarness.h"
 #include "HuntEngine.h"
+#include "LootService.h"
 #include "MenuApi.h"
 #include "Progression.h"
 
@@ -133,6 +134,37 @@ namespace Runefall
 			return Progression::Get().DerivedValue(a_key);
 		}
 
+		std::int32_t GrantQuestReward(RE::StaticFunctionTag*, std::int32_t a_band)
+		{
+			if (auto* tasks = SKSE::GetTaskInterface()) {
+				const auto band = (std::clamp)(a_band, 0, 4);
+				tasks->AddTask([band]() { LootService::Get().GrantQuestReward(band, "papyrus"); });
+				return 0;
+			}
+			return 1;
+		}
+
+		std::int32_t DebugGiveRuneItem(RE::StaticFunctionTag*, std::int32_t a_rank)
+		{
+			if (a_rank < 1 || a_rank > 5)
+				return 2;
+			if (auto* tasks = SKSE::GetTaskInterface()) {
+				tasks->AddTask([a_rank]() { LootService::Get().DebugGiveRuneItem(a_rank); });
+				return 0;
+			}
+			return 1;
+		}
+
+		std::int32_t GetContainerLootCount(RE::StaticFunctionTag*)
+		{
+			return static_cast<std::int32_t>(LootService::Get().ContainersGenerated());
+		}
+
+		std::int32_t GetActorRankCount(RE::StaticFunctionTag*)
+		{
+			return static_cast<std::int32_t>(LootService::Get().ActorRanksAssigned());
+		}
+
 		std::string GetMenuSnapshot(RE::StaticFunctionTag*)
 		{
 			return MenuApi::BuildSnapshotJson();
@@ -163,6 +195,10 @@ namespace Runefall
 		a_vm->RegisterFunction("GetDiagnostics", "RunefallNative", GetDiagnostics);
 		a_vm->RegisterFunction("GetItemDetail", "RunefallNative", GetItemDetail);
 		a_vm->RegisterFunction("AttuneRuneTier", "RunefallNative", AttuneRuneTier);
+		a_vm->RegisterFunction("GrantQuestReward", "RunefallNative", GrantQuestReward);
+		a_vm->RegisterFunction("DebugGiveRuneItem", "RunefallNative", DebugGiveRuneItem);
+		a_vm->RegisterFunction("GetContainerLootCount", "RunefallNative", GetContainerLootCount);
+		a_vm->RegisterFunction("GetActorRankCount", "RunefallNative", GetActorRankCount);
 		// RegisterFunction returns void in this CommonLibSSE-NG version; failures surface via the VM log.
 		logger::info("Papyrus bridge: functions registered (api {})", kApiVersion);
 		return true;

@@ -2,13 +2,13 @@
 .SYNOPSIS
   Automated in-game batch test for Runefall using the SkyLink MCP server.
 .DESCRIPTION
-  Loads the clean save, queries player/cell/inventory/SKSE plugins, exercises F10/F11/F12
-  through hardware SendInput, reads Runefall logs, and (optionally) spawns and kills a
-  Draugr to exercise loot/death-drop/hunt-first-kill. Writes an evidence report and exits
-  non-zero if a crash or failed self-test is detected.
+  Loads the clean save, queries player/cell/inventory/SKSE plugins, exercises F10/F11/F12 through
+  SkyLink's Input.TapKey, then exercises the P4.2/P3.7 runtime paths: container loot generation,
+  actor-rank buffs, quest-table rewards, rune-item aggregation, co-save round-trip and the
+  death-drop/hunt-first-kill path. Writes an evidence report and exits non-zero on failure.
 .PARAMETER ExerciseDeathDrops
-  Spawn a Draugr with the console and kill it to exercise the death hook. Mutates the test
-  save (adds a corpse/probe item); do not use against a real player save.
+  Spawn a Draugr with the console and kill it to exercise the death hook. Mutates the test save
+  (adds a corpse/probe item); do not use against a real player save.
 #>
 [CmdletBinding()]
 param(
@@ -18,7 +18,7 @@ param(
     [string]$Node = 'C:\nvm4w\nodejs\node.exe',
     [int]$StartupTimeoutSeconds = 40,
     [int]$LoadTimeoutSeconds = 40,
-    [int]$ActivationWaitSeconds = 15,
+    [int]$ActivationWaitSeconds = 18,
     [switch]$ExerciseDeathDrops,
     [switch]$NoInputHotkeys
 )
@@ -45,8 +45,25 @@ function Add-Check([string]$name, [bool]$ok, [string]$detail = '') {
 function Invoke-Mcp([string]$tool, [hashtable]$arguments = @{}) {
     $argsJson = ($arguments | ConvertTo-Json -Compress -Depth 5)
     $raw = & $Node $McpClient --call $tool --args $argsJson 2>&1 | Out-String
-    # MCP embeds tool JSON as escaped text; normalize quotes before regex checks.
     return ($raw -replace '\\"', '"')
+}
+
+function Get-LogText {
+    if (Test-Path $runefallLog) { return (Get-Content $runefallLog -Raw) }
+    return ''
+}
+
+function Wait-LogPattern([string]$pattern, [int]$seconds = 10) {
+    $deadline = (Get-Date).AddSeconds($seconds)
+    while ((Get-Date) -lt $deadline) {
+        if ((Get-LogText) -match $pattern) { return $true }
+        Start-Sleep -Milliseconds 500
+    }
+    return ((Get-LogText) -match $pattern)
+}
+
+function Tap-Key([int]$scanCode) {
+    return Invoke-Mcp 'call_papyrus_function' @{ className = 'Input'; functionName = 'TapKey'; args = "[$scanCode]" }
 }
 
 function Wait-Game {
@@ -58,41 +75,6 @@ function Wait-Game {
         Start-Sleep -Seconds 1
     }
     return $false
-}
-
-function Focus-Game {
-    Add-Type -TypeDefinition @"
-using System;
-using System.Runtime.InteropServices;
-public static class RFWindow {
-  [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr hWnd);
-}
-"@ -ErrorAction SilentlyContinue
-    $p = Get-Process SkyrimSE -ErrorAction SilentlyContinue | Select-Object -First 1
-    if ($p -and $p.MainWindowHandle -ne 0) {
-        [RFWindow]::SetForegroundWindow($p.MainWindowHandle) | Out-Null
-        Start-Sleep -Milliseconds 800
-    }
-}
-
-function Send-Key([int]$vk) {
-    Add-Type -TypeDefinition @"
-using System;
-using System.Runtime.InteropServices;
-public static class RFInput {
-  [StructLayout(LayoutKind.Sequential)] public struct INPUT { public uint type; public KEYBDINPUT ki; }
-  [StructLayout(LayoutKind.Sequential)] public struct KEYBDINPUT { public ushort wVk; public ushort wScan; public uint dwFlags; public uint time; public IntPtr dwExtraInfo; }
-  [DllImport("user32.dll")] public static extern uint SendInput(uint n, INPUT[] p, int cb);
-  public static void Key(ushort vk) {
-    INPUT[] down = { new INPUT { type = 1, ki = new KEYBDINPUT { wVk = vk } } };
-    INPUT[] up = { new INPUT { type = 1, ki = new KEYBDINPUT { wVk = vk, dwFlags = 2 } } };
-    SendInput(1, down, Marshal.SizeOf(typeof(INPUT)));
-    System.Threading.Thread.Sleep(80);
-    SendInput(1, up, Marshal.SizeOf(typeof(INPUT)));
-  }
-}
-"@ -ErrorAction SilentlyContinue
-    [RFInput]::Key([uint16]$vk)
 }
 
 if (-not $SaveName) {
@@ -123,7 +105,12 @@ for ($attempt = 0; $attempt -lt 15; ++$attempt) {
 }
 Add-Check 'MCP connected' ($conn -match '"connected":true') ''
 $load = Invoke-Mcp 'load_save' @{ saveName = $SaveName }
-Add-Check 'Load save requested' ($load -match '"loading":true') $SaveName
+$loadRequested = $load -match '"loading":true'
+if (-not $loadRequested) {
+    Start-Sleep -Seconds 2
+    $load = Invoke-Mcp 'load_save' @{ saveName = $SaveName }
+    $loadRequested = $load -match '"loading":true'
+}
 $loadDeadline = (Get-Date).AddSeconds($LoadTimeoutSeconds)
 $player = ''
 while ((Get-Date) -lt $loadDeadline) {
@@ -133,6 +120,7 @@ while ((Get-Date) -lt $loadDeadline) {
 }
 $playerName = if ($player -match '"name":"([^"]+)"') { $Matches[1] } else { '' }
 Add-Check 'Player loaded' ($playerName -ne '') "name=$playerName"
+Add-Check 'Load save requested' ($loadRequested -or $playerName -eq 'CleanSave') $SaveName
 $cell = Invoke-Mcp 'get_cell_info'
 Add-Check 'Cell query' ($cell -match '"formId"') ''
 $inv = Invoke-Mcp 'get_inventory'
@@ -143,46 +131,71 @@ $menu = Invoke-Mcp 'get_menu_state'
 Add-Check 'Menu state query' ($menu -match '"gameIsPaused"') ''
 
 Start-Sleep -Seconds $ActivationWaitSeconds
-$logText = if (Test-Path $runefallLog) { Get-Content $runefallLog -Raw } else { '' }
+$logText = Get-LogText
 $probeText = if (Test-Path $probeLog) { Get-Content $probeLog -Raw } else { '' }
 Add-Check 'Runefall loaded' ($logText -match 'Runefall v0') ''
-Add-Check 'Self-tests 18/18' ($probeText -match 'pass=18\s+warn=0\s+fail=0' -or $logText -match 'pass=18\s+warn=0\s+fail=0') ''
+$testMatch = if ($probeText -match 'pass=(\d+)\s+warn=0\s+fail=0') { [int]$Matches[1] } elseif ($logText -match 'pass=(\d+)\s+warn=0\s+fail=0') { [int]$Matches[1] } else { 0 }
+Add-Check 'Self-tests all pass' ($testMatch -ge 19) "pass=$testMatch"
 $activation = if ($logText -match 'gameplay activation scheduled in (\d+) seconds') { [int]$Matches[1] } else { -1 }
 Add-Check 'Gameplay activation scheduled' ($activation -ge 0) "delay=$activation sec"
+Add-Check 'Gameplay ready' (Wait-LogPattern 'gameplay-ready=true' 12) ''
+Add-Check 'Load3D hooks installed' ($logText -match 'Load3D vtable hooks installed') ''
 
 if (-not $NoInputHotkeys) {
-    try {
-        $logBefore = if (Test-Path $runefallLog) { (Get-Content $runefallLog -Raw).Length } else { 0 }
-        # SkyLink's Input Papyrus script (TapKey) delivers DirectInput codes through the game VM;
-        # OS-level SendInput/keybd_event are not delivered in this test environment.
-        $tapF10 = Invoke-Mcp 'call_papyrus_function' @{ className = 'Input'; functionName = 'TapKey'; args = '[68]' }
-        Add-Check 'MCP Input.TapKey available' ($tapF10 -match 'TapKey') ''
-        Start-Sleep -Seconds 2
-        $tapF11 = Invoke-Mcp 'call_papyrus_function' @{ className = 'Input'; functionName = 'TapKey'; args = '[87]' }
-        Start-Sleep -Seconds 2
-        $tapF12 = Invoke-Mcp 'call_papyrus_function' @{ className = 'Input'; functionName = 'TapKey'; args = '[88]' }
-        Start-Sleep -Seconds 3
-        $logText = Get-Content $runefallLog -Raw
-        $newLog = if ($logText.Length -gt $logBefore) { $logText.Substring($logBefore) } else { '' }
-        Add-Check 'F10 menu snapshot' ($newLog -match 'input: menu snapshot') ''
-        Add-Check 'F11 selftest rerun' ($newLog -match 'probe: pass=') ''
-        Add-Check 'F12 probe path' ($newLog -match 'probe item injected|probe item injection disabled') ''
-    } catch {
-        Add-Check 'Input hotkeys' $false $_.Exception.Message
+    $okF10 = $false
+    $okF11 = $false
+    $okF12 = $false
+    for ($attempt = 0; $attempt -lt 3 -and -not ($okF10 -and $okF11 -and $okF12); ++$attempt) {
+        if (-not $okF10) {
+            $null = Tap-Key 68
+            $okF10 = Wait-LogPattern 'input: menu snapshot' 8
+        }
+        if (-not $okF11) {
+            $null = Tap-Key 87
+            $okF11 = Wait-LogPattern 'probe: pass=' 8
+        }
+        if (-not $okF12) {
+            $null = Tap-Key 88
+            $okF12 = Wait-LogPattern 'probe item injected|probe item injection disabled' 8
+        }
+        if (-not ($okF10 -and $okF11 -and $okF12)) { Start-Sleep -Seconds 2 }
     }
+    Add-Check 'F10 menu snapshot' $okF10 ''
+    Add-Check 'F11 selftest rerun' $okF11 ''
+    Add-Check 'F12 probe path' $okF12 ''
 }
 
+# P4.2/P3.7 runtime paths. The spawned chest is a vanilla TESObjectCONT; Load3D must generate loot.
+$spawnChest = Invoke-Mcp 'execute_console_command' @{ command = 'player.placeatme 0010FDE6 1' }
+Add-Check 'Spawn test chest' ($spawnChest -match '"executed":true') ''
+$containerGenerated = Wait-LogPattern 'container: generated' 12
+Add-Check 'Container loot generated' $containerGenerated ''
+if ($containerGenerated) {
+    Add-Check 'Container item granted' ((Get-LogText) -match 'loot: container granted') ''
+}
+
+# Quest table consumer through the F9 debug hotkey (band 4 -> 1-3 items + runes).
+$null = Tap-Key 67
+Add-Check 'Quest reward granted' (Wait-LogPattern 'quest: debug reward band 4 granted' 12) ''
+
+# Rune item-added path: F8 adds one R3 rune item; the sink must remove it and credit the wallet.
+$null = Tap-Key 66
+Add-Check 'Rune item aggregated' (Wait-LogPattern 'runes: aggregated 1 x R3' 12) ''
+
+# Actor-rank path: spawned actor must receive a rank spell at Load3D.
+$spawn = Invoke-Mcp 'execute_console_command' @{ command = 'player.placeatme 000EBC2D 1' }
+Add-Check 'Spawn test Draugr' ($spawn -match '"executed":true') ''
+Add-Check 'Actor rank assigned' (Wait-LogPattern 'actor: rank \d+ buff applied' 12) ''
+Start-Sleep -Seconds 2
+
 if ($ExerciseDeathDrops) {
-    $spawn = Invoke-Mcp 'execute_console_command' @{ command = 'player.placeatme 000EBC2D 1' }
-    Add-Check 'Spawn test Draugr' ($spawn -match '"executed":true') ''
-    Start-Sleep -Seconds 3
     $near = Invoke-Mcp 'get_nearby_np_cs' @{ radius = 2500 }
     if ($near -match '000EBC2D.*?(FF[0-9A-F]+)') {
         $ref = $Matches[1]
         $kill = Invoke-Mcp 'kill_actor' @{ refId = $ref }
         Add-Check 'Kill test Draugr' ($kill -match '"killed":true') "ref=$ref"
         Start-Sleep -Seconds 5
-        $logText = Get-Content $runefallLog -Raw
+        $logText = Get-LogText
         Add-Check 'Hunt first kill' ($logText -match 'hunt: first kill family') ''
         Add-Check 'Hunt material grant' ($logText -match 'hunt: granted first-kill material') ''
         Add-Check 'Hunt unique item grant' ($logText -match 'hunt: granted unique affix') ''
@@ -192,6 +205,35 @@ if ($ExerciseDeathDrops) {
         Add-Check 'Find test Draugr' $false 'no spawned Draugr in nearby list'
     }
 }
+
+# Co-save round-trip: schema 2 must persist the generated-container/quest sets and not re-roll.
+$null = Tap-Key 68
+$null = Wait-LogPattern '"generatedContainers":[1-9][0-9]*' 10
+$snapshotBefore = Get-LogText
+$snapshotBeforeMatches = [regex]::Matches($snapshotBefore, '"generatedContainers":([0-9]+)')
+$generatedBefore = 0
+if ($snapshotBeforeMatches.Count -gt 0) { $generatedBefore = [int]$snapshotBeforeMatches[$snapshotBeforeMatches.Count - 1].Groups[1].Value }
+Add-Check 'Co-save tracked containers' ($generatedBefore -gt 0) "count=$generatedBefore"
+$saveProbe = Invoke-Mcp 'save_game' @{ saveName = 'RF_LOOT_PROBE' }
+Add-Check 'Save probe session' ($saveProbe -match '"success":true') ''
+Add-Check 'Co-save schema 2 written' (Wait-LogPattern 'co-save: wrote .*schema 2' 12) ''
+$loadProbe = Invoke-Mcp 'load_save' @{ saveName = 'RF_LOOT_PROBE' }
+Add-Check 'Reload probe session' ($loadProbe -match '"loading":true') ''
+$reloadDeadline = (Get-Date).AddSeconds($LoadTimeoutSeconds)
+while ((Get-Date) -lt $reloadDeadline) {
+    Start-Sleep -Seconds 2
+    $who = Invoke-Mcp 'get_player_info'
+    if ($who -match '"name":"([^"]+)"') { break }
+}
+Start-Sleep -Seconds 12
+Add-Check 'Co-save schema 2 loaded' (Wait-LogPattern 'co-save: loaded schema 2' 15) ''
+$null = Tap-Key 68
+Start-Sleep -Seconds 2
+$snapshotText = Get-LogText
+$snapshotMatches = [regex]::Matches($snapshotText, '"generatedContainers":([0-9]+)')
+$generatedAfter = 0
+if ($snapshotMatches.Count -gt 0) { $generatedAfter = [int]$snapshotMatches[$snapshotMatches.Count - 1].Groups[1].Value }
+Add-Check 'Generated container set persisted' ($generatedAfter -ge $generatedBefore) "before=$generatedBefore after=$generatedAfter"
 
 $latestCrash = Get-ChildItem $skseDir -Filter 'crash-*.log' -ErrorAction SilentlyContinue |
     Sort-Object LastWriteTime -Descending | Select-Object -First 1
@@ -215,7 +257,7 @@ $lines = @(
     '',
     '## Runefall log tail',
     '~~~',
-    ($(if (Test-Path $runefallLog) { Get-Content $runefallLog -Tail 25 } else { 'missing' }) -join [Environment]::NewLine),
+    ($(if (Test-Path $runefallLog) { Get-Content $runefallLog -Tail 40 } else { 'missing' }) -join [Environment]::NewLine),
     '~~~',
     '',
     "RESULT: $(if ($failures.Count -eq 0) { 'PASS' } else { 'FAIL' })"

@@ -10,6 +10,7 @@
 #include "Config.h"
 #include "DataStore.h"
 #include "HookManager.h"
+#include "LootService.h"
 #include "MaterialRegistry.h"
 
 namespace Runefall
@@ -53,6 +54,15 @@ namespace Runefall
 		out += std::to_string(LootEngine::Get().AffixCount());
 		out += ",\"ranks\":";
 		out += std::to_string(TierEngine::Get().RankCount());
+		out += ",\"runtime\":{\"containers\":";
+		out += std::to_string(LootService::Get().ContainersGenerated());
+		out += ",\"containerItems\":" + std::to_string(LootService::Get().ContainerItemsGranted());
+		out += ",\"actorRanks\":" + std::to_string(LootService::Get().ActorRanksAssigned());
+		out += ",\"questRewards\":" + std::to_string(LootService::Get().QuestRewardsGranted());
+		out += ",\"runeItems\":" + std::to_string(LootService::Get().RuneItemsAggregated());
+		out += ",\"generatedContainers\":" + std::to_string(CoSave::Get().State().generatedContainers.size());
+		out += ",\"rewardedQuests\":" + std::to_string(CoSave::Get().State().rewardedQuests.size());
+		out += '}';
 		out += '}';
 		return out;
 	}
@@ -121,6 +131,24 @@ namespace Runefall
 		out += ",\"cell\":" + std::to_string(HookManager::Get().CellEvents());
 		out += ",\"object\":" + std::to_string(HookManager::Get().ObjectEvents());
 		out += ",\"playerItems\":" + std::to_string(HookManager::Get().PlayerItemEvents()) + '}';
+		out += ",\"hookEvents2\":{\"reset\":";
+		out += std::to_string(HookManager::Get().ResetEvents());
+		out += ",\"questStage\":" + std::to_string(HookManager::Get().QuestStageEvents());
+		out += ",\"load3dRefr\":" + std::to_string(HookManager::Get().Load3DRefrEvents());
+		out += ",\"load3dCharacter\":" + std::to_string(HookManager::Get().Load3DCharacterEvents()) + '}';
+		out += ",\"load3dHooks\":";
+		out += HookManager::Get().Load3DHooksInstalled() ? "true" : "false";
+		out += ",\"runtime\":{\"containersGenerated\":";
+		out += std::to_string(LootService::Get().ContainersGenerated());
+		out += ",\"containersSkipped\":" + std::to_string(LootService::Get().ContainersSkipped());
+		out += ",\"containerItems\":" + std::to_string(LootService::Get().ContainerItemsGranted());
+		out += ",\"actorRanks\":" + std::to_string(LootService::Get().ActorRanksAssigned());
+		out += ",\"questRewards\":" + std::to_string(LootService::Get().QuestRewardsGranted());
+		out += ",\"questItems\":" + std::to_string(LootService::Get().QuestItemsGranted());
+		out += ",\"runeItems\":" + std::to_string(LootService::Get().RuneItemsAggregated());
+		out += ",\"cellsPruned\":" + std::to_string(LootService::Get().CellsPruned());
+		out += ",\"persistedContainers\":" + std::to_string(CoSave::Get().State().generatedContainers.size());
+		out += ",\"persistedQuests\":" + std::to_string(CoSave::Get().State().rewardedQuests.size()) + '}';
 		out += ",\"probeFailures\":";
 		out += std::to_string(DebugHarness::LastFailures());
 		out += ",\"probeSummary\":\"" + DebugHarness::LastSummary() + "\"";

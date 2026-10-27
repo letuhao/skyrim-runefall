@@ -1,6 +1,6 @@
 # STATE - Runefall
 
-Last updated: 2026-10-26
+Last updated: 2026-10-27
 
 ## Goal
 
@@ -67,11 +67,24 @@ Implement v1 fully before manual game tests: static validation + an automated in
 harness continuously; batch in-game sessions only at T1 (full probe + scripted walkthrough) and
 T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30 rounds).
 
+## Architecture baseline (2026-10-27)
+
+- POC base code is frozen as the starting point for the real mod. `ARCHITECTURE.md` defines the
+  layer/dependency rules, item identity, effect data model, hook lifecycle, co-save contract,
+  POC debt register and migration phases A-F.
+- `FormCatalog` + generator-emitted `form_ids.csv` are the single source of truth for Runefall
+  record identity; hard-coded local FormID windows were removed from LootService/Progression and
+  the archive verifier now asserts the catalog is packaged.
+- Evidence: static gates 5/5 (2026-10-27 23:27), batch 33/33 PASS with 19/19 self-tests
+  (2026-10-27 23:29), archive verifier PASS with 554 catalog rows.
+- Next work is Phase B (item instance identity + co-save v3), then Phase C (domain/service split).
+
 ## Next step
 
 Implementation phase I1 (native core) is in progress:
 
-1. DONE: Config, DataStore, PackManager, FormResolver, CoSave, DebugHarness, PapyrusBridge,
+1. DONE: architecture baseline + FormCatalog (POC freeze; see ARCHITECTURE.md).
+2. DONE: Config, DataStore, PackManager, FormResolver, CoSave, DebugHarness, PapyrusBridge,
    modular bootstrap. Build PASS (780,288 bytes, hash 7867ABEB...1ECB); deployed to the test env.
 2. DONE (I2 foundation): Runefall.Build generator PASS; 3 ESL plugins (184/40/38 records) +
    18 data CSVs + manifests + ini generated and deployed to J:\SkyrimTest\1.6.1170.
@@ -94,7 +107,7 @@ Closed: 1.7.104 support deferred; release target locked to 1.6.1170 (D-062).
 
 ## Last known-good version
 
-0.2.0-dev (Phase 0 DLL built and export-verified; in-game load pending user-side test).
+0.1.0 POC base (runtime-verified; not a release).
 
 ## Build / run command
 

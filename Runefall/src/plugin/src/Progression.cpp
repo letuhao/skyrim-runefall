@@ -2,6 +2,7 @@
 
 #include "RuneForge.h"
 #include "DataStore.h"
+#include "FormCatalog.h"
 #include "FormResolver.h"
 
 #include "CoSave.h"
@@ -10,6 +11,31 @@ namespace Runefall
 {
 	namespace
 	{
+		std::string SlugPascal(std::string_view a_value)
+		{
+			std::string slug;
+			slug.reserve(a_value.size());
+			for (const auto c : a_value) {
+				const auto lower = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+				slug.push_back((std::isalnum(static_cast<unsigned char>(lower)) != 0) ? lower : '_');
+			}
+			while (!slug.empty() && slug.front() == '_')
+				slug.erase(slug.begin());
+			while (!slug.empty() && slug.back() == '_')
+				slug.pop_back();
+			std::string out;
+			bool capitalize = true;
+			for (const auto c : slug) {
+				if (c == '_') {
+					capitalize = true;
+					continue;
+				}
+				out.push_back(capitalize ? static_cast<char>(std::toupper(static_cast<unsigned char>(c))) : c);
+				capitalize = false;
+			}
+			return out;
+		}
+
 		const std::array<std::string_view, 9> kAttributeNames = {
 			"Might", "Endurance", "Precision", "Agility", "Guile",
 			"Cunning", "Intellect", "Wisdom", "Willpower"
@@ -76,8 +102,7 @@ namespace Runefall
 
 	void Progression::SyncGlobals()
 	{
-		auto* dataHandler = RE::TESDataHandler::GetSingleton();
-		if (!dataHandler)
+		if (!FormCatalog::Get().Loaded())
 			return;
 		static const char* kGlobals[9] = {
 			"RF_GLOB_Attr_Might", "RF_GLOB_Attr_Endurance", "RF_GLOB_Attr_Precision",
@@ -85,21 +110,22 @@ namespace Runefall
 			"RF_GLOB_Attr_Intellect", "RF_GLOB_Attr_Wisdom", "RF_GLOB_Attr_Willpower"
 		};
 		for (std::size_t i = 0; i < attributes.size() && i < 9; ++i) {
-			auto* global = dataHandler->LookupForm<RE::TESGlobal>(static_cast<RE::FormID>(0x880 + i), "Runefall.esp");
-			if (!global)
-				global = FormResolver::ResolveAs<RE::TESGlobal>(kGlobals[i]);
-			if (global)
+			if (auto* global = FormCatalog::Get().LookupAs<RE::TESGlobal>(kGlobals[i]))
 				global->value = static_cast<float>(attributes[i]);
+			else
+				logger::warn("progression: global '{}' unresolved", kGlobals[i]);
 		}
-		if (auto* tier = dataHandler->LookupForm<RE::TESGlobal>(0x889, "Runefall.esp"))
+		if (auto* tier = FormCatalog::Get().LookupAs<RE::TESGlobal>("RF_GLOB_State_RuneTier"))
 			tier->value = static_cast<float>(runeTier);
 		const auto keys = DerivedKeys();
 		for (std::size_t i = 0; i < keys.size(); ++i) {
-			if (auto* derived = dataHandler->LookupForm<RE::TESGlobal>(static_cast<RE::FormID>(0x8A8 + i), "Runefall.esp"))
+			const auto editorID = std::format("RF_GLOB_Derived_{}", SlugPascal(keys[i]));
+			if (auto* derived = FormCatalog::Get().LookupAs<RE::TESGlobal>(editorID))
 				derived->value = DerivedValue(keys[i]);
+			else
+				logger::warn("progression: derived global '{}' unresolved", editorID);
 		}
 	}
-
 	void Progression::LoadFromCoSave()
 	{
 		LoadAttributeDefinitions();

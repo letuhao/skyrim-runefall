@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21)
 
 project(
     Runefall
-    VERSION 0.2.0
+    VERSION 0.1.0
     DESCRIPTION "Runefall - Torchlight/Diablo-style RPG overhaul for Skyrim SE/AE"
     LANGUAGES CXX)
 
@@ -80,6 +80,7 @@ else()
         src/DataStore.cpp
         src/PackManager.cpp
         src/FormResolver.cpp
+        src/FormCatalog.cpp
         src/CoSave.cpp
         src/ItemRegistry.cpp
         src/LootEngine.cpp

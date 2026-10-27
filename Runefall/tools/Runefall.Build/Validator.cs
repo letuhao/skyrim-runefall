@@ -122,7 +122,8 @@ internal static class Validator
             Expect(baseOut.Mod.MagicEffects.Count >= 200, "base plugin has >=200 MGEF", lines, ref failed);
             Expect(baseOut.Mod.Npcs.Count == 20, "base plugin has 20 boss NPC templates", lines, ref failed);
             Expect(baseOut.Mod.Classes.Count == 20, "base plugin has 20 boss class templates", lines, ref failed);
-            Expect(baseOut.Mod.Spells.Count == 27, "base plugin has 27 skill spells", lines, ref failed);
+            Expect(baseOut.Mod.Spells.Count == 32, "base plugin has 32 spells (27 skill + 5 rank)", lines, ref failed);
+            Expect(baseOut.Mod.Spells.Count(s => s.EditorID?.StartsWith("RF_SPEL_Rank_", StringComparison.Ordinal) == true) == 5, "base plugin has 5 rank abilities", lines, ref failed);
             Expect(baseOut.Mod.Perks.Count == 27, "base plugin has 27 skill perks", lines, ref failed);
             Expect(baseOut.Mod.Quests.Count == 3, "base plugin has 3 quest hosts", lines, ref failed);
             Expect(baseOut.Mod.FormLists.Count == 5, "base plugin has 5 form lists", lines, ref failed);

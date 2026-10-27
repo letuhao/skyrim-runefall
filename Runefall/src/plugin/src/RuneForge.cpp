@@ -67,6 +67,23 @@ namespace Runefall
 		return SpendRunes(a_costUnits);
 	}
 
+	void RuneForge::AddRunesToWallet(std::int32_t a_rank, std::int32_t a_amount)
+	{
+		AddRunes(a_rank, a_amount);
+	}
+
+	void RuneForge::AddRuneUnits(std::int32_t a_units)
+	{
+		if (a_units <= 0)
+			return;
+		Wallet()[0] += a_units;
+	}
+
+	std::int32_t RuneForge::WalletUnits()
+	{
+		return WalletTotalUnits();
+	}
+
 	void RuneForge::ReloadSocketRecipes()
 	{
 		socketRecipes.clear();

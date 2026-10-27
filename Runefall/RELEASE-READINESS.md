@@ -1,33 +1,40 @@
-# Runefall — release readiness (0.2.0-dev, 2026-10-27)
+# Runefall - POC base status (2026-10-27)
 
-## Gates that pass
+**Not a release.** The current code is the validated POC base for the real mod. Release metadata is
+0.1.0 so the first public build can use that version, but no Nexus upload, tag or push has been made.
 
-| Gate | Evidence |
+## What is proven
+
+| Area | Evidence |
 |---|---|
-| Static gates (DLL, generator, Papyrus, FOMOD, release tree) | 5/5 PASS, static-gates-20261027-110226.md |
-| In-game batch incl. MCP TapKey hotkeys | all checks PASS, batch-test-20261027-110306.md |
-| Self-tests | 18/18 PASS |
-| Release archive layout/members/XML/hash | 21/21 PASS, release-verify-20261027-110455.md |
-| Runtime loot / death drop / hunt unique | verified on CleanSave, no crash |
-| Menu pages | Character, Rune Forge, Hunt Codex, Item Detail captured |
-| Compatibility baseline | 86-plugin test list; UI/USSEP/Alternate Start/CC/SkyUI/EngineFixes/SkyrimSoulsRE PASS |
+| Static gates (DLL, generator, Papyrus, FOMOD, release tree) | 5/5 PASS, static-gates-20261027-231233/232716 |
+| In-game batch | 33/33 PASS, 19/19 self-tests, no crash, batch-test-20261027-232958 |
+| Form catalog | 554 rows packaged; catalog self-test PASS; archive verifier PASS |
+| Container/actor/quest/rune/co-save paths | PASS in batch |
+| Death drop + hunt first kill | PASS in batch |
+| Compatibility smoke | OWL, Worlds Dawn, Fortunate Foes, DiabloRim PASS (targets verified loaded) |
+| Uninstall matrix | pack-disable, dll-remove, all-remove PASS |
+| Archive verifier | PASS, release-verify-20261027-233226 |
 
-## Remaining scope before a non-dev release
+## What is still POC
 
-- P4.2 mutation hooks: container generation, actor-spawn buffs, cell/menu/item mutation paths.
-- P3.7 runtime application of drops_containers.csv and drops_quests.csv (tables loaded, not consumed).
-- P5.6/P5.7: uninstall/pack-disable matrix and untested compatibility targets (OWL, DiabloRim, Worlds Dawn, Fortunate Foes, overhauls).
-- Media: loot/hunt gallery shots; tooltip close-up.
-- Version promotion from 0.2.0-dev to the release version, then final Nexus upload.
+- Affix/skill MGEF semantics are placeholders (all ValueModifier/Health).
+- Item metadata is not instance-keyed; save/load loses registry identity.
+- Progression writes GLOB mirrors only; no actor-value/perk application.
+- UI is four read-only pages; no interactive forge/salvage/MCM.
+- Content placement, monster affixes, boss encounters and quest content are not implemented.
+- Only a 5-weapon base pool; no armor/jewelry/slot model.
+- Compatibility is smoke-level on an isolated 87-plugin env, not the full 3,753-plugin Mantras list.
+- Media gallery/tooltip capture is incomplete.
 
-## Current artifact
+## Architecture
 
-- DLL 1,021,440 B sha256 055950B21D91930871D794B79508871AF640712A83D7149EAE6D1EF48F48702C
-- Candidate Runefall-0.2.0-dev.zip 495,667 B sha256 BAC5B815F8467F1EA4BC618D460556B56F1D86A0210ADA5672D8D286DF36A346
-- Local main is 44 commits ahead of origin/main; not pushed.
+The binding structure, dependency rules, identity model, effect schema, co-save contract, POC debt
+register and migration phases are in [ARCHITECTURE.md](ARCHITECTURE.md). Real development starts at
+Phase B (item instance identity + co-save v3) and Phase C (domain/service split).
 
-## Recommendation
+## Artifacts (not published)
 
-Treat this as a **beta candidate**, not a final release. The build is runtime-stable on the tested
-1.6.1170 setup; the remaining items above are feature/media/compatibility completeness, not build
-or crash blockers.
+- DLL 1,092,608 B sha256 D7F0912C9F8E18D5E3D30F8D817A809289F45567337B03EA3E29CEDDB2898A94
+- Candidate Runefall-0.1.0.zip 530,036 B sha256 1A07C7939D548828C067DD11E2ABE04E474B1BCB6AB6EC083CF66FAB1549C859
+- Local main is ahead of origin/main; not pushed.

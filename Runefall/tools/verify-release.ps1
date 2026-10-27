@@ -39,6 +39,7 @@ try {
         'Data/Runefall - Unique.esp',
         'Data/SKSE/Plugins/Runefall.dll',
         'Data/Runefall/runefall.ini',
+        'Data/Runefall/data/form_ids.csv',
         'Data/Scripts/RunefallNative.pex',
         'Data/Scripts/RunefallProbe.pex',
         'Data/Scripts/RunefallQuestHost.pex',
@@ -46,6 +47,13 @@ try {
     )
     foreach ($entry in $required) {
         Check "member $entry" ($names -contains $entry)
+    }
+    $formEntry = $zip.GetEntry('Data/Runefall/data/form_ids.csv')
+    if ($formEntry) {
+        $reader = New-Object IO.StreamReader($formEntry.Open())
+        $formText = $reader.ReadToEnd(); $reader.Close()
+        $formRows = ($formText -split "`n" | Where-Object { $_ -match ',' }).Count
+        Check 'form_ids catalog populated' ($formRows -ge 500) "rows=$formRows"
     }
     Check 'no top-level Runefall/ wrapper' (-not ($names | Where-Object { $_ -match '^Runefall/' })) ''
     Check 'no Data/Data nesting' (-not ($names | Where-Object { $_ -like 'Data/Data/*' })) ''
@@ -62,7 +70,7 @@ try {
         $moduleText = $reader.ReadToEnd(); $reader.Close()
         try { [xml]$infoXml = $infoText; Check 'info.xml parses' $true '' } catch { Check 'info.xml parses' $false $_.Exception.Message }
         try { [xml]$moduleXml = $moduleText; Check 'ModuleConfig.xml parses' $true '' } catch { Check 'ModuleConfig.xml parses' $false $_.Exception.Message }
-        Check 'info version 0.2.0-dev' ($infoText -match '<Version>0\.2\.0-dev</Version>') ''
+        Check 'info version 0.1.0' ($infoText -match '<Version>0\.1\.0</Version>') ''
         Check 'ModuleConfig has no missing Data\SKSE ref' ($moduleText -match 'Data\\SKSE') ''
     } else {
         Check 'FOMOD files present' $false 'info.xml or ModuleConfig.xml missing'

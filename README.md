@@ -10,6 +10,7 @@ The project lives in [Runefall/](Runefall/):
 - [Runefall/src/papyrus/](Runefall/src/papyrus/) - Papyrus native bridge and quest probe
 - [Runefall/tools/DataMiner/](Runefall/tools/DataMiner/) - official-master data miner (C#, Mutagen)
 - [Runefall/tools/Runefall.Build/](Runefall/tools/Runefall.Build/) - ESL + CSV generator/validator (C#, Mutagen)
+- [Runefall/ARCHITECTURE.md](Runefall/ARCHITECTURE.md) - architecture baseline for the real mod
 - [Runefall/STATE.md](Runefall/STATE.md), [Runefall/DECISIONS.md](Runefall/DECISIONS.md), [Runefall/VALIDATION.md](Runefall/VALIDATION.md)
 
 ## Requirements (hard)

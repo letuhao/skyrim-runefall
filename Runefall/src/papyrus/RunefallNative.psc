@@ -18,3 +18,7 @@ int Function SpendSkillPoint(string a_skill) Global Native
 string Function GetMenuSnapshot() Global Native
 float Function GetDerivedStat(string a_key) Global Native
 int Function AttuneRuneTier() Global Native
+int Function GrantQuestReward(int a_band) Global Native
+int Function DebugGiveRuneItem(int a_rank) Global Native
+int Function GetContainerLootCount() Global Native
+int Function GetActorRankCount() Global Native

@@ -19,6 +19,14 @@ namespace Runefall
 				gameplayDelaySeconds = std::atoi(std::string{ a_value }.c_str());
 			else if (a_key == "bEnableRuntimeLoot")
 				enableRuntimeLoot = a_value == "1" || a_value == "true";
+			else if (a_key == "bEnableContainerLoot")
+				enableContainerLoot = a_value == "1" || a_value == "true";
+			else if (a_key == "bEnableActorRanks")
+				enableActorRanks = a_value == "1" || a_value == "true";
+			else if (a_key == "bEnableQuestDrops")
+				enableQuestDrops = a_value == "1" || a_value == "true";
+			else if (a_key == "iContainerLootPerCell")
+				containerLootPerCell = std::atoi(std::string{ a_value }.c_str());
 			else if (a_key == "iLootAuthority")
 				lootAuthority = std::atoi(std::string{ a_value }.c_str());
 			else if (a_key == "bEnableMenu")
@@ -77,6 +85,8 @@ namespace Runefall
 			return { "Config.SelfTest", CheckStatus::Fail, "iLootAuthority out of range" };
 		if (gameplayDelaySeconds < 0 || gameplayDelaySeconds > 3600)
 			return { "Config.SelfTest", CheckStatus::Fail, "iGameplayDelaySeconds out of range" };
+		if (containerLootPerCell < 0 || containerLootPerCell > 64)
+			return { "Config.SelfTest", CheckStatus::Fail, "iContainerLootPerCell out of range" };
 		return { "Config.SelfTest", CheckStatus::Pass, "debug=" + std::string{ debugSelfTest ? "1" : "0" } + " authority=" + std::to_string(lootAuthority) };
 	}
 }

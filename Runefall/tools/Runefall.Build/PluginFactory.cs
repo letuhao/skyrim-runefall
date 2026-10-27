@@ -127,6 +127,17 @@ internal static class PluginFactory
         for (var extra = 1; extra <= 44; ++extra)
             AddEffect(mod, keys, "RF_MGEF_Utility_Extra" + extra.ToString("00"));
 
+        // Actor-rank buffs: three constant-effect MGEFs shared by five rank abilities. The
+        // magnitudes are fixed because MagicEffect/Spell magnitudes are baked records.
+        var rankEffects = new Dictionary<string, FormKey>(StringComparer.Ordinal);
+        foreach (var (effectName, actorValue) in new[]
+        {
+            ("Health", ActorValue.Health),
+            ("Damage", ActorValue.AttackDamageMult),
+            ("Armor", ActorValue.DamageResist)
+        })
+            rankEffects[effectName] = AddBuffEffect(mod, keys, "RF_MGEF_RankBuff_" + effectName, actorValue);
+
         keys.StartAt(0xA00);
         foreach (var row in content.SkillRows)
         {
@@ -161,6 +172,41 @@ internal static class PluginFactory
                 });
                 mod.Spells.Add(spell);
             }
+        }
+
+        // Enemy-rank abilities: applied at actor spawn and queried back on death so the buff and
+        // the death drop agree on the rank. HasSpell() makes the grant idempotent across saves.
+        var rankSpells = new (int Rank, float Health, float Damage, float Armor)[]
+        {
+            (1, 50f, 0.20f, 10f),
+            (2, 150f, 0.40f, 20f),
+            (3, 350f, 0.70f, 30f),
+            (4, 600f, 1.00f, 40f),
+            (5, 900f, 1.50f, 50f)
+        };
+        foreach (var (rank, health, damage, armor) in rankSpells)
+        {
+            var spell = new Spell(mod)
+            {
+                EditorID = "RF_SPEL_Rank_" + rank,
+                Name = "Runefall Rank " + rank,
+                Type = SpellType.Ability,
+                CastType = CastType.ConstantEffect,
+                TargetType = TargetType.Self,
+                BaseCost = 0,
+                ChargeTime = 0,
+                CastDuration = 0,
+                Effects = new Noggog.ExtendedList<Effect>()
+            };
+            foreach (var (effectName, magnitude) in new[] { ("Health", health), ("Damage", damage), ("Armor", armor) })
+            {
+                spell.Effects!.Add(new Effect
+                {
+                    BaseEffect = new FormLinkNullable<IMagicEffectGetter>(rankEffects[effectName]),
+                    Data = new EffectData { Magnitude = magnitude, Area = 0, Duration = 0 }
+                });
+            }
+            mod.Spells.Add(spell);
         }
 
         keys.StartAt(0xB00);
@@ -275,6 +321,24 @@ internal static class PluginFactory
             ActorValue = ActorValue.Health
         };
         effect.CastType = CastType.FireAndForget;
+        effect.TargetType = TargetType.Self;
+        mod.MagicEffects.Add(effect);
+        return effect.FormKey;
+    }
+
+    private static FormKey AddBuffEffect(SkyrimMod mod, FormKeyAllocator keys, string editor, ActorValue actorValue)
+    {
+        var effect = new MagicEffect(mod)
+        {
+            EditorID = editor,
+            Name = editor.Replace("RF_MGEF_", string.Empty).Replace('_', ' ')
+        };
+        effect.Archetype = new MagicEffectArchetype
+        {
+            Type = MagicEffectArchetype.TypeEnum.ValueModifier,
+            ActorValue = actorValue
+        };
+        effect.CastType = CastType.ConstantEffect;
         effect.TargetType = TargetType.Self;
         mod.MagicEffects.Add(effect);
         return effect.FormKey;

@@ -1,11 +1,15 @@
 #include "FormResolver.h"
 
+#include "FormCatalog.h"
+
 namespace Runefall
 {
 	RE::TESForm* FormResolver::Resolve(std::string_view a_editorID)
 	{
 		if (a_editorID.empty())
 			return nullptr;
+		if (auto* catalogued = FormCatalog::Get().Lookup(a_editorID))
+			return catalogued;
 		auto* form = RE::TESForm::LookupByEditorID(std::string_view{ a_editorID });
 		if (!form) {
 			// Light-plugin (ESL) EditorIDs are not reliably present in the global editor-ID map.
@@ -29,6 +33,20 @@ namespace Runefall
 						if (editorID && a_editorID == editorID) {
 							logger::info("form-resolver: '{}' resolved via MISC array scan", a_editorID);
 							return misc;
+						}
+					}
+				}
+			}
+			// Rank abilities are SPEL records; light-plugin EditorIDs miss the global map too.
+			if (a_editorID.starts_with("RF_SPEL_")) {
+				if (auto* dataHandler = RE::TESDataHandler::GetSingleton()) {
+					for (auto* spell : dataHandler->GetFormArray<RE::SpellItem>()) {
+						if (!spell)
+							continue;
+						const char* editorID = spell->GetFormEditorID();
+						if (editorID && a_editorID == editorID) {
+							logger::info("form-resolver: '{}' resolved via SPEL array scan", a_editorID);
+							return spell;
 						}
 					}
 				}

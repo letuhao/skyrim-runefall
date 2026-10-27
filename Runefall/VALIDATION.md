@@ -789,3 +789,21 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - DLL 1,021,440 B sha256 055950B21D91930871D794B79508871AF640712A83D7149EAE6D1EF48F48702C;
   zip 495,667 B sha256 BAC5B815F8467F1EA4BC618D460556B56F1D86A0210ADA5672D8D286DF36A346.
 - Batch evidence batch-test-20261027-110306.md (all checks PASS).
+
+
+## Architecture baseline + FormCatalog (2026-10-27 23:12-23:32)
+
+- Frozen the POC as the real-mod base; wrote `ARCHITECTURE.md` (layers/dependency rules, item
+  identity, effect schema, hook lifecycle, co-save contract, POC debt register, phases A-F).
+- Generator now emits `Data/Runefall/data/form_ids.csv` (554 editor-ID -> plugin/local-FormID rows).
+- New runtime `FormCatalog` loads the catalog; `FormResolver`, `LootService` rank/rune/hunt
+  lookups and `Progression` GLOB mirrors resolve through it. Hard-coded local FormID windows
+  (0x900+index, 0xA1B+rank, 0xB80+index, 0x880/0x889/0x8A8) were removed from those paths.
+- DataStore expects 20 tables; self-tests now 19 (added `FormCatalog.SelfTest`).
+- Static gates 5/5 PASS: `build/evidence/static-gates-20261027-232716.md`.
+- In-game batch 33/33 PASS, 19/19 self-tests, no crash: `build/evidence/batch-test-20261027-232958.md`.
+- Archive verifier PASS incl. `form_ids.csv` member and 554 catalog rows:
+  `build/evidence/release-verify-20261027-233226.md`.
+- Artifacts: DLL 1,092,608 B sha256 D7F0912C9F8E18D5E3D30F8D817A809289F45567337B03EA3E29CEDDB2898A94;
+  candidate Runefall-0.1.0.zip 530,036 B.
+- Not published; real-mod work starts at Phase B (item identity + co-save v3) and Phase C (domain split).

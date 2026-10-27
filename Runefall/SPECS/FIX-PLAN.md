@@ -1,6 +1,8 @@
 # Runefall — Fix Plan (from 4-agent audit, 2026-10-27)
 
-Status: **P1 safety fixes applied 2026-10-27** (runtime loot verified in-game). Version stays `0.2.0-dev`.
+Status: **POC base frozen 2026-10-27 for the real-mod build**. The code below is a validated vertical
+slice, not a release; see `ARCHITECTURE.md` for the target structure, POC debt register and migration
+phases. Version metadata is now 0.1.0 (first public release will be 0.1.0).
 
 ## Status update 2026-10-27
 

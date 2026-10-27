@@ -1,0 +1,224 @@
+# Runefall architecture (POC base -> production)
+
+Status: **architecture baseline established 2026-10-27**. The current code is a working POC
+vertical slice; this document is the binding structure for turning it into the real mod. Read it
+before adding features. It complements `SPECS/L4-RUNTIME.md` (design intent) and
+`SPECS/FIX-PLAN.md` (POC debt list).
+
+## 1. Hard rules
+
+1. **Engine boundary is explicit.** Game-specific calls live in `platform/` adapters
+   (`FormCatalog`, `FormResolver`, `DynamicEnchantment`, `HookManager`). Domain code must not
+   call `RE::TESForm::LookupByID`, `AddObjectToContainer`, `GetSingleton` or event sinks directly.
+2. **No game mutation inside a dispatch callback.** Sinks and hooks capture FormIDs/handles/values,
+   enqueue one immutable command through the task queue, and return. The command re-resolves and
+   re-validates on the game thread. This is already how P4.2 behaves.
+3. **One source of truth for IDs.** Runtime record identity comes from `form_ids.csv` through
+   `FormCatalog`. No new hard-coded `0x900 + index` / `0xB80 + index` / `0xA1B + rank` literal is
+   allowed; generator and runtime share the catalog. (Legacy fallbacks are removed as modules are
+   migrated.)
+4. **Data drives behavior.** Affix effect semantics, drop tables, ranks, recipes, materials,
+   strings and FormIDs are data, validated at load. Code contains policy and engine glue only.
+5. **Fail closed, log once.** Missing data/pack/form/record disables the affected feature with a
+   specific log line; no silent fallback that changes gameplay semantics and no crash.
+6. **No hidden per-frame work.** Hooks/tasks only; UI reads immutable snapshots.
+7. **POC debug paths are gated.** F7-F12 debug hotkeys, probe item injection, forced quest/rune
+   grants and self-test execution are `bDebugSelfTest`/debug-build features, never release gameplay.
+8. **Co-save is a versioned API.** Every schema change has a migration rule and a decode test.
+
+## 2. Current POC map (what exists today)
+
+| File / area | Responsibility | POC debt |
+|---|---|---|
+| `Config` | INI parsing, feature toggles, caps | typed config only; no per-pack config |
+| `DataStore` | CSV parser + table registry | no JSON schema validation; 20 tables hard-coded |
+| `FormCatalog` | **new**: editor ID -> (plugin, local FormID) from `form_ids.csv` | cache never invalidated on revert; no reverse map |
+| `FormResolver` | EditorID fallback lookups, local-ID legacy fallbacks | legacy paths must be deleted after catalog migration |
+| `PackManager` | pack discovery/manifests | read-only, no merge order enforcement |
+| `ItemRegistry` | runtime metadata list keyed by registryId | **not tied to an item instance**; lost on save/prune; no identity |
+| `LootEngine` | affix/rarity/drop-table rolls | mutations + rolls in one class; no authority/loot-context model |
+| `TierEngine` | rank weights/table | no monster-affix package model |
+| `HuntEngine` | race family/first-kill state | template-like, no events |
+| `Progression` | attributes, tier, derived GLOB mirrors, attunement | no actor-value/perk application; GLOB-only |
+| `RuneForge` / `MaterialRegistry` | wallet, salvage, socket/convert recipes | transactions not atomic; no UI-facing result model |
+| `DynamicEnchantment` | runtime EnchantmentItem creation | single-purpose; effect semantics still placeholder |
+| `LootService` | ~950-line orchestration: container/actor/quest/rune/death/probe | **must be split**; mixes policy, engine glue and test hooks |
+| `HookManager` | Load3D vtable hooks + six sinks + task dispatch | hook + dispatch + policy in one file; no unregister/preflight contract |
+| `MenuApi` / `MenuUI` | snapshot JSON + 4 read-only pages | no interactive UI, no item card/tooltip, no MCM |
+| `PapyrusBridge` | native functions | no versioned event surface; debug functions exposed |
+| `CoSave` | TLV schema 2 | item metadata not instance-keyed; no migration framework beyond ad-hoc `Remaining()` checks |
+| `DebugHarness` | self-tests + probe log | debug facilities mixed into release code path |
+
+## 3. Target layers and dependency rule
+
+    core/        Types, Result<T>, strong IDs, Config value types, Logging, RNG (no RE::)
+      |
+    domain/      Item, Affix, Rarity, DropContext, LootDecision, ProgressionState,
+      |          RankState, HuntState, Wallet, Materials, ItemIdentity (no RE::)
+      |
+    platform/    IFormLookup, IItemMutator, IActorQuery, IPlayerState, IEventQueue,
+      |          ISerializationStore, IScheduler, IUIHost (interfaces) + RE:: adapters
+      |
+    services/    LootService, ContainerLootService, ActorRankService, QuestRewardService,
+      |          RuneWalletService, ProgressionService, HuntService, MenuService
+      |
+    interfaces/  HookManager (only entry point for engine events), PapyrusBridge, MenuUI
+
+Dependency rule: arrows only downward. `core` and `domain` compile without CommonLibSSE headers;
+they are unit-testable on the host. `platform` is the only layer allowed to include `RE/` and
+`SKSE/`. `services` depends on domain + platform interfaces. `interfaces` depends on services.
+
+### Target module responsibilities
+
+| Layer | Module | Responsibility |
+|---|---|---|
+| core | `Result`, `Error` | explicit success/failure with category; no bool error codes across boundaries |
+| core | `FormKeyRef` | (plugin, localFormId) value type; `FormCatalog` accepts it |
+| core | `ItemInstanceKey` | stable (baseID, uniqueID) identity used by registry/co-save/UI |
+| domain | `LootContext` | source (kill/container/quest/vendor/world), rank, rfTier, ilvl, tags |
+| domain | `LootDecision` | item plan: base ref, rarity, enhancements, sockets, runes, materials |
+| domain | `EffectSpec` | archetype, actor value, magnitude mode (flat/percent), duration, area, conditions |
+| platform | `IFormLookup` | EditorID/FormKey -> form; reverse map; no global mutation |
+| platform | `IItemMutator` | create/enchant/add/remove item; the only place `ExtraDataList` ownership is decided |
+| platform | `IEventQueue` | capture -> task -> revalidate; testable fake |
+| platform | `ISerializationStore` | section get/set with version + migration |
+| services | `LootService` | orchestrates a LootContext through domain policy + platform adapters |
+| interfaces | `HookManager` | installs/uninstalls hooks, maps engine events to commands, no gameplay policy |
+
+## 4. Item identity (mandatory before content work)
+
+The POC `ItemRegistry` keyed only by `registryId` cannot survive save/load and cannot correlate a
+runtime-enchanted item to its metadata. Production design:
+
+- Every Runefall-generated item receives an `RE::ExtraUniqueID` marker on its `ExtraDataList`
+  with a Runefall base ID and a monotonically allocated unique ID (persisted generation counter in
+  co-save).
+- `ItemInstanceKey = (baseID, uniqueID)` is the registry key. Co-save section 3 stores
+  `key -> ItemMetadata`; `registryId` remains a legacy in-memory handle only.
+- On pickup/death/container transfer, the marker travels with the item; `ItemAdded` finalizes
+  metadata if an item was mutated outside our hooks. UI/tooltip reads only registry data, never
+  parses display names.
+- If the marker cannot be attached (ownership unproven), the item is still granted as plain loot
+  but is not registered and is logged; never guess identity from names.
+- Registry pruning is deterministic: item destroyed/removed -> key dropped; unresolved keys are
+  dropped on load with a count in diagnostics.
+
+This removes the current POC limitation that a save/load loses all item metadata.
+
+## 5. Effect / affix data model
+
+Current POC: every generated MGEF is `ValueModifier / Health`; affix names and values do not map
+to real effects. Production schema must add an effect spec per affix (and per skill/unique/utility):
+
+    affixId, category, tier, weight, slots, ...
+    effect: {
+      archetype: ValueModifier | PeakValueModifier | ValueAndLimit | ...
+      actorValue: Health | OneHanded | Destruction | ...
+      magnitudeMode: flat | percentOfBase | percentOfMax
+      minValue, maxValue, duration, area, conditions[]
+    }
+
+Generator responsibilities:
+1. Validate that every affix row has a complete effect spec and a resolvable actor value.
+2. Emit exactly one MGEF per (archetype, actorValue, duration/area) variant or one per affix when
+   conditions differ; do not reuse an arbitrary placeholder.
+3. Emit `form_ids.csv`; validator asserts every generated record has a catalog row.
+4. Runtime `EffectSpec` is loaded from CSV; `DynamicEnchantment` only maps spec -> `Effect`.
+
+## 6. Hooks and task lifecycle (implemented pattern)
+
+1. `HookManager::Register` runs at `kDataLoaded`, preflights every vtable slot and logs failures;
+   a failed hook disables only its subsystem.
+2. A sink/hook captures **values only** (FormID, ObjectRefHandle, base FormID, count, menu name)
+   and calls `IEventQueue::Submit(command)`.
+3. `SKSE::GetTaskInterface()->AddTask` drains commands on the game thread; each service
+   re-resolves forms and re-checks: gameplay-ready, config gate, data gate, target validity.
+4. Hooks never call `AddObjectToContainer`/`RemoveItem`/`EnchantObject` directly.
+5. Co-save callbacks run before the world is ready; they only rebuild state, never touch forms.
+6. `TESResetEvent` clears per-ref state; `kNewGame`/`kPostLoadGame` start a fresh session after
+   the configured gameplay delay.
+
+No new hook may be added without: a preflight, a null/validity check, a fail-closed log, a
+self-test or batch assertion, and a line in `VALIDATION.md`.
+
+## 7. Co-save contract
+
+Header: magic, schema, flags, section count. Sections are TLV; unknown sections skipped.
+
+| Id | Section | Status |
+|---|---|---|
+| 1 | progression | POC |
+| 2 | rune wallet | POC |
+| 3 | item registry (instance-keyed) | **target; POC stores list without identity** |
+| 4 | hunt state | POC |
+| 5 | container state | POC (schema 2) |
+| 6 | unique-source state | reserved |
+| 7 | pack state | POC |
+| 8 | config hash | POC |
+| 9 | rewarded quests | POC (schema 2) |
+| 10 | actor rank state | reserved |
+
+Rules: every section has a length cap and a decode test; schema upgrades are explicit; a failed
+section disables only that section, never aborts the save.
+
+## 8. Testing strategy
+
+| Level | What | Where |
+|---|---|---|
+| Unit (host) | core/domain logic: rolls, caps, wallet, effect mapping | new `src/plugin/test` with Catch2; no game |
+| Self-test (in DLL) | data load, catalog, engines, co-save round-trip, policy pure functions | `DebugHarness` (currently 19 tests) |
+| Batch (in game) | load save, hooks, container/actor/quest/rune/co-save, death drop, crash scan | `tools/run-batch-test.ps1` |
+| Compatibility | target loaded + no crash + runtime paths still run | `tools/run-compat-test.ps1` |
+| Uninstall | pack disable, DLL remove, all remove | `tools/run-uninstall-test.ps1` |
+| Visual | menu pages, item card/tooltip, loot/hunt gallery | SKSE Menu Framework + MCP/window capture |
+
+A change is not done until the relevant level passes and the evidence file is referenced in
+`VALIDATION.md`.
+
+## 9. POC debt register (priority order)
+
+| Prior. | Debt | Current file | Target action |
+|---|---|---|---|
+| P0 | Affix/skill MGEF semantics are placeholders | `PluginFactory.AddEffect` | effect spec schema + generator rewrite |
+| P0 | Item metadata not instance-keyed | `ItemRegistry`, `CoSave` | `ItemInstanceKey` + ExtraUniqueID marker + co-save v3 |
+| P0 | `LootService` mixes policy/engine/test | `LootService.cpp` (~950 lines) | split services; facade only |
+| P1 | No engine interfaces; domain calls RE:: | all services | introduce platform interfaces + fakes |
+| P1 | Debug grants exposed as Papyrus natives | `PapyrusBridge.cpp` | debug-build/INI gate |
+| P1 | UI read-only | `MenuUI.cpp` | MenuApi snapshot + interactive actions |
+| P1 | Progression does not change actor values/perks | `Progression.cpp` | ProgressionService + AV/perk adapters |
+| P2 | Form resolver legacy local-ID fallbacks | `FormResolver.cpp`, `Progression.cpp` | delete after catalog parity tests |
+| P2 | Hard-coded table list / no schema versioning | `DataStore` | table descriptors + schema version |
+| P2 | Co-save migration ad hoc | `CoSave.cpp` | section handler registry + migration funcs |
+| P2 | No unit-testable host build | CMake | core/domain test target without CommonLibSSE |
+
+## 10. Migration plan
+
+**Phase A (foundation, current):** `FormCatalog` + generator `form_ids.csv`; document architecture;
+catalog self-test; batch expectation updated. Exit: build/static gates PASS; catalog resolves rank
+spells, runes, hunt records and globals without local-ID literals.
+
+**Phase B (identity):** `ItemInstanceKey`, ExtraUniqueID marker, registry rewrite, co-save v3 with
+migration from schema 2; item tooltip reads registry. Exit: save -> reload -> metadata survives;
+batch verifies same item key before/after; no name parsing.
+
+**Phase C (domain split):** move roll/policy logic into `domain/`; introduce host unit tests;
+`LootService` facade; `HookManager` dispatch-only. Exit: core/domain tests run without Skyrim;
+batch unchanged.
+
+**Phase D (effect model):** effect spec schema, generator rewrite, real MGEFs; validation coverage
+gates. Exit: every affix maps to an intended actor value/archetype; batch tooltip shows real effects.
+
+**Phase E (gameplay systems):** progression AV/perk application, skills/casting, interactive UI,
+content placement, monster affixes. Exit: playable loop for one build/archetype.
+
+**Phase F (release hardening):** full load-order compatibility, performance budget, uninstall,
+media, version/publish. Exit: `skyrim-ship-gate` PASS.
+
+## 11. Definition of done for any module
+
+- Public header documents ownership and failure semantics.
+- No hard-coded local FormIDs (catalog or named constant from generator).
+- Engine access only through platform interfaces.
+- Self-test or unit test covers pure logic; batch covers engine path.
+- Failure path logs a specific reason and disables only the feature.
+- `ARCHITECTURE.md` module table and `VALIDATION.md` updated.
