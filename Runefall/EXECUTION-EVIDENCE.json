@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-27T23:21:31.559Z",
+  "updatedAt": "2026-10-27T23:26:49.783Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -147,6 +147,27 @@
       "path": "build/evidence/static-gates-20261028-062043.md",
       "result": "PASS",
       "detail": "9/9 gates"
+    },
+    {
+      "slice": "F0.9",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-062414.md",
+      "result": "PASS",
+      "detail": "9/9; CSV-free data tree"
+    },
+    {
+      "slice": "F0.9",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-062459.md",
+      "result": "PASS",
+      "detail": "21/21; POC behavior retained on JSON data; no crash"
+    },
+    {
+      "slice": "F0.9",
+      "kind": "release-verify",
+      "path": "build/evidence/release-verify-20261028-062621.md",
+      "result": "PASS",
+      "detail": "JSON form_ids; archive verified"
     }
   ]
 }

@@ -39,7 +39,7 @@ try {
         'Data/Runefall - Unique.esp',
         'Data/SKSE/Plugins/Runefall.dll',
         'Data/Runefall/runefall.ini',
-        'Data/Runefall/data/form_ids.csv',
+        'Data/Runefall/data/form_ids.json',
         'Data/Scripts/RunefallNative.pex',
         'Data/Scripts/RunefallProbe.pex',
         'Data/Scripts/RunefallQuestHost.pex',
@@ -48,11 +48,12 @@ try {
     foreach ($entry in $required) {
         Check "member $entry" ($names -contains $entry)
     }
-    $formEntry = $zip.GetEntry('Data/Runefall/data/form_ids.csv')
+    $formEntry = $zip.GetEntry('Data/Runefall/data/form_ids.json')
     if ($formEntry) {
         $reader = New-Object IO.StreamReader($formEntry.Open())
         $formText = $reader.ReadToEnd(); $reader.Close()
-        $formRows = ($formText -split "`n" | Where-Object { $_ -match ',' }).Count
+        $formJson = $formText | ConvertFrom-Json
+        $formRows = @($formJson.rows).Count
         Check 'form_ids catalog populated' ($formRows -ge 500) "rows=$formRows"
     }
     Check 'no top-level Runefall/ wrapper' (-not ($names | Where-Object { $_ -match '^Runefall/' })) ''

@@ -93,7 +93,8 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
 - F0.6 PASS: RunefallCoreHost JSON test, 0 allocations, 1.53 ns lookup; static gates 9/9.
 - F0.7 PASS: 15 roles/19 race profiles, unknown provisional + known NordRace, JSON cache; batch 21/21.
 - F0.8 PASS: manual/automatic cache rescan + delayed startup scan (configurable, 600s prod/1s test).
-- Next: F0.9 POC JSON migration.
+- F0.9 PASS: JSON-only data tree (0 CSV, 30 JSON), runtime JSON, batch 21/21, release verifier PASS.
+- L0 foundation complete (F0.1-F0.9). Next: C1.1 threat-protection spike.
 
 ## Next step
 

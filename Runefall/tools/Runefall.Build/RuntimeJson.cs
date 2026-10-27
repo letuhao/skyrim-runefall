@@ -37,6 +37,12 @@ internal static class RuntimeJson
         }
     }
 
+    public static void RemoveCsv(string dir)
+    {
+        foreach (var csv in Directory.GetFiles(dir, "*.csv"))
+            File.Delete(csv);
+    }
+
     private static List<string> ParseLine(string line)
     {
         var cells = new List<string>();

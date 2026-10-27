@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "F0.9",
-  "updatedAt": "2026-10-27T23:21:31.555Z",
+  "currentSlice": "C1.1",
+  "updatedAt": "2026-10-27T23:26:49.779Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -176,11 +176,21 @@
       "id": "F0.9",
       "layer": "L0",
       "slice": "POC JSON migration",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "generator and runtime both use JSON only; regression PASS",
       "depends": "F0.3/F0.4",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/static-gates-20261028-062414.md",
+        "build/evidence/batch-test-20261028-062459.md",
+        "build/evidence/release-verify-20261028-062621.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "json-only-data-tree": "PASS (0 CSV, 30 JSON)",
+        "runtime-json": "PASS",
+        "poc-regression": "PASS 21/21",
+        "release-verifier-json": "PASS"
+      }
     },
     "C1.1": {
       "id": "C1.1",
@@ -574,9 +584,9 @@
     }
   },
   "currentWork": {
-    "slice": "F0.9",
-    "step": "POC JSON migration",
-    "nextAction": "move remaining generator tables/content to JSON source; remove CSV intermediate; regression batch"
+    "slice": "C1.1",
+    "step": "threat protection spike",
+    "nextAction": "build minimal damage hook proof for direct/DoT/reflected/environmental categories with apply-once and no crash"
   },
   "blockers": [],
   "finalRelease": null

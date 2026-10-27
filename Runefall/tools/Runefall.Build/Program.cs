@@ -59,6 +59,7 @@ internal static class Program
         }
         var report = Validator.Validate(plugins, content, runefallData);
         Console.WriteLine(report);
+        RuntimeJson.RemoveCsv(runefallData);
 
         WriteBuildReport(Path.Combine(outDir, "BUILD-REPORT.md"), report, content);
 

@@ -923,3 +923,14 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Batch 21/21 PASS, including "Runtime content rescan" and "Delayed runtime scan":
   build/evidence/batch-test-20261028-061918.md.
 - Static gates 9/9 PASS: build/evidence/static-gates-20261028-062043.md.
+
+
+## F0.9 POC JSON migration (2026-10-28 06:22-06:26)
+
+- Generator now removes all transitional CSV files after validation; shipped data tree has 30 JSON
+  files and 0 CSV files. DataStore already reads JSON only.
+- Release verifier updated to form_ids.json; archive verified.
+- Static gates 9/9 PASS: build/evidence/static-gates-20261028-062414.md.
+- In-game batch PASS 21/21, no crash: build/evidence/batch-test-20261028-062459.md.
+- Archive verifier PASS: build/evidence/release-verify-20261028-062621.md.
+- Layer L0 foundation complete: F0.1-F0.9 PASS.
