@@ -677,3 +677,12 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
   required FOMOD/data/DLL/Papyrus members, no top-level wrapper, no Data/Data nesting, no duplicates,
   FOMOD XML parses, info version 0.2.0-dev, Data\SKSE reference present, DLL non-empty, ESP is TES4.
 - Evidence: `build/evidence/release-verify-20261027-054406.md`.
+
+## Cross-reference validator 2026-10-27 09:10
+
+- Validator now loads the data CSVs and checks every referenced EditorID exists in a generated
+  plugin: affixes.csv effectEditorId (600 rows), unique_affixes.csv effectEditorId (59),
+  skills.csv rank1-3, drops_races.csv material/unique rewards.
+- Generator RESULT PASS; "data cross-reference EditorIDs resolve" PASS.
+- Static gates: 5/5 PASS (evidence static-gates-20261027-090952.md).
+- Artifact DLL 966144 B SHA-256 413D8A54F6D7716A68557DA15195B10FBBFEE00FC7B32CDEDA1F273E35606854; candidate zip 467961 B SHA-256 4D938D457078790DC73853D40062BAE3C12FF761BF33F78AD7C047C75B16471B.

@@ -133,6 +133,97 @@ internal static class Validator
             }
             Expect(badSpells == 0, "base plugin spells have no null EFID effects", lines, ref failed);
         }
+
+        // P3.6 cross-reference checks: every data-referenced EditorID must exist in a generated plugin.
+        string[] ReadCsv(string fileName, out string[] header)
+        {
+            var path = Path.Combine(dataDir, fileName);
+            if (!File.Exists(path))
+            {
+                header = Array.Empty<string>();
+                return Array.Empty<string>();
+            }
+            var rows = File.ReadAllLines(path).Where(l => !string.IsNullOrWhiteSpace(l)).ToArray();
+            header = rows.Length > 0 ? rows[0].Split(',') : Array.Empty<string>();
+            return rows.Skip(1).ToArray();
+        }
+        int ColumnIndex(string[] header, string name) => Array.IndexOf(header, name);
+
+        var missingRefs = 0;
+        void RequireRef(string context, string value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return;
+            if (!allEditors.Contains(value))
+            {
+                if (missingRefs < 10)
+                    lines.Add($"FAIL data ref missing record: {context} -> {value}");
+                ++missingRefs;
+            }
+        }
+
+        {
+            var rows = ReadCsv("affixes.csv", out var header);
+            var cEffect = ColumnIndex(header, "effectEditorId");
+            foreach (var row in rows)
+            {
+                var cells = row.Split(',');
+                if (cEffect >= 0 && cEffect < cells.Length)
+                    RequireRef("affixes.csv", cells[cEffect]);
+            }
+        }
+        {
+            var rows = ReadCsv("unique_affixes.csv", out var header);
+            var cEffect = ColumnIndex(header, "effectEditorId");
+            foreach (var row in rows)
+            {
+                var cells = row.Split(',');
+                if (cEffect >= 0 && cEffect < cells.Length)
+                    RequireRef("unique_affixes.csv", cells[cEffect]);
+            }
+        }
+        {
+            var rows = ReadCsv("skills.csv", out var header);
+            var c1 = ColumnIndex(header, "rank1");
+            var c2 = ColumnIndex(header, "rank2");
+            var c3 = ColumnIndex(header, "rank3");
+            foreach (var row in rows)
+            {
+                var cells = row.Split(',');
+                foreach (var c in new[] { c1, c2, c3 })
+                    if (c >= 0 && c < cells.Length)
+                        RequireRef("skills.csv", cells[c]);
+            }
+        }
+        {
+            var uniqueRows = ReadCsv("unique_affixes.csv", out var uniqueHeader);
+            var cUniqueId = ColumnIndex(uniqueHeader, "uniqueId");
+            var uniqueIds = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var row in uniqueRows)
+            {
+                var cells = row.Split(',');
+                if (cUniqueId >= 0 && cUniqueId < cells.Length)
+                    uniqueIds.Add(cells[cUniqueId]);
+            }
+            var rows = ReadCsv("drops_races.csv", out var header);
+            var cType = ColumnIndex(header, "rewardType");
+            var cId = ColumnIndex(header, "rewardId");
+            foreach (var row in rows)
+            {
+                var cells = row.Split(',');
+                if (cType < 0 || cId < 0 || cType >= cells.Length || cId >= cells.Length)
+                    continue;
+                if (cells[cType] == "material")
+                    RequireRef("drops_races.csv material", cells[cId]);
+                else if (cells[cType] == "unique_affix" && !uniqueIds.Contains(cells[cId]))
+                {
+                    lines.Add($"FAIL data ref missing unique affix: drops_races.csv -> {cells[cId]}");
+                    ++missingRefs;
+                }
+            }
+        }
+        Expect(missingRefs == 0, "data cross-reference EditorIDs resolve", lines, ref failed);
+
         lines.Add("WARN NPC/CLAS boss templates are not generated yet (next content phase)");
 
         lines.Add(failed ? "RESULT: FAIL" : "RESULT: PASS");
