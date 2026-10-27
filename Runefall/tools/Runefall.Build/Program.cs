@@ -186,6 +186,7 @@ internal static class Program
             "bEnableContainerLoot=1\n" +
             "bEnableActorRanks=1\n" +
             "bEnableQuestDrops=1\n" +
+            "bEnableDebugNatives=0\n" +
             "iContainerLootPerCell=8\n\n" +
                    "[Paths]\n" +
                    "sDataDir=\n" +

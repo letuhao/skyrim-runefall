@@ -18,6 +18,7 @@ namespace Runefall
 		[[nodiscard]] bool        EnablePapyrus() const noexcept { return enablePapyrus; }
 		[[nodiscard]] bool        EnableCoSave() const noexcept { return enableCoSave; }
 		[[nodiscard]] bool        EnableProbes() const noexcept { return enableProbes; }
+		[[nodiscard]] bool        EnableDebugNatives() const noexcept { return enableDebugNatives; }
 		[[nodiscard]] bool        DebugTrace() const noexcept { return debugTrace; }
 		[[nodiscard]] int         GameplayDelaySeconds() const noexcept { return gameplayDelaySeconds; }
 		[[nodiscard]] bool        EnableRuntimeLoot() const noexcept { return enableRuntimeLoot; }
@@ -46,6 +47,7 @@ namespace Runefall
 		bool        enablePapyrus = true;
 		bool        enableCoSave = true;
 		bool        enableProbes = true;
+		bool        enableDebugNatives = false;
 		int         lootAuthority = 0;
 		std::string dataDirOverride;
 		std::string packDirOverride;

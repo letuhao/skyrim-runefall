@@ -136,6 +136,11 @@ Rules:
 
 ## 6. Papyrus bridge (versioned API)
 
+> **Policy (D-064):** this bridge is a compatibility/query surface, not the gameplay
+> implementation. Runefall gameplay is DLL-native. Papyrus scripts are limited to native
+> declarations, debug/probe helpers and explicitly approved compatibility shims; polling loops and
+> gameplay logic are prohibited and enforced by `tools/check-papyrus-policy.ps1`.
+
 Expose a small, stable, versioned surface. Bridge version is reported at load; scripts check it.
 
 Query functions:

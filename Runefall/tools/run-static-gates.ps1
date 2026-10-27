@@ -49,6 +49,13 @@ Gate "content generator" {
     ($out | Select-String "PASS plugin" | Measure-Object).Count.ToString() + " plugin checks"
 }
 
+Gate "Papyrus policy" {
+    $policy = & (Join-Path $Project "tools\check-papyrus-policy.ps1") -Project $Project 2>&1
+    $policy | Set-Content (Join-Path $evidence "papyrus-policy-$stamp.log")
+    if ($LASTEXITCODE -ne 0) { throw "Papyrus policy failed: $($policy -join '; ')" }
+    ($policy | Select-Object -Last 1)
+}
+
 Gate "Papyrus compile" {
     $out = Join-Path $Project "build\dist\Data\Scripts"
     New-Item -ItemType Directory -Force $out | Out-Null

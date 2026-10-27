@@ -1,6 +1,7 @@
 #include "PapyrusBridge.h"
 
 #include "CoSave.h"
+#include "Config.h"
 #include "DebugHarness.h"
 #include "HuntEngine.h"
 #include "LootService.h"
@@ -188,17 +189,22 @@ namespace Runefall
 		a_vm->RegisterFunction("GetSkillRank", "RunefallNative", GetSkillRank);
 		a_vm->RegisterFunction("GetRuneCount", "RunefallNative", GetRuneCount);
 		a_vm->RegisterFunction("GetHuntFirstKill", "RunefallNative", GetHuntFirstKill);
-		a_vm->RegisterFunction("SpendAttributePoint", "RunefallNative", SpendAttributePoint);
-		a_vm->RegisterFunction("SpendSkillPoint", "RunefallNative", SpendSkillPoint);
 		a_vm->RegisterFunction("GetMenuSnapshot", "RunefallNative", GetMenuSnapshot);
 		a_vm->RegisterFunction("GetDerivedStat", "RunefallNative", GetDerivedStat);
 		a_vm->RegisterFunction("GetDiagnostics", "RunefallNative", GetDiagnostics);
 		a_vm->RegisterFunction("GetItemDetail", "RunefallNative", GetItemDetail);
-		a_vm->RegisterFunction("AttuneRuneTier", "RunefallNative", AttuneRuneTier);
-		a_vm->RegisterFunction("GrantQuestReward", "RunefallNative", GrantQuestReward);
-		a_vm->RegisterFunction("DebugGiveRuneItem", "RunefallNative", DebugGiveRuneItem);
 		a_vm->RegisterFunction("GetContainerLootCount", "RunefallNative", GetContainerLootCount);
 		a_vm->RegisterFunction("GetActorRankCount", "RunefallNative", GetActorRankCount);
+		// D-064: mutation/debug entry points are opt-in (test builds only). Gameplay never depends on
+		// Papyrus; the native DLL paths drive all Runefall state.
+		if (Config::Get().EnableDebugNatives()) {
+			a_vm->RegisterFunction("SpendAttributePoint", "RunefallNative", SpendAttributePoint);
+			a_vm->RegisterFunction("SpendSkillPoint", "RunefallNative", SpendSkillPoint);
+			a_vm->RegisterFunction("AttuneRuneTier", "RunefallNative", AttuneRuneTier);
+			a_vm->RegisterFunction("GrantQuestReward", "RunefallNative", GrantQuestReward);
+			a_vm->RegisterFunction("DebugGiveRuneItem", "RunefallNative", DebugGiveRuneItem);
+			logger::warn("Papyrus bridge: debug mutation natives enabled (bEnableDebugNatives=1)");
+		}
 		// RegisterFunction returns void in this CommonLibSSE-NG version; failures surface via the VM log.
 		logger::info("Papyrus bridge: functions registered (api {})", kApiVersion);
 		return true;

@@ -807,3 +807,20 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Artifacts: DLL 1,092,608 B sha256 D7F0912C9F8E18D5E3D30F8D817A809289F45567337B03EA3E29CEDDB2898A94;
   candidate Runefall-0.1.0.zip 530,036 B.
 - Not published; real-mod work starts at Phase B (item identity + co-save v3) and Phase C (domain split).
+
+
+## DLL-first Papyrus policy (2026-10-27 23:35-23:43)
+
+- Added binding rule D-064 and ARCHITECTURE §1.1: gameplay/loot/ranks/inventory/UI/quest-stage
+  logic is DLL-native; Papyrus is limited to native declaration stubs, debug/probe helpers and an
+  approved compatibility shim, with no polling or gameplay logic.
+- Added `tools/check-papyrus-policy.ps1` (allowlist + forbidden patterns: OnUpdate,
+  RegisterForUpdate/RegisterForSingleUpdate, Utility.Wait, While). Wired as static gate #3.
+- Debug/mutation natives (SpendAttributePoint, SpendSkillPoint, AttuneRuneTier, GrantQuestReward,
+  DebugGiveRuneItem) now register only when `bEnableDebugNatives=1`; release default is 0.
+- Static gates 6/6 PASS: `build/evidence/static-gates-20261027-234233.md`.
+- In-game batch still 33/33 PASS, 19/19 self-tests, no crash:
+  `build/evidence/batch-test-20261027-234332.md`.
+- Archive verifier PASS: `build/evidence/release-verify-20261027-234307.md`.
+- Artifacts: DLL 1,093,120 B sha256 95A6A444CDA9449BA2F42EC4F17C25F98545F34DDAD87E3C21D038E6E633264A;
+  candidate zip 530,166 B sha256 D3B7C97A0956C81BC2D6BE20807EBFBD274E618B4E4C45EF65AE8432A5B63B03.

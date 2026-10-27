@@ -16,8 +16,10 @@ Runefall CHANGELOG
   DLL removal, full removal; no crash in any mode.
 - Batch PASS: 30 checks covering container/actor/quest/rune paths, co-save round-trip, death drop,
   hunt first-kill and hotkeys; 18/18 self-tests; no new crash log.
-- Static gates 5/5 and release archive verifier PASS; local git history contains the full
-  pre-release line.
+- Static gates 6/6 (including the Papyrus policy gate) and release archive verifier PASS; local git
+  history contains the full pre-release line.
+- DLL-first Papyrus policy (D-064): gameplay is native; packaged scripts are declaration/probe-only,
+  debug mutation natives are off by default, and polling/gameplay Papyrus is rejected by a gate.
 - Known limitations: inventory/tooltip gallery shots remain user-side; Grid Inventory base and
   Summermyst compatibility are not shipped/tested; Skyrim 1.7.x is unsupported (D-062).
 

@@ -29,6 +29,14 @@ Runefall **will not work without all four**:
 Not required: SkyUI, MCM Helper, JContainers, PapyrusUtil, .NET runtime, or any Creation Club
 content beyond what Skyrim itself ships.
 
+## Runtime policy: DLL-first, no gameplay Papyrus
+
+Runefall gameplay, loot, ranks, inventory mutation, UI and quest-stage handling are implemented in
+the native SKSE DLL. Papyrus is limited to the native declaration stub, debug/probe helpers gated
+off in release, and an explicitly approved compatibility shim. Polling loops and gameplay logic in
+Papyrus are prohibited; `tools/check-papyrus-policy.ps1` enforces this in the static gates
+(decision D-064).
+
 ## Installation (v1 test build)
 
 1. Install Skyrim 1.6.1170 + SKSE 1.6.1170 + Address Library 1.6.1170.

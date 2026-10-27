@@ -1,5 +1,7 @@
 Scriptname RunefallNative Hidden
-{SKSE native bridge exposed by Runefall.dll (API v1).}
+{SKSE native bridge exposed by Runefall.dll (API v1).
+  D-064: this file is declaration-only. Mutating/debug natives are registered only when
+  bEnableDebugNatives=1; gameplay never depends on Papyrus.}
 
 int Function GetApiVersion() Global Native
 int Function GetPluginVersion() Global Native

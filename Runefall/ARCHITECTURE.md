@@ -25,6 +25,37 @@ before adding features. It complements `SPECS/L4-RUNTIME.md` (design intent) and
 7. **POC debug paths are gated.** F7-F12 debug hotkeys, probe item injection, forced quest/rune
    grants and self-test execution are `bDebugSelfTest`/debug-build features, never release gameplay.
 8. **Co-save is a versioned API.** Every schema change has a migration rule and a decode test.
+9. **DLL-first; Papyrus is not a gameplay runtime.** Gameplay, loot, ranks, inventory mutation, UI
+   logic, quest-stage handling and anything else implementable in the DLL must be implemented in
+   the DLL. Papyrus is allowed only for native declaration stubs, the debug/probe harness, and an
+   explicitly reviewed compatibility shim. See §1.1 and decision D-064.
+
+### 1.1 Papyrus policy (binding)
+
+Ten years of shipped Skyrim mods show Papyrus as a recurring source of script lag, save bloat and
+CTDs (long update loops, VMAD churn, alias/quest machinery, stack pressure). Runefall therefore
+treats Papyrus as a **last-resort compatibility surface**, not an implementation language.
+
+Allowed:
+1. **Native declaration stubs** — `src/papyrus/RunefallNative.psc` exists only so the Papyrus VM can
+   bind names to SKSE native functions. Declarations only; no `EndFunction` bodies.
+2. **Debug/probe harness** — `RunefallProbe.psc`, `RunefallQuestHost.psc`, `RunefallMenuBridge.psc`
+   are test/diagnostic helpers, gated by `bDebugSelfTest`/`bEnableDebugNatives`, and never part of
+   a release gameplay path.
+3. **Approved compatibility shim** — only when a third-party mod exposes no native/event API. It
+   must be optional, fail closed, contain no polling or gameplay decision logic, have a measured
+   budget, and be recorded in `DECISIONS.md`.
+
+Prohibited in Papyrus:
+- `OnUpdate`, `RegisterForUpdate`, `RegisterForSingleUpdate`, `Utility.Wait` or any polling loop.
+- Inventory/loot selection, item creation/mutation, rank/attribute application, quest-stage
+  progression, menu behaviour, or anything the DLL can do.
+- Any script that is required for the core loop; if the DLL cannot run without it, implement it in
+  the DLL instead.
+
+Enforcement: `tools/check-papyrus-policy.ps1` is a static gate (allowlist + forbidden patterns).
+Adding a script requires updating the allowlist and adding a D-record with the justification and
+performance/safety budget. The checker is the source of truth; do not bypass it.
 
 ## 2. Current POC map (what exists today)
 
@@ -170,6 +201,7 @@ section disables only that section, never aborts the save.
 | Batch (in game) | load save, hooks, container/actor/quest/rune/co-save, death drop, crash scan | `tools/run-batch-test.ps1` |
 | Compatibility | target loaded + no crash + runtime paths still run | `tools/run-compat-test.ps1` |
 | Uninstall | pack disable, DLL remove, all remove | `tools/run-uninstall-test.ps1` |
+| Policy | Papyrus allowlist + forbidden polling/gameplay patterns | `tools/check-papyrus-policy.ps1` in static gates |
 | Visual | menu pages, item card/tooltip, loot/hunt gallery | SKSE Menu Framework + MCP/window capture |
 
 A change is not done until the relevant level passes and the evidence file is referenced in

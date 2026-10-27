@@ -361,3 +361,13 @@ Runefall is not an idle or session-timer game. All income and costs are expresse
 encounter, loot event, discovery and boss kill. Heavy combat pays much more than slow
 exploration by design; an hour of exploration may legitimately yield no rune income and is
 rewarded through materials, nodes and discoveries instead. No passive/daily generation.
+
+## D-064 DLL-first: Papyrus is not a gameplay runtime (accepted, user-directed 2026-10-27)
+Ten years of Skyrim modding evidence show Papyrus as a recurring source of performance loss, script
+lag, save bloat and CTDs (update loops, VMAD/alias churn, stack pressure). Runefall therefore
+implements all gameplay, loot, rank, inventory, UI and quest-stage logic in the native DLL. Papyrus
+is allowed only for: (a) `RunefallNative.psc` native declaration stubs, (b) debug/probe-only
+scripts gated off in release, (c) an optional third-party compatibility shim with no polling or
+gameplay logic, recorded with a performance/safety budget. Enforced by
+`tools/check-papyrus-policy.ps1` in the static gates; adding a script requires an allowlist update
+and a decision record.

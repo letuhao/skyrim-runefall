@@ -41,6 +41,8 @@ namespace Runefall
 				enableCoSave = a_value == "1" || a_value == "true";
 			else if (a_key == "bEnableProbes")
 				enableProbes = a_value == "1" || a_value == "true";
+			else if (a_key == "bEnableDebugNatives")
+				enableDebugNatives = a_value == "1" || a_value == "true";
 		} else if (a_section == "Paths") {
 			if (a_key == "sDataDir")
 				dataDirOverride = a_value;

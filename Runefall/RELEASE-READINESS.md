@@ -7,14 +7,15 @@
 
 | Area | Evidence |
 |---|---|
-| Static gates (DLL, generator, Papyrus, FOMOD, release tree) | 5/5 PASS, static-gates-20261027-231233/232716 |
-| In-game batch | 33/33 PASS, 19/19 self-tests, no crash, batch-test-20261027-232958 |
+| Static gates (DLL, generator, Papyrus, FOMOD, release tree) | 6/6 PASS, static-gates-20261027-234233 |
+| In-game batch | 33/33 PASS, 19/19 self-tests, no crash, batch-test-20261027-234332 |
 | Form catalog | 554 rows packaged; catalog self-test PASS; archive verifier PASS |
 | Container/actor/quest/rune/co-save paths | PASS in batch |
 | Death drop + hunt first kill | PASS in batch |
 | Compatibility smoke | OWL, Worlds Dawn, Fortunate Foes, DiabloRim PASS (targets verified loaded) |
 | Uninstall matrix | pack-disable, dll-remove, all-remove PASS |
-| Archive verifier | PASS, release-verify-20261027-233226 |
+| Papyrus policy | 4 allowlisted scripts, checker PASS, debug natives off by default |
+| Archive verifier | PASS, release-verify-20261027-234307 |
 
 ## What is still POC
 
@@ -35,6 +36,6 @@ Phase B (item instance identity + co-save v3) and Phase C (domain/service split)
 
 ## Artifacts (not published)
 
-- DLL 1,092,608 B sha256 D7F0912C9F8E18D5E3D30F8D817A809289F45567337B03EA3E29CEDDB2898A94
-- Candidate Runefall-0.1.0.zip 530,036 B sha256 1A07C7939D548828C067DD11E2ABE04E474B1BCB6AB6EC083CF66FAB1549C859
+- DLL 1,093,120 B sha256 95A6A444CDA9449BA2F42EC4F17C25F98545F34DDAD87E3C21D038E6E633264A
+- Candidate Runefall-0.1.0.zip 530,166 B sha256 D3B7C97A0956C81BC2D6BE20807EBFBD274E618B4E4C45EF65AE8432A5B63B03
 - Local main is ahead of origin/main; not pushed.

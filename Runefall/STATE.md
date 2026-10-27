@@ -75,8 +75,11 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
 - `FormCatalog` + generator-emitted `form_ids.csv` are the single source of truth for Runefall
   record identity; hard-coded local FormID windows were removed from LootService/Progression and
   the archive verifier now asserts the catalog is packaged.
-- Evidence: static gates 5/5 (2026-10-27 23:27), batch 33/33 PASS with 19/19 self-tests
-  (2026-10-27 23:29), archive verifier PASS with 554 catalog rows.
+- Evidence: static gates 6/6 (2026-10-27 23:42), batch 33/33 PASS with 19/19 self-tests
+  (2026-10-27 23:43), archive verifier PASS with 554 catalog rows.
+- Papyrus avoidance is now a binding rule (D-064): packaged scripts are declaration/probe only,
+  debug mutation natives are gated by `bEnableDebugNatives=0` by default, and the static gates
+  include `tools/check-papyrus-policy.ps1`.
 - Next work is Phase B (item instance identity + co-save v3), then Phase C (domain/service split).
 
 ## Next step
