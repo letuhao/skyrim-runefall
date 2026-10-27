@@ -22,7 +22,7 @@ All content and balance is data. Code only loads, validates, resolves and execut
         -> game
 
 Rules:
-1. Adding/altering content must be a data/pack change, not a C++ or Papyrus edit.
+1. Adding/altering content must be a data/pack change authored by agents against schema/criteria, not a C++ or Papyrus edit.
 2. Generated ESP records come from the same data; no hand-edited records.
 3. Base + optional packs + external patch overlays; every table has a schema version and a
    validator; invalid/missing data fails closed with a specific log.
@@ -48,6 +48,7 @@ Rules:
 | F0.2 | L0 | Data pipeline v2 | per-table schemas; content source dirs; pack overlay merge; deterministic generator; DataStore descriptors; validator pipeline | base + a test pack load/validate; no code change for a data row | F0.1 |
 | F0.3 | L0 | Record/form pipeline | FormCatalog coverage; ESL FormID windows; generated records from data; tier keywords; pack records | catalog gate; every data-referenced EditorID resolves | F0.2 |
 | F0.4 | L0 | Co-save v3 + migration | schema registry; v2->v3 migration; caps/truncation; downgrade/uninstall behavior; test saves | old save loads; corrupt/truncated rejection; no save bloat | F0.1 |
+| F0.6 | L0 | Runtime content resolver (fallback) | shared schema interpreter; deterministic fallback for unknown mods/events; profile/cache decision; no pre-generated row required | unknown race/event resolves without content gap; repeatable; no crash | F0.2 |
 | F0.5 | L0 | Host tests + diagnostics | RunefallCoreHost/Catch2; load/lookup benchmark; no-allocation gate; read-only snapshot/log | host CI PASS; <=25 ms load; <=100 ns lookup | F0.2-F0.4 |
 | C1.1 | L1 | Threat protection spike | minimal ESP+DLL hook proof; damage-category matrix; apply-once; pipeline position; perf | spike report covers melee/ranged/spell/DoT/explosion; no crash | F0.5 |
 | C1.2 | L1 | Race classification | race/template/keyword classifier; host/anomaly/provisional; unknown report; patch table | all vanilla/DLC races mapped; synthetic unknown auto-defaults; no content gap | F0.3 |
@@ -74,6 +75,16 @@ Rules:
 | R5.2 | L5 | Save/upgrade/uninstall | old save migration; pack disable; uninstall; downgrade; version negotiation | all uninstall modes PASS | R5.1 |
 | R5.3 | L5 | Balance and calibration | data-driven balance report; TTK/encounter budgets; playtest passes | playtest targets met or documented | P4.x |
 | R5.4 | L5 | Packaging/release | version, FOMOD, Nexus assets/media, archive verify, release gate | ship gate PASS; archive verified | R5.2/R5.3 |
+
+## 5. Content execution model
+
+    agent-authored source -> offline compiler -> shipped pack data/records -> runtime ContentRegistry
+    runtime event / unknown mod -> deterministic runtime resolver -> ephemeral or persisted profile
+
+The runtime resolver is part of the DLL, not a second content pipeline. It uses the same schemas,
+seed rules and fallback rules as the offline compiler, never silently invents unsupported content,
+and logs every provisional decision. Generated runtime profiles are recomputed where possible and
+only persisted when identity/state requires it.
 
 ## 5. First slice F0.1 - detailed tasks
 
@@ -111,6 +122,7 @@ Each row is a gate for the later slice.
 | G8 | Crafting/materials | Real item designs vs token fallback, material grades, recipes/stations, Monster Hunter gear trees. |
 | G9 | Player progression | Rune Rank economy, attunement, attributes/skills/trees/active skills, respec/NG+. |
 | G10 | UI redesign | Page inventory, interaction model, tooltip/item card, settings. |
+| G12 | Runtime generation | What the runtime may generate (profiles/packages/loot/events), seed/identity/persistence rules, fallback failure policy, and how it stays patchable. |
 | G11 | Compatibility/release | Supported target mods, uninstall policy, versioning, Nexus assets. |
 
 ## 7. Execution rules

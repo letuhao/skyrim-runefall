@@ -10,6 +10,12 @@ tiers, crafting).
 
 ## Files
 
+- `isekai-hero-skyrim.md` — **DEEP DIVE** of IsekaiHero (full C++ source, Prisma view, ModAPI, professions/progression/shop/skill tree/quests, crafting hooks, co-save, MCM, packaging).
+- `codexofpowerng.md` — **DEEP DIVE** of CodexOfPowerNG (build/progression system: registration, build options/effects, inventory integration, rewards sync, undo, co-save serialization, Prisma UI).
+- `calamity-reactive-loot-affixes.md` — **DEEP DIVE** of Calamity (reactive affix engine: JSON affix catalog + modules, 4-layer arch: native EventBridge/7 sinks, C# generator, Prisma UI panel, Papyrus; trigger pipeline health-damage/hit/DoT; instance storage & ExtraUniqueID serialization; KID/SPID; VFX).
+- `adaptive-attributes-skse.md` — **DEEP DIVE** of Adaptive Attributes SKSE (native progression: XP/milestones/caps/baseline/reconciliation, native hooks, event sinks, form registry, settings, co-save schema v7, Papyrus bridge, VR, OStim).
+- `dynamic-enemy-spawns-skse.md` — **DEEP DIVE** of Dynamic Enemy Spawns SKSE (spawn system: ScanManager, SpawnManager, safety filters, encounter identity, reward dedup, cleanup/disengage, equipment copy, furniture placement, UI).
+- `container-distribution-framework.md` — **DEEP DIVE** of CDF (JSON distribution grammar, runtime hook on TESObjectREFR::Initialize/Reset, conditions, change types, safety gating, compatibility with SPID/KID/FLM).
 - `ui-web-menu.md` — UI stack: Prisma UI (web UI in-game), SKSE Menu Framework, HUD overlays, widgets, Prisma UI example plugin architecture.
 - `loot-systems.md` — Loot generation, rarity/affixes, container distribution, Death Drop Overhaul, Dynamic Container Loot, Grid Inventory.
 - `progression-attributes.md` — Actor values, attributes, perks, custom skills, Adaptive Attributes, Concentration Strain.
