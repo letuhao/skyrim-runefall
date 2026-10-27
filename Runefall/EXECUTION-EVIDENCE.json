@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-27T22:18:10.393Z",
+  "updatedAt": "2026-10-27T22:25:55.755Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -49,6 +49,20 @@
       "path": "build/evidence/static-gates-20261028-051731.md",
       "result": "PASS",
       "detail": "7/7 gates including JSON schema"
+    },
+    {
+      "slice": "F0.3",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-052338.md",
+      "result": "PASS",
+      "detail": "8/8 gates incl valid+invalid JSON pack pipeline"
+    },
+    {
+      "slice": "F0.3",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-052420.md",
+      "result": "PASS",
+      "detail": "20/20 self-tests, JSON-generated tables, no crash"
     }
   ]
 }

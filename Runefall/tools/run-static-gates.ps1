@@ -56,6 +56,13 @@ Gate "JSON schemas and base pack" {
     ($out | Select-Object -Last 1)
 }
 
+Gate "JSON content pipeline" {
+    $out = & (Join-Path $Project "tools\test-content-pipeline.ps1") 2>&1
+    $out | Set-Content (Join-Path $evidence "json-pipeline-$stamp.log")
+    if ($LASTEXITCODE -ne 0) { throw "JSON content pipeline failed: $($out -join '; ')" }
+    ($out | Select-Object -Last 1)
+}
+
 Gate "Papyrus policy" {
     $policy = & (Join-Path $Project "tools\check-papyrus-policy.ps1") -Project $Project 2>&1
     $policy | Set-Content (Join-Path $evidence "papyrus-policy-$stamp.log")

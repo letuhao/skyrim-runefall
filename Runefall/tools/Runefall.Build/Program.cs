@@ -12,6 +12,7 @@ internal static class Program
     private static readonly UTF8Encoding Utf8NoBom = new(false);
     private static string outDir = Path.Combine("..", "..", "build", "dist");
     private static string? deployDataDir;
+    private static string packPath = Path.GetFullPath(Path.Combine("content", "base", "pack.json"));
 
     private static void Main(string[] args)
     {
@@ -19,6 +20,7 @@ internal static class Program
         {
             if (args[i] == "--out" && i + 1 < args.Length) outDir = args[++i];
             else if (args[i] == "--deploy" && i + 1 < args.Length) deployDataDir = args[++i];
+            else if (args[i] == "--pack" && i + 1 < args.Length) packPath = Path.GetFullPath(args[++i]);
         }
 
         outDir = Path.GetFullPath(outDir);
@@ -28,6 +30,14 @@ internal static class Program
         Directory.CreateDirectory(runefallData);
         Directory.CreateDirectory(packDir);
 
+        var packErrors = LadderContent.WriteFromPack(runefallData, packPath);
+        if (packErrors.Count > 0)
+        {
+            foreach (var error in packErrors)
+                Console.WriteLine($"CONTENT PACK FAIL: {error}");
+            Environment.ExitCode = 1;
+            return;
+        }
         var content = ContentFactory.Create();
         WriteData(content, runefallData);
         WriteManifests(packDir, content);
@@ -83,7 +93,6 @@ internal static class Program
         WriteCsv(Path.Combine(dir, "unique_affixes.csv"), content.UniqueColumns, content.UniqueRows);
         WriteCsv(Path.Combine(dir, "unique_sources.csv"), content.UniqueSourceColumns, content.UniqueSourceRows);
         WriteCsv(Path.Combine(dir, "strings.csv"), content.StringColumns, content.StringRows);
-        LadderContent.WriteAll(dir);
 
         var formats = new StringBuilder();
         formats.AppendLine("{");

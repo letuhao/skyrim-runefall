@@ -864,3 +864,13 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Static gates now 7/7 PASS including JSON schemas:
   build/evidence/static-gates-20261028-051731.md.
 - F0.3 JSON content pipeline is next; runtime still reads legacy CSV until F0.3/F0.9.
+
+
+## F0.3 JSON content pipeline (2026-10-28 05:18-05:24)
+
+- Generator now reads content/base/pack.json via ContentPackLoader; seven ladder entities are
+  loaded from JSON, validated, and emitted as runtime tables; no formula generation for those tables.
+- Invalid pack test removes powerIndex and is rejected with field path; valid pack builds.
+- Static gates 8/8 PASS: build/evidence/static-gates-20261028-052338.md.
+- In-game batch PASS 20/20, no crash: build/evidence/batch-test-20261028-052420.md.
+- Runtime DataStore still reads transitional CSV; F0.4 replaces this with JSON.

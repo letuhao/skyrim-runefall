@@ -185,6 +185,23 @@ internal static class LadderContent
             ? "\"" + value.Replace("\"", "\"\"") + "\""
             : value;
 
+    public static List<string> WriteFromPack(string dir, string packPath)
+    {
+        var errors = new List<string>();
+        var pack = ContentPackLoader.Load(packPath, out var loadErrors);
+        errors.AddRange(loadErrors);
+        if (pack is null)
+            return errors;
+        WriteCsv(dir, "stage_ladder.csv", StageColumns, pack.StageRows);
+        WriteCsv(dir, "tier_definitions.csv", TierColumns, pack.TierRows);
+        WriteCsv(dir, "curve_profiles.csv", CurveColumns, pack.CurveRows);
+        WriteCsv(dir, "difficulty_profiles.csv", DifficultyColumns, pack.DifficultyRows);
+        WriteCsv(dir, "stage_assignment_rules.csv", AssignmentColumns, pack.AssignmentRows);
+        WriteCsv(dir, "stage_content_bands.csv", ContentBandColumns, pack.ContentBandRows);
+        WriteCsv(dir, "legacy_rf_tier_map.csv", LegacyTierColumns, pack.LegacyTierRows);
+        return errors;
+    }
+
     public static List<string> Validate(string dir)
     {
         var errors = new List<string>();

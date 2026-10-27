@@ -87,7 +87,9 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
 - F0.1 in progress (2026-10-28): StageEngine full ABI/validation, co-save v3 ladder section,
   old tier keyword retirement, generator validator; batch 20/20 PASS and static gates 6/6.
   F0.1 PASS. F0.2 PASS: 28 JSON schemas, base pack 7 entities, validator and static gate.
-- Next: F0.3 JSON content pipeline (generator reads JSON, emits runtime data/ESP), then JSON DataStore.
+- F0.3 PASS: generator reads JSON pack, validates entity files, rejects invalid packs with paths,
+  emits runtime tables/ESP; static gates 8/8 and batch 20/20.
+- Next: F0.4 JSON DataStore (replace transitional CSV reader).
 
 ## Next step
 
