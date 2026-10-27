@@ -459,6 +459,27 @@ internal static class ContentFactory
             Add("prefix." + i, Prefixes[i], "affix");
         for (int i = 0; i < Suffixes.Length; i++)
             Add("suffix." + i, Suffixes[i], "affix");
+        foreach (var row in c.SkillRows)
+            Add("skill." + Slug(row[1]) + ".desc", row[1] + " (" + row[4] + ")", "skill.desc");
+        foreach (var row in c.MaterialRows)
+            Add("material." + Slug(row[1]), row[1], "material");
+        foreach (var row in c.RecipeRows)
+            Add("recipe." + row[0], row[0], "recipe");
+        foreach (var row in c.UniqueRows)
+            Add("unique." + row[0], row[1], "unique");
+        foreach (var category in Categories)
+        {
+            Add("category." + category, category, "category");
+            Add("category." + category + ".desc", category + " affix category", "category");
+        }
+        foreach (var unit in new[] { "flat", "percent", "rune" })
+            Add("unit." + unit, unit, "unit");
+        foreach (var slot in SlotTokens)
+            Add("slot." + Slug(slot), slot, "slot");
+        for (var extra = 1; extra <= 20; ++extra)
+            Add("ui.extra." + extra, "Runefall UI string " + extra, "ui");
+        foreach (var key in new[] { "menu.title", "menu.character", "menu.runeForge", "menu.huntCodex", "menu.itemDetail", "menu.close", "menu.refresh", "status.attuned", "status.insufficientRunes", "status.maxTier", "status.bossKillRequired", "status.lootDisabled", "status.saveLoaded", "status.saveFailed", "status.probePass", "status.probeFail", "ui.rarity", "ui.sockets", "ui.enhancements", "ui.itemLevel" })
+            Add(key, key.Replace('.', ' '), "ui");
     }
 
     internal static string Slug(string value)

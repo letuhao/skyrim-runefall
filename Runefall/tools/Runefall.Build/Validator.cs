@@ -272,6 +272,7 @@ internal static class Validator
             var uniqueIds = content.UniqueRows.Select(r => r[0]).Distinct(StringComparer.Ordinal).Count();
             Expect(uniqueIds == 59, "unique_affixes.csv has 59 distinct ids", lines, ref failed);
             Expect(content.SkillRows.Count == 18, "skills.csv has 18 skills", lines, ref failed);
+            Expect(content.StringRows.Count >= 250, "strings.csv covers >=250 keys", lines, ref failed);
         }
 
         lines.Add(failed ? "RESULT: FAIL" : "RESULT: PASS");

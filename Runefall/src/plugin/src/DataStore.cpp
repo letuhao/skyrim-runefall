@@ -190,6 +190,18 @@ namespace Runefall
 		return it == tables.end() ? nullptr : &it->second;
 	}
 
+	std::string DataStore::GetString(std::string_view a_key) const
+	{
+		const auto* table = GetTable("strings.csv");
+		if (!table)
+			return {};
+		for (const auto& row : table->rows) {
+			if (row.size() >= 2 && row[0] == a_key)
+				return row[1];
+		}
+		return {};
+	}
+
 	std::size_t DataStore::TotalRows() const
 	{
 		std::size_t total = 0;

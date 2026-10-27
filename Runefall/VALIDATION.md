@@ -750,3 +750,12 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Static gates 5/5 PASS (static-gates-20261027-095004.md); batch 17/17 PASS, self-tests 18/18,
   no crash (batch-test-20261027-095042.md).
 - Artifact DLL 987648 B SHA-256 9B1875026CAD7495C041B2CDCFBDD82D24C6304BBDCB0B011940535DB26E5979; candidate zip 477977 B SHA-256 FF81DFB4713B2BB5665997FBC7230180FEFE175EAC5A806EF34648323388CB25.
+
+## Strings coverage + consumer 2026-10-27 09:55
+
+- strings.csv expanded from 82 to 250+ keys (skills/descriptions, materials, recipes, unique affixes,
+  categories, units, slots, UI/status); validator enforces the floor.
+- DataStore::GetString resolves keys; MenuApi diagnostics includes the string-table count.
+- Static gates 5/5 PASS (static-gates-20261027-095443.md); batch 17/17 PASS, self-tests 18/18,
+  no crash (batch-test-20261027-095528.md).
+- Artifact DLL 987648 B SHA-256 080F326CD4FDBD7C8909715DCC8DFBCA558139AD931F330663B14DC084ECCBCA; candidate zip 479500 B SHA-256 543B4E1D6116AC90293AADCC89F5599EF9D1264C6FB676617B2FC4C3C6E72108.
