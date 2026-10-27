@@ -233,6 +233,47 @@ internal static class Validator
         }
         Expect(missingRefs == 0, "data cross-reference EditorIDs resolve", lines, ref failed);
 
+
+        // P3.6/L3E coverage gates: race/family and affix-table invariants.
+        {
+            var groups = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var row in content.RaceGroupRows)
+            {
+                if (row.Length < 5 || string.IsNullOrWhiteSpace(row[0])) { lines.Add("FAIL race_groups.csv malformed row"); failed = true; continue; }
+                groups.Add(row[0]);
+                if (row[1].Split('|', StringSplitOptions.RemoveEmptyEntries).Length == 0) { lines.Add($"FAIL race_groups.csv {row[0]} has no member races"); failed = true; }
+                if (string.IsNullOrWhiteSpace(row[3]) || string.IsNullOrWhiteSpace(row[4])) { lines.Add($"FAIL race_groups.csv {row[0]} missing unique/material"); failed = true; }
+            }
+            Expect(groups.Count == 19, "race_groups.csv has 19 unique families", lines, ref failed);
+
+            var uniqueFirst = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var row in content.RaceDropRows)
+            {
+                if (row.Length < 5) { lines.Add("FAIL drops_races.csv malformed row"); failed = true; continue; }
+                if (row[1] == "unique_affix" && row[4] == "1") uniqueFirst.Add(row[0]);
+                if (row[1] == "material" && row[4] == "1") { lines.Add($"FAIL drops_races.csv {row[0]} material must not be firstOnly"); failed = true; }
+            }
+            Expect(uniqueFirst.Count == groups.Count, "drops_races.csv has one firstOnly unique per family", lines, ref failed);
+
+            var categories = new Dictionary<string, int>(StringComparer.Ordinal);
+            var slots = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var row in content.AffixRows)
+            {
+                if (row.Length < 6) { lines.Add("FAIL affixes.csv malformed row"); failed = true; continue; }
+                categories[row[2]] = categories.TryGetValue(row[2], out var count) ? count + 1 : 1;
+                foreach (var token in row[5].Split('|', StringSplitOptions.RemoveEmptyEntries))
+                    slots.Add(token);
+            }
+            Expect(categories.Count == 5, "affixes.csv covers 5 categories", lines, ref failed);
+            foreach (var category in categories)
+                Expect(category.Value >= 20, $"affix category {category.Key} has >=20 rows", lines, ref failed);
+            Expect(slots.Count >= 11, "affixes.csv covers >=11 slot tokens", lines, ref failed);
+
+            var uniqueIds = content.UniqueRows.Select(r => r[0]).Distinct(StringComparer.Ordinal).Count();
+            Expect(uniqueIds == 59, "unique_affixes.csv has 59 distinct ids", lines, ref failed);
+            Expect(content.SkillRows.Count == 18, "skills.csv has 18 skills", lines, ref failed);
+        }
+
         lines.Add(failed ? "RESULT: FAIL" : "RESULT: PASS");
         return string.Join(Environment.NewLine, lines);
     }
