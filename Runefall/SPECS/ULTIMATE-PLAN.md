@@ -1,135 +1,119 @@
-# ULTIMATE PLAN - Runefall, layer by layer
+# ULTIMATE PLAN v2 - Runefall from foundation to release
 
-Status: **draft 2026-10-28**, data-driven architecture. This is the master plan for completing
-the mod. The first slice is the ladder audit fixes; every later slice adds one layer and must leave
-the build/game in a proven state.
+Status: full plan, 2026-10-28. Built from the clarified decisions. JSON is the only authored and runtime content format. The plan is executed one slice at a time; each slice ends with data, implementation, tests and evidence.
 
-## 1. Final goal
+## 1. Goal
 
-Runefall 1.6.1170: a four-pillar RPG overhaul with a complete 100-stage/10-tier power ruler, enemy
-threat system, encounters, loot/economy, crafting, player progression and UI, tested on the target
-J: environment and packaged for release.
+Build Runefall for Skyrim SE/AE 1.6.1170 from the current POC to a complete release: 100-stage/10-tier ladder, threat protection, races/roles, encounters, hunts, anomaly content, loot, crafting, player progression/classes, Prisma UI, content packs, compatibility and release.
 
-## 2. Architecture rule: data first, code second
+## 2. Architecture rules
 
-All content and balance is data. Code only loads, validates, resolves and executes it.
-
-    content source (CSV/JSON + pack manifests)
-        -> Runefall.Build (records + data tables + form_ids)
-        -> DataStore (typed tables, schema version, pack overlays)
-        -> FormCatalog (record identity)
-        -> services (ladder, loot, protection, encounters, abilities, UI)
-        -> game
-
-Rules:
-1. Adding/altering content must be a data/pack change authored by agents against schema/criteria, not a C++ or Papyrus edit.
-2. Generated ESP records come from the same data; no hand-edited records.
-3. Base + optional packs + external patch overlays; every table has a schema version and a
-   validator; invalid/missing data fails closed with a specific log.
-4. No deferred module owns ladder tables; no module duplicates another's data.
-5. One slice at a time: data/schema + implementation + tests + evidence before the next.
+1. Data first: content, balance, pacing, ratings and fallback rules are JSON data. Code loads, validates, resolves and executes.
+2. One content schema, two producers: offline compiler for shipped packs; runtime DLL resolver for unknown mods and events. Both use the same entity shapes.
+3. Content keys, not FormIDs: authored content uses stable keys. FormIDs appear only inside generated ESP records and explicitly allowed unique/master references.
+4. Offline packs are pre-generated; the DLL applies them. Runtime fallback is generated lazily, cached under Data/Runefall/runtime/ and delayed (default 10 minutes) to avoid load spikes.
+5. No JContainers and no heavy Papyrus. The DLL owns JSON I/O, storage and gameplay.
+6. Minimal dependencies: Prisma UI is the hard UI dependency; everything else optional unless proven necessary.
+7. Packs avoid conflicts by namespaced keys and design; last loaded wins on the same key, like Skyrim. No explicit load-order language is required.
+8. English only for release; localization fields reserved, other languages are not supported by default.
+9. Fail closed: invalid data disables the feature/pack with a log, never crashes the game.
+10. One slice at a time; no next slice until the current one has build/test/game evidence.
 
 ## 3. Layers
 
-| Layer | Purpose | Exit condition |
+| Layer | Purpose | Exit |
 |---|---|---|
-| L0 Foundation | ladder fixes, data pipeline, records, co-save, tests | ruler is authoritative and data-driven |
-| L1 Combat core | threat protection, race classification, enemy packages, actor enhancement | first staged enemy fight works |
-| L2 World/encounters | world bands, spawns, hunts, bosses, anomaly content | enemies appear in the world correctly |
-| L3 Loot/economy/crafting | ladder-driven loot, materials, crafting, gear, rune economy | full loot-to-craft loop |
-| L4 Player/UI | player rank/attributes/skills, UI pages, inspect | playable end-to-end with UI |
-| L5 Release | compatibility, save/upgrade, balance, packaging | release gate passes |
+| L0 Foundation | ladder fixes, JSON pipeline, records, co-save, runtime resolver, tests | data-driven foundation proven |
+| L1 Combat | protection, roles/races, NPC packages, player attributes/ratings | first staged fights and ratings |
+| L2 World | bands, spawns, rare spawns, hunts, bosses, anomaly, runtime cache | world content appears correctly |
+| L3 Loot and crafting | loot, materials, runtime items, crafting, rune gear, economy | loot-to-craft loop |
+| L4 Player and UI | Rune Level, 9 classes, skills, Prisma UI, HUD, menus | playable end-to-end |
+| L5 Packs/endgame | pack tooling, base packs, mod packs, agent skills, raids/quests, localization | content scaling |
+| L6 Release | compatibility, save/upgrade, calibration, packaging | ship gate |
 
-## 4. Slice table
+## 4. Full slice table
 
-| ID | Layer | Slice | Deliverables | Acceptance | Depends |
+| ID | Layer | Slice | Output | Acceptance | Depends |
 |---|---|---|---|---|---|
-| F0.1 | L0 | **Ladder audit fixes (first slice)** | fix default difficulty; complete RequestStage ABI; load curve/legacy tables; validate tier/band/difficulty; wire StageEngine into loot/rank; co-save v3 ladder state; retire old tier keywords; generator validator; host tests/benchmark | audit blockers closed; batch PASS >=20 self-tests; no dual 5-rank system; no crash | current |
-| F0.2 | L0 | Data pipeline v2 | per-table schemas; content source dirs; pack overlay merge; deterministic generator; DataStore descriptors; validator pipeline | base + a test pack load/validate; no code change for a data row | F0.1 |
-| F0.3 | L0 | Record/form pipeline | FormCatalog coverage; ESL FormID windows; generated records from data; tier keywords; pack records | catalog gate; every data-referenced EditorID resolves | F0.2 |
-| F0.4 | L0 | Co-save v3 + migration | schema registry; v2->v3 migration; caps/truncation; downgrade/uninstall behavior; test saves | old save loads; corrupt/truncated rejection; no save bloat | F0.1 |
-| F0.6 | L0 | Runtime content resolver (fallback) | shared schema interpreter; deterministic fallback for unknown mods/events; profile/cache decision; no pre-generated row required | unknown race/event resolves without content gap; repeatable; no crash | F0.2 |
-| F0.5 | L0 | Host tests + diagnostics | RunefallCoreHost/Catch2; load/lookup benchmark; no-allocation gate; read-only snapshot/log | host CI PASS; <=25 ms load; <=100 ns lookup | F0.2-F0.4 |
-| C1.1 | L1 | Threat protection spike | minimal ESP+DLL hook proof; damage-category matrix; apply-once; pipeline position; perf | spike report covers melee/ranged/spell/DoT/explosion; no crash | F0.5 |
-| C1.2 | L1 | Race classification | race/template/keyword classifier; host/anomaly/provisional; unknown report; patch table | all vanilla/DLC races mapped; synthetic unknown auto-defaults; no content gap | F0.3 |
-| C1.3 | L1 | Threat protection | protection formula/penetration; player/anomaly policy; categories; compatibility hooks | staged fights respect gap; apply-once; KYE2 coexistence smoke | C1.1/C1.2 |
-| C1.4 | L1 | Enemy packages | per-tier stats/perk/spell/ability packages from data; rank/elite/boss overlays | actors receive one package; no double scaling; budgets respected | C1.3 |
-| C1.5 | L1 | Actor enhancement/equipment | humanoid gear/perk distribution; random apply tables; toggles/cleanup; tag/report | selected actors get player-like gear/perks; toggle does not corrupt saves | F0.3/C1.4 |
-| C1.6 | L1 | Attacker/player interface | player rank==stage input; attacker StageProfile; damage channel/penetration contract | mage and warrior both get penetration; no player protection by default | C1.3 |
-| W2.1 | L2 | World bands / level design | stage_content_bands consumption; world-band data; hold/dungeon bands; quest exclusions | data drives area difficulty; no vanilla record edits | C1.4 |
-| W2.2 | L2 | Encounter/spawn system | encounter classes; spawn tables; caps/cooldowns; identity/cleanup; safe locations | spawns follow data; duplicate/reload safe; no city/quest leaks | W2.1 |
-| W2.3 | L2 | Call of the Hunt / manifestations | hunt contract; rare manifestations; reward/identity; travel/safety | player-triggered and rare encounters work | W2.2 |
-| W2.4 | L2 | Bosses/quest bands | fixed-stage boss placement; questBand->stage; unique trophy/reward; IDs | bosses spawn at authored stage; quest actors excluded | W2.2 |
-| W2.5 | L2 | Anomaly ladder/content | anomaly families/curves/tier labels; anomaly encounters; cores/trophies; Anomaly Codex feed | anomaly fights scale without host protection; rewards in data | W2.2/C1.2 |
-| A3.1 | L3 | Ladder-driven loot | loot budgets/ilvl bands; rarity/drop tables by stage; containers/quests/bosses | loot follows stage budget; no hardcoded values | W2.2/C1.3 |
-| A3.2 | L3 | Loot authority/compat | additive/takeover modes; OWL/other loot mods; pricing | authority config documented/tested; no crash | A3.1 |
-| A3.3 | L3 | Material items/tokens | real MISC items, fallback tokens, family/tier parts; material ledger from inventory | materials are items; unknown races get tokens; no currency-only | C1.2 |
-| A3.4 | L3 | Crafting system | recipes/stations; salvage/reroll/upgrade/socket; transaction safety | full loop material->craft->use; fail-closed | A3.3 |
-| A3.5 | L3 | Monster Hunter gear tree | weapon/armor trees from monster parts; set bonuses; trophy gear | gear tree data-driven; end-to-end craft | A3.4 |
-| A3.6 | L3 | Rune economy/attunement | rune drops/wallet/spend; attunement gates; respec; glob mirrors | rank progression works with ladder; save-safe | A3.1 |
-| P4.1 | L4 | Player Rune Rank/attributes | player rank 1-100; attributes; derived stats; UI data | player power curve works; no protection default | A3.6 |
-| P4.2 | L4 | Skills/trees/active skills | 18 skills, trees, active abilities, cost/cooldown, data | skill build playable; no Papyrus polling | P4.1 |
-| P4.3 | L4 | UI redesign | SKSE Menu Framework pages: character, forge, hunt, anomaly codex, settings | pages usable; no debug pages in release | P4.1/P4.2 |
-| P4.4 | L4 | Inspect/tooltip/item data | native item detail/tooltip; resistance/inspect view; snapshots | item card reads registry; no name parsing | A3.5/P4.3 |
-| R5.1 | L5 | Compatibility matrix | OWL, Worlds Dawn, Fortunate Foes, KYE2, Grid/Summermyst where available; load-order profile | target-loaded smoke PASS; conflicts documented | all |
-| R5.2 | L5 | Save/upgrade/uninstall | old save migration; pack disable; uninstall; downgrade; version negotiation | all uninstall modes PASS | R5.1 |
-| R5.3 | L5 | Balance and calibration | data-driven balance report; TTK/encounter budgets; playtest passes | playtest targets met or documented | P4.x |
-| R5.4 | L5 | Packaging/release | version, FOMOD, Nexus assets/media, archive verify, release gate | ship gate PASS; archive verified | R5.2/R5.3 |
+| F0.1 | L0 | Ladder audit fixes (first slice) | fix difficulty default, full RequestStage ABI, curve/legacy load, validation, wire to loot/rank, co-save v3 ladder state, retire old tier keywords, generator validator, host tests/bench | audit blockers closed, 20+ self-tests, batch PASS, no dual system, no crash | current |
+| F0.2 | L0 | Freeze JSON schema | one JSON Schema per entity; pack manifest; versioning; examples | all current content represented; schema validation passes; no CSV authoring | F0.1 |
+| F0.3 | L0 | JSON content pipeline | generator CLI validate/build/preview; JSON to ESP/data/manifest; deterministic IDs | base pack builds from JSON; invalid pack fails with path/line | F0.2 |
+| F0.4 | L0 | JSON runtime loader | DataStore JSON reader; table registry; schema version checks; no CSV code path | runtime loads JSON; missing/corrupt table fails closed | F0.3 |
+| F0.5 | L0 | Co-save v3 | section registry; ladder state; migration v2 to v3; caps/truncation; downgrade log | old save loads; corruption rejected; save size budget | F0.4 |
+| F0.6 | L0 | Host core and tests | RunefallCoreHost target; Catch2; benchmarks; no-allocation gates; static schema tests | host CI PASS; load/lookup budgets measured | F0.3-F0.5 |
+| F0.7 | L0 | Runtime content resolver | identity/role resolver; deterministic fallback; cache; pack override; unknown race path | unknown race resolves; repeatable; cache reload; no crash | F0.4/F0.6 |
+| F0.8 | L0 | Diagnostics and rescan | read-only snapshot; settings Rescan button; automatic rescan on pack/version change; delayed startup scan | manual and automatic rescan work; no load spike | F0.7 |
+| F0.9 | L0 | POC JSON migration | convert all current CSV content/balance to JSON; keep POC behavior; deprecate CSV | generator and runtime both use JSON only; regression PASS | F0.3/F0.4 |
+| C1.1 | L1 | Protection spike | damage hook proof; category matrix; apply-once; pipeline position; perf | spike covers direct/DoT/reflected/environmental; no crash | F0.4 |
+| C1.2 | L1 | Roles and race classification | primary role + tags; host/anomaly/provisional; unknown fallback; patch table | vanilla/DLC mapped; modded race defaults; no content gap | F0.7 |
+| C1.3 | L1 | Threat protection | 70% cap, 3%/stage, 5% floor, 50% DoT, reflected/environmental bypass, penetration; player/anomaly policy | staged fights respect gap; apply-once; no crash | C1.1/C1.2 |
+| C1.4 | L1 | NPC packages | spawn stage + role package + 2-4 perks + gear/outfit + loot; light archetype tag; no deep sim | humanoid/creature packages apply once; gear remains vanilla-lootable | C1.3 |
+| C1.5 | L1 | Actor equipment distribution | equipment sets/outfits; random archetype variation; toggles/cleanup; performance caps | selected actors get gear/perks; toggle safe; save/load safe | C1.4 |
+| C1.6 | L1 | Player attributes | 9 attributes; 3 points/stage; breakthroughs 9/12/15...; effects and caps; respec | attribute budget data-driven; PCR follows gear/class | F0.4 |
+| C1.7 | L1 | Combat ratings | PCR/NCR/RCR; TTK/TTD/Q; Skyrim and Action pace profiles; both number+label; data JSON | ratings reproducible; formulas match data; display profiles | C1.3/C1.6 |
+| C1.8 | L1 | Player attacker/penetration | player stage input; attack channel; penetration sources/cap; mage channel | warrior/mage both penetrate; player no protection default | C1.3/C1.6 |
+| W2.1 | L2 | World bands | encounter zones/cells/regions to stage bands; content bands; exclusions | data drives area stage; vanilla zones respected | C1.4 |
+| W2.2 | L2 | Spawn and encounter system | spawn rate tables; encounter classes; caps/cooldowns; identity/cleanup; safe locations | spawns follow data; reload-safe; no city/quest leaks | W2.1 |
+| W2.3 | L2 | Rare high-stage spawns | rate-table high-stage chance; condition hooks reserved for packs | low-level zone can rarely spawn high stage; rate tunable | W2.2 |
+| W2.4 | L2 | Hunt contracts | player-called hunts; hunt identity; reward/evidence; safety | hunts work end-to-end; no duplicate rewards | W2.2 |
+| W2.5 | L2 | Bosses and unique actors | fixed-stage overrides; unique FormID refs allowed; boss packages; quest bands | authored bosses at designed stage; unique refs resolve | W2.2/W2.4 |
+| W2.6 | L2 | Anomaly ladder | families, curves, tier labels, anomaly encounters, cores/trophies | anomaly content works without host protection | C1.2/W2.2 |
+| W2.7 | L2 | Runtime cache lifecycle | race-role JSON cache; pack/version invalidation; manual rescan; old cache migration | cache correct after pack change; rescan safe | F0.7/W2.2 |
+| A3.1 | L3 | Ladder-driven loot | loot tables by stage/ilvl; containers/quests/bosses; budgets | loot follows stage and data; no hardcoded values | W2.2/C1.4 |
+| A3.2 | L3 | Materials and tokens | real MISC items; family/grade parts; fallback tokens; inventory ledger | materials are items; unknown roles get tokens | C1.2 |
+| A3.3 | L3 | Runtime item generation | item instances from base forms; stats/affixes/runewords; no new item records for ordinary crafting | generated item persists; visuals/name correct; no crash | A3.2/F0.7 |
+| A3.4 | L3 | Crafting system | MH/Last Epoch style destroy-and-create; recipes/stations/currencies; validation | full crafting loop; transaction-safe | A3.3 |
+| A3.5 | L3 | Rune equipment and inventory | rune gear generation; sockets/runewords; rune inventory UI data | rune gear works; inventory data stable | A3.4 |
+| A3.6 | L3 | Rune economy and attunement | rune XP, wallet, attunement, respec, glob mirrors | progression with ladder; save-safe | A3.1 |
+| A3.7 | L3 | Loot authority compat | additive/takeover modes; OWL and major loot mods; pricing | compatibility smoke PASS; no crash | A3.1 |
+| P4.1 | L4 | Rune Level progression | XP gauge; kills/potions/quests hooks; 40-hour pacing; tier breakthroughs | 40-hour targets data-driven; breakthrough works | C1.6/F0.5 |
+| P4.2 | L4 | 9 classes | class identities, tiers, advantages, class quests, respec | 9 classes data-driven; class build differs | P4.1 |
+| P4.3 | L4 | Skills and passives | player skill tree; active skills; NPC packages separate; no shared player nodes | builds playable; no NPC skill contamination | P4.2 |
+| P4.4 | L4 | Prisma UI foundation | hard dependency; web UI shell; settings/rescan; data bridge | UI loads; read-only snapshot works; no gameplay in UI | F0.8 |
+| P4.5 | L4 | Character/HUD/indicators | character page; PCR/NCR labels/numbers; HUD indicators | ratings display correct; HUD optional/low cost | P4.4/C1.7 |
+| P4.6 | L4 | Breakthrough/class menus | breakthrough UI; class/tier/advantage UI; materials/raid gates | menus complete; no Papyrus polling | P4.4/P4.2 |
+| P4.7 | L4 | Codex/inspect/tooltip | anomaly codex; item inspect; tooltip slices; rune details | pages work; data from registry only | A3.5/P4.4 |
+| R5.1 | L5 | Pack tooling | pack format, build/preview, versioning, dependency checks, conflict diagnostics | base + test pack; no load-order language | F0.3/F0.9 |
+| R5.2 | L5 | Base content packs | Skyrim + official DLC foundation packs; races/roles/encounters/loot | base world fully staged; no gaps | R5.1/A3.7 |
+| R5.3 | L5 | Famous-mod packs | pack per supported mod; race/role/loot additions; patchable overrides | supported mod smoke PASS | R5.1/C1.2 |
+| R5.4 | L5 | Agent skills and criteria | content skills per entity; criteria rules; generator prompts; validation loop | agent pack produced, validated, built, tested | R5.1/F0.6 |
+| R5.5 | L5 | Endgame, raids, quests | raid bosses; quests; endgame maps; dungeon hunts; unique rewards | endgame loop complete | W2.5/W2.6/A3.6 |
+| R5.6 | L5 | Localization structure | English only; string keys; optional language packs reserved | all player text localized by key; no unsupported language claim | R5.1 |
+| R6.1 | L6 | Compatibility matrix | OWL, Worlds Dawn, Fortunate Foes, KYE2, loot/combat mods; load-order profiles | target smoke PASS; conflicts documented | all gameplay |
+| R6.2 | L6 | Save/upgrade/uninstall | old save migration; pack disable; DLL remove; downgrade | all uninstall modes PASS | F0.5/A3.7 |
+| R6.3 | L6 | Balance calibration | PCR/NCR/TTK/TTD report; 40-hour pacing; pace profiles; playtest tuning | targets met or documented | C1.7/P4.1/P4.2 |
+| R6.4 | L6 | Release packaging | version; FOMOD; Nexus assets; archive verification; ship gate | ship gate PASS; archive verified | R6.1-R6.3 |
 
-## 5. Content execution model
+## 5. First slice F0.1 detail
 
-    agent-authored source -> offline compiler -> shipped pack data/records -> runtime ContentRegistry
-    runtime event / unknown mod -> deterministic runtime resolver -> ephemeral or persisted profile
+1. Fix StageRequest default difficulty and full ABI (source, ruleId, category, player rank, precedence, jitter, clamp, rejection, golden vectors).
+2. Load and validate curve profiles and legacy RF tier map.
+3. Validate tiers, content bands, difficulties, rules, capacities, keyword ids.
+4. Wire StageEngine into actor rank/loot paths; remove the POC 5-rank dual system.
+5. Co-save v3 ladder section and v2 migration.
+6. Retire RF_KW_Tier_0..5 with mapping; regenerate keywords.
+7. Generator validator, host core tests and benchmarks.
+8. Batch checks and no-crash evidence; update docs and commit.
 
-The runtime resolver is part of the DLL, not a second content pipeline. It uses the same schemas,
-seed rules and fallback rules as the offline compiler, never silently invents unsupported content,
-and logs every provisional decision. Generated runtime profiles are recomputed where possible and
-only persisted when identity/state requires it.
+## 6. Balance defaults
 
-## 5. First slice F0.1 - detailed tasks
+- Player attributes provide 33 percent of same-stage enemy power; gear/class provides 67 percent.
+- Three tuning levers: attribute points earned, enemy power, per-attribute power. Default: keep 3 points/stage; tune per-attribute power first.
+- 40-hour rune play: tier hours 1.5/2.5/3/3.5/4/4.5/5/5/5/6; about 3600 rune kills, 36 per stage average; data-driven.
+- Protection: 70 percent cap, 3 percent per stage, 5 percent floor, DoT 50 percent protection, reflected/environmental none, penetration cap 20 stages.
+- Two pace profiles: Skyrim and Action/ARPG, selected in settings; default Skyrim.
+- Ratings visible as number + label; HUD later.
 
-1. StageRequest default difficulty = none (255 or explicit flag); fix tests.
-2. Complete RequestStage: source precedence, ruleId, category, player-rank value, jitter/clamp
-   order, golden vectors; reject unknown values.
-3. Load curve_profiles and legacy_rf_tier_map; validate maxStage/curve vs stage table.
-4. Validate all ladder tables: tier names/keywords/ranges, content-band coverage/overlap,
-   difficulty profiles, rule coverage, capacity formulas.
-5. Wire StageEngine into actor rank/loot paths: replace the POC 5-rank decision with stage-derived
-   rank/tier or a compatibility shim; remove dual scaling.
-6. Co-save v3 ladder section (player rank/stage, difficulty, overrides cap 256) + v2 migration.
-7. Retire old RF_KW_Tier_0..5 and old rank tables from new generation; map old data.
-8. Generator validator + host core/Catch2 + benchmark; add gates to run-static-gates.
-9. Batch checks for stage load and no dual system; no crash.
-10. Update VALIDATION/STATE/CHANGELOG and commit.
+## 7. Deferred clarification gates
 
-Acceptance: all audit blockers closed; 20+ self-tests; batch PASS; static gates PASS; no crash;
-one authoritative stage/tier path.
+G1 data pipeline: answered, JSON only; G2 protection: answered; G3 roles: answered; G4 world: rate tables plus later conditions; G5 enemy packages: simple; G6 equipment: vanilla loot; G7 anomaly: later; G8 crafting: MH/Last Epoch style; G9 player: 9 classes, 33 percent; G10 UI: Prisma; G11 compatibility: known mods; G12 runtime generation: offline and runtime, own JSON.
 
-## 6. Deferred feature clarification backlog
+Remaining design work is inside the slice that owns it, not before foundation.
 
-No detailed spec is written for a deferred feature until its clarification slice is answered.
-Each row is a gate for the later slice.
+## 8. Goal proposal
 
-| Gate | Feature | Clarify before spec |
-|---|---|---|
-| G1 | Data pipeline | Where do content definitions live (CSV/JSON source dir), how do packs overlay/override, schema versioning, who validates? |
-| G2 | Threat protection | Which damage categories/DoT/penetration channels, player/anomaly target policy, hook spike evidence, external-mod stacking. |
-| G3 | Race classification | Host/anomaly table ownership, unknown provisional default, KYE2 seed import/credit, patch workflow for modded races. |
-| G4 | World/encounters | World-band source, spawn modes (called/rare/ambient), caps/cooldowns, city/quest exclusions, difficulty presets. |
-| G5 | Enemy packages/abilities | Per-tier stat/ability budget, package size, generated records, elite/boss overlays. |
-| G6 | Actor enhancement/equipment | Humanoid gear/perk model, random apply chance, toggle/cleanup semantics, player-like equipment scope. |
-| G7 | Anomaly ladder | Family list, curves/tier labels, Cores/trophies, Anomaly Codex, no host protection. |
-| G8 | Crafting/materials | Real item designs vs token fallback, material grades, recipes/stations, Monster Hunter gear trees. |
-| G9 | Player progression | Rune Rank economy, attunement, attributes/skills/trees/active skills, respec/NG+. |
-| G10 | UI redesign | Page inventory, interaction model, tooltip/item card, settings. |
-| G12 | Runtime generation | What the runtime may generate (profiles/packages/loot/events), seed/identity/persistence rules, fallback failure policy, and how it stays patchable. |
-| G11 | Compatibility/release | Supported target mods, uninstall policy, versioning, Nexus assets. |
+Objective: Execute ULTIMATE-PLAN v2 from F0.1 through R6.4, one slice at a time, with JSON as the only content format, proving each slice with build, host tests, in-game batch and evidence, and finishing with a verified release candidate.
 
-## 7. Execution rules
+Completion: all 48 slices PASS; ladder/combat/world/loot/crafting/player/UI/packs/release gates PASS; no crash in batch; archive verified; docs/version/changelog updated; no unresolved blocker.
 
-- Work one slice at a time; do not start the next until the current slice has evidence.
-- Every slice must add tests and update the relevant spec/data doc.
-- No feature may hardcode content or balance values; add data + validator instead.
-- No Papyrus gameplay; no per-frame work; fail closed; no crash.
-- If a slice reveals a missing design, stop and write a short clarification note; do not invent.
-- The plan may be reordered by the human, but no slice is deleted without recording why.
+Execution rule: before each slice, read its exact row; after each slice, record evidence and update STATE/VALIDATION. No slice skips tests, and no deferred feature is invented outside its slice.
