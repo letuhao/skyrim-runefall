@@ -723,3 +723,13 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Static gates 5/5 PASS (static-gates-20261027-093658.md); runtime batch 17/17 PASS, self-tests
   18/18, hunt unique item + material PASS, no crash (batch-test-20261027-093737.md).
 - Artifact DLL 978432 B SHA-256 9804B4AD85F51E3C3D3A953A96E559388446AC9A419024094537478E86EF2E05; candidate zip 475554 B SHA-256 FE5E118861960037848B689982F1A7FDEE3DE9A52FD566997E63B09BA6C5F50A.
+
+## Boss-kill attunement gate 2026-10-27 09:40
+
+- CoSaveState gains runeTier and bossKillTier; progression section encodes both and decodes them
+  optionally for schema-1 saves. Progression::MarkBossKill is called from rank>=4 death rolls;
+  TryAttune returns 3 until the current tier has a boss kill, then spends rune units and raises tier.
+- Papyrus AttuneRuneTier logs the result code.
+- Static gates 5/5 PASS (static-gates-20261027-094102.md); batch 17/17 PASS, self-tests 18/18,
+  schema-1 save load OK (batch-test-20261027-094140.md).
+- Artifact DLL 979968 B SHA-256 DFBB943E68F96C4DCC532BB7B1F8B01614F0F0B27DA269C29AAF5B518C236E89; candidate zip 475967 B SHA-256 32AE8ABE22740C778ECF5CE19C2A220E7B2CD2015BE2C7393B1238759B1D8EE9.

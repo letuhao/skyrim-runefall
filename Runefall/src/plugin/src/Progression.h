@@ -21,6 +21,7 @@ namespace Runefall
 		[[nodiscard]] std::int32_t AttributePoints() const noexcept { return attributePoints; }
 		[[nodiscard]] std::int32_t SkillPoints() const noexcept { return skillPoints; }
 		[[nodiscard]] std::int32_t RuneTier() const noexcept { return runeTier; }
+		[[nodiscard]] bool         BossKillReady() const noexcept { return bossKillTier >= runeTier; }
 		[[nodiscard]] std::int32_t SkillRank(std::string_view a_skill) const;
 		[[nodiscard]] std::size_t AttributeEffectCount() const noexcept { return attributeEffectCount; }
 
@@ -31,7 +32,9 @@ namespace Runefall
 		bool RespecAttributes(std::int32_t a_runeCost);
 		bool RespecSkills(std::int32_t a_runeCost);
 
-		// 0 = attuned, 1 = insufficient runes, 2 = already max tier.
+		void MarkBossKill(std::int32_t a_runeTier);
+
+		// 0 = attuned, 1 = insufficient runes, 2 = already max tier, 3 = boss kill required.
 		[[nodiscard]] std::int32_t TryAttune();
 
 		void SetRuneTier(std::int32_t a_tier) noexcept { runeTier = std::clamp(a_tier, 0, 5); }
@@ -47,6 +50,7 @@ namespace Runefall
 		std::int32_t                  attributePoints = 0;
 		std::int32_t                  skillPoints = 0;
 		std::int32_t                  runeTier = 0;
+		std::int32_t                  bossKillTier = -1;
 		std::vector<SkillProgress>    skills;
 		std::size_t                   attributeEffectCount = 0;
 	};

@@ -161,6 +161,8 @@ namespace Runefall
 		const auto seed = static_cast<std::uint64_t>(a_actor->GetFormID()) ^ (static_cast<std::uint64_t>(std::time(nullptr)) << 32);
 		Rng        rng(seed);
 		const auto rank = TierEngine::Get().RollRank(rfTier, rng);
+		if (rank >= 4)
+			Progression::Get().MarkBossKill(rfTier);
 		const auto base = PickBaseObject(a_actor, rng);
 		if (!base)
 			return false;

@@ -9,6 +9,8 @@ namespace Runefall
 		std::array<std::int32_t, 9> attributes{};
 		std::int32_t                attributePoints = 0;
 		std::int32_t                skillPoints = 0;
+		std::int32_t                runeTier = 0;
+		std::int32_t                bossKillTier = -1;
 		std::array<std::int32_t, 5> runes{};
 		std::unordered_map<std::string, std::uint8_t> huntFirstKill;
 		std::unordered_map<std::string, std::string>  packVersions;

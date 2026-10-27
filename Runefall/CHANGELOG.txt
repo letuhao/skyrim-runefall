@@ -2,6 +2,8 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- Boss-kill attunement gate: rank>=4 deaths record bossKillTier in co-save; TryAttune requires it,
+  spends rune units and raises tier. Schema-1 save decode remains compatible.
 - Boss content: 20 NPC templates + 20 classes generated at 0xD00 with validator range/count gates;
   runtime load/batch verified.
 - Attributes data split (attributes.csv + attribute_effects.csv); Progression/MenuApi consume

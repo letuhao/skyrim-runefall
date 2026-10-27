@@ -34,6 +34,8 @@ namespace Runefall
 		attributes = state.attributes;
 		attributePoints = state.attributePoints;
 		skillPoints = state.skillPoints;
+		runeTier = std::clamp(state.runeTier, 0, 5);
+		bossKillTier = state.bossKillTier;
 	}
 
 	void Progression::SaveToCoSave()
@@ -42,6 +44,8 @@ namespace Runefall
 		state.attributes = attributes;
 		state.attributePoints = attributePoints;
 		state.skillPoints = skillPoints;
+		state.runeTier = runeTier;
+		state.bossKillTier = bossKillTier;
 	}
 
 	std::int32_t Progression::Attribute(std::size_t a_index) const
@@ -137,14 +141,26 @@ namespace Runefall
 		return 60;
 	}
 
+	void Progression::MarkBossKill(std::int32_t a_runeTier)
+	{
+		if (a_runeTier > bossKillTier) {
+			bossKillTier = a_runeTier;
+			logger::info("progression: boss kill recorded for rune tier {}", a_runeTier);
+		}
+	}
+
 	std::int32_t Progression::TryAttune()
 	{
 		if (runeTier >= 5)
 			return 2;
+		if (!BossKillReady())
+			return 3;
 		const auto cost = 25 * (runeTier + 1);
 		if (!RuneForge::SpendUnits(cost))
 			return 1;
 		++runeTier;
+		bossKillTier = -1;
+		SaveToCoSave();
 		logger::info("progression: attuned to rune tier {} (cost {} units)", runeTier, cost);
 		return 0;
 	}

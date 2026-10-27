@@ -167,6 +167,8 @@ namespace Runefall
 			PutI32(progress, value);
 		PutI32(progress, a_state.attributePoints);
 		PutI32(progress, a_state.skillPoints);
+		PutI32(progress, a_state.runeTier);
+		PutI32(progress, a_state.bossKillTier);
 		sections.push_back(BuildSection(kSectionProgression, progress));
 
 		std::vector<std::uint8_t> runes;
@@ -274,6 +276,11 @@ namespace Runefall
 						return false;
 				if (!sectionReader.I32(a_out.attributePoints) || !sectionReader.I32(a_out.skillPoints))
 					return false;
+				// Schema 1 saves lack these two fields; keep defaults when the payload ends here.
+				if (sectionReader.Remaining() >= 8) {
+					if (!sectionReader.I32(a_out.runeTier) || !sectionReader.I32(a_out.bossKillTier))
+						return false;
+				}
 				break;
 			case kSectionRunes:
 				for (auto& value : a_out.runes)
