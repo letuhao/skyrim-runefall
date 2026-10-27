@@ -20,6 +20,7 @@ namespace Runefall
 		bool         provisional = false;
 		std::vector<std::string> materialRefs;
 		std::string  lootTable;
+		std::string  dataVersion;
 	};
 
 	class RuntimeContentResolver
@@ -33,6 +34,8 @@ namespace Runefall
 		[[nodiscard]] std::size_t RoleCount() const noexcept { return roles.size(); }
 		[[nodiscard]] std::size_t RaceProfileCount() const noexcept { return raceProfiles.size(); }
 		[[nodiscard]] std::size_t CachedProfileCount() const noexcept { return cache.size(); }
+		void Rescan();
+		[[nodiscard]] std::string_view DataVersion() const noexcept { return dataVersion; }
 		[[nodiscard]] static SelfTestResult SelfTest();
 
 	private:
@@ -58,11 +61,14 @@ namespace Runefall
 		[[nodiscard]] std::string CachePath(std::string_view a_key) const;
 		[[nodiscard]] static std::string CacheKey(const RaceDescriptor& a_race);
 		bool WriteCache(const RuntimeRaceProfile& a_profile);
+		void RescanIfNeeded();
+		[[nodiscard]] std::string ComputeDataVersion() const;
 		[[nodiscard]] std::string ReadCache(std::string_view a_path) const;
 
 		std::unordered_map<std::string, RoleDef> roles;
 		std::unordered_map<std::string, RaceDef> raceProfiles;
 		std::unordered_map<std::string, RuntimeRaceProfile> cache;
 		bool loaded = false;
+		std::string dataVersion;
 	};
 }

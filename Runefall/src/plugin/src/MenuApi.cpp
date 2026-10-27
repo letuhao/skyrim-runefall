@@ -2,6 +2,7 @@
 
 #include "CoSave.h"
 #include "StageEngine.h"
+#include "RuntimeContentResolver.h"
 #include "HuntEngine.h"
 #include "ItemRegistry.h"
 #include "LootEngine.h"
@@ -152,6 +153,10 @@ namespace Runefall
 		out += ",\"cellsPruned\":" + std::to_string(LootService::Get().CellsPruned());
 		out += ",\"persistedContainers\":" + std::to_string(CoSave::Get().State().generatedContainers.size());
 		out += ",\"persistedQuests\":" + std::to_string(CoSave::Get().State().rewardedQuests.size()) + '}';
+		out += ",\"runtimeContent\":{\"roles\":" + std::to_string(RuntimeContentResolver::Get().RoleCount());
+		out += ",\"raceProfiles\":" + std::to_string(RuntimeContentResolver::Get().RaceProfileCount());
+		out += ",\"cachedProfiles\":" + std::to_string(RuntimeContentResolver::Get().CachedProfileCount());
+		out += ",\"dataVersion\":\"" + std::string{ RuntimeContentResolver::Get().DataVersion() } + "\"}";
 		out += ",\"probeFailures\":";
 		out += std::to_string(DebugHarness::LastFailures());
 		out += ",\"probeSummary\":\"" + DebugHarness::LastSummary() + "\"";

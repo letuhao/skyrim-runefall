@@ -3,7 +3,7 @@
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "F0.8",
-  "updatedAt": "2026-10-27T23:01:21.136Z",
+  "updatedAt": "2026-10-27T23:08:43.061Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -156,11 +156,21 @@
       "id": "F0.8",
       "layer": "L0",
       "slice": "Diagnostics and rescan",
-      "status": "PENDING",
+      "status": "IN_PROGRESS",
       "acceptance": "manual and automatic rescan work; no load spike",
       "depends": "F0.7",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/batch-test-20261028-060628.md",
+        "build/evidence/static-gates-20261028-060803.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "automatic-cache-invalidation": "PASS",
+        "manual-rescan-hotkey": "PASS",
+        "diagnostics-resolver-fields": "PASS",
+        "batch-rescan-check": "PASS",
+        "delayed-startup-scan": "PENDING (needs race registry scan path)"
+      }
     },
     "F0.9": {
       "id": "F0.9",
@@ -565,8 +575,8 @@
   },
   "currentWork": {
     "slice": "F0.8",
-    "step": "runtime cache lifecycle and settings rescan",
-    "nextAction": "add pack/version invalidation, manual rescan hook, delayed startup scan and diagnostics"
+    "step": "manual/automatic rescan and diagnostics done",
+    "nextAction": "add delayed startup scan hook (after cell load, configurable delay) and verify, then F0.9"
   },
   "blockers": [],
   "finalRelease": null

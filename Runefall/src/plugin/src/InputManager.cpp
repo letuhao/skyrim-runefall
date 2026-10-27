@@ -3,12 +3,14 @@
 #include "DebugHarness.h"
 #include "LootService.h"
 #include "MenuApi.h"
+#include "RuntimeContentResolver.h"
 
 namespace Runefall
 {
 	namespace
 	{
 		// DirectInput scan codes for the default debug/UI hotkeys.
+		constexpr std::uint32_t kKeyF6 = 0x40;
 		constexpr std::uint32_t kKeyF7 = 0x41;
 		constexpr std::uint32_t kKeyF8 = 0x42;
 		constexpr std::uint32_t kKeyF9 = 0x43;
@@ -31,7 +33,14 @@ namespace Runefall
 						continue;
 					const auto code = button->GetIDCode();
 					if (auto* tasks = SKSE::GetTaskInterface()) {
-						if (code == kKeyF7) {
+						if (code == kKeyF6) {
+							tasks->AddTask([]() {
+								RuntimeContentResolver::Get().Rescan();
+								logger::info("input: runtime content rescan requested");
+								if (auto* console = RE::ConsoleLog::GetSingleton())
+									console->Print("[Runefall] runtime content cache rescanned");
+							});
+						} else if (code == kKeyF7) {
 							tasks->AddTask([]() {
 								const auto diagnostics = MenuApi::BuildDiagnosticsJson();
 								logger::info("input: diagnostics {}", diagnostics);
@@ -96,7 +105,7 @@ namespace Runefall
 		}
 		deviceManager->AddEventSink<RE::InputEvent*>(&g_inputSink);
 		registered = true;
-		logger::info("input: hotkeys registered (F7 diagnostics, F8 rune debug, F9 quest debug, F10 snapshot, F11 probe, F12 probe item)");
+		logger::info("input: hotkeys registered (F6 runtime rescan, F7 diagnostics, F8 rune debug, F9 quest debug, F10 snapshot, F11 probe, F12 probe item)");
 	}
 
 	SelfTestResult InputManager::SelfTest()

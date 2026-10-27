@@ -102,6 +102,10 @@ namespace Runefall
 			raceProfiles[race.raceEditorId] = std::move(race);
 		}
 		loaded = !roles.empty() && !raceProfiles.empty() && roles.contains("rf:role/unknown");
+		if (loaded) {
+			dataVersion = ComputeDataVersion();
+			RescanIfNeeded();
+		}
 		if (!loaded)
 			logger::error("runtime-resolver: tables loaded but no roles/race profiles (or missing unknown role)");
 		else
@@ -163,6 +167,7 @@ namespace Runefall
 		file << "  \"provisional\": " << (a_profile.provisional ? "true" : "false") << ",\n";
 		file << "  \"generatorVersion\": \"0.1.0\",\n";
 		file << "  \"lootTable\": \"" << Escape(a_profile.lootTable) << "\",\n";
+		file << "  \"dataVersion\": \"" << Escape(a_profile.dataVersion) << "\",\n";
 		file << "  \"materialRefs\": [";
 		for (std::size_t i = 0; i < a_profile.materialRefs.size(); ++i) {
 			if (i > 0)
@@ -171,6 +176,49 @@ namespace Runefall
 		}
 		file << "]\n}\n";
 		return static_cast<bool>(file);
+	}
+
+	std::string RuntimeContentResolver::ComputeDataVersion() const
+	{
+		return std::format("roles={};races={};plugin=0.1.0", roles.size(), raceProfiles.size());
+	}
+
+	void RuntimeContentResolver::RescanIfNeeded()
+	{
+		const auto directory = DataStore::Get().DataDirectory().parent_path() / "runtime";
+		std::error_code error;
+		if (!fs::exists(directory, error))
+			return;
+		for (const auto& entry : fs::directory_iterator(directory, error)) {
+			if (error || !entry.is_regular_file())
+				continue;
+			const auto text = ReadCache(entry.path().string());
+			if (text.find(dataVersion) == std::string::npos) {
+				std::error_code removeError;
+				fs::remove(entry.path(), removeError);
+				if (!removeError)
+					logger::info("runtime-resolver: removed stale cache {}", entry.path().filename().string());
+			}
+		}
+	}
+
+	void RuntimeContentResolver::Rescan()
+	{
+		const auto directory = DataStore::Get().DataDirectory().parent_path() / "runtime";
+		std::error_code error;
+		std::size_t removed = 0;
+		if (fs::exists(directory, error)) {
+			for (const auto& entry : fs::directory_iterator(directory, error)) {
+				if (error || !entry.is_regular_file())
+					continue;
+				std::error_code removeError;
+				fs::remove(entry.path(), removeError);
+				if (!removeError)
+					++removed;
+			}
+		}
+		cache.clear();
+		logger::info("runtime-resolver: manual rescan removed {} cached profile(s), dataVersion={}", removed, dataVersion);
 	}
 
 	RuntimeRaceProfile RuntimeContentResolver::ResolveRace(const RaceDescriptor& a_race)
@@ -211,6 +259,7 @@ namespace Runefall
 			"rf:material/" + familySlug + "_core"
 		};
 		profile.lootTable = "rf:loot/" + familySlug + "_role";
+		profile.dataVersion = dataVersion;
 		if (!WriteCache(profile)) {
 			logger::error("runtime-resolver: failed to write cache for {}", key);
 		} else {
@@ -239,7 +288,7 @@ namespace Runefall
 		if (first.materialRefs.empty() || first.lootTable.empty())
 			return { "RuntimeContentResolver.SelfTest", CheckStatus::Fail, "unknown race generated no material/loot profile" };
 		const auto cacheText = resolver.ReadCache(resolver.CachePath(first.cacheKey));
-		if (cacheText.empty() || cacheText.find(first.cacheKey) == std::string::npos || cacheText.find("rf:role/unknown") == std::string::npos)
+		if (cacheText.empty() || cacheText.find(first.cacheKey) == std::string::npos || cacheText.find("rf:role/unknown") == std::string::npos || cacheText.find("dataVersion") == std::string::npos)
 			return { "RuntimeContentResolver.SelfTest", CheckStatus::Fail, "runtime JSON cache was not written/read" };
 
 		RaceDescriptor known;

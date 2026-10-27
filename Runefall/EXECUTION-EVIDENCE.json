@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-27T23:01:21.140Z",
+  "updatedAt": "2026-10-27T23:08:43.065Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -117,6 +117,20 @@
       "slice": "F0.7",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-060036.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "F0.8",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-060628.md",
+      "result": "PASS",
+      "detail": "21/21; F6 runtime rescan PASS; cache invalidation; no crash"
+    },
+    {
+      "slice": "F0.8",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-060803.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

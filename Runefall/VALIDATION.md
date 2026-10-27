@@ -903,3 +903,13 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Resolver self-test PASS; batch 21/21 self-tests, no crash: build/evidence/batch-test-20261028-055842.md.
 - Cache evidence: J:/SkyrimTest/1.6.1170/Data/Runefall/runtime (known + provisional profiles).
 - Static gates 9/9 PASS: build/evidence/static-gates-20261028-060036.md.
+
+
+## F0.8 partial - cache lifecycle/rescan (2026-10-28 06:00-06:08)
+
+- Runtime cache now carries dataVersion; stale cache files are removed automatically on load.
+- Manual rescan API + F6 hotkey; batch check "Runtime content rescan" PASS.
+- Diagnostics JSON includes runtimeContent roles/raceProfiles/cachedProfiles/dataVersion.
+- Batch 21/21 PASS, no crash: build/evidence/batch-test-20261028-060628.md.
+- Static gates 9/9 PASS: build/evidence/static-gates-20261028-060803.md.
+- PENDING: delayed startup scan (10 min) requires the race registry scan path; F0.8 not marked PASS yet.

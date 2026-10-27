@@ -161,7 +161,10 @@ if (-not $NoInputHotkeys) {
         }
         if (-not ($okF10 -and $okF11 -and $okF12)) { Start-Sleep -Seconds 2 }
     }
-    Add-Check 'F10 menu snapshot' $okF10 ''
+    $null = Tap-Key 64
+Start-Sleep -Milliseconds 700
+Add-Check 'Runtime content rescan' (Wait-LogPattern 'runtime-resolver: manual rescan removed' 10) ''
+Add-Check 'F10 menu snapshot' $okF10 ''
     Add-Check 'F11 selftest rerun' $okF11 ''
     Add-Check 'F12 probe path' $okF12 ''
 }
