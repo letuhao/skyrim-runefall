@@ -783,8 +783,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 
 
-## Rune Forge and Hunt Codex verified 2026-10-27 10:51
+## Final candidate verification 2026-10-27 10:53
 
-- Captured docs/media/menu-rune-forge.png (3 items tracked, 600 affixes, probe 18/18) and
-  docs/media/menu-hunt-codex.png (19 families, Draugr first-kill yes).
-- All four Runefall menu pages are now visually verified; no code change.
+- Current candidate re-verified after the last code changes: 21/21 PASS
+  (release-verify-20261027-105351.md).
+- DLL 1,020,928 B sha256 280DF266D433A24E9AED4CADB93F7772C40BA441DE70FA646D0B2B1FD511288E;
+  zip 494,606 B sha256 5956A8F7E76208FE9E39519D33DD2E95B4BB36829A58796741B654F25191B63E.
