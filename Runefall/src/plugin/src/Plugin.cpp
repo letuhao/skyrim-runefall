@@ -10,6 +10,7 @@
 #include "PapyrusBridge.h"
 #include "DataStore.h"
 #include "HookManager.h"
+#include "MaterialRegistry.h"
 #include "LootEngine.h"
 #include "TierEngine.h"
 #include "HuntEngine.h"
@@ -103,6 +104,7 @@ namespace
 			Runefall::MenuUI::Register();
 		// Data/engine tables are required by loot/hunt/tier even when probes are off.
 		Runefall::DataStore::Get().LoadAll(Runefall::RunefallDataDir());
+		Runefall::MaterialRegistry::Get().LoadDefinitions();
 		Runefall::LootEngine::Get().Reload();
 		Runefall::TierEngine::Get().Reload();
 		Runefall::HuntEngine::Get().Reload();

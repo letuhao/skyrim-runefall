@@ -92,6 +92,7 @@ else()
         src/MenuApi.cpp
         src/MenuUI.cpp
         src/HookManager.cpp
+        src/MaterialRegistry.cpp
         src/InputManager.cpp
         src/DebugHarness.cpp
         src/PapyrusBridge.cpp)

@@ -759,3 +759,12 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Static gates 5/5 PASS (static-gates-20261027-095443.md); batch 17/17 PASS, self-tests 18/18,
   no crash (batch-test-20261027-095528.md).
 - Artifact DLL 987648 B SHA-256 080F326CD4FDBD7C8909715DCC8DFBCA558139AD931F330663B14DC084ECCBCA; candidate zip 479500 B SHA-256 543B4E1D6116AC90293AADCC89F5599EF9D1264C6FB676617B2FC4C3C6E72108.
+
+## Material registry 2026-10-27 10:00
+
+- MaterialRegistry loads materials.csv definitions and persists per-material counts in co-save
+  section 5; RuneForge::Salvage now grants materials + runes and clears the item registry id.
+- MenuApi diagnostics report total materials. Co-save section is optional for old saves.
+- Static gates 5/5 PASS (static-gates-20261027-095948.md); batch 17/17 PASS, self-tests 18/18,
+  no crash (batch-test-20261027-100026.md).
+- Artifact DLL 996352 B SHA-256 D741EECE93297960B502DE5ECE2FD4B92EE212DDFBCF161D29CB587067A0EF3D; candidate zip 483303 B SHA-256 81C6FE74842B7DEA5A3A9C9DDDA57805F96D856093639E2BC2E5059DD362320A.

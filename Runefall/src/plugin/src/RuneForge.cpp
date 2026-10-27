@@ -2,6 +2,8 @@
 
 #include "CoSave.h"
 #include "LootEngine.h"
+#include "MaterialRegistry.h"
+#include "ItemRegistry.h"
 
 namespace Runefall
 {
@@ -90,6 +92,18 @@ namespace Runefall
 		const std::int32_t materials = 1 + a_item.rarity / 2 + a_item.ilvl / 20;
 		const std::int32_t runes = 10 + a_item.rarity * 5;
 		return { materials, runes };
+	}
+
+	ForgeResult RuneForge::Salvage(ItemMetadata& a_item)
+	{
+		const auto [materials, runes] = SalvageYield(a_item);
+		if (materials <= 0 || runes <= 0)
+			return { false, 7 };
+		MaterialRegistry::Get().AddDefaultForTier(a_item.rarity, materials);
+		AddRunes(1, runes);
+		a_item.registryId = 0;
+		logger::info("rune-forge: salvaged item for {} materials / {} runes", materials, runes);
+		return { true, 0 };
 	}
 
 	ForgeResult RuneForge::Reroll(ItemMetadata& a_item, std::int32_t a_lockedIndex, std::string_view a_slotGroup, Rng& a_rng)

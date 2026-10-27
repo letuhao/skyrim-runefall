@@ -2,6 +2,7 @@
 
 #include "ItemRegistry.h"
 #include "Progression.h"
+#include "MaterialRegistry.h"
 
 #include <cstring>
 #include <format>
@@ -16,6 +17,7 @@ namespace Runefall
 		constexpr std::uint16_t kSectionRunes = 2;
 		constexpr std::uint16_t kSectionItems = 3;
 		constexpr std::uint16_t kSectionHunt = 4;
+		constexpr std::uint16_t kSectionMaterials = 5;
 		constexpr std::uint16_t kSectionPackState = 7;
 		constexpr std::uint16_t kSectionConfigHash = 8;
 
@@ -209,6 +211,14 @@ namespace Runefall
 		}
 		sections.push_back(BuildSection(kSectionHunt, hunt));
 
+		std::vector<std::uint8_t> materials;
+		PutU32(materials, static_cast<std::uint32_t>(a_state.materials.size()));
+		for (const auto& [id, count] : a_state.materials) {
+			PutString(materials, id);
+			PutI32(materials, count);
+		}
+		sections.push_back(BuildSection(kSectionMaterials, materials));
+
 		std::vector<std::uint8_t> packs;
 		PutU32(packs, static_cast<std::uint32_t>(a_state.packVersions.size()));
 		for (const auto& [id, version] : a_state.packVersions) {
@@ -287,6 +297,19 @@ namespace Runefall
 					if (!sectionReader.I32(value))
 						return false;
 				break;
+			case kSectionMaterials: {
+				std::uint32_t count = 0;
+				if (!sectionReader.U32(count) || count > 1000)
+					return false;
+				for (std::uint32_t i = 0; i < count; ++i) {
+					std::string id;
+					std::int32_t value = 0;
+					if (!sectionReader.String(id) || id.size() > 128 || !sectionReader.I32(value))
+						return false;
+					a_out.materials[id] = value;
+				}
+				break;
+			}
 			case kSectionItems: {
 				std::uint32_t count = 0;
 				if (!sectionReader.U32(count) || count > 100000)
@@ -362,6 +385,7 @@ namespace Runefall
 			return;
 		auto& state = CoSave::Get().State();
 		Progression::Get().SaveToCoSave();
+		MaterialRegistry::Get().SaveToCoSave();
 		state.items = ItemRegistry::Get().All();
 		state.configHash = HashConfig();
 		const auto bytes = Encode(state);
@@ -404,6 +428,7 @@ namespace Runefall
 			if (Decode(payload, CoSave::Get().State())) {
 				ItemRegistry::Get().Load(CoSave::Get().State().items);
 				Progression::Get().LoadFromCoSave();
+				MaterialRegistry::Get().LoadFromCoSave();
 				logger::info("co-save: loaded schema {} ({} bytes, {} item entries)", version, payload.size(), CoSave::Get().State().items.size());
 			} else {
 				logger::error("co-save: malformed section payload, state reset");

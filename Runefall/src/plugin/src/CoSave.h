@@ -13,6 +13,7 @@ namespace Runefall
 		std::int32_t                bossKillTier = -1;
 		std::array<std::int32_t, 5> runes{};
 		std::unordered_map<std::string, std::uint8_t> huntFirstKill;
+		std::unordered_map<std::string, std::int32_t> materials;
 		std::unordered_map<std::string, std::string>  packVersions;
 		std::vector<ItemMetadata>                     items;
 		std::uint32_t                                 configHash = 0;

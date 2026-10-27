@@ -2,6 +2,7 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- MaterialRegistry + co-save material counts; RuneForge salvage grants materials/runes.
 - Strings: 250+ localization keys, DataStore::GetString consumer, MenuApi diagnostics count.
 - HookManager: read-only container/menu/cell/object event sinks with diagnostics counters;
   no mutation in dispatch. Batch verified.

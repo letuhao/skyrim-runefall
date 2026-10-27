@@ -10,6 +10,7 @@
 #include "Config.h"
 #include "DataStore.h"
 #include "HookManager.h"
+#include "MaterialRegistry.h"
 
 namespace Runefall
 {
