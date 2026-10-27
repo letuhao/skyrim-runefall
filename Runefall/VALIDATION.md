@@ -740,3 +740,13 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
   5 affix categories each >=20 rows, >=11 slot tokens, 59 distinct unique IDs, 18 skills.
 - Generator RESULT PASS; static gates 5/5 PASS (static-gates-20261027-094402.md).
 - Artifact DLL 979968 B SHA-256 DFBB943E68F96C4DCC532BB7B1F8B01614F0F0B27DA269C29AAF5B518C236E89; candidate zip 475969 B SHA-256 302F033374AA89D61483E243F27638FE205489F132ACE9AE02B5222FB388A3D4.
+
+## Read-only hook manager 2026-10-27 09:50
+
+- Added HookManager with read-only event sinks for container changes, menu open/close, cell fully
+  loaded, and object loaded. Sinks only count events and emit bounded debug logs; no game
+  mutation happens in dispatch.
+- Registered at kDataLoaded; MenuApi diagnostics expose the four counters.
+- Static gates 5/5 PASS (static-gates-20261027-095004.md); batch 17/17 PASS, self-tests 18/18,
+  no crash (batch-test-20261027-095042.md).
+- Artifact DLL 987648 B SHA-256 9B1875026CAD7495C041B2CDCFBDD82D24C6304BBDCB0B011940535DB26E5979; candidate zip 477977 B SHA-256 FF81DFB4713B2BB5665997FBC7230180FEFE175EAC5A806EF34648323388CB25.

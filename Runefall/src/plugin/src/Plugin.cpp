@@ -9,6 +9,7 @@
 #include "DynamicEnchantment.h"
 #include "PapyrusBridge.h"
 #include "DataStore.h"
+#include "HookManager.h"
 #include "LootEngine.h"
 #include "TierEngine.h"
 #include "HuntEngine.h"
@@ -93,6 +94,7 @@ namespace
 	{
 		logger::info("Runefall data loaded: bootstrap complete, API {}", Runefall::kApiVersion);
 		Runefall::DynamicEnchantment::SetGameplayReady(false);
+		Runefall::HookManager::Get().Register();
 		if (Runefall::Config::Get().EnableLootHooks())
 			Runefall::LootService::Get().RegisterHooks();
 		if (Runefall::Config::Get().EnableInput())

@@ -9,6 +9,7 @@
 #include "DebugHarness.h"
 #include "Config.h"
 #include "DataStore.h"
+#include "HookManager.h"
 
 namespace Runefall
 {
@@ -97,6 +98,11 @@ namespace Runefall
 		out += cfg.EnableCoSave() ? "true" : "false";
 		out += ",\"attributeEffects\":";
 		out += std::to_string(Progression::Get().AttributeEffectCount());
+		out += ",\"hookEvents\":{\"container\":";
+		out += std::to_string(HookManager::Get().ContainerEvents());
+		out += ",\"menu\":" + std::to_string(HookManager::Get().MenuEvents());
+		out += ",\"cell\":" + std::to_string(HookManager::Get().CellEvents());
+		out += ",\"object\":" + std::to_string(HookManager::Get().ObjectEvents()) + '}';
 		out += ",\"probeFailures\":";
 		out += std::to_string(DebugHarness::LastFailures());
 		out += ",\"probeSummary\":\"" + DebugHarness::LastSummary() + "\"";

@@ -91,6 +91,7 @@ else()
         src/LootService.cpp
         src/MenuApi.cpp
         src/MenuUI.cpp
+        src/HookManager.cpp
         src/InputManager.cpp
         src/DebugHarness.cpp
         src/PapyrusBridge.cpp)
