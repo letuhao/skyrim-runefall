@@ -126,8 +126,10 @@ else()
     target_compile_definitions(RunefallStage PRIVATE RUNEFALL_STAGE)
 
     # Standalone host-side ladder data test/benchmark (no RE/SKSE).
-    add_executable(RunefallLadderHost EXCLUDE_FROM_ALL tests/ladder_host.cpp)
-    target_compile_features(RunefallLadderHost PRIVATE cxx_std_23)
+    find_package(nlohmann_json CONFIG REQUIRED)
+    add_executable(RunefallCoreHost EXCLUDE_FROM_ALL tests/ladder_host.cpp)
+    target_compile_features(RunefallCoreHost PRIVATE cxx_std_23)
+    target_link_libraries(RunefallCoreHost PRIVATE nlohmann_json::nlohmann_json)
 
     source_group("Resources" FILES "${CMAKE_CURRENT_BINARY_DIR}/src/version.rc")
 

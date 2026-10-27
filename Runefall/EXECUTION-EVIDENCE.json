@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-27T22:33:46.802Z",
+  "updatedAt": "2026-10-27T22:43:34.000Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -84,6 +84,20 @@
       "path": "build/evidence/batch-test-20261028-053201.md",
       "result": "PASS",
       "detail": "schema1 migrated to v3; schema3 round-trip; 1939 bytes"
+    },
+    {
+      "slice": "F0.6",
+      "kind": "host-test",
+      "path": "src/plugin/build/msvc/RunefallCoreHost.exe",
+      "result": "PASS",
+      "detail": "JSON 100 stages; 0 allocations; 1.53 ns lookup"
+    },
+    {
+      "slice": "F0.6",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-054252.md",
+      "result": "PASS",
+      "detail": "9/9 gates including host core"
     }
   ]
 }

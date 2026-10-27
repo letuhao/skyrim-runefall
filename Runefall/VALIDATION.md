@@ -884,3 +884,11 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - In-game batch PASS 20/20, stage ladder loaded, no crash: build/evidence/batch-test-20261028-053201.md.
 - Co-save v3 loaded a schema-1 save, migrated runeTier to player rank/stage, wrote schema 3,
   reloaded 5 item entries; 1939 bytes. Truncation rejection covered by CoSave.SelfTest.
+
+
+## F0.6 host core tests (2026-10-28 05:38-05:42)
+
+- RunefallCoreHost target reads the runtime JSON tables, validates 100 stages/tier formulas and
+  tier/band/curve/legacy counts, measures 10M lookups with a zero-allocation gate.
+- Host result: PASS, 0 allocations, 1.53 ns/lookup.
+- Static gates 9/9 PASS: build/evidence/static-gates-20261028-054252.md.

@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "F0.6",
-  "updatedAt": "2026-10-27T22:33:46.798Z",
+  "currentSlice": "F0.7",
+  "updatedAt": "2026-10-27T22:43:33.995Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -114,11 +114,20 @@
       "id": "F0.6",
       "layer": "L0",
       "slice": "Host core and tests",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "host CI PASS; load/lookup budgets measured",
       "depends": "F0.3-F0.5",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/static-gates-20261028-054252.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "host-core-target": "PASS",
+        "json-data-test": "PASS",
+        "zero-allocation": "PASS",
+        "lookup-benchmark": "PASS 1.53ns",
+        "static-gate": "PASS"
+      }
     },
     "F0.7": {
       "id": "F0.7",
@@ -542,9 +551,9 @@
     }
   },
   "currentWork": {
-    "slice": "F0.6",
-    "step": "host core tests and benchmarks",
-    "nextAction": "extend host test to cover schema/table validation and add allocation/no-allocation check; wire host target into static gates"
+    "slice": "F0.7",
+    "step": "runtime content resolver",
+    "nextAction": "implement role/race fallback resolver and runtime JSON cache under Data/Runefall/runtime"
   },
   "blockers": [],
   "finalRelease": null
