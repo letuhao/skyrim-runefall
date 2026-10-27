@@ -56,6 +56,7 @@ namespace Runefall
 		[[nodiscard]] bool EnsureContainerLoot(RE::TESObjectREFR* a_ref);
 		void               EnsureActorRank(RE::Actor* a_actor);
 		[[nodiscard]] std::int32_t ResolveActorRank(RE::Actor* a_actor);
+		[[nodiscard]] std::uint8_t ResolveActorStage(RE::Actor* a_actor);
 		[[nodiscard]] bool GrantLootItem(
 			RE::TESObjectREFR* a_owner,
 			std::int32_t       a_rank,
@@ -75,6 +76,7 @@ namespace Runefall
 
 		std::unordered_set<RE::FormID>         processedActors;
 		std::unordered_map<RE::FormID, std::int32_t> actorRanks;
+		std::unordered_map<RE::FormID, std::uint8_t> actorStages;
 		std::unordered_map<RE::FormID, std::uint32_t> cellLootCounts;
 		bool                                   hooksRegistered = false;
 

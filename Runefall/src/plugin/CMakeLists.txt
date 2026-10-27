@@ -125,6 +125,10 @@ else()
         USE_ADDRESS_LIBRARY)
     target_compile_definitions(RunefallStage PRIVATE RUNEFALL_STAGE)
 
+    # Standalone host-side ladder data test/benchmark (no RE/SKSE).
+    add_executable(RunefallLadderHost EXCLUDE_FROM_ALL tests/ladder_host.cpp)
+    target_compile_features(RunefallLadderHost PRIVATE cxx_std_23)
+
     source_group("Resources" FILES "${CMAKE_CURRENT_BINARY_DIR}/src/version.rc")
 
     # Optional SKSE Menu Framework integration via the fixed dynamic header.

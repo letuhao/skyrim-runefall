@@ -35,7 +35,7 @@ Build Runefall for Skyrim SE/AE 1.6.1170 from the current POC to a complete rele
 
 | ID | Layer | Slice | Output | Acceptance | Depends |
 |---|---|---|---|---|---|
-| F0.1 | L0 | Ladder audit fixes (first slice) | fix difficulty default, full RequestStage ABI, curve/legacy load, validation, wire to loot/rank, co-save v3 ladder state, retire old tier keywords, generator validator, host tests/bench | audit blockers closed, 20+ self-tests, batch PASS, no dual system, no crash | current |
+| F0.1 | L0 | Ladder audit fixes (first slice) | fix difficulty default, full RequestStage ABI, curve/legacy load, validation, actor-stage loot bridge, co-save v3 ladder state, retire old tier keywords, generator validator, host data/benchmark | audit blockers closed, 20+ self-tests, batch PASS, stage drives actor loot ilvl, no crash; legacy rank tables remain a documented shim until A3.1 | current |
 | F0.2 | L0 | Freeze JSON schema | one JSON Schema per entity; pack manifest; versioning; examples | all current content represented; schema validation passes; no CSV authoring | F0.1 |
 | F0.3 | L0 | JSON content pipeline | generator CLI validate/build/preview; JSON to ESP/data/manifest; deterministic IDs | base pack builds from JSON; invalid pack fails with path/line | F0.2 |
 | F0.4 | L0 | JSON runtime loader | DataStore JSON reader; table registry; schema version checks; no CSV code path | runtime loads JSON; missing/corrupt table fails closed | F0.3 |

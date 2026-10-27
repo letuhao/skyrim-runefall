@@ -12,6 +12,7 @@
 #include "Progression.h"
 #include "RuneForge.h"
 #include "TierEngine.h"
+#include "StageEngine.h"
 
 #include "RE/C/ContainerMenu.h"
 
@@ -355,6 +356,25 @@ namespace Runefall
 		logger::info("actor: rank {} buff applied to {:08X}", rank, formID);
 	}
 
+	std::uint8_t LootService::ResolveActorStage(RE::Actor* a_actor)
+	{
+		if (!a_actor)
+			return 1;
+		const auto formID = a_actor->GetFormID();
+		if (const auto it = actorStages.find(formID); it != actorStages.end())
+			return it->second;
+		const auto rfTier = (std::clamp)(Progression::Get().RuneTier(), 0, 5);
+		StageRequest request;
+		request.source = StageSource::WorldBand;
+		request.band = static_cast<std::uint8_t>((std::clamp)(1 + rfTier * 15, 1, 100));
+		request.seed = static_cast<std::uint64_t>(formID);
+		request.difficultyProfile = 255;
+		const auto profile = StageEngine::Get().RequestStage(request);
+		const auto stage = (profile.flags & kStageProfileRejected) ? static_cast<std::uint8_t>(1) : profile.stage;
+		actorStages[formID] = stage;
+		return stage;
+	}
+
 	std::int32_t LootService::ResolveActorRank(RE::Actor* a_actor)
 	{
 		if (!a_actor)
@@ -626,6 +646,7 @@ namespace Runefall
 		const auto seed = static_cast<std::uint64_t>(a_actor->GetFormID()) ^ (static_cast<std::uint64_t>(std::time(nullptr)) << 32);
 		Rng        rng(seed);
 		const auto rank = ResolveActorRank(a_actor);
+		const auto stage = ResolveActorStage(a_actor);
 		if (rank >= 4)
 			Progression::Get().MarkBossKill(rfTier);
 		auto* base = PickBaseObject(rng);
@@ -645,7 +666,7 @@ namespace Runefall
 
 		std::optional<ItemMetadata> metadata;
 		for (int attempt = 0; attempt < 16; ++attempt) {
-			metadata = LootEngine::Get().Generate(rank, rfTier, 10 + rfTier * 10, tags, "WEAPON", rng);
+			metadata = LootEngine::Get().Generate(rank, rfTier, stage, tags, "WEAPON", rng);
 			if (metadata && metadata->enhancementCount > 0)
 				break;
 		}
