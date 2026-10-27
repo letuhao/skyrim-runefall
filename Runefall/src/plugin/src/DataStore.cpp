@@ -49,89 +49,55 @@ namespace Runefall
 		return kExpectedTables;
 	}
 
-	bool DataStore::ParseCsvFile(const fs::path& a_path, CsvTable& a_out)
+	bool DataStore::ParseJsonFile(const fs::path& a_path, CsvTable& a_out)
 	{
-		std::ifstream file{ a_path, std::ios::binary };
-		if (!file.is_open()) {
-			a_out.error = "cannot open";
-			return false;
-		}
-
-		std::vector<std::vector<std::string>> records;
-		std::vector<std::string>              currentRecord;
-		std::string                           currentField;
-		bool                                  inQuotes = false;
-		char                                  c;
-
-		while (file.get(c)) {
-			if (inQuotes) {
-				if (c == '"') {
-					if (file.peek() == '"') {
-						file.get(c);
-						currentField.push_back('"');
-					} else {
-						inQuotes = false;
-					}
-				} else {
-					currentField.push_back(c);
-				}
-				continue;
-			}
-
-			switch (c) {
-			case '"':
-				inQuotes = true;
-				break;
-			case ',':
-				currentRecord.emplace_back(std::move(currentField));
-				currentField.clear();
-				break;
-			case '\r':
-				break;
-			case '\n':
-				currentRecord.emplace_back(std::move(currentField));
-				currentField.clear();
-				records.emplace_back(std::move(currentRecord));
-				currentRecord.clear();
-				break;
-			default:
-				currentField.push_back(c);
-				break;
-			}
-		}
-		if (inQuotes) {
-			a_out.error = "unterminated quoted field";
-			return false;
-		}
-		if (!currentField.empty() || !currentRecord.empty()) {
-			currentRecord.emplace_back(std::move(currentField));
-			records.emplace_back(std::move(currentRecord));
-		}
-
-		if (records.empty()) {
-			a_out.error = "empty file";
-			return false;
-		}
-
-		for (auto& header : records.front())
-			header = std::string{ Trim(header) };
-		if (records.front().empty() || records.front().front().empty()) {
-			a_out.error = "empty header";
-			return false;
-		}
-
-		a_out.headers = records.front();
-		for (std::size_t i = 1; i < records.size(); ++i) {
-			auto& row = records[i];
-			if (row.empty() || (row.size() == 1 && row.front().empty()))
-				continue;
-			if (row.size() != a_out.headers.size()) {
-				a_out.error = std::format("row {} has {} fields, expected {}", i + 1, row.size(), a_out.headers.size());
+		try {
+			std::ifstream file{ a_path };
+			if (!file)
+				return false;
+			auto json = nlohmann::json::parse(file);
+			if (!json.is_object())
+				return false;
+			if (json.value("schemaVersion", 0) != 1) {
+				a_out.error = "unsupported JSON table schemaVersion";
 				return false;
 			}
-			a_out.rows.emplace_back(std::move(row));
+			const auto columns = json.find("columns");
+			const auto rows = json.find("rows");
+			if (columns == json.end() || !columns->is_array() || rows == json.end() || !rows->is_array())
+				return false;
+			for (const auto& column : *columns) {
+				if (!column.is_string())
+					return false;
+				a_out.headers.push_back(column.get<std::string>());
+			}
+			for (const auto& row : *rows) {
+				if (!row.is_object())
+					return false;
+				std::vector<std::string> values;
+				values.reserve(a_out.headers.size());
+				for (const auto& header : a_out.headers) {
+					const auto value = row.find(header);
+					if (value == row.end())
+						return false;
+					if (value->is_string())
+						values.push_back(value->get<std::string>());
+					else if (value->is_boolean())
+						values.push_back(value->get<bool>() ? "1" : "0");
+					else if (value->is_number())
+						values.push_back(value->dump());
+					else if (value->is_null())
+						values.push_back({});
+					else
+						return false;
+				}
+				a_out.rows.push_back(std::move(values));
+			}
+			return true;
+		} catch (const std::exception& e) {
+			a_out.error = std::string{ "json: " } + e.what();
+			return false;
 		}
-		return true;
 	}
 
 	SelfTestResult DataStore::LoadAll(const fs::path& a_dataDir)
@@ -159,11 +125,12 @@ namespace Runefall
 		for (const auto& name : kExpectedTables) {
 			CsvTable table;
 			table.name = name;
-			const auto path = a_dataDir / name;
-			if (!fs::exists(path)) {
-				missing.emplace_back(name);
-			} else if (!ParseCsvFile(path, table)) {
-				malformed.emplace_back(name + ": " + table.error);
+			auto jsonPath = a_dataDir / name;
+			jsonPath.replace_extension(".json");
+			if (!fs::exists(jsonPath)) {
+				missing.emplace_back(jsonPath.filename().string());
+			} else if (!ParseJsonFile(jsonPath, table)) {
+				malformed.emplace_back(jsonPath.filename().string() + ": " + table.error);
 			} else {
 				table.loaded = true;
 			}

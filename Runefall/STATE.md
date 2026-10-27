@@ -89,7 +89,8 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
   F0.1 PASS. F0.2 PASS: 28 JSON schemas, base pack 7 entities, validator and static gate.
 - F0.3 PASS: generator reads JSON pack, validates entity files, rejects invalid packs with paths,
   emits runtime tables/ESP; static gates 8/8 and batch 20/20.
-- Next: F0.4 JSON DataStore (replace transitional CSV reader).
+- F0.4 PASS: DataStore reads runtime JSON only; F0.5 PASS: co-save v3 migration verified in-game.
+- Next: F0.6 host core tests/benchmarks and static-gate wiring.
 
 ## Next step
 

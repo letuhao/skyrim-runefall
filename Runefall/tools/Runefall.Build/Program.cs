@@ -45,6 +45,7 @@ internal static class Program
 
         var plugins = PluginFactory.Create(content, dataDir);
         WriteFormIds(plugins, runefallData);
+        RuntimeJson.WriteAll(runefallData);
         var ladderErrors = LadderContent.Validate(runefallData);
         if (ladderErrors.Count > 0)
         {

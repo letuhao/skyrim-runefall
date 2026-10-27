@@ -31,7 +31,7 @@ namespace Runefall
 		[[nodiscard]] static const std::vector<std::string>& ExpectedTables();
 
 	private:
-		static bool ParseCsvFile(const fs::path& a_path, CsvTable& a_out);
+		static bool ParseJsonFile(const fs::path& a_path, CsvTable& a_out);
 
 		std::unordered_map<std::string, CsvTable> tables;
 		fs::path                                  dataDir;

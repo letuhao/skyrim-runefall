@@ -874,3 +874,13 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Static gates 8/8 PASS: build/evidence/static-gates-20261028-052338.md.
 - In-game batch PASS 20/20, no crash: build/evidence/batch-test-20261028-052420.md.
 - Runtime DataStore still reads transitional CSV; F0.4 replaces this with JSON.
+
+
+## F0.4 JSON runtime loader / F0.5 co-save v3 (2026-10-28 05:28-05:32)
+
+- Generator writes runtime JSON for every table; DataStore now parses JSON only and the CSV parser
+  was removed from the runtime code path.
+- Static gates 8/8 PASS: build/evidence/static-gates-20261028-053119.md.
+- In-game batch PASS 20/20, stage ladder loaded, no crash: build/evidence/batch-test-20261028-053201.md.
+- Co-save v3 loaded a schema-1 save, migrated runeTier to player rank/stage, wrote schema 3,
+  reloaded 5 item entries; 1939 bytes. Truncation rejection covered by CoSave.SelfTest.

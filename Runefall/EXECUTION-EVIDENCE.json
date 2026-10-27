@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-27T22:25:55.755Z",
+  "updatedAt": "2026-10-27T22:33:46.802Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -63,6 +63,27 @@
       "path": "build/evidence/batch-test-20261028-052420.md",
       "result": "PASS",
       "detail": "20/20 self-tests, JSON-generated tables, no crash"
+    },
+    {
+      "slice": "F0.4",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-053119.md",
+      "result": "PASS",
+      "detail": "8/8; runtime JSON tables generated"
+    },
+    {
+      "slice": "F0.4",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-053201.md",
+      "result": "PASS",
+      "detail": "20/20; JSON-only DataStore; no crash"
+    },
+    {
+      "slice": "F0.5",
+      "kind": "migration",
+      "path": "build/evidence/batch-test-20261028-053201.md",
+      "result": "PASS",
+      "detail": "schema1 migrated to v3; schema3 round-trip; 1939 bytes"
     }
   ]
 }

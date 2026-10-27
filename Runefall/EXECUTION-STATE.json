@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "F0.4",
-  "updatedAt": "2026-10-27T22:25:55.752Z",
+  "currentSlice": "F0.6",
+  "updatedAt": "2026-10-27T22:33:46.798Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -76,21 +76,39 @@
       "id": "F0.4",
       "layer": "L0",
       "slice": "JSON runtime loader",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "runtime loads JSON; missing/corrupt table fails closed",
       "depends": "F0.3",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/static-gates-20261028-053119.md",
+        "build/evidence/batch-test-20261028-053201.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "runtime-json-loader": "PASS",
+        "csv-parser-removed": "PASS",
+        "json-generation": "PASS",
+        "batch": "PASS",
+        "static-gates": "PASS"
+      }
     },
     "F0.5": {
       "id": "F0.5",
       "layer": "L0",
       "slice": "Co-save v3",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "old save loads; corruption rejected; save size budget",
       "depends": "F0.4",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/batch-test-20261028-053201.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "section-11": "PASS",
+        "v2-to-v3-migration": "PASS (schema1 observed)",
+        "truncation-test": "PASS",
+        "save-size": "1939 bytes observed"
+      }
     },
     "F0.6": {
       "id": "F0.6",
@@ -524,9 +542,9 @@
     }
   },
   "currentWork": {
-    "slice": "F0.4",
-    "step": "JSON runtime loader",
-    "nextAction": "replace DataStore CSV reader with JSON pack reader while preserving 27-table API and batch checks"
+    "slice": "F0.6",
+    "step": "host core tests and benchmarks",
+    "nextAction": "extend host test to cover schema/table validation and add allocation/no-allocation check; wire host target into static gates"
   },
   "blockers": [],
   "finalRelease": null
