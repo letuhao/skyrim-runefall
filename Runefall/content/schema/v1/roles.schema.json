@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "roles.schema.json",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "roles"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "roles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "$id": "role.schema.json",
+        "title": "Role",
+        "type": "object",
+        "required": [
+          "schemaVersion",
+          "key",
+          "tags"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "key": {
+            "$ref": "common.schema.json#/$defs/contentKey"
+          },
+          "parentRole": {
+            "type": "string"
+          },
+          "tags": {
+            "$ref": "common.schema.json#/$defs/tagList"
+          },
+          "defaultFamily": {
+            "type": "string"
+          },
+          "hostPolicy": {
+            "enum": [
+              "host",
+              "anomaly",
+              "provisional",
+              "exclude"
+            ]
+          },
+          "protectionPolicy": {
+            "enum": [
+              "host",
+              "anomaly",
+              "none"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": true
+      }
+    }
+  }
+}

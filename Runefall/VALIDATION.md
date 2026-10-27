@@ -892,3 +892,14 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
   tier/band/curve/legacy counts, measures 10M lookups with a zero-allocation gate.
 - Host result: PASS, 0 allocations, 1.53 ns/lookup.
 - Static gates 9/9 PASS: build/evidence/static-gates-20261028-054252.md.
+
+
+## F0.7 runtime content resolver (2026-10-28 05:45-06:00)
+
+- Added data-driven roles (15) and race profiles (19) to the base JSON pack; generator emits
+  roles.csv/race_profiles.csv and runtime JSON.
+- RuntimeContentResolver loads roles/profiles, resolves unknown races to provisional Unknown role,
+  known NordRace to humanoid, and writes versioned JSON cache under Data/Runefall/runtime.
+- Resolver self-test PASS; batch 21/21 self-tests, no crash: build/evidence/batch-test-20261028-055842.md.
+- Cache evidence: J:/SkyrimTest/1.6.1170/Data/Runefall/runtime (known + provisional profiles).
+- Static gates 9/9 PASS: build/evidence/static-gates-20261028-060036.md.

@@ -4,6 +4,7 @@
 #include "DataStore.h"
 #include "FormCatalog.h"
 #include "StageEngine.h"
+#include "RuntimeContentResolver.h"
 #include "FormResolver.h"
 #include "ItemRegistry.h"
 #include "HuntEngine.h"
@@ -71,9 +72,11 @@ namespace Runefall
 		results.push_back(DataStore::Get().LoadAll(RunefallDataDir()));
 		FormCatalog::Get().Load();
 		StageEngine::Get().Load();
+		RuntimeContentResolver::Get().Load();
 		results.push_back(DataStore::Get().SelfTest());
 		results.push_back(FormCatalog::SelfTest());
 		results.push_back(StageEngine::SelfTest());
+		results.push_back(RuntimeContentResolver::SelfTest());
 		LootEngine::Get().Reload();
 		TierEngine::Get().Reload();
 		HuntEngine::Get().Reload();

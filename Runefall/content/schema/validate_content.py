@@ -17,6 +17,8 @@ ENTITY_SCHEMA = {
     "assignmentRules": "assignment-rules.schema.json",
     "contentBands": "content-bands.schema.json",
     "legacyTierMap": "legacy-tier-map.schema.json",
+    "roles": "roles.schema.json",
+    "raceProfiles": "race-profiles.schema.json",
 }
 
 def load(path: Path):

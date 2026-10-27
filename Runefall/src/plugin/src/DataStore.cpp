@@ -35,6 +35,8 @@ namespace Runefall
 			"stage_assignment_rules.csv",
 			"stage_content_bands.csv",
 			"legacy_rf_tier_map.csv",
+			"roles.csv",
+			"race_profiles.csv",
 		};
 	}
 

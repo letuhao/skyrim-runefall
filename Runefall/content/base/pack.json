@@ -32,6 +32,14 @@
     {
       "entity": "legacyTierMap",
       "file": "data/legacy_rf_tier_map.json"
+    },
+    {
+      "entity": "roles",
+      "file": "data/roles.json"
+    },
+    {
+      "entity": "raceProfiles",
+      "file": "data/race_profiles.json"
     }
   ],
   "localization": []

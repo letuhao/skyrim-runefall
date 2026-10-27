@@ -11,6 +11,7 @@
 #include "DataStore.h"
 #include "FormCatalog.h"
 #include "StageEngine.h"
+#include "RuntimeContentResolver.h"
 #include "HookManager.h"
 #include "MaterialRegistry.h"
 #include "RuneForge.h"
@@ -109,6 +110,7 @@ namespace
 		Runefall::DataStore::Get().LoadAll(Runefall::RunefallDataDir());
 		Runefall::FormCatalog::Get().Load();
 		Runefall::StageEngine::Get().Load();
+		Runefall::RuntimeContentResolver::Get().Load();
 		Runefall::MaterialRegistry::Get().LoadDefinitions();
 		Runefall::RuneForge::Get().ReloadSocketRecipes();
 		Runefall::LootEngine::Get().Reload();

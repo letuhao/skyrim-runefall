@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "F0.7",
-  "updatedAt": "2026-10-27T22:43:33.995Z",
+  "currentSlice": "F0.8",
+  "updatedAt": "2026-10-27T23:01:21.136Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -133,11 +133,24 @@
       "id": "F0.7",
       "layer": "L0",
       "slice": "Runtime content resolver",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "unknown race resolves; repeatable; cache reload; no crash",
       "depends": "F0.4/F0.6",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/batch-test-20261028-055842.md",
+        "build/evidence/static-gates-20261028-060036.md",
+        "J:/SkyrimTest/1.6.1170/Data/Runefall/runtime"
+      ],
+      "notes": "",
+      "checklist": {
+        "roles": "PASS 15",
+        "race-profiles": "PASS 19",
+        "unknown-provisional": "PASS",
+        "known-humanoid": "PASS",
+        "cache-write-read": "PASS",
+        "self-test": "PASS 21/21",
+        "static-gates": "PASS"
+      }
     },
     "F0.8": {
       "id": "F0.8",
@@ -551,9 +564,9 @@
     }
   },
   "currentWork": {
-    "slice": "F0.7",
-    "step": "runtime content resolver",
-    "nextAction": "implement role/race fallback resolver and runtime JSON cache under Data/Runefall/runtime"
+    "slice": "F0.8",
+    "step": "runtime cache lifecycle and settings rescan",
+    "nextAction": "add pack/version invalidation, manual rescan hook, delayed startup scan and diagnostics"
   },
   "blockers": [],
   "finalRelease": null

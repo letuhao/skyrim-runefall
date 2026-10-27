@@ -46,6 +46,16 @@ internal static class LadderContent
         "rfTier", "stageMin", "stageMax", "playerRankStage", "notes"
     };
 
+    public static readonly string[] RoleColumns =
+    {
+        "roleKey", "parentRole", "tags", "hostPolicy", "protectionPolicy"
+    };
+
+    public static readonly string[] RaceProfileColumns =
+    {
+        "profileKey", "raceEditorId", "roles", "family", "priority"
+    };
+
     public static void WriteAll(string dir)
     {
         Directory.CreateDirectory(dir);
@@ -199,6 +209,8 @@ internal static class LadderContent
         WriteCsv(dir, "stage_assignment_rules.csv", AssignmentColumns, pack.AssignmentRows);
         WriteCsv(dir, "stage_content_bands.csv", ContentBandColumns, pack.ContentBandRows);
         WriteCsv(dir, "legacy_rf_tier_map.csv", LegacyTierColumns, pack.LegacyTierRows);
+        WriteCsv(dir, "roles.csv", RoleColumns, pack.RoleRows);
+        WriteCsv(dir, "race_profiles.csv", RaceProfileColumns, pack.RaceProfileRows);
         return errors;
     }
 

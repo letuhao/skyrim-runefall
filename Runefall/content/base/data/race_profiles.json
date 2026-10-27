@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "profiles": [
+    {
+      "key": "rf:raceprofile/nord",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "NordRace"
+      },
+      "roles": [
+        "humanoid"
+      ],
+      "family": "humanoid",
+      "priority": 100,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/imperial",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "ImperialRace"
+      },
+      "roles": [
+        "humanoid"
+      ],
+      "family": "humanoid",
+      "priority": 99,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/breton",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "BretonRace"
+      },
+      "roles": [
+        "humanoid"
+      ],
+      "family": "humanoid",
+      "priority": 98,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/redguard",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "RedguardRace"
+      },
+      "roles": [
+        "humanoid"
+      ],
+      "family": "humanoid",
+      "priority": 97,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/altmer",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "HighElfRace"
+      },
+      "roles": [
+        "humanoid"
+      ],
+      "family": "humanoid",
+      "priority": 96,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/bosmer",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "WoodElfRace"
+      },
+      "roles": [
+        "humanoid"
+      ],
+      "family": "humanoid",
+      "priority": 95,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/dunmer",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "DarkElfRace"
+      },
+      "roles": [
+        "humanoid"
+      ],
+      "family": "humanoid",
+      "priority": 94,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/orc",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "OrcRace"
+      },
+      "roles": [
+        "humanoid"
+      ],
+      "family": "humanoid",
+      "priority": 93,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/khajiit",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "KhajiitRace"
+      },
+      "roles": [
+        "humanoid"
+      ],
+      "family": "humanoid",
+      "priority": 92,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/argonian",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "ArgonianRace"
+      },
+      "roles": [
+        "humanoid"
+      ],
+      "family": "humanoid",
+      "priority": 91,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/draugr",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "DraugrRace"
+      },
+      "roles": [
+        "undead"
+      ],
+      "family": "undead",
+      "priority": 90,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/dragon",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "DragonRace"
+      },
+      "roles": [
+        "dragon"
+      ],
+      "family": "dragon",
+      "priority": 89,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/wolf",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "WolfRace"
+      },
+      "roles": [
+        "beast"
+      ],
+      "family": "beast",
+      "priority": 88,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/bear",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "BearRace"
+      },
+      "roles": [
+        "beast"
+      ],
+      "family": "beast",
+      "priority": 87,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/sabrecat",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "SabreCatRace"
+      },
+      "roles": [
+        "beast"
+      ],
+      "family": "beast",
+      "priority": 86,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/falmer",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "FalmerRace"
+      },
+      "roles": [
+        "falmer"
+      ],
+      "family": "falmer",
+      "priority": 85,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/werewolf",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "WerewolfBeastRace"
+      },
+      "roles": [
+        "werewolf"
+      ],
+      "family": "werewolf",
+      "priority": 84,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/vampire",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Dawnguard.esm",
+        "editorId": "DLC1VampireBeastRace"
+      },
+      "roles": [
+        "vampire"
+      ],
+      "family": "vampire",
+      "priority": 83,
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:raceprofile/dwarvencenturion",
+      "raceRef": {
+        "kind": "editorId",
+        "plugin": "Skyrim.esm",
+        "editorId": "DwarvenCenturionRace"
+      },
+      "roles": [
+        "machine"
+      ],
+      "family": "machine",
+      "priority": 82,
+      "schemaVersion": 1
+    }
+  ]
+}

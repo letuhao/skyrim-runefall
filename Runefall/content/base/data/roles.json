@@ -1,0 +1,170 @@
+{
+  "schemaVersion": 1,
+  "roles": [
+    {
+      "key": "rf:role/humanoid",
+      "tags": [
+        "humanoid",
+        "falmer",
+        "vampire"
+      ],
+      "hostPolicy": "host",
+      "protectionPolicy": "host",
+      "defaultFamily": "humanoid",
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:role/beast",
+      "tags": [
+        "beast",
+        "werewolf",
+        "giant"
+      ],
+      "hostPolicy": "host",
+      "protectionPolicy": "host",
+      "defaultFamily": "beast",
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:role/undead",
+      "tags": [
+        "undead",
+        "vampire",
+        "draugr"
+      ],
+      "hostPolicy": "host",
+      "protectionPolicy": "host",
+      "defaultFamily": "undead",
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:role/construct",
+      "tags": [
+        "construct",
+        "machine",
+        "dwemer"
+      ],
+      "hostPolicy": "host",
+      "protectionPolicy": "host",
+      "defaultFamily": "construct",
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:role/dragon",
+      "tags": [
+        "dragon"
+      ],
+      "hostPolicy": "host",
+      "protectionPolicy": "host",
+      "defaultFamily": "dragon",
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:role/daedra",
+      "tags": [
+        "daedra"
+      ],
+      "hostPolicy": "host",
+      "protectionPolicy": "host",
+      "defaultFamily": "daedra",
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:role/spectral",
+      "tags": [
+        "spectral",
+        "ghost"
+      ],
+      "hostPolicy": "host",
+      "protectionPolicy": "host",
+      "defaultFamily": "spectral",
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:role/magical",
+      "tags": [
+        "magical",
+        "atronach"
+      ],
+      "hostPolicy": "host",
+      "protectionPolicy": "host",
+      "defaultFamily": "magical",
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:role/insect",
+      "tags": [
+        "insect",
+        "chaurus"
+      ],
+      "hostPolicy": "host",
+      "protectionPolicy": "host",
+      "defaultFamily": "insect",
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:role/giant",
+      "tags": [
+        "giant"
+      ],
+      "hostPolicy": "host",
+      "protectionPolicy": "host",
+      "defaultFamily": "giant",
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:role/vampire",
+      "parentRole": "undead",
+      "tags": [
+        "vampire"
+      ],
+      "hostPolicy": "host",
+      "protectionPolicy": "host",
+      "defaultFamily": "vampire",
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:role/werewolf",
+      "parentRole": "beast",
+      "tags": [
+        "werewolf"
+      ],
+      "hostPolicy": "host",
+      "protectionPolicy": "host",
+      "defaultFamily": "werewolf",
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:role/falmer",
+      "parentRole": "humanoid",
+      "tags": [
+        "falmer"
+      ],
+      "hostPolicy": "host",
+      "protectionPolicy": "host",
+      "defaultFamily": "falmer",
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:role/machine",
+      "parentRole": "construct",
+      "tags": [
+        "machine"
+      ],
+      "hostPolicy": "host",
+      "protectionPolicy": "host",
+      "defaultFamily": "machine",
+      "schemaVersion": 1
+    },
+    {
+      "key": "rf:role/unknown",
+      "tags": [
+        "unknown"
+      ],
+      "hostPolicy": "provisional",
+      "protectionPolicy": "host",
+      "defaultFamily": "unknown",
+      "schemaVersion": 1
+    }
+  ]
+}

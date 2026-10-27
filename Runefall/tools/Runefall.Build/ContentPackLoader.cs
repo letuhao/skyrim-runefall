@@ -12,6 +12,8 @@ internal sealed class LoadedPack
     public List<string[]> AssignmentRows { get; } = new();
     public List<string[]> ContentBandRows { get; } = new();
     public List<string[]> LegacyTierRows { get; } = new();
+    public List<string[]> RoleRows { get; } = new();
+    public List<string[]> RaceProfileRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -55,6 +57,8 @@ internal static class ContentPackLoader
             ReadAssignment(pack, files, errors);
             ReadBands(pack, files, errors);
             ReadLegacy(pack, files, errors);
+            ReadRoles(pack, files, errors);
+            ReadRaceProfiles(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -248,6 +252,58 @@ internal static class ContentPackLoader
             });
         }
         if (pack.ContentBandRows.Count != 10) errors.Add($"stage_content_bands: expected 10 rows, got {pack.ContentBandRows.Count}");
+    }
+
+
+    private static void ReadRoles(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("roles", files, errors, "roles");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"roles.roles[{index++}]";
+            var tags = "";
+            if (item.TryGetProperty("tags", out var tagArray) && tagArray.ValueKind == JsonValueKind.Array)
+                tags = string.Join("|", tagArray.EnumerateArray().Select(t => t.GetString() ?? ""));
+            else
+                errors.Add($"{path}: missing tags");
+            pack.RoleRows.Add(new[]
+            {
+                Text(item, "key", path, errors),
+                item.TryGetProperty("parentRole", out var parent) && parent.ValueKind == JsonValueKind.String ? parent.GetString() ?? "" : "",
+                tags,
+                Text(item, "hostPolicy", path, errors),
+                Text(item, "protectionPolicy", path, errors)
+            });
+        }
+        if (pack.RoleRows.Count == 0) errors.Add("roles: no rows");
+    }
+
+    private static void ReadRaceProfiles(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("raceProfiles", files, errors, "profiles");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"race_profiles.profiles[{index++}]";
+            var editorId = "";
+            if (item.TryGetProperty("raceRef", out var raceRef) && raceRef.ValueKind == JsonValueKind.Object)
+                editorId = Text(raceRef, "editorId", path + ".raceRef", errors);
+            else
+                errors.Add($"{path}: missing raceRef.editorId");
+            var roles = "";
+            if (item.TryGetProperty("roles", out var roleArray) && roleArray.ValueKind == JsonValueKind.Array)
+                roles = string.Join("|", roleArray.EnumerateArray().Select(r => r.GetString() ?? ""));
+            else
+                errors.Add($"{path}: missing roles");
+            pack.RaceProfileRows.Add(new[]
+            {
+                Text(item, "key", path, errors), editorId, roles, Text(item, "family", path, errors), I(Int(item, "priority", path, errors))
+            });
+        }
+        if (pack.RaceProfileRows.Count == 0) errors.Add("race_profiles: no rows");
     }
 
     private static void ReadLegacy(LoadedPack pack, Dictionary<string, string> files, List<string> errors)

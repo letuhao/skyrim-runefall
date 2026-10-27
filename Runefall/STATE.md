@@ -91,7 +91,8 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
   emits runtime tables/ESP; static gates 8/8 and batch 20/20.
 - F0.4 PASS: DataStore reads runtime JSON only; F0.5 PASS: co-save v3 migration verified in-game.
 - F0.6 PASS: RunefallCoreHost JSON test, 0 allocations, 1.53 ns lookup; static gates 9/9.
-- Next: F0.7 runtime content resolver and fallback JSON cache.
+- F0.7 PASS: 15 roles/19 race profiles, unknown provisional + known NordRace, JSON cache; batch 21/21.
+- Next: F0.8 runtime cache lifecycle/rescan/diagnostics.
 
 ## Next step
 
