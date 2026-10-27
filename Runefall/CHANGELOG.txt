@@ -2,6 +2,8 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- Final validation pass: static gates 5/5, full batch (with TapKey hotkeys) PASS, release archive
+  verifier 21/21.
 - Batch harness hotkeys fixed via MCP Input.TapKey; full in-game run passes including F10/F11/F12.
 - Nexus publication docs: media plan, credits/AI disclosure, publication checklist; archive
   verifier re-run 21/21.

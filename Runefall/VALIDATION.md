@@ -780,11 +780,13 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 
 
-## Menu page interaction verified 2026-10-27 10:33
 
-- Used MCP Input.TapKey (F1) plus a mouse click to open the Skyrim section, then captured:
-  docs/media/menu-runefall.png, menu-character.png, menu-item-detail.png.
-- Menu pages render real state: Character (attribute/skill points, RF tier, attributes) and Item
-  Detail (3 tracked items with rarity/ilvl/sockets/enhancements).
-- This closes the F1 page-interaction gap; death loot/hunt shots still need capture.
-- No code change; artifacts unchanged.
+## Final validation pass 2026-10-27 10:36
+
+- Static gates: 5/5 PASS (static-gates-20261027-103440.md).
+- Full batch session including MCP Input.TapKey hotkeys: all checks PASS, exit 0,
+  self-tests 18/18, Draugr hunt material + unique item, no new crash
+  (batch-test-20261027-103519.md).
+- Release archive verifier: 21/21 PASS (release-verify-20261027-103628.md).
+- Candidate: DLL 1,017,344 B sha256 4C7DA7AEADD71D16F075FB1EB449067A626E499A2445502A6175700248E71863;
+  zip 493,770 B sha256 4721F78BE179EA7383AA7CF5F93B2447A161287AE0CD06A8BA51E972FE27CC8B.

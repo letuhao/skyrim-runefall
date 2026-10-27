@@ -5,7 +5,7 @@
 - [x] hard requirements documented in READMEs
 - [x] AI disclosure and credits (NEXUS-CREDITS.md)
 - [x] known limitations documented
-- [ ] Nexus media captured (NEXUS-MEDIA-PLAN.md)
-- [ ] compatibility matrix target passes (untested targets disclosed)
+- [~] Nexus media partially captured (menu/Character/Item Detail; loot/hunt shots pending)
+- [~] compatibility matrix partially passes (UI stack PASS; other targets disclosed untested)
 - [ ] final release version promoted from 0.2.0-dev
 - [ ] local commits pushed with user approval
