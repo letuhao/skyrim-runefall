@@ -6,7 +6,7 @@ Capture on the 1.6.1170 test environment (CleanSave, exterior Riverwood is suffi
 |---|---|---|---|
 | 1 | F1 Mod Control Panel with the Runefall section selected | menu pages exist | CAPTURED: docs/media/menu-runefall.png |
 | 2 | Item Detail page with a tracked enchanted item | rarity/ilvl/sockets/enhancements | CAPTURED: docs/media/menu-item-detail.png |
-| 3 | Player inventory tooltip for Refined Iron Sword | runtime enchantment + affix name | not captured |
+| 3 | Player inventory showing Refined Iron Sword (enchanted) | runtime item appears in inventory | CAPTURED: docs/media/inventory.png (tooltip shot pending) |
 | 4 | Bandit corpse with Mythic Iron Mace + four affix effects | death-drop loot works | not captured |
 | 5 | Draugr corpse with Runed Draugr Draugr Hunt + Draugr Essence | hunt first-kill reward | not captured |
 | 6 | Rune Forge page with rune/material counts | RuneForge data path and costs | not captured |

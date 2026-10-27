@@ -783,10 +783,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 
 
-## GLOB mirror sync 2026-10-27 10:46
+## Inventory media capture 2026-10-27 10:50
 
-- Progression writes spent attributes to RF_GLOB_Attr_* (local IDs 0x880+) and RF tier to
-  RF_GLOB_State_RuneTier (0x889) on load/save/spend. No actor values are modified.
-- Static gates 5/5 PASS (static-gates-20261027-104550.md); full batch PASS, self-tests 18/18,
-  hunt unique PASS, no crash (batch-test-20261027-104630.md).
-- Artifact DLL 1020928 B SHA-256 280DF266D433A24E9AED4CADB93F7772C40BA441DE70FA646D0B2B1FD511288E; candidate zip 494606 B SHA-256 5956A8F7E76208FE9E39519D33DD2E95B4BB36829A58796741B654F25191B63E.
+- Opened inventory via MCP Input.TapKey (I) after closing F1; captured docs/media/inventory.png.
+  The list includes Refined Iron Sword (2) with the enchantment marker, proving runtime items
+  appear in the vanilla inventory. Tooltip close-up still pending.
+- No code change; gates from the prior build remain valid.
