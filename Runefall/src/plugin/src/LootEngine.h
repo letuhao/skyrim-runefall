@@ -38,6 +38,17 @@ namespace Runefall
 		float        weight = 1.0f;
 	};
 
+	struct BossDropDef
+	{
+		std::string  bossId;
+		std::int32_t itemCount = 1;
+		std::int32_t guaranteedRarity = 0;
+		std::int32_t runeMin = 0;
+		std::int32_t runeMax = 0;
+		std::int32_t materialTier = 0;
+		std::string  uniqueTableId;
+	};
+
 	struct GeneralDropDef
 	{
 		std::int32_t rank = 0;
@@ -93,6 +104,7 @@ namespace Runefall
 			std::vector<RarityDef>       rarities;
 			std::vector<RarityWeightDef> weights;
 			std::vector<GeneralDropDef>  generalDrops;
+			std::vector<BossDropDef>     bossDrops;
 		};
 
 		[[nodiscard]] std::optional<ItemMetadata> GenerateFrom(

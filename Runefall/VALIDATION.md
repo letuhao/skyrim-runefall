@@ -775,10 +775,11 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 
 
-## Rune-convert recipe consumption 2026-10-27 10:17
 
-- RuneForge loads rune_convert recipes and consumes their material cost before converting 5 lower
-  runes; self-test updated and batch re-verified 18/18.
-- Static gates 5/5 PASS (static-gates-20261027-101723.md); batch 17/17 PASS
-  (batch-test-20261027-101801.md).
-- Artifact DLL 1015808 B SHA-256 D2973FADA447C56B26196CE3F81F7B2502FB539AE1AE9EB4D59261494067D6FC; candidate zip 493106 B SHA-256 A03EF8859358DAD52F7949CFA83CDBA524AB2C7F6E7D9757043136586554F1C9.
+## Boss drop table 2026-10-27 10:21
+
+- LootEngine loads drops_bosses.csv and applies the guaranteedRarity floor to BossDrop-tagged
+  items (rank>=4), selecting the boss row by rank.
+- Static gates 5/5 PASS (static-gates-20261027-102049.md); batch 17/17 PASS, self-tests 18/18,
+  no crash (batch-test-20261027-102128.md).
+- Artifact DLL 1017344 B SHA-256 4C7DA7AEADD71D16F075FB1EB449067A626E499A2445502A6175700248E71863; candidate zip 493770 B SHA-256 4721F78BE179EA7383AA7CF5F93B2447A161287AE0CD06A8BA51E972FE27CC8B.

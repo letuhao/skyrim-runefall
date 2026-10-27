@@ -238,7 +238,20 @@ namespace Runefall
 		const auto picked = static_cast<std::size_t>(WeightedPick(weights, a_rng));
 		if (picked >= candidates.size())
 			return std::nullopt;
-		const auto& rarity = candidates[picked];
+		const RarityDef* chosen = &candidates[picked];
+		if ((a_tags & static_cast<std::uint16_t>(ItemTag::BossDrop)) != 0 && !a_data.bossDrops.empty()) {
+			const auto bossIndex = static_cast<std::size_t>((std::max)(0, (std::min)(a_rank - 4, static_cast<std::int32_t>(a_data.bossDrops.size()) - 1)));
+			const auto guaranteed = a_data.bossDrops[bossIndex].guaranteedRarity;
+			if (guaranteed > chosen->id) {
+				for (const auto& candidate : a_data.rarities) {
+					if (candidate.id == guaranteed) {
+						chosen = &candidate;
+						break;
+					}
+				}
+			}
+		}
+		const auto& rarity = *chosen;
 
 		ItemMetadata item;
 		item.rarity = static_cast<std::uint8_t>(rarity.id);
