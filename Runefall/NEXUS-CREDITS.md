@@ -11,6 +11,12 @@
 | PapyrusCompiler | compiling shipped PEX | Bethesda toolchain; PEX only in archive |
 | nlohmann/json, spdlog, fmt | linked libraries | MIT/BSD-style; see vcpkg metadata |
 
+## Reference mods (knowledge only, no assets or records shipped)
+
+| Reference | Use | Attribution |
+|---|---|---|
+| Know Your Enemy 2 (Nexus mod 93258) and Know Your Enemy 2 - Armors (Nexus mod 94067) | Race-class taxonomy, class resistance patterns and perk-entry research used as a design reference; no records, scripts, assets or runtime dependency | Thanks to the KYE2 authors for publishing their work; no KYE2 content is redistributed |
+
 ## Game content
 
 No Skyrim assets are redistributed. The mod only adds new ESL records and runtime behavior;

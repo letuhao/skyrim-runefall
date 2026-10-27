@@ -6,6 +6,7 @@ The project lives in [Runefall/](Runefall/):
 
 - [Runefall/GAME-DESIGN.md](Runefall/GAME-DESIGN.md) - product and gameplay pillars
 - [Runefall/SPECS/](Runefall/SPECS/) - layered design specs (L1-L5) plus mining/drop-table studies
+- [Runefall/SPECS/POWER-LADDER.md](Runefall/SPECS/POWER-LADDER.md) - enemy stage ladder, world bands, threat protection (foundation module)
 - [Runefall/src/plugin/](Runefall/src/plugin/) - native CommonLibSSE-NG plugin (C++, CMake + vcpkg)
 - [Runefall/src/papyrus/](Runefall/src/papyrus/) - Papyrus native bridge and quest probe
 - [Runefall/tools/DataMiner/](Runefall/tools/DataMiner/) - official-master data miner (C#, Mutagen)

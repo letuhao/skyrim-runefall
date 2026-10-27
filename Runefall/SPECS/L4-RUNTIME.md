@@ -40,6 +40,11 @@ All modules live in one DLL. Names are conceptual; actual C++ class names can di
 | Compatibility | loot authority modes, soft-detect other mods, patch hooks | Config |
 | Logger | versioned log, categories, rate limiting, diagnostic export | bootstrap |
 
+The stage/power-ladder module is specified in `SPECS/POWER-LADDER.md`: StageEngine,
+WorldBandResolver, RaceClassifier, ProtectionService, PenetrationResolver and StageProfileStore.
+All balance values (curves, bands, class tables, protection rules, world bands) are data generated
+by Runefall.Build (D-066); the DLL owns policy, engine access and persistence.
+
 Threading rule: game-thread only for engine reads/writes and hooks. File IO and CSV parsing happen
 once at data load (game thread acceptable at kDataLoaded; if profiling shows a stall, parse on a
 worker and publish under a lock). UI rendering runs on the render thread through SKSE Menu

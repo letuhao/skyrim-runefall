@@ -80,7 +80,12 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
 - Papyrus avoidance is now a binding rule (D-064): packaged scripts are declaration/probe only,
   debug mutation natives are gated by `bEnableDebugNatives=0` by default, and the static gates
   include `tools/check-papyrus-policy.ps1`.
-- Next work is Phase B (item instance identity + co-save v3), then Phase C (domain/service split).
+- Power-ladder foundation accepted: `SPECS/POWER-LADDER.md` (100 stages, x15 curve, 10 tiers,
+  3%/90% protection, data-driven world bands, provisional race fallback). D-065/D-066/D-067 record
+  the decisions; ARCHITECTURE rule 10 makes balance data-only.
+- Next work: implement the power-ladder data tables + validator first, then the Phase-1 damage-hook
+  spike (prove coverage/apply-once before any stage-scaling code). Item identity remains the next
+  structural phase after the spike.
 
 ## Next step
 
