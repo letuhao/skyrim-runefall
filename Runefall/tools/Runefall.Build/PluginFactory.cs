@@ -90,6 +90,8 @@ internal static class PluginFactory
             mod.Keywords.Add(new Keyword(mod) { EditorID = "RF_KW_Socket_" + socket });
         for (var tier = 0; tier <= 5; ++tier)
             mod.Keywords.Add(new Keyword(mod) { EditorID = "RF_KW_Tier_" + tier });
+        for (var tier = 1; tier <= 10; ++tier)
+            mod.Keywords.Add(new Keyword(mod) { EditorID = "RF_KW_Tier_" + tier.ToString("00") });
 
         keys.StartAt(0x880);
         foreach (var (build, attribute) in new[] { ("Warrior", "Might"), ("Warrior", "Endurance"), ("Warrior", "Precision"), ("Thief", "Agility"), ("Thief", "Guile"), ("Thief", "Cunning"), ("Mage", "Intellect"), ("Mage", "Wisdom"), ("Mage", "Willpower") })

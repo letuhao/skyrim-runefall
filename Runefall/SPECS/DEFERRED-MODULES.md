@@ -1,84 +1,78 @@
 # Deferred modules - register and interfaces
 
-Status: **scope register 2026-10-28**. The power-ladder module is the ruler only
-(`SPECS/POWER-LADDER.md`). Everything below is a separate module/slice. Do not put its data,
-records, UI or balance into the ladder.
+Status: **aligned to the audited ladder, 2026-10-28**. The ladder owns stages, curves, capacities,
+content bands and difficulty profiles. Everything else is a separate module. No module may
+duplicate ladder tables or edit another module's data.
 
-## 1. Module register
+## 1. Register
 
-| # | Module | Owns | Consumes from ladder | Does not own |
+| # | Module | Owns | Consumes from ladder | Must not own |
 |---|---|---|---|---|
-| 1 | **POWER-LADDER** (current) | stages 1-100, 10 tiers, curve, StageProfile, assignment/clamp | - | races, damage, spawns, abilities, materials, UI |
-| 2 | **THREAT-PROTECTION** | damage hook, category matrix, protection formula/params, penetration sources/stacking, player/anomaly target policy | StageProfile attacker/target, stage gap | stage tables, race tables, spawning |
-| 3 | **RACE-CLASSIFICATION** | race/template/keyword classifier, host/anomaly/provisional tags, unknown-race report/patch table | stage profile tags | stage curve, damage |
-| 4 | **LEVEL-DESIGN / ENCOUNTERS** | world bands, encounter classes, spawn tables, placement, caps/cooldowns, encounter identity | StageProfile schema, RequestStage | race classifier, abilities |
-| 5 | **ENEMY-ABILITIES** | passive/active packages per tier/family, tier keywords usage, ability records | StageProfile/tier | stage curve, spawn placement |
-| 6 | **ANOMALY-LADDER** | anomaly families, anomaly curves/tier labels, anomaly abilities, anomaly reward sources | shared 100-stage axis + arithmetic | host ladder tiers, crafting recipes |
-| 7 | **CRAFTING-MATERIALS** | material items/tokens, recipes, stations, Monster Hunter gear trees, material economy | reward tags/item IDs from encounters | stage/encounter/damage |
-| 8 | **EQUIPMENT / ACTOR-ENHANCEMENT** | humanoid gear/perk distribution, random enhancement tables, spawn/apply tables, toggle/cleanup policy | StageProfile/tier, encounter class | stage curve, player progression |
-| 9 | **PLAYER-PROGRESSION** | player Rune Rank 1-100, attributes, skill trees, active skills, respec | shared ladder arithmetic | enemy ladder/content |
-| 10 | **UI-REDESIGN** | Anomaly Codex, character pages, inspect/tooltip, menu slices | snapshots from services | gameplay rules |
-| 11 | **COMPATIBILITY / RELEASE** | load-order tests, uninstall, packaging, versioning | all modules | module internals |
+| 1 | POWER-LADDER (current) | 100 stages, 10 tiers, curve, capacities, content bands, difficulty profiles, assignment, ladder co-save state | - | protection, world bands, races, abilities, materials, UI |
+| 2 | THREAT-PROTECTION | damage hook, category matrix, protection/penetration, player/anomaly target policy | StageGap/PowerRatio, StageProfile | stage/curve tables |
+| 3 | RACE-CLASSIFICATION | race/template/keyword classifier, host/anomaly/provisional tags, unknown report | StageRequest only if it needs a stage; normally tags only | stage curve |
+| 4 | LEVEL-DESIGN / ENCOUNTERS | world bands, encounter classes, spawn tables, placement, caps, encounter identity | StageProfile schema, RequestStage, content bands | ladder tables |
+| 5 | ENEMY-ABILITIES | passive/active packages per tier/family, ability records | tier, capacity, content bands | stage curve |
+| 6 | ANOMALY-LADDER | anomaly families, anomaly curve registration, anomaly tier labels, anomaly abilities, anomaly rewards | CurveEvaluator/curve registration, shared stage arithmetic | host ladder tables |
+| 7 | CRAFTING-MATERIALS | material items/tokens, recipes, stations, Monster Hunter gear trees | rewardCapacity, encounter reward tags | stage/encounter/combat |
+| 8 | EQUIPMENT / ACTOR-ENHANCEMENT | humanoid gear/perk distribution, random enhancement tables, tag/cleanup policy | tier/capacity/content bands | stage curve |
+| 9 | PLAYER-PROGRESSION | player Rune Rank economy, attributes, skill trees, active skills, respec | kPlayerRank, rank==stage contract | enemy/encounter data |
+| 10 | UI-REDESIGN | Anomaly Codex, character pages, inspect/tooltip slices | snapshots | gameplay rules |
+| 11 | COMPATIBILITY / RELEASE | load-order tests, uninstall, packaging, versioning | all module contracts | module internals |
 
-## 2. Interface contracts
+## 2. Interfaces
 
 ### POWER-LADDER -> consumers
-- `StageProfile { stage, tier, source, flags, profileId }`
-- `RequestStage(StageRequest)` validates/clamps a request supplied by the consumer.
-- `Power(stage)`, `StatMultiplier(stage, kind)`, `TierOf(stage)`.
-- No consumer data is read by the ladder.
+- StageProfile { stage, tier, curve, source, flags }.
+- RequestStage(StageRequest) with explicit precedence and deterministic seed.
+- Power, StatMultiplier, TierOf, Capacity, ContentBand, Difficulty, StageGap, PowerRatio.
+- Ladder co-save: player rank/stage, difficulty profile, manual overrides only (cap 256).
 
 ### THREAT-PROTECTION
-- Input: attacker StageProfile, target StageProfile, damage category, penetration points.
+- Input: StageProfile attacker/target, damage category, penetration.
 - Output: final damage multiplier (once), bypass reason.
-- Owns `damage_categories.csv`, `protection_rules.csv`, `penetration_sources.csv`.
-- Must prove the hook with the Phase-1 spike before stage scaling ships.
+- Owns protection formula, category matrix, penetration sources, player/anomaly policy.
+- Must prove its hook with the Phase-1 spike; ladder exposes only gap/power-ratio arithmetic.
 
 ### RACE-CLASSIFICATION
-- Input: actor base/ref, race, template chain, keywords.
-- Output: tags `HOST`, `ANOMALY`, `PROVISIONAL`, family/class ids.
-- Owns `race_classification.csv`, class taxonomy, provisional fallback/report.
-- Unknown race = provisional host by default; never skipped.
+- Outputs tags HOST, ANOMALY, PROVISIONAL plus family/class ids; never sets ladder stage.
+- Unknown race = provisional host by default; patchable table; log/report.
 
 ### LEVEL-DESIGN / ENCOUNTERS
-- Owns `world_bands.csv`, `encounter_classes.csv`, `spawn_tables.csv`.
-- Produces `StageRequest` (band/stage/source/seed) for the ladder.
-- Excludes cities/quest actors and applies caps/cooldowns.
+- Owns world bands/spawn tables/placement; produces StageRequest with band/stage/source/seed.
+- Uses ladder content bands for gating and caps; no ladder edits.
 
 ### ENEMY-ABILITIES
-- Consumes tier/stage; owns ability tables/records.
-- No per-frame scanning; packages applied at spawn/load with caps.
+- Consumes tier/capacity/content bands; owns ability records and per-tier packages.
+- Applied at spawn/load with caps; no per-frame scanning.
 
 ### ANOMALY-LADDER
-- Separate spec/module. Shares the 100-stage axis and arithmetic, but defines its own tier labels,
-  family curves, abilities and reward sources. No anomaly data in the host ladder.
+- Registers anomaly curve profiles (same stage axis) and own tier labels/families/rewards.
+- No anomaly data in the host ladder; host curve remains unchanged.
 
 ### CRAFTING-MATERIALS
-- Owns real material items/tokens, recipes, stations, gear trees.
-- Consumes reward tags/item IDs (host materials, anomaly parts, trophies); the encounter/ladder
-  module never defines recipes.
-- Material items are physical MISC items, not currency; tokens are explicit fallback placeholders.
+- Owns real MISC material items, fallback tokens, recipes, stations, MH gear trees.
+- Consumes ladder rewardCapacity/encounter tags; no ladder/encounter logic.
+- Materials are items, not currency; tokens are explicit fallback placeholders.
 
 ### EQUIPMENT / ACTOR-ENHANCEMENT
-- Consumes StageProfile/encounter class; owns spawn/apply tables, random enhancement chance,
-  humanoid gear/perk distribution and toggle/cleanup policy.
-- Equipment is vanilla persistent state: toggles gate future application only; no mass removal.
+- Consumes tier/capacity/content bands; owns gear/perk distribution, random apply tables.
+- Equipment is persistent vanilla state; toggles gate future application only, no mass removal.
 
 ### PLAYER-PROGRESSION
-- Player Rune Rank 1-100 later; uses the shared ladder; no enemy content.
-- No player protection by default; compatibility-first.
+- Owns Rune Rank 1-100 economy/attributes/skills/trees; supplies kPlayerRank.
+- Ladder does not own rank gain, respec or attunement.
 
 ### UI-REDESIGN
-- Separate slice; current UI is read-only/debug and will be redesigned.
-- Consumes snapshots; never drives gameplay decisions.
+- Separate slice; consumes read-only snapshots; no gameplay rules.
 
 ## 3. Build order
 
-1. POWER-LADDER data + validator + StageEngine (current).
-2. THREAT-PROTECTION Phase-1 damage spike (hook/coverage).
-3. RACE-CLASSIFICATION + provisional fallback.
-4. LEVEL-DESIGN / ENCOUNTERS (world bands first).
-5. ENEMY-ABILITIES packages.
+1. POWER-LADDER data, host core, StageEngine/RequestStage.
+2. THREAT-PROTECTION Phase-1 damage spike.
+3. RACE-CLASSIFICATION.
+4. LEVEL-DESIGN / ENCOUNTERS.
+5. ENEMY-ABILITIES.
 6. ANOMALY-LADDER.
 7. EQUIPMENT / ACTOR-ENHANCEMENT.
 8. PLAYER-PROGRESSION.
@@ -86,11 +80,10 @@ records, UI or balance into the ladder.
 10. UI-REDESIGN.
 11. COMPATIBILITY / RELEASE.
 
-Items 2-4 are the critical path for the first playable enemy slice. Items 7-10 can run in parallel
-once the ladder and encounter contracts are stable.
+Items 2-4 are the critical path for the first playable enemy slice.
 
 ## 4. Rule
 
-**No module may edit another module's data or records directly.** Cross-module behavior goes
-through the interfaces above. If a requirement seems to belong in two modules, it belongs in the
-consumer.
+No module may duplicate ladder tables (stage, tier, curve, capacity, content band, difficulty).
+Consumers use the ladder API and their own module data. If a requirement appears in two modules, it
+belongs to the consumer, not the ladder.

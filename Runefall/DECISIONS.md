@@ -398,3 +398,16 @@ detect or reference their plugins, records, keywords or perks at runtime, and sh
 assets or records. The race seed is regenerated from vanilla/DLC masters and reviewed; KYE2 is
 credited in NEXUS-CREDITS.md for the knowledge. Optional coexistence is tested as an external mod,
 never as a dependency.
+
+
+## D-068 Ladder inventory, composition and POC migration (accepted after audits 2026-10-28)
+The ladder owns seven tables: stage_ladder, tier_definitions, curve_profiles,
+difficulty_profiles, stage_assignment_rules, stage_content_bands and legacy_rf_tier_map. It also
+owns neutral capacity indexes, tier breakpoints, content bands, the StageRequest ABI, composition
+order and co-save schema v3 section 11. The curve adds an armor exponent (default 0.25) and
+consumer overlays are applied once after the stage/difficulty multipliers. The POC RF Tier 0-5
+world axis and enemy rank multipliers are retired; maps: RF Tier 0..5 -> stages 1-15/16-30/31-45/
+46-60/61-80/81-100, player runeTier -> player rank stages 1/20/40/60/80/100; old tier keywords
+RF_KW_Tier_0..5 are retired without renumbering and map to RF_KW_Tier_01..10. World bands, threat
+protection, anomaly curves, race classification, crafting, equipment, player economy and UI remain
+in their own modules (D-066/DEFERRED-MODULES).

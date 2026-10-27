@@ -1,8 +1,10 @@
 Runefall CHANGELOG
 ==================
 
-0.1.0 - 2026-10-27 (first public release)
+0.1.0 - 2026-10-27 (first public release; ladder runtime 2026-10-28)
 - Public release of the Runefall four-pillar RPG overhaul for Skyrim SE/AE 1.6.1170.
+- 100-stage/10-tier power ladder runtime: generated seven ladder tables, StageEngine, deterministic
+  RequestStage, capacities/content bands/difficulty profiles, 20/20 self-tests; in-game batch PASS.
 - Native SKSE plugin (CommonLibSSE-NG), three ESL plugins, 19 data tables, Papyrus bridge and
   SKSE Menu Framework pages (Character, Rune Forge, Hunt Codex, Item Detail).
 - P4.2 runtime mutation paths: Load3D vtable hooks for container loot generation and actor-rank

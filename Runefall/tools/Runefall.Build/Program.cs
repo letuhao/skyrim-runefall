@@ -72,10 +72,11 @@ internal static class Program
         WriteCsv(Path.Combine(dir, "unique_affixes.csv"), content.UniqueColumns, content.UniqueRows);
         WriteCsv(Path.Combine(dir, "unique_sources.csv"), content.UniqueSourceColumns, content.UniqueSourceRows);
         WriteCsv(Path.Combine(dir, "strings.csv"), content.StringColumns, content.StringRows);
+        LadderContent.WriteAll(dir);
 
         var formats = new StringBuilder();
         formats.AppendLine("{");
-        formats.AppendLine("  \"format\": 1,");
+        formats.AppendLine("  \"format\": 2,");
         formats.AppendLine("  \"columns\": {");
         var tables = new (string Name, string[] Cols)[]
         {
@@ -89,6 +90,13 @@ internal static class Program
             ("attributes.csv", content.AttributeColumns), ("attribute_effects.csv", content.AttributeEffectColumns), ("unique_affixes.csv", content.UniqueColumns),
             ("unique_sources.csv", content.UniqueSourceColumns), ("strings.csv", content.StringColumns),
             ("form_ids.csv", new[] { "editorId", "plugin", "localFormId", "recordType" }),
+            ("stage_ladder.csv", LadderContent.StageColumns),
+            ("tier_definitions.csv", LadderContent.TierColumns),
+            ("curve_profiles.csv", LadderContent.CurveColumns),
+            ("difficulty_profiles.csv", LadderContent.DifficultyColumns),
+            ("stage_assignment_rules.csv", LadderContent.AssignmentColumns),
+            ("stage_content_bands.csv", LadderContent.ContentBandColumns),
+            ("legacy_rf_tier_map.csv", LadderContent.LegacyTierColumns),
         };
         for (int i = 0; i < tables.Length; i++)
         {

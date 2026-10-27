@@ -189,12 +189,14 @@ Header: magic, schema, flags, section count. Sections are TLV; unknown sections 
 | 2 | rune wallet | POC |
 | 3 | item registry (instance-keyed) | **target; POC stores list without identity** |
 | 4 | hunt state | POC |
-| 5 | container state | POC (schema 2) |
+| 5 | materials | POC |
 | 6 | unique-source state | reserved |
 | 7 | pack state | POC |
 | 8 | config hash | POC |
-| 9 | rewarded quests | POC (schema 2) |
-| 10 | actor rank state | reserved |
+| 9 | container state | POC (schema 2) |
+| 10 | rewarded quests | POC (schema 2) |
+| 11 | ladder state | **target v3** (player rank/stage, difficulty, overrides cap 256) |
+| 12 | encounter state | reserved |
 
 Rules: every section has a length cap and a decode test; schema upgrades are explicit; a failed
 section disables only that section, never aborts the save.

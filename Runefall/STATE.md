@@ -84,9 +84,10 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
   x15 curve, StageProfile/RequestStage). All other systems are registered in
   `SPECS/DEFERRED-MODULES.md` and must not be added to the ladder. D-065/D-066/D-067 record the
   decisions; ARCHITECTURE rule 10 makes balance data-only.
-- Next work: implement the power-ladder data tables + validator first, then the Phase-1 damage-hook
-  spike (prove coverage/apply-once before any stage-scaling code). Item identity remains the next
-  structural phase after the spike.
+- Ladder implementation DONE (2026-10-28): seven generated tables, StageEngine + deterministic
+  RequestStage, 20/20 self-tests, in-game batch PASS, static gates 6/6, archive verifier PASS.
+  Next: host-core unit tests/benchmarks, co-save v3 ladder section, POC tier/rank migration, then
+  the threat-protection damage spike.
 
 ## Next step
 

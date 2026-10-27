@@ -81,6 +81,7 @@ else()
         src/PackManager.cpp
         src/FormResolver.cpp
         src/FormCatalog.cpp
+        src/StageEngine.cpp
         src/CoSave.cpp
         src/ItemRegistry.cpp
         src/LootEngine.cpp

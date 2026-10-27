@@ -28,6 +28,13 @@ namespace Runefall
 			"unique_sources.csv",
 			"strings.csv",
 			"form_ids.csv",
+			"stage_ladder.csv",
+			"tier_definitions.csv",
+			"curve_profiles.csv",
+			"difficulty_profiles.csv",
+			"stage_assignment_rules.csv",
+			"stage_content_bands.csv",
+			"legacy_rf_tier_map.csv",
 		};
 	}
 
@@ -142,8 +149,8 @@ namespace Runefall
 				std::ifstream f{ formatsPath };
 				auto          json = nlohmann::json::parse(f);
 				formatVersion = json.value("format", 0);
-				if (formatVersion != 1)
-					malformed.emplace_back("formats.json declares format " + std::to_string(formatVersion) + ", expected 1");
+				if (formatVersion != 2)
+					malformed.emplace_back("formats.json declares format " + std::to_string(formatVersion) + ", expected 2");
 			} catch (const std::exception& e) {
 				malformed.emplace_back("formats.json: " + std::string{ e.what() });
 			}

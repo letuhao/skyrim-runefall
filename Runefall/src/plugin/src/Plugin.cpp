@@ -10,6 +10,7 @@
 #include "PapyrusBridge.h"
 #include "DataStore.h"
 #include "FormCatalog.h"
+#include "StageEngine.h"
 #include "HookManager.h"
 #include "MaterialRegistry.h"
 #include "RuneForge.h"
@@ -107,6 +108,7 @@ namespace
 		// Data/engine tables are required by loot/hunt/tier even when probes are off.
 		Runefall::DataStore::Get().LoadAll(Runefall::RunefallDataDir());
 		Runefall::FormCatalog::Get().Load();
+		Runefall::StageEngine::Get().Load();
 		Runefall::MaterialRegistry::Get().LoadDefinitions();
 		Runefall::RuneForge::Get().ReloadSocketRecipes();
 		Runefall::LootEngine::Get().Reload();

@@ -824,3 +824,20 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Archive verifier PASS: `build/evidence/release-verify-20261027-234307.md`.
 - Artifacts: DLL 1,093,120 B sha256 95A6A444CDA9449BA2F42EC4F17C25F98545F34DDAD87E3C21D038E6E633264A;
   candidate zip 530,166 B sha256 D3B7C97A0956C81BC2D6BE20807EBFBD274E618B4E4C45EF65AE8432A5B63B03.
+
+
+## Power ladder implementation (2026-10-28 01:45-02:01)
+
+- Added seven generated ladder tables (stage_ladder, tier_definitions, curve_profiles,
+  difficulty_profiles, stage_assignment_rules, stage_content_bands, legacy_rf_tier_map).
+- Added StageEngine (C++): loads 100 stages/10 tiers, curves/multipliers, capacities, difficulty
+  profiles, content bands, deterministic RequestStage, StageGap/PowerRatio, self-test.
+- DataStore expects 27 tables; formats.json format 2; generator emits the ladder data and 10 new
+  tier keywords (RF_KW_Tier_01..10); FormCatalog now 564 records.
+- DebugHarness: 20/20 self-tests (StageEngine.SelfTest PASS).
+- In-game batch: PASS, self-tests 20/20, "stage-engine: loaded 100 stages, 10 tiers", no new crash:
+  build/evidence/batch-test-20261028-015902.md.
+- Static gates 6/6 PASS: build/evidence/static-gates-20261028-020042.md.
+- Archive verifier PASS: build/evidence/release-verify-20261028-020119.md.
+- Artifacts: DLL 1,120,256 B sha256 A0B56A129994ED49792FCF459E31849C64079EE24E2F3F190D50C30956C3CEA2;
+  candidate zip 548,467 B sha256 2C8422FD0001773D2AE83941B66EB0B917E616E6F262C190C48EC53C24352078.

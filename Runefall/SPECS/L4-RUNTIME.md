@@ -122,11 +122,18 @@ Known sections:
     2  rune wallet       counts per rank, lifetime earned/spent
     3  item registry     entries (metadata above), free-list, generation counter
     4  hunt state        per-family firstOnly flags, kill counters, material drop stats
-    5  container state   (ref FormKey, rolled flag, group id); TTL by cell reset
-    6  unique sources    boss/quest unique awarded flags
+    5  materials         material counts / derived cache
+    6  unique sources    boss/quest unique awarded flags (reserved)
     7  pack state        installed pack IDs + versions + data format versions
     8  config snapshot   hash of effective INI + data versions + base/pack versions
-    9  migration         previous schema versions, commit markers
+    9  container state   (ref FormKey, rolled flag, group id); TTL by cell reset
+    10 quest state       rewarded quest IDs (schema 2)
+    11 ladder state      player rank/stage, difficulty profile, manual stage overrides (cap 256)
+    12 encounter state   reserved for the encounter module
+
+    Header (v3): magic RNFS, u16 schema=3, u16 serialization version, u32 flags, u32 section count.
+    This section map supersedes earlier L4/ARCHITECTURE maps; the authoritative table is
+    SPECS/POWER-LADDER.md section 9.
 
 Rules:
 

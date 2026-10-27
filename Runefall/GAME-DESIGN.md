@@ -44,9 +44,13 @@ vanilla records.
 
 One shared resource ties all four pillars together: the Rune Rank, plus rune currency.
 
-- Rune Rank (0-5) exists conceptually on every combat actor, every Runefall item and the
-  player. It is a system-wide power scale, not a new actor value.
-- Enemy tier equals rune rank: 1 Elite, 2 Champion, 3 Mini-boss, 4 Boss, 5 Mythic.
+> **Superseded 2026-10-28 (D-065/D-068):** the RF Tier 0-5 / five-rank model below is the POC
+> model. The live world/balance ruler is the 100-stage, 10-tier ladder in
+> SPECS/POWER-LADDER.md; the player Rune Rank is a 1-100 input source whose economy is deferred to
+> PLAYER-PROGRESSION. Do not build new content on the 0-5 ranks.
+
+- Rune Rank (1-100) exists conceptually on the ladder, not as a new actor value.
+- Enemy rank/elite/boss overlays are consumer modules on top of the stage curve.
 - Player progression: rune essence (currency) accumulates from kills, salvage, container
   caches and boss drops; it is spent on attribute points, rerolls, socketing and crafting.
 - Equipment: Runefall items carry rarity and up to three rune sockets; socketed runes add

@@ -1,148 +1,241 @@
 # POWER-LADDER - the 100-stage ruler
 
-Status: **scope locked 2026-10-28**. This module is deliberately the *ruler only*: 100 stages,
-10 tiers, the power/stat curve and the stage-profile contract that every other module consumes.
-It does not define crafting, equipment, actor enhancement, enemy abilities, encounters, player
-attributes or UI. Those are separate modules in `SPECS/DEFERRED-MODULES.md`.
+Status: **revised after three audits, 2026-10-28**. This is the authoritative ladder scope. It is
+the game's balance/content ruler; all later modules consume it. No deferred module data lives here.
 
-Bindings: D-065 (ladder/curve), D-066 (data-driven balance), D-064 (DLL-first), ARCHITECTURE
-hard rule 10.
+Bindings: D-065 (100 stages/x15), D-066 (data-driven), D-067 (KYE2 reference only), D-068 (ladder
+inventory/composition/migration), D-064 (DLL-first), ARCHITECTURE rules 9-10.
 
-## 1. In scope
+## 1. Scope
 
-1. 100 stages, 10 tiers of 10.
-2. Tier names and boundaries.
-3. Power index and stat multiplier lookup.
-4. Stage arithmetic and clamping.
-5. Stage profile identity (stage, tier, source, flags) and its persistence contract.
-6. Stage assignment contract: the ladder accepts a requested stage/band from a consumer and
-   applies offsets/jitter/clamp; it does **not** own world-band or spawn data.
-7. Ten tier keywords generated for consumers that need an engine-visible tier marker.
-8. A single consumer-facing API used by protection, encounters, abilities, loot and UI.
+In scope:
 
-## 2. Out of scope (deferred modules)
+1. 100 stages, 10 tiers, approved names.
+2. Power curve and stat multipliers (health, damage, regen, armor).
+3. Neutral capacity budgets per stage (stat/offense/defense/utility/ability/loot/reward/encounter).
+4. Tier breakpoints, tier keywords, localization keys.
+5. Stage content bands (player level, item level, gear check, unlock tag, v1 population flag).
+6. Difficulty profiles (multipliers/deltas; no protection parameters).
+7. Deterministic `StageRequest` -> `StageProfile` assignment.
+8. Composition contract for consumers.
+9. Ladder persistence (player rank/stage, difficulty, manual overrides only).
+10. Migration mapping from POC RF-Tier/rank data; generator/validator; host tests; diagnostics.
 
-Do not add these to this module; build them in their own slices:
+Out of scope (owned by `SPECS/DEFERRED-MODULES.md`):
+threat protection/penetration, world bands/encounters, race classification, enemy abilities,
+anomaly ladder, crafting/materials, equipment/actor enhancement, player progression economy, UI.
 
-| Deferred module | Owns |
+## 2. Stage and tier model
+
+`tier = min(10, floor((stage - 1) / 10) + 1)`
+`P(s) = 15^((s - 1) / 99)` (Stage 1 = 1x, Stage 100 = 15x)
+
+Curve defaults (data in `curve_profiles.csv`, not code):
+healthExp = 0.65, damageExp = 0.45, regenExp = 0.30, armorExp = 0.25.
+`healthMult = P^healthExp`, etc.
+
+| Stage | Power | Health | Damage | Regen | Armor |
+|---:|---:|---:|---:|---:|---:|
+| 1 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |
+| 10 | 1.28 | 1.17 | 1.12 | 1.08 | 1.06 |
+| 20 | 1.68 | 1.40 | 1.26 | 1.17 | 1.14 |
+| 30 | 2.21 | 1.67 | 1.43 | 1.27 | 1.22 |
+| 40 | 2.91 | 2.00 | 1.62 | 1.38 | 1.31 |
+| 50 | 3.82 | 2.39 | 1.83 | 1.49 | 1.40 |
+| 60 | 5.02 | 2.85 | 2.07 | 1.62 | 1.50 |
+| 70 | 6.60 | 3.41 | 2.34 | 1.76 | 1.60 |
+| 80 | 8.68 | 4.07 | 2.64 | 1.91 | 1.71 |
+| 90 | 11.41 | 4.87 | 2.99 | 2.08 | 1.84 |
+| 100 | 15.00 | 5.81 | 3.38 | 2.25 | 1.97 |
+
+Tier names and breakpoints:
+
+| Tier | Stages | Name | Breakpoint tag |
+|---:|---:|---|---|
+| 1 | 1-10 | Runetouched | `RF_TIER_01` |
+| 2 | 11-20 | Runebound | `RF_TIER_02` |
+| 3 | 21-30 | Runeforged | `RF_TIER_03` |
+| 4 | 31-40 | Runecrowned | `RF_TIER_04` |
+| 5 | 41-50 | Runelord | `RF_TIER_05` |
+| 6 | 51-60 | Runebreaker | `RF_TIER_06` |
+| 7 | 61-70 | Runefall Cataclysm | `RF_TIER_07` |
+| 8 | 71-80 | Runewarden | `RF_TIER_08` |
+| 9 | 81-90 | Runesovereign | `RF_TIER_09` |
+| 10 | 91-100 | Runefall Ascendant | `RF_TIER_10` |
+
+Tier breakpoints must be measurable: each tier has a capacity step and a content-band unlock tag.
+The ladder defines the step; consumers decide what the step unlocks.
+
+## 3. Capacity budgets
+
+Neutral capacity indexes (stage 1 = 100, stage 100 shown), generated in `stage_ladder.csv` from the
+same P(s); consumers map them to their own unit scales. They are the only ladder budget authority.
+
+| Field | Formula | Stage 1 | Stage 50 | Stage 100 |
+|---|---|---:|---:|---:|
+| statCapacity | round(100 x P) | 100 | 382 | 1500 |
+| offenseCapacity | round(100 x P^0.45) | 100 | 183 | 338 |
+| defenseCapacity | round(100 x P^0.65) | 100 | 239 | 581 |
+| utilityCapacity | round(100 x P^0.30) | 100 | 149 | 225 |
+| abilityCapacity | round(100 x P^0.25) | 100 | 140 | 197 |
+| lootCapacity | round(100 x P^0.50) | 100 | 195 | 387 |
+| rewardCapacity | round(100 x P^0.40) | 100 | 171 | 296 |
+| encounterCost | round(10 x P^0.35) | 10 | 16 | 23 |
+
+Rules: integer rounding; monotonic non-decreasing; validator asserts formulas and tier deltas.
+Consumers must not duplicate these formulas or invent a second budget table.
+
+## 4. Data tables owned by the ladder
+
+All generated by `Runefall.Build`, loaded by `DataStore` with `formats.json` **format 2** and
+per-table schemas, resolved by `FormCatalog` for records. `form_ids.csv` is generator/FormCatalog
+owned, not a ladder table.
+
+| Table | Columns |
 |---|---|
-| `THREAT-PROTECTION` | damage hook, category matrix, penetration sources/stacking, player/anomaly target policy |
-| `RACE-CLASSIFICATION` | race/template/keyword classifier, host/anomaly/provisional, unknown-race patch table |
-| `LEVEL-DESIGN / ENCOUNTERS` | world bands, encounter/spawn tables, placement, caps, cooldowns |
-| `ANOMALY-LADDER` | anomaly families, anomaly curves/tier labels, anomaly abilities, anomaly rewards |
-| `ENEMY-ABILITIES` | passive/active skill packages per tier/family |
-| `CRAFTING-MATERIALS` | material items/tokens, recipes, crafting stations, Monster Hunter gear trees |
-| `EQUIPMENT / ACTOR-ENHANCEMENT` | humanoid gear/perk distribution, random enhancement tables, cleanup policy |
-| `PLAYER-PROGRESSION` | player Rune Rank, attributes, skills, trees, active skills, respec |
-| `UI-REDESIGN` | Anomaly Codex, character pages, inspect/tooltip slices |
-| `COMBAT-ABILITIES` | damage types, DoTs, status effects, enemy active skills |
+| `stage_ladder.csv` | stage, tier, curveId, powerIndex, healthMult, damageMult, regenMult, armorMult, statCapacity, offenseCapacity, defenseCapacity, utilityCapacity, abilityCapacity, lootCapacity, rewardCapacity, encounterCost |
+| `tier_definitions.csv` | tier, name, nameKey, stageMin, stageMax, keywordEditorId, breakpointTag, budgetStep, unlockTag, description |
+| `curve_profiles.csv` | curveId, powerBase, healthExp, damageExp, regenExp, armorExp, maxStage, enabled, notes |
+| `difficulty_profiles.csv` | profileId, name, nameKey, stageDelta, statMult, damageDealtMult, damageTakenMult, xpMult, rewardMult, dropMult, maxStage, enabled, notes |
+| `stage_assignment_rules.csv` | ruleId, source, appliesTo, minStage, maxStage, offsetMin, offsetMax, jitter, seedSalt, priority, enabled, notes |
+| `stage_content_bands.csv` | stageMin, stageMax, tier, playerLevelMin, playerLevelMax, itemLevelMin, itemLevelMax, gearCheckBand, unlockTag, v1Populated, notes |
+| `legacy_rf_tier_map.csv` | rfTier, stageMin, stageMax, playerRankStage, notes |
 
-Interfaces between them are defined in `SPECS/DEFERRED-MODULES.md`. The ladder exposes stage
-facts; consumers implement their own data and behavior.
+No other ladder table is required. Difficulty profiles do **not** contain protection or world-band
+fields. Anomaly curves/tier labels are registered by the ANOMALY-LADDER module later.
 
-## 3. Stage and tier model
+## 5. ESP records owned by the ladder
 
-Tier: `tier = min(10, floor((stage - 1) / 10) + 1)`.
+Generated from data, identity in `form_ids.csv`:
 
-Power: `P(s) = 15^((s - 1) / 99)`; Stage 1 = 1x, Stage 100 = 15x.
+- 10 tier keywords `RF_KW_Tier_01..10`, mapped from `tier_definitions.csv`.
+- No MGEF/SPEL/PERK in the ruler; consumers generate their own packages.
+- Old POC keywords `RF_KW_Tier_0..5` are retired from generation, not renumbered/reused; their
+  saves/conditions map through `legacy_rf_tier_map.csv`/migration. Localization keys live in
+  `strings.csv` (`nameKey`).
 
-Initial stat exponents (configurable data, not code):
-health 0.65, damage 0.45, regen 0.30.
-
-| Stage | Power | Health x | Damage x | Regen x |
-|---:|---:|---:|---:|---:|
-| 1 | 1.00 | 1.00 | 1.00 | 1.00 |
-| 10 | 1.28 | 1.17 | 1.12 | 1.08 |
-| 20 | 1.68 | 1.40 | 1.26 | 1.17 |
-| 30 | 2.21 | 1.67 | 1.43 | 1.27 |
-| 40 | 2.91 | 2.00 | 1.62 | 1.38 |
-| 50 | 3.82 | 2.39 | 1.83 | 1.49 |
-| 60 | 5.02 | 2.85 | 2.07 | 1.62 |
-| 70 | 6.60 | 3.41 | 2.34 | 1.76 |
-| 80 | 8.68 | 4.07 | 2.64 | 1.91 |
-| 90 | 11.41 | 4.87 | 2.99 | 2.08 |
-| 100 | 15.00 | 5.81 | 3.38 | 2.25 |
-
-Tier names (approved):
-
-1 Runetouched (1-10)
-2 Runebound (11-20)
-3 Runeforged (21-30)
-4 Runecrowned (31-40)
-5 Runelord (41-50)
-6 Runebreaker (51-60)
-7 Runefall Cataclysm (61-70)
-8 Runewarden (71-80)
-9 Runesovereign (81-90)
-10 Runefall Ascendant (91-100)
-
-The stage is a power budget, not a claim that two actors of the same stage are equal.
-
-## 4. Data tables owned by this module
-
-Generated by `Runefall.Build`, validated by `DataStore`, resolved through `FormCatalog` where
-records exist. No tunable value is hardcoded in C++.
-
-| File | Columns | Rules |
-|---|---|---|
-| `stage_ladder.csv` | stage, tier, powerIndex, healthMult, damageMult, regenMult | exactly 100 rows; monotonic; clamped |
-| `tier_definitions.csv` | tier, name, stageMin, stageMax, keywordEditorId, description | 10 rows; contiguous 1-100 |
-| `stage_assignment_rules.csv` | ruleId, minStage, maxStage, jitterMin, jitterMax, seedSalt, notes | jitter/clamp policy for consumers |
-| `stage_profile_schema.csv` | field, type, required, default, notes | consumer contract for persistence |
-
-Everything else (world bands, race tables, protection rules, spawn tables, resistance, abilities,
-materials, recipes) belongs to the deferred modules.
-
-## 5. ESP records owned by this module
-
-Generated from data; identity in `form_ids.csv`:
-
-- 10 tier keywords `RF_KW_Tier_01..10`.
-- No stage-specific MGEF/SPEL/PERK in the ruler. Consumers that need packages generate their own
-  records in their module (enemy abilities, equipment, etc.).
-- No QUST/Papyrus logic (D-064).
-
-## 6. Runtime contract
+## 6. Stage profile and request ABI
 
 ```cpp
+enum class StageSource : std::uint8_t {
+  kDefault = 0, kWorldBand = 1, kEncounter = 2, kOverride = 3, kPlayerRank = 4
+};
+
+struct StageRequest {
+  StageSource   source = StageSource::kDefault;
+  std::uint8_t  requestedStage = 0;   // 0 = not set
+  std::uint8_t  band = 0;             // consumer world band, 0 = not set
+  std::uint8_t  category = 0;         // consumer actor-category id
+  std::uint8_t  difficultyProfile = 0;
+  std::uint8_t  overrideStage = 0;    // hard override, 0 = not set
+  std::uint16_t ruleId = 0;
+  std::uint64_t seed = 0;             // consumer-stable seed (FormID/encounter id)
+};
+
 struct StageProfile {
-  std::uint8_t  stage;        // 1-100
-  std::uint8_t  tier;         // 1-10
-  std::uint8_t  source;       // world band / encounter / override / consumer
-  std::uint16_t flags;        // host/anomaly/provisional/... only as consumer tags
-  std::uint32_t profileId;    // stable consumer/encounter identity
+  std::uint8_t stage = 1;   // 1-100
+  std::uint8_t tier = 1;    // 1-10, derived and validated
+  std::uint8_t curve = 0;   // curve profile id
+  StageSource  source = StageSource::kDefault;
+  std::uint16_t flags = 0;  // consumer tags only; ladder owns no classification
 };
 ```
 
-```cpp
-StageProfile RequestStage(StageRequest request);   // validate + offset + jitter + clamp
-float        Power(std::uint8_t stage);
-float        StatMultiplier(std::uint8_t stage, StatKind kind);
-std::uint8_t TierOf(std::uint8_t stage);
+Resolution order: explicit `overrideStage` > explicit `requestedStage` > matching `ruleId` >
+`source` default rule > difficulty `stageDelta`; then deterministic jitter; then clamp to
+`[1, curve.maxStage]`; then derive tier from data. No `std::hash`, `rand`, wall clock or frame
+counters. Seed mixing uses FNV-1a over stable integers; jitter uses `hash % (max-min+1)`.
+Unknown source/rule/category or an out-of-range value is a rejected request, logged once.
+
+Golden vectors (stage assignments across sources/seeds/clamps) are committed with the host tests.
+
+## 7. Composition contract
+
+Consumers must apply exactly one stage layer:
+
+```
+finalStat = baseRecordStat x stageMult(stage) x difficultyMult(profile) x consumerRank/gear
+finalDamageTaken = consumerProtection(finalStat, attacker/target stage gap)
 ```
 
-`StageRequest` is supplied by the consumer (level design/encounter/anomaly module): it contains
-`requestedStage` or `band`, `offset`, `source`, `seed`, and optional hard overrides. The ladder
-never reads world cells, spawn tables or race data.
+- The ladder owns `stageMult` and `difficultyMult`; it never applies them twice.
+- Consumer rank/elite/boss/equipment overlays are applied once after the ladder multipliers.
+- Protection/penetration are entirely consumer layers; ladder only returns `StageGap`/`PowerRatio`.
+- The old POC rank multipliers are retired and must not stack with stage multipliers; migration maps
+  their intent to stage bands (D-068).
 
-Persistence: the ladder exposes the schema; the owning scenario module decides whether a generic
-actor is stored or recomputed. The ladder does not scan actors or hold raw pointers.
+## 8. Player rank interface (not progression)
 
-## 7. Validation gates
+Player Rune Rank is an input source (`kPlayerRank`), 1-100 on the same axis. The ladder does not own
+rank gain, attunement or respec; PLAYER-PROGRESSION owns those. Default mapping is rank == stage;
+the player module may supply a different stage through `requestedStage` once specified. Player has
+no target protection by default (THREAT-PROTECTION owns that policy).
 
-1. `stage_ladder.csv` has exactly 100 rows; stages 1-100; tiers 1-10; monotonic multipliers;
-   endpoints 1.00 and 15.00.
-2. `tier_definitions.csv` has 10 approved names and contiguous ranges.
-3. `stage_assignment_rules.csv` covers all stages and configurable jitter; clamps are honoured.
-4. `Power`/`StatMultiplier` match the CSV within float tolerance; no hardcoded curve values.
-5. Deterministic assignment: same request + seed = same profile; out-of-range requests clamp.
-6. Co-save profile schema versioned; malformed profiles rejected.
-7. Static grep gate: no stage/tier numeric table duplicated in C++ or Papyrus.
-8. No deferred-module table is required for the ladder self-test to pass.
+## 9. Persistence
 
-## 8. Open items
+Canonical co-save schema **v3** (this section supersedes the older L4/ARCHITECTURE maps):
 
-- Player Rune Rank uses this ladder later; player progression detail is deferred.
-- Anomaly ladder is a separate module that shares the 100-stage axis and defines its own tier
-  labels/curves; it consumes this ladder's stage arithmetic, not vice versa.
-- Tier keyword use by consumers is fixed when each deferred module is specified.
+- header: magic, u16 schema, u16 serialization version, **u32 flags**, u32 section count.
+- sections: 1 progression, 2 rune wallet, 3 item registry, 4 hunt state, 5 materials,
+  6 unique-source (reserved), 7 pack state, 8 config hash, 9 container state, 10 quest state,
+  **11 ladder state**, 12 encounter state (reserved).
+- section 11 payload: version, playerRank, playerStage, difficultyProfile, curveId, overrideCount;
+  entries `{u64 key, u8 stage, u8 flags}`, cap 256.
+- Only player ladder state + manual overrides persist; generic actors and encounter actors are
+  recomputed from `StageRequest` and are not stored individually. Overrides are keyed by stable
+  consumer key (FormID/encounter id), never raw pointers.
+- Decode validates all lengths/caps; malformed section disables only that section. v2 reads and
+  migrates: `runeTier 0-5 -> playerRankStage [1,20,40,60,80,100]`; old RF tier data maps through
+  `legacy_rf_tier_map.csv`; downgrade writes a readable refusal log.
+
+## 10. API surface
+
+```cpp
+StageProfile RequestStage(const StageRequest&) const;
+float Power(std::uint8_t stage) const;
+float StatMultiplier(std::uint8_t stage, StatKind kind) const; // Health/Damage/Regen/Armor
+std::uint8_t TierOf(std::uint8_t stage) const;
+std::uint32_t Capacity(std::uint8_t stage, CapacityKind kind) const;
+std::uint8_t StageGap(std::uint8_t targetStage, std::uint8_t attackerStage) const;
+float PowerRatio(std::uint8_t targetStage, std::uint8_t attackerStage) const;
+const TierDef& Tier(std::uint8_t tier) const;
+const DifficultyDef* Difficulty(std::uint8_t profileId) const;
+const ContentBand* ContentBand(std::uint8_t stage) const;
+```
+
+All calls are const, allocation-free after load, main-thread-safe-read/immutable. No protection,
+world, race or spawn data is exposed.
+
+## 11. Migration from POC
+
+- RF Tier 0-5 world axis is retired; `legacy_rf_tier_map.csv` maps to stage ranges:
+  0:1-15, 1:16-30, 2:31-45, 3:46-60, 4:61-80, 5:81-100; player rank stage: 1/20/40/60/80/100.
+- Old `enemy_ranks.csv` rank multipliers are retired; the stage curve replaces them. Old rank
+  keywords/spells/buff records are removed from generation; IDs are not reused; compatibility map
+  is retained in the migration table.
+- Old `rfTier`-keyed consumer tables are not edited by this module; their owning modules map their
+  rows through the legacy table in their own migration slices.
+- Old save `runeTier` migrates to ladder section 11; old tier keywords/conditions map by keyword
+  EditorID/FormKey; no renumbering.
+
+## 12. Validation gates
+
+1. 100 stage rows; 10 tier rows; stage/tier agreement; tier names/nameKeys/ranges contiguous.
+2. Curve endpoints P(1)=1, P(100)=15; multipliers match formulas within 1e-4; armor exponent valid.
+3. Capacity formulas and integer rounding match; monotonic non-decreasing; tier steps measurable.
+4. Content bands cover all 100 stages; no overlap; v1 coverage reported (not silently missing).
+5. Difficulty profiles validated sec/range/maxStage; no protection/world fields allowed.
+6. Assignment rules cover all sources; golden vectors reproduce; rejected inputs fail closed.
+7. Co-save v3 round-trip, v2 migration, truncation/cap rejection, downgrade log.
+8. Tier keywords generated and catalogued; old six retired; FormCatalog self-test.
+9. Load <= 25 ms p99 on the test host; lookup <= 100 ns/call; zero allocations after load.
+10. Static grep gate: no duplicated curve/tier/capacity table in C++ or Papyrus.
+11. No deferred-module table is required for ladder self-tests.
+
+## 13. Deferred interfaces
+
+The ladder exposes arithmetic only; each consumer defines its own data/behavior in its module:
+THREAT-PROTECTION consumes `StageGap`/`PowerRatio`; LEVEL-DESIGN supplies world bands via a
+`StageRequest`; RACE-CLASSIFICATION supplies tags (not stage); PLAYER-PROGRESSION owns rank
+economy; ANOMALY-LADDER registers curve profiles through the curve API; ENEMY-ABILITIES/EQUIPMENT/
+CRAFTING consume capacities and content bands; UI consumes snapshots.

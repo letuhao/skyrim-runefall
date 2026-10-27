@@ -59,10 +59,11 @@ Two progression axes:
 
 - Character level: vanilla leveling (XP from the game). Grants 2 attribute points and 1
   skill point per level (P-02, P-06). Unchanged from the base game except for the grants.
-- Runefall Tier (RF Tier 0-5): the world/difficulty axis. Gates item levels, enemy ranks,
-  affix magnitudes and rune ranks. Advanced by an attunement ritual at a forge, requiring a
-  boss kill of the current rank and a rune cost (T-03). This is the Diablo/Torchlight
-  "difficulty tier" analogue and is optional to advance (players can stay at a tier).
+- Runefall Tier (RF Tier 0-5): **POC model, superseded 2026-10-28 (D-065/D-068)**. The live
+  world/balance axis is the 100-stage/10-tier ladder (SPECS/POWER-LADDER.md); RF tiers map to
+  stage ranges for migration. Do not add new content that depends on the 0-5 axis.
+  (Original text: gates item levels, enemy ranks, affix magnitudes and rune ranks; advanced by
+  an attunement ritual at a forge; optional to advance.)
 
 ## 3. The Rune (R)
 

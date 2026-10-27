@@ -83,7 +83,9 @@ hand. It roots in the body that keeps it.
   things give its rungs plain names: Runetouched, Runebound, Runeforged,
   Runecrowned, Runelord, Runebreaker, and the seventh, whispered over
   mugs in the Bannered Mare — *Runefall Cataclysm* — a name for what
-  they fear, less than what they have seen.
+  they fear, less than what they have seen. Above the Cataclysm lie the
+  three names only the oldest hunters use: Runewarden, Runesovereign,
+  and Runefall Ascendant.
 - When a rune-bearer dies, **the rune does not die with them**. It lingers in the scar for a few
   breaths, then leaps to the nearest living body strong enough to hold
   it. Hunters race those breaths with a blade; a rune cut free in time is
@@ -217,7 +219,7 @@ The sky remembers what it dropped. Welcome to the hunt.**
 
 | System concept | Lore device used here |
 | --- | --- |
-| 70-stage ladder (7 tiers × 10) | Rune "climbs" as it feeds; hunters count rungs; tier names are folknames coined in the story itself |
+| 100-stage ladder (10 tiers × 10) | Rune "climbs" as it feeds; hunters count rungs; tier names are folknames coined in the story itself |
 | Deterministic stage, not equal power | "Same rung, different animal" is what farmers joke — the rune is a syllable, the body is its grammar |
 | Stage-gap threat protection (no one-shots upward) | "Iron is spent" against a rune-woven hide; wounds close; only runes bite runes |
 | Penetration from rune-forged equipment | A harvested rune laid into temper carries its syllable into the target's weave; "cut the curtain's seam" |

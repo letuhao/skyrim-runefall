@@ -14,4 +14,4 @@ Runefall-0.1.0.zip
 530036
  bytes sha256 
 1A07C7939D548828C067DD11E2ABE04E474B1BCB6AB6EC083CF66FAB1549C859
-runtime: batch 33/33 PASS, self-tests 19/19, static gates 6/6, archive verifier PASS
+runtime: ladder batch PASS, self-tests 20/20, static gates 6/6, archive verifier PASS

@@ -1,6 +1,7 @@
 #include "MenuApi.h"
 
 #include "CoSave.h"
+#include "StageEngine.h"
 #include "HuntEngine.h"
 #include "ItemRegistry.h"
 #include "LootEngine.h"
@@ -54,6 +55,8 @@ namespace Runefall
 		out += std::to_string(LootEngine::Get().AffixCount());
 		out += ",\"ranks\":";
 		out += std::to_string(TierEngine::Get().RankCount());
+		out += ",\"stages\":" + std::to_string(StageEngine::Get().StageCount());
+		out += ",\"tiers\":" + std::to_string(StageEngine::Get().TierCount());
 		out += ",\"runtime\":{\"containers\":";
 		out += std::to_string(LootService::Get().ContainersGenerated());
 		out += ",\"containerItems\":" + std::to_string(LootService::Get().ContainerItemsGranted());
