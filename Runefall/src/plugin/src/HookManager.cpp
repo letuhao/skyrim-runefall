@@ -1,6 +1,7 @@
 #include "HookManager.h"
 
 #include "LootService.h"
+#include "DamagePipeline.h"
 
 #include "RE/C/Character.h"
 #include "RE/C/ContainerMenu.h"
@@ -8,6 +9,7 @@
 #include "RE/M/MenuOpenCloseEvent.h"
 #include "RE/S/ScriptEventSourceHolder.h"
 #include "RE/T/TESCellFullyLoadedEvent.h"
+#include "RE/T/TESHitEvent.h"
 #include "RE/T/TESContainerChangedEvent.h"
 #include "RE/T/TESObjectLoadedEvent.h"
 #include "RE/T/TESQuestStageEvent.h"
@@ -29,6 +31,7 @@ namespace Runefall
 		std::atomic<std::uint32_t> g_questStageEvents{ 0 };
 		std::atomic<std::uint32_t> g_load3dRefrEvents{ 0 };
 		std::atomic<std::uint32_t> g_load3dCharacterEvents{ 0 };
+		std::atomic<std::uint32_t> g_damageEvents{ 0 };
 		std::atomic_bool           g_registered{ false };
 		std::atomic_bool           g_load3dInstalled{ false };
 
@@ -38,6 +41,21 @@ namespace Runefall
 				tasks->AddTask([a_formID]() { LootService::Get().OnObject3DLoaded(a_formID); });
 			}
 		}
+
+		class HitSink : public RE::BSTEventSink<RE::TESHitEvent>
+		{
+		public:
+			RE::BSEventNotifyControl ProcessEvent(const RE::TESHitEvent* a_event, RE::BSTEventSource<RE::TESHitEvent>*) override
+			{
+				if (!a_event)
+					return RE::BSEventNotifyControl::kContinue;
+				g_damageEvents.fetch_add(1);
+				const auto target = a_event->target ? a_event->target->GetFormID() : 0;
+				const auto attacker = a_event->cause ? a_event->cause->GetFormID() : 0;
+				DamagePipeline::Get().Record(target, attacker, 1.0f, kDamageFlagNone);
+				return RE::BSEventNotifyControl::kContinue;
+			}
+		};
 
 		class ContainerSink : public RE::BSTEventSink<RE::TESContainerChangedEvent>
 		{
@@ -155,6 +173,7 @@ namespace Runefall
 			}
 		};
 
+		HitSink         g_hitSink;
 		ContainerSink   g_containerSink;
 		MenuSink        g_menuSink;
 		CellSink        g_cellSink;
@@ -239,6 +258,7 @@ namespace Runefall
 			g_registered.store(false);
 			return;
 		}
+		holder->AddEventSink<RE::TESHitEvent>(&g_hitSink);
 		holder->AddEventSink<RE::TESContainerChangedEvent>(&g_containerSink);
 		if (auto* ui = RE::UI::GetSingleton())
 			ui->AddEventSink<RE::MenuOpenCloseEvent>(&g_menuSink);
@@ -249,6 +269,7 @@ namespace Runefall
 		holder->AddEventSink<RE::TESResetEvent>(&g_resetSink);
 		holder->AddEventSink<RE::TESQuestStageEvent>(&g_questSink);
 		g_load3dInstalled.store(InstallLoad3DHooks());
+		logger::info("damage-pipeline: TESHitEvent sink registered (classification spike, no damage mutation)");
 		logger::info("hooks: event sinks registered (container/menu/cell/object/reset/quest)");
 	}
 

@@ -82,6 +82,7 @@ else()
         src/FormResolver.cpp
         src/FormCatalog.cpp
         src/StageEngine.cpp
+        src/DamagePipeline.cpp
         src/RuntimeContentResolver.cpp
         src/CoSave.cpp
         src/ItemRegistry.cpp

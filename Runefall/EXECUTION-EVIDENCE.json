@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-27T23:26:49.783Z",
+  "updatedAt": "2026-10-27T23:53:08.570Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -168,6 +168,27 @@
       "path": "build/evidence/release-verify-20261028-062621.md",
       "result": "PASS",
       "detail": "JSON form_ids; archive verified"
+    },
+    {
+      "slice": "C1.1",
+      "kind": "spike",
+      "path": "build/evidence/c1.1-spike-20261028.md",
+      "result": "PARTIAL",
+      "detail": "TESHitEvent sink + classifier; direct hit samples; unsafe vtable hook removed after crashes"
+    },
+    {
+      "slice": "C1.1",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-064809.md",
+      "result": "PASS",
+      "detail": "22/22; damage event sink; no crash"
+    },
+    {
+      "slice": "C1.1",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-065218.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
     }
   ]
 }

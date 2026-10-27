@@ -934,3 +934,14 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - In-game batch PASS 21/21, no crash: build/evidence/batch-test-20261028-062459.md.
 - Archive verifier PASS: build/evidence/release-verify-20261028-062621.md.
 - Layer L0 foundation complete: F0.1-F0.9 PASS.
+
+
+## C1.1 threat-protection spike - partial (2026-10-28 06:30-06:52)
+
+- Safe TESHitEvent sink and damage-category classifier implemented.
+- Classifier self-test PASS for direct/DoT/reflected/environmental/invalid.
+- In-game direct hit samples observed on player/wolf; batch 22/22 no crash.
+- A vtable HandleHealthDamage hook at Character slot 0x68 crashed during load; it was removed.
+  Crash logs: crash-2026-10-27-23-30-31.log, crash-2026-10-27-23-38-01.log.
+- C1.1 remains IN_PROGRESS: damage modification/apply-once and ranged/spell/DoT/explosion
+  observation are still required.
