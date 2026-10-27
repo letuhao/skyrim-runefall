@@ -2,6 +2,7 @@ Runefall CHANGELOG
 ==================
 
 0.2.0-dev - 2026-10-27
+- unique_sources.csv consumed by HuntEngine; unique grants log their source.
 - Derived attribute stats: attribute_effects consumer, MenuApi derived object, Papyrus GetDerivedStat.
 - MaterialRegistry + co-save material counts; RuneForge salvage grants materials/runes.
 - Strings: 250+ localization keys, DataStore::GetString consumer, MenuApi diagnostics count.

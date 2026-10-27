@@ -41,6 +41,8 @@ namespace Runefall
 		}
 		out += "],\"items\":";
 		out += std::to_string(ItemRegistry::Get().Size());
+		out += ",\"uniqueSources\":";
+		out += std::to_string(HuntEngine::Get().UniqueSourceCount());
 		out += ",\"huntFamilies\":";
 		out += std::to_string(HuntEngine::Get().FamilyCount());
 		out += ",\"affixes\":";

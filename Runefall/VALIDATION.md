@@ -770,9 +770,12 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 ## Derived attribute stats 2026-10-27 10:03
 
-- Progression consumes attribute_effects.csv and computes DerivedValue(effectKey) from spent
-  attribute points; DerivedKeys enumerates all effect keys.
-- MenuApi snapshot adds a derived object; Papyrus GetDerivedStat exposes the values.
-- Actor-value application remains pending. Static gates 5/5 PASS; batch 17/17 PASS, self-tests
-  18/18, no crash (batch-test-20261027-100409.md).
-- Artifact DLL 1001984 B SHA-256 CE5781C5D95D2ABC7983627839B5EC9616575E59F787A930D501F6A4451A5A99; candidate zip 486595 B SHA-256 4BD513D525E342A558616ADFC109D8BAC8D14EE65313892EC3D48E224CC25C43.
+
+## Unique sources consumer 2026-10-27 10:07
+
+- HuntEngine loads unique_sources.csv, exposes FindUniqueSource/UniqueSourceCount; unique grants log
+  their source (verified: "hunt: unique source 'DraugrRace' (race)").
+- MenuApi diagnostics report the unique-source count.
+- Static gates 5/5 PASS (static-gates-20261027-100654.md); batch 17/17 PASS, 18/18 self-tests,
+  hunt unique PASS (batch-test-20261027-100732.md).
+- Artifact DLL 1005568 B SHA-256 2A4F27D8B67A1FAA835A995FA65CCD7694E9AADC4EE35D35727DCC8822510861; candidate zip 487625 B SHA-256 74EE8D0FDE3A9B46E2457536C137A0583582D894D7937CB262A2C8D72912B05E.

@@ -64,6 +64,7 @@ namespace Runefall
 	{
 		groups.clear();
 		rewards.clear();
+		uniqueSources.clear();
 		loaded = false;
 
 		const auto* groupTable = DataStore::Get().GetTable("race_groups.csv");
@@ -107,6 +108,26 @@ namespace Runefall
 				rewards.push_back(std::move(def));
 		}
 
+		if (const auto* uniqueSourceTable = DataStore::Get().GetTable("unique_sources.csv")) {
+			const int uId = FindColumn(*uniqueSourceTable, "uniqueId");
+			const int uType = FindColumn(*uniqueSourceTable, "sourceType");
+			const int uSource = FindColumn(*uniqueSourceTable, "sourceEditorId");
+			const int uRule = FindColumn(*uniqueSourceTable, "dropRule");
+			const int uFirst = FindColumn(*uniqueSourceTable, "firstOnly");
+			const int uNote = FindColumn(*uniqueSourceTable, "note");
+			for (const auto& row : uniqueSourceTable->rows) {
+				UniqueSourceDef def;
+				def.uniqueId = Cell(row, uId);
+				def.sourceType = Cell(row, uType);
+				def.sourceEditorId = Cell(row, uSource);
+				def.dropRule = Cell(row, uRule);
+				def.firstOnly = CellInt(row, uFirst) != 0;
+				def.note = Cell(row, uNote);
+				if (!def.uniqueId.empty())
+					uniqueSources.push_back(std::move(def));
+			}
+		}
+
 		loaded = !groups.empty() && !rewards.empty();
 	}
 
@@ -126,6 +147,15 @@ namespace Runefall
 		for (const auto& group : groups) {
 			if (group.group == a_group)
 				return &group;
+		}
+		return nullptr;
+	}
+
+	const UniqueSourceDef* HuntEngine::FindUniqueSource(std::string_view a_uniqueId) const
+	{
+		for (const auto& source : uniqueSources) {
+			if (source.uniqueId == a_uniqueId)
+				return &source;
 		}
 		return nullptr;
 	}

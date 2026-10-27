@@ -288,6 +288,8 @@ namespace Runefall
 				const auto displayName = "Runed " + a_family.group + " " + std::string{ cell(cName) };
 				extraList->SetOverrideName(displayName.c_str());
 				a_actor->AddObjectToContainer(base, extraList, 1, nullptr);
+				if (const auto* source = HuntEngine::Get().FindUniqueSource(a_family.uniqueAffixId))
+					logger::info("hunt: unique source '{}' ({})", source->sourceEditorId, source->sourceType);
 				logger::info("hunt: granted unique affix '{}' as '{}'", a_family.uniqueAffixId, displayName);
 				return;
 			}

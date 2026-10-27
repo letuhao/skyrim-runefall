@@ -12,6 +12,16 @@ namespace Runefall
 		std::string              materialId;
 	};
 
+	struct UniqueSourceDef
+	{
+		std::string uniqueId;
+		std::string sourceType;
+		std::string sourceEditorId;
+		std::string dropRule;
+		bool        firstOnly = false;
+		std::string note;
+	};
+
 	struct RaceRewardDef
 	{
 		std::string  group;
@@ -35,6 +45,8 @@ namespace Runefall
 		[[nodiscard]] const RaceGroupDef* FindFamilyForRace(std::string_view a_raceEditorId) const;
 		[[nodiscard]] const RaceGroupDef* FindFamily(std::string_view a_group) const;
 		[[nodiscard]] const RaceRewardDef* FindReward(std::string_view a_group, std::string_view a_rewardType) const;
+		[[nodiscard]] const UniqueSourceDef* FindUniqueSource(std::string_view a_uniqueId) const;
+		[[nodiscard]] std::size_t UniqueSourceCount() const noexcept { return uniqueSources.size(); }
 
 		[[nodiscard]] bool HasFirstKill(std::string_view a_group) const;
 		bool               MarkFirstKill(std::string_view a_group);
@@ -44,6 +56,7 @@ namespace Runefall
 	private:
 		std::vector<RaceGroupDef>  groups;
 		std::vector<RaceRewardDef> rewards;
+		std::vector<UniqueSourceDef> uniqueSources;
 		bool                       loaded = false;
 	};
 }
