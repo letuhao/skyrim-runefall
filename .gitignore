@@ -95,6 +95,8 @@ Runefall/build/*
 !Runefall/build/slices/
 !Runefall/build/slices/**
 !Runefall/build/evidence/
-!Runefall/build/evidence/**
+Runefall/build/evidence/*
+!Runefall/build/evidence/S0/
+!Runefall/build/evidence/S0/**
 !Runefall/build/TRACEABILITY.json
 !Runefall/build/state.schema.json
