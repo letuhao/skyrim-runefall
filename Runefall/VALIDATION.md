@@ -1090,3 +1090,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - 5 families; F3 anomaly spawn; host protection skipped; core/trophy MISC granted on corpse.
 - Batch 32/32; static gates 9/9. Codex UI feed remains P4.6.
+
+
+## W2.7 runtime cache/hot reload - PASS (2026-10-28 09:46-09:52)
+
+- Load-order-independent cache key, dataVersion invalidation, manifest, F6 and delayed scans.
+- Batch 32/32; static gates 9/9.

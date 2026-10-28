@@ -64,6 +64,8 @@ namespace Runefall
 		[[nodiscard]] std::string CachePath(std::string_view a_key) const;
 		[[nodiscard]] static std::string CacheKey(const RaceDescriptor& a_race);
 		bool WriteCache(const RuntimeRaceProfile& a_profile);
+		bool WriteManifest();
+		[[nodiscard]] std::string ManifestPath() const;
 		void RescanIfNeeded();
 		[[nodiscard]] std::string ComputeDataVersion() const;
 		[[nodiscard]] std::string ReadCache(std::string_view a_path) const;

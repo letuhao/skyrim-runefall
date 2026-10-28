@@ -106,6 +106,7 @@ namespace Runefall
 		if (loaded) {
 			dataVersion = ComputeDataVersion();
 			RescanIfNeeded();
+			WriteManifest();
 			startupScanDone = false;
 			startupStart = std::chrono::steady_clock::now();
 		}
@@ -140,6 +141,32 @@ namespace Runefall
 	{
 		const auto directory = DataStore::Get().DataDirectory().parent_path() / "runtime";
 		return (directory / std::format("race-{:016X}.json", Hash(a_key))).string();
+	}
+
+	std::string RuntimeContentResolver::ManifestPath() const
+	{
+		const auto directory = DataStore::Get().DataDirectory().parent_path() / "runtime";
+		return (directory / "manifest.json").string();
+	}
+
+	bool RuntimeContentResolver::WriteManifest()
+	{
+		const auto path = ManifestPath();
+		std::error_code error;
+		fs::create_directories(fs::path{ path }.parent_path(), error);
+		if (error)
+			return false;
+		std::ofstream file{ path, std::ios::trunc };
+		if (!file)
+			return false;
+		file << "{\n";
+		file << "  \"schemaVersion\": 1,\n";
+		file << "  \"dataVersion\": \"" << Escape(dataVersion) << "\",\n";
+		file << "  \"roles\": " << roles.size() << ",\n";
+		file << "  \"raceProfiles\": " << raceProfiles.size() << ",\n";
+		file << "  \"loadOrderIndependentKey\": true\n";
+		file << "}\n";
+		return static_cast<bool>(file);
 	}
 
 	std::string RuntimeContentResolver::ReadCache(std::string_view a_path) const
@@ -310,6 +337,9 @@ namespace Runefall
 		const auto cacheText = resolver.ReadCache(resolver.CachePath(first.cacheKey));
 		if (cacheText.empty() || cacheText.find(first.cacheKey) == std::string::npos || cacheText.find("rf:role/unknown") == std::string::npos || cacheText.find("dataVersion") == std::string::npos)
 			return { "RuntimeContentResolver.SelfTest", CheckStatus::Fail, "runtime JSON cache was not written/read" };
+		const auto manifest = resolver.ReadCache(resolver.ManifestPath());
+		if (manifest.empty() || manifest.find("loadOrderIndependentKey") == std::string::npos || manifest.find(resolver.DataVersion()) == std::string::npos)
+			return { "RuntimeContentResolver.SelfTest", CheckStatus::Fail, "runtime cache manifest is missing or stale" };
 
 		RaceDescriptor known;
 		known.plugin = "Skyrim.esm";

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T02:46:46.631Z",
+  "updatedAt": "2026-10-28T02:52:31.657Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -558,6 +558,27 @@
       "slice": "W2.6",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-094603.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "W2.7",
+      "kind": "summary",
+      "path": "build/evidence/w2.7-runtime-cache-20261028.md",
+      "result": "PASS",
+      "detail": "load-order-independent cache key; dataVersion invalidate; manifest; F6/delayed scan"
+    },
+    {
+      "slice": "W2.7",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-094909.md",
+      "result": "PASS",
+      "detail": "32/32; runtime rescan/delayed scan"
+    },
+    {
+      "slice": "W2.7",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-095152.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

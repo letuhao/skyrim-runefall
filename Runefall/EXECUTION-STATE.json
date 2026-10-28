@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "W2.7",
-  "updatedAt": "2026-10-28T02:46:46.627Z",
+  "currentSlice": "A3.1",
+  "updatedAt": "2026-10-28T02:52:31.653Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -538,11 +538,24 @@
       "id": "W2.7",
       "layer": "L2",
       "slice": "Runtime cache lifecycle",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "cache correct after pack change; rescan safe",
       "depends": "F0.7/W2.2",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/w2.7-runtime-cache-20261028.md",
+        "build/evidence/batch-test-20261028-094909.md",
+        "build/evidence/static-gates-20261028-095152.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "cache-key": "PASS load-order independent",
+        "data-version-invalidation": "PASS",
+        "manifest": "PASS self-test",
+        "f6-rescan": "PASS",
+        "delayed-startup-scan": "PASS",
+        "batch": "PASS 32/32",
+        "static-gates": "PASS"
+      }
     },
     "A3.1": {
       "id": "A3.1",
@@ -786,9 +799,9 @@
     }
   },
   "currentWork": {
-    "slice": "W2.7",
-    "step": "runtime content cache/hot reload",
-    "nextAction": "cache version/manifest, invalidate on dataVersion, F6 rescan, load-order independence"
+    "slice": "A3.1",
+    "step": "loot tables and rarity",
+    "nextAction": "data-driven loot tables, rarity weights, container/actor/boss/quest loot generation"
   },
   "blockers": [],
   "finalRelease": null

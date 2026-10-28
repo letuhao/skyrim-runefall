@@ -109,7 +109,8 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
 - W2.4 PASS: data-driven hunt contract; F4 start; Draugr completed with 2 runes; batch 30/30.
 - W2.5 PASS: 5 bosses fixed stages; FormID resolution; batch 31/31.
 - W2.6 PASS: 5 anomalies, spawn/no-protection, core/trophy rewards; batch 32/32.
-- Next: W2.7 runtime cache/hot reload.
+- W2.7 PASS: runtime cache key/dataVersion/manifest + F6/delayed scan; batch 32/32.
+- L2 world complete. Next: A3.1 loot tables/rarity.
 
 ## Next step
 
