@@ -4,6 +4,8 @@
 #include "Progression.h"
 #include "MaterialRegistry.h"
 
+#include <algorithm>
+#include <array>
 #include <cstring>
 #include <format>
 
@@ -187,7 +189,7 @@ namespace Runefall
 		if (a_formID == 0 || HasGeneratedContainer(a_formID))
 			return false;
 		if (state.generatedContainers.size() >= 4096)
-			state.generatedContainers.erase(state.generatedContainers.begin());
+			state.generatedContainers.erase(std::min_element(state.generatedContainers.begin(), state.generatedContainers.end()));
 		state.generatedContainers.push_back(a_formID);
 		return true;
 	}
@@ -207,7 +209,7 @@ namespace Runefall
 		if (a_questFormID == 0 || HasRewardedQuest(a_questFormID))
 			return false;
 		if (state.rewardedQuests.size() >= 1024)
-			state.rewardedQuests.erase(state.rewardedQuests.begin());
+			state.rewardedQuests.erase(std::min_element(state.rewardedQuests.begin(), state.rewardedQuests.end()));
 		state.rewardedQuests.push_back(a_questFormID);
 		return true;
 	}
@@ -220,38 +222,87 @@ namespace Runefall
 
 	std::vector<std::uint8_t> CoSave::Encode(const CoSaveState& a_state)
 	{
+		constexpr std::size_t kMaxItems = 1024;
+		constexpr std::size_t kMaxHunts = 256;
+		constexpr std::size_t kMaxMaterials = 256;
+		constexpr std::size_t kMaxPacks = 64;
+		constexpr std::size_t kMaxContainers = 4096;
+		constexpr std::size_t kMaxQuests = 1024;
+		constexpr std::size_t kMaxOverrides = 256;
+		constexpr std::size_t kMaxSkills = 256;
+		if (a_state.items.size() > kMaxItems || a_state.huntFirstKill.size() > kMaxHunts ||
+			a_state.materials.size() > kMaxMaterials || a_state.packVersions.size() > kMaxPacks ||
+			a_state.generatedContainers.size() > kMaxContainers || a_state.rewardedQuests.size() > kMaxQuests ||
+			a_state.ladderOverrides.size() > kMaxOverrides || a_state.skillRanks.size() > kMaxSkills ||
+			a_state.characterClass.size() > 64)
+			return {};
+		auto validKey = [](const std::string& value, std::size_t max) { return value.size() <= max; };
+		for (const auto& [key, flag] : a_state.huntFirstKill)
+			if (!validKey(key, 64) || flag > 1) return {};
+		for (const auto& [key, count] : a_state.materials)
+			if (!validKey(key, 64) || count < 0) return {};
+		for (const auto& [key, version] : a_state.packVersions)
+			if (!validKey(key, 32) || !validKey(version, 32)) return {};
+		for (const auto& [skill, rank] : a_state.skillRanks)
+			if (!validKey(skill, 64) || rank < 1 || rank > 100) return {};
+		for (const auto& item : a_state.items) {
+			if (item.registryId == 0 || item.rarity > 5 || item.ilvl > 1000 || item.socketCount > 3 ||
+				item.enhancementCount > 5 || !validKey(item.enhancements[0].affixId, 64))
+				return {};
+		}
+		auto sortedItems = a_state.items;
+		std::sort(sortedItems.begin(), sortedItems.end(), [](const ItemMetadata& a, const ItemMetadata& b) {
+			return a.registryId != b.registryId ? a.registryId < b.registryId : a.baseFormId < b.baseFormId;
+		});
+		for (std::size_t i = 1; i < sortedItems.size(); ++i)
+			if (sortedItems[i].registryId == sortedItems[i - 1].registryId) return {};
+		auto sortedContainers = a_state.generatedContainers;
+		std::sort(sortedContainers.begin(), sortedContainers.end());
+		sortedContainers.erase(std::unique(sortedContainers.begin(), sortedContainers.end()), sortedContainers.end());
+		auto sortedQuests = a_state.rewardedQuests;
+		std::sort(sortedQuests.begin(), sortedQuests.end());
+		sortedQuests.erase(std::unique(sortedQuests.begin(), sortedQuests.end()), sortedQuests.end());
+		auto sortedOverrides = a_state.ladderOverrides;
+		std::sort(sortedOverrides.begin(), sortedOverrides.end(), [](const LadderOverride& a, const LadderOverride& b) {
+			if (a.key != b.key) return a.key < b.key;
+			if (a.stage != b.stage) return a.stage < b.stage;
+			return a.flags < b.flags;
+		});
+		std::vector<std::pair<std::string, std::uint8_t>> hunts(a_state.huntFirstKill.begin(), a_state.huntFirstKill.end());
+		std::sort(hunts.begin(), hunts.end());
+		std::vector<std::pair<std::string, std::int32_t>> materials(a_state.materials.begin(), a_state.materials.end());
+		std::sort(materials.begin(), materials.end());
+		std::vector<std::pair<std::string, std::string>> packs(a_state.packVersions.begin(), a_state.packVersions.end());
+		std::sort(packs.begin(), packs.end());
+		std::vector<std::pair<std::string, std::int32_t>> skills(a_state.skillRanks.begin(), a_state.skillRanks.end());
+		std::sort(skills.begin(), skills.end());
+
 		std::vector<std::uint8_t> out;
 		out.insert(out.end(), { 'R', 'N', 'F', 'S' });
 		PutU16(out, kSaveVersion);
-		PutU32(out, 0);  // flags, reserved
+		PutU32(out, 0);
 		PutU16(out, kSaveVersion);
 
 		std::vector<std::vector<std::uint8_t>> sections;
-
 		std::vector<std::uint8_t> progress;
-		for (const auto value : a_state.attributes)
-			PutI32(progress, value);
+		for (const auto value : a_state.attributes) PutI32(progress, value);
 		PutI32(progress, a_state.attributePoints);
 		PutI32(progress, a_state.skillPoints);
 		PutI32(progress, a_state.runeTier);
 		PutI32(progress, a_state.bossKillTier);
 		sections.push_back(BuildSection(kSectionProgression, progress));
-
 		std::vector<std::uint8_t> runes;
-		for (const auto value : a_state.runes)
-			PutI32(runes, value);
+		for (const auto value : a_state.runes) PutI32(runes, value);
 		sections.push_back(BuildSection(kSectionRunes, runes));
-
 		std::vector<std::uint8_t> items;
-		PutU32(items, static_cast<std::uint32_t>(a_state.items.size()));
-		for (const auto& item : a_state.items) {
+		PutU32(items, static_cast<std::uint32_t>(sortedItems.size()));
+		for (const auto& item : sortedItems) {
 			PutU32(items, item.registryId);
 			PutU32(items, item.baseFormId);
 			items.push_back(item.rarity);
 			PutU16(items, item.ilvl);
 			items.push_back(item.socketCount);
-			for (const auto rune : item.socketRunes)
-				PutI32(items, rune);
+			for (const auto rune : item.socketRunes) PutI32(items, rune);
 			items.push_back(item.enhancementCount);
 			for (std::uint8_t e = 0; e < 5; ++e) {
 				const auto& enhancement = item.enhancements[e];
@@ -266,76 +317,67 @@ namespace Runefall
 			PutU16(items, item.tags);
 		}
 		sections.push_back(BuildSection(kSectionItems, items));
-
 		std::vector<std::uint8_t> hunt;
-		PutU32(hunt, static_cast<std::uint32_t>(a_state.huntFirstKill.size()));
-		for (const auto& [id, flag] : a_state.huntFirstKill) {
-			PutString(hunt, id);
-			hunt.push_back(flag);
-		}
+		PutU32(hunt, static_cast<std::uint32_t>(hunts.size()));
+		for (const auto& [id, flag] : hunts) { PutString(hunt, id); hunt.push_back(flag); }
 		sections.push_back(BuildSection(kSectionHunt, hunt));
-
-		std::vector<std::uint8_t> materials;
-		PutU32(materials, static_cast<std::uint32_t>(a_state.materials.size()));
-		for (const auto& [id, count] : a_state.materials) {
-			PutString(materials, id);
-			PutI32(materials, count);
-		}
-		sections.push_back(BuildSection(kSectionMaterials, materials));
-
-		std::vector<std::uint8_t> packs;
-		PutU32(packs, static_cast<std::uint32_t>(a_state.packVersions.size()));
-		for (const auto& [id, version] : a_state.packVersions) {
-			PutString(packs, id);
-			PutString(packs, version);
-		}
-		sections.push_back(BuildSection(kSectionPackState, packs));
-
+		std::vector<std::uint8_t> materialData;
+		PutU32(materialData, static_cast<std::uint32_t>(materials.size()));
+		for (const auto& [id, count] : materials) { PutString(materialData, id); PutI32(materialData, count); }
+		sections.push_back(BuildSection(kSectionMaterials, materialData));
+		std::vector<std::uint8_t> packData;
+		PutU32(packData, static_cast<std::uint32_t>(packs.size()));
+		for (const auto& [id, version] : packs) { PutString(packData, id); PutString(packData, version); }
+		sections.push_back(BuildSection(kSectionPackState, packData));
 		std::vector<std::uint8_t> hash;
 		PutU32(hash, a_state.configHash);
 		sections.push_back(BuildSection(kSectionConfigHash, hash));
-
 		std::vector<std::uint8_t> containers;
-		PutU32(containers, static_cast<std::uint32_t>(a_state.generatedContainers.size()));
-		for (const auto id : a_state.generatedContainers)
-			PutU32(containers, id);
+		PutU32(containers, static_cast<std::uint32_t>(sortedContainers.size()));
+		for (const auto id : sortedContainers) PutU32(containers, id);
 		sections.push_back(BuildSection(kSectionContainers, containers));
-
 		std::vector<std::uint8_t> quests;
-		PutU32(quests, static_cast<std::uint32_t>(a_state.rewardedQuests.size()));
-		for (const auto id : a_state.rewardedQuests)
-			PutU32(quests, id);
+		PutU32(quests, static_cast<std::uint32_t>(sortedQuests.size()));
+		for (const auto id : sortedQuests) PutU32(quests, id);
 		sections.push_back(BuildSection(kSectionQuests, quests));
-
 		std::vector<std::uint8_t> ladder;
-		PutU8(ladder, 1);  // ladder section schema
+		PutU8(ladder, 1);
 		PutU8(ladder, a_state.playerRank);
 		PutU8(ladder, a_state.playerStage);
 		PutU8(ladder, a_state.difficultyProfile);
 		PutU8(ladder, a_state.curveId);
-		PutU16(ladder, static_cast<std::uint16_t>(a_state.ladderOverrides.size()));
-		for (const auto& entry : a_state.ladderOverrides) {
-			PutU64(ladder, entry.key);
-			PutU8(ladder, entry.stage);
-			PutU8(ladder, entry.flags);
-		}
+		PutU16(ladder, static_cast<std::uint16_t>(sortedOverrides.size()));
+		for (const auto& entry : sortedOverrides) { PutU64(ladder, entry.key); PutU8(ladder, entry.stage); PutU8(ladder, entry.flags); }
 		PutU32(ladder, a_state.playerXp);
 		PutString(ladder, a_state.characterClass);
-		PutU16(ladder, static_cast<std::uint16_t>((std::min)(a_state.skillRanks.size(), static_cast<std::size_t>(256))));
-		for (const auto& [skill, rank] : a_state.skillRanks) {
-			PutString(ladder, skill);
-			PutI32(ladder, rank);
-		}
+		PutU16(ladder, static_cast<std::uint16_t>(skills.size()));
+		for (const auto& [skill, rank] : skills) { PutString(ladder, skill); PutI32(ladder, rank); }
 		PutU8(ladder, a_state.endgameComplete ? 1 : 0);
 		sections.push_back(BuildSection(kSectionLadder, ladder));
-
 		PutU32(out, static_cast<std::uint32_t>(sections.size()));
-		for (const auto& section : sections)
-			out.insert(out.end(), section.begin(), section.end());
+		for (const auto& section : sections) out.insert(out.end(), section.begin(), section.end());
 		return out;
 	}
 
-	bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out)
+bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out)
+	{
+		CoSaveState candidate;
+		if (!DecodeImpl(a_bytes, candidate))
+			return false;
+		a_out = std::move(candidate);
+		return true;
+	}
+
+	bool CoSave::LoadRecord(const std::vector<std::uint8_t>& a_bytes, std::uint32_t a_recordVersion, CoSaveState& a_out)
+	{
+		if (a_recordVersion > kSaveVersion) {
+			logger::error("co-save: reject record-version {}", a_recordVersion);
+			return false;
+		}
+		return Decode(a_bytes, a_out);
+	}
+
+	bool CoSave::DecodeImpl(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out)
 	{
 		a_out = CoSaveState{};
 		if (a_bytes.size() < 12)
@@ -353,18 +395,22 @@ namespace Runefall
 		std::uint16_t saveVersion = 0;
 		std::uint32_t flags = 0;
 		std::uint32_t sectionCount = 0;
-		if (!reader.U16(schema) || schema > kSaveVersion)
-			return false;
-		if (schema >= 3 && !reader.U32(flags))
-			return false;
-		if (!reader.U16(saveVersion) || !reader.U32(sectionCount))
-			return false;
-
-		constexpr std::uint32_t kMaxSections = 64;
-		if (sectionCount > kMaxSections) {
-			logger::error("co-save: sectionCount {} exceeds cap {}", sectionCount, kMaxSections);
+		if (!reader.U16(schema) || schema < 1 || schema > kSaveVersion) {
+			logger::error("co-save: reject schema {}", schema);
 			return false;
 		}
+		if (schema >= 3) {
+			if (!reader.U32(flags)) return false;
+			if (flags != 0) { logger::error("co-save: reject flags {}", flags); return false; }
+			if (!reader.U16(saveVersion) || saveVersion != schema) { logger::error("co-save: reject version-mirror"); return false; }
+		} else if (!reader.U16(saveVersion) || saveVersion != schema) {
+			logger::error("co-save: reject version-mirror");
+			return false;
+		}
+		if (!reader.U32(sectionCount)) return false;
+		constexpr std::uint32_t kMaxSections = 64;
+		if (sectionCount > kMaxSections) { logger::error("co-save: reject section-count {}", sectionCount); return false; }
+		std::array<bool, 16> seenSections{};
 		for (std::uint32_t i = 0; i < sectionCount; ++i) {
 			std::uint16_t id = 0;
 			std::uint32_t len = 0;
@@ -379,6 +425,11 @@ namespace Runefall
 				payload[b] = value;
 			}
 			Reader sectionReader{ payload };
+			constexpr std::uint16_t kMaxKnownSection = 12;
+			if (id >= 1 && id <= kMaxKnownSection) {
+				if (seenSections[id]) { logger::error("co-save: reject duplicate-section {}", id); return false; }
+				seenSections[id] = true;
+			}
 
 			switch (id) {
 			case kSectionProgression:
@@ -400,12 +451,12 @@ namespace Runefall
 				break;
 			case kSectionMaterials: {
 				std::uint32_t count = 0;
-				if (!sectionReader.U32(count) || count > 1000)
+				if (!sectionReader.U32(count) || count > 256)
 					return false;
 				for (std::uint32_t i = 0; i < count; ++i) {
 					std::string id;
 					std::int32_t value = 0;
-					if (!sectionReader.String(id) || id.size() > 128 || !sectionReader.I32(value))
+					if (!sectionReader.String(id) || id.size() > 64 || !sectionReader.I32(value) || value < 0)
 						return false;
 					a_out.materials[id] = value;
 				}
@@ -413,7 +464,9 @@ namespace Runefall
 			}
 			case kSectionItems: {
 				std::uint32_t count = 0;
-				if (!sectionReader.U32(count) || count > 100000)
+				if (!sectionReader.U32(count) || count > 1024)
+					return false;
+				if (sectionReader.Remaining() < count * 100u)
 					return false;
 				a_out.items.resize(count);
 				for (auto& item : a_out.items) {
@@ -421,8 +474,8 @@ namespace Runefall
 						return false;
 					if (!sectionReader.U8(item.rarity) || !sectionReader.U16(item.ilvl) || !sectionReader.U8(item.socketCount))
 						return false;
-					if (item.rarity > 5 || item.socketCount > 3) {
-						logger::error("co-save: invalid item rarity {} / socketCount {}", item.rarity, item.socketCount);
+					if (item.registryId == 0 || item.rarity > 5 || item.ilvl > 1000 || item.socketCount > 3) {
+						logger::error("co-save: reject item-range");
 						return false;
 					}
 					for (auto& rune : item.socketRunes)
@@ -431,7 +484,7 @@ namespace Runefall
 					if (!sectionReader.U8(item.enhancementCount) || item.enhancementCount > 5)
 						return false;
 					for (auto& enhancement : item.enhancements) {
-						if (!sectionReader.String(enhancement.affixId) || !sectionReader.String(enhancement.effectEditorId))
+						if (!sectionReader.String(enhancement.affixId) || enhancement.affixId.size() > 64 || !sectionReader.String(enhancement.effectEditorId) || enhancement.effectEditorId.size() > 64)
 							return false;
 						if (!sectionReader.I32(enhancement.category) || !sectionReader.I32(enhancement.tier) || !sectionReader.Float(enhancement.magnitude))
 							return false;
@@ -445,12 +498,12 @@ namespace Runefall
 			}
 			case kSectionHunt: {
 				std::uint32_t count = 0;
-				if (!sectionReader.U32(count) || count > 10000)
+				if (!sectionReader.U32(count) || count > 256)
 					return false;
 				for (std::uint32_t n = 0; n < count; ++n) {
 					std::string   key;
 					std::uint8_t  flag = 0;
-					if (!sectionReader.String(key) || !sectionReader.U8(flag))
+					if (!sectionReader.String(key) || key.size() > 64 || !sectionReader.U8(flag) || flag > 1)
 						return false;
 					a_out.huntFirstKill[std::move(key)] = flag;
 				}
@@ -458,12 +511,12 @@ namespace Runefall
 			}
 			case kSectionPackState: {
 				std::uint32_t count = 0;
-				if (!sectionReader.U32(count) || count > 1000)
+				if (!sectionReader.U32(count) || count > 64)
 					return false;
 				for (std::uint32_t n = 0; n < count; ++n) {
 					std::string key;
 					std::string version;
-					if (!sectionReader.String(key) || !sectionReader.String(version))
+					if (!sectionReader.String(key) || key.size() > 32 || !sectionReader.String(version) || version.size() > 32)
 						return false;
 					a_out.packVersions[std::move(key)] = std::move(version);
 				}
@@ -506,6 +559,10 @@ namespace Runefall
 				if (!sectionReader.U8(a_out.playerRank) || !sectionReader.U8(a_out.playerStage) ||
 					!sectionReader.U8(a_out.difficultyProfile) || !sectionReader.U8(a_out.curveId))
 					return false;
+				if (a_out.playerRank < 1 || a_out.playerRank > 100 || a_out.playerStage < 1 || a_out.playerStage > 100 ||
+					(a_out.difficultyProfile != 255 && (a_out.difficultyProfile < 1 || a_out.difficultyProfile > 5)) ||
+					a_out.curveId < 1 || a_out.curveId > 5)
+					return false;
 				std::uint16_t count = 0;
 				if (!sectionReader.U16(count) || count > kMaxLadderOverrides)
 					return false;
@@ -519,7 +576,7 @@ namespace Runefall
 					a_out.ladderOverrides.push_back(entry);
 				}
 				if (sectionReader.Remaining() >= 4) {
-					if (!sectionReader.U32(a_out.playerXp))
+					if (!sectionReader.U32(a_out.playerXp) || a_out.playerXp > 10000000)
 						return false;
 				}
 				if (sectionReader.Remaining() > 0) {
@@ -533,14 +590,17 @@ namespace Runefall
 						std::int32_t rank = 0;
 						if (!sectionReader.String(skill) || skill.size() > 64 || !sectionReader.I32(rank))
 							return false;
-						if (rank > 0)
-							a_out.skillRanks[skill] = rank;
+						if (rank < 1 || rank > 100)
+							return false;
+						a_out.skillRanks[skill] = rank;
 					}
 					if (sectionReader.Remaining() >= 1) {
 						std::uint8_t complete = 0;
 						if (!sectionReader.U8(complete))
 							return false;
-						a_out.endgameComplete = complete != 0;
+						if (complete > 1)
+						return false;
+					a_out.endgameComplete = complete != 0;
 					}
 				}
 				break;
@@ -549,7 +609,21 @@ namespace Runefall
 				break;
 			}
 		}
+		if (reader.Remaining() != 0) { logger::error("co-save: reject trailing bytes {}", reader.Remaining()); return false; }
 		MigrateLegacy(a_out, schema);
+		std::sort(a_out.generatedContainers.begin(), a_out.generatedContainers.end());
+		a_out.generatedContainers.erase(std::unique(a_out.generatedContainers.begin(), a_out.generatedContainers.end()), a_out.generatedContainers.end());
+		std::sort(a_out.rewardedQuests.begin(), a_out.rewardedQuests.end());
+		a_out.rewardedQuests.erase(std::unique(a_out.rewardedQuests.begin(), a_out.rewardedQuests.end()), a_out.rewardedQuests.end());
+		std::sort(a_out.items.begin(), a_out.items.end(), [](const ItemMetadata& a, const ItemMetadata& b) { return a.registryId != b.registryId ? a.registryId < b.registryId : a.baseFormId < b.baseFormId; });
+		for (std::size_t i = 0; i < a_out.items.size(); ++i) {
+			const auto& item = a_out.items[i];
+			if (item.registryId == 0 || (i > 0 && a_out.items[i - 1].registryId == item.registryId) || item.rarity > 5 || item.ilvl > 1000 || item.socketCount > 3 || item.enhancementCount > 5)
+				return false;
+			for (std::uint8_t e = 0; e < item.enhancementCount && e < 5; ++e)
+				if (item.enhancements[e].category < 0 || item.enhancements[e].category > 5 || item.enhancements[e].tier < 0 || item.enhancements[e].tier > 5)
+					return false;
+		}
 		return true;
 	}
 
@@ -568,14 +642,24 @@ namespace Runefall
 
 	void CoSave::OnSave(SKSE::SerializationInterface* a_intfc)
 	{
-		if (!a_intfc)
-			return;
+		if (!a_intfc) return;
 		auto& state = CoSave::Get().State();
 		Progression::Get().SaveToCoSave();
 		MaterialRegistry::Get().SaveToCoSave();
 		state.items = ItemRegistry::Get().All();
 		state.configHash = HashConfig();
 		const auto bytes = Encode(state);
+		if (bytes.empty()) {
+			logger::error("co-save: encode cap exceeded; save skipped");
+			return;
+		}
+		if (bytes.size() > kMaxEncodedBytes) {
+			logger::error("co-save: encoded bytes exceed budget {} > {}; save skipped", bytes.size(), kMaxEncodedBytes);
+			return;
+		}
+		logger::info("co-save: state rank={} stage={} xp={} class={} endgame={} containers={} quests={} items={} materials={} configHash={:08X}",
+			state.playerRank, state.playerStage, state.playerXp, state.characterClass, state.endgameComplete ? 1 : 0,
+			state.generatedContainers.size(), state.rewardedQuests.size(), state.items.size(), state.materials.size(), state.configHash);
 		if (!a_intfc->OpenRecord(kSerializationRecord, kSaveVersion)) {
 			logger::error("co-save: failed to open record");
 			return;
@@ -588,17 +672,17 @@ namespace Runefall
 
 	void CoSave::OnLoad(SKSE::SerializationInterface* a_intfc)
 	{
-		if (!a_intfc)
-			return;
+		if (!a_intfc) return;
 		CoSave::Get().Reset();
 
 		std::uint32_t type = 0;
 		std::uint32_t size = 0;
 		std::uint32_t version = 0;
+		CoSaveState candidate;
+		bool loaded = false;
 		while (a_intfc->GetNextRecordInfo(type, version, size)) {
-			constexpr std::uint32_t kMaxRecordBytes = 16u * 1024u * 1024u;
 			if (size > kMaxRecordBytes) {
-				logger::error("co-save: record {:08X} size {} exceeds cap; skipped", type, size);
+				logger::error("co-save: reject record-size {}", size);
 				continue;
 			}
 			std::vector<std::uint8_t> payload(size);
@@ -606,20 +690,26 @@ namespace Runefall
 				logger::error("co-save: short read on record {:08X}", type);
 				continue;
 			}
-			if (type != kSerializationRecord)
-				continue;
-			if (version > kSaveVersion) {
-				logger::error("co-save: schema {} newer than supported {}", version, kSaveVersion);
+			if (type != kSerializationRecord) continue;
+			if (loaded) { logger::info("co-save: duplicate record ignored"); continue; }
+			if (!LoadRecord(payload, version, candidate)) {
+				logger::error("co-save: reject record; defaults kept");
 				continue;
 			}
-			if (Decode(payload, CoSave::Get().State())) {
-				ItemRegistry::Get().Load(CoSave::Get().State().items);
-				Progression::Get().LoadFromCoSave();
-				MaterialRegistry::Get().LoadFromCoSave();
-				logger::info("co-save: loaded schema {} ({} bytes, {} item entries)", version, payload.size(), CoSave::Get().State().items.size());
-			} else {
-				logger::error("co-save: malformed section payload, state reset");
-			}
+			CoSave::Get().State() = candidate;
+			ItemRegistry::Get().Load(candidate.items);
+			Progression::Get().LoadFromCoSave();
+			MaterialRegistry::Get().LoadFromCoSave();
+			loaded = true;
+			logger::info("co-save: loaded schema {} ({} bytes, {} item entries)", version, payload.size(), candidate.items.size());
+			logger::info("co-save: state rank={} stage={} xp={} class={} endgame={} containers={} quests={} items={} materials={} configHash={:08X}",
+				candidate.playerRank, candidate.playerStage, candidate.playerXp, candidate.characterClass, candidate.endgameComplete ? 1 : 0,
+				candidate.generatedContainers.size(), candidate.rewardedQuests.size(), candidate.items.size(), candidate.materials.size(), candidate.configHash);
+		}
+		if (!loaded) {
+			CoSave::Get().Reset();
+			ItemRegistry::Get().Clear();
+			logger::info("co-save: no record; defaults");
 		}
 	}
 
@@ -668,7 +758,7 @@ namespace Runefall
 		item.tags = static_cast<std::uint16_t>(ItemTag::ContainerLoot);
 		sample.items.push_back(item);
 		sample.configHash = HashConfig();
-		sample.generatedContainers = { 0x000ABCDE, 0x00012345 };
+		sample.generatedContainers = { 0x00012345, 0x000ABCDE };
 		sample.rewardedQuests = { 0x000F00D1 };
 		sample.playerRank = 42;
 		sample.playerXp = 1234;
@@ -677,8 +767,22 @@ namespace Runefall
 		sample.difficultyProfile = 2;
 		sample.curveId = 1;
 		sample.ladderOverrides.push_back({ 0x00000000000F00D1ull, 50, 1 });
+		sample.skillRanks["Cleave"] = 3;
+		sample.characterClass = "warrior";
 
 		const auto encoded = Encode(sample);
+		if (encoded.empty())
+			return { "CoSave.SelfTest", CheckStatus::Fail, "encode returned empty" };
+		if (encoded.size() > kMaxEncodedBytes)
+			return { "CoSave.SelfTest", CheckStatus::Fail, "sample exceeds budget" };
+		if (!(encoded[0] == 'R' && encoded[1] == 'N' && encoded[2] == 'F' && encoded[3] == 'S') ||
+			encoded[4] != 3 || encoded[5] != 0 || encoded[6] != 0 || encoded[7] != 0 ||
+			encoded[8] != 0 || encoded[9] != 0 || encoded[10] != 3 || encoded[11] != 0)
+			return { "CoSave.SelfTest", CheckStatus::Fail, "header layout mismatch" };
+		logger::info("co-save: header hex {:02X}{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}{:02X}",
+			encoded[0], encoded[1], encoded[2], encoded[3], encoded[4], encoded[5], encoded[6], encoded[7],
+			encoded[8], encoded[9], encoded[10], encoded[11], encoded[12], encoded[13], encoded[14], encoded[15]);
+
 		CoSaveState decoded;
 		if (!Decode(encoded, decoded))
 			return { "CoSave.SelfTest", CheckStatus::Fail, "round-trip decode failed" };
@@ -689,19 +793,122 @@ namespace Runefall
 			decoded.items[0].registryId != item.registryId || decoded.items[0].enhancements[0].affixId != item.enhancements[0].affixId ||
 			decoded.items[0].enhancements[0].magnitude != item.enhancements[0].magnitude || decoded.items[0].tags != item.tags ||
 			decoded.generatedContainers != sample.generatedContainers || decoded.rewardedQuests != sample.rewardedQuests ||
-			decoded.playerRank != sample.playerRank || decoded.playerXp != sample.playerXp || decoded.endgameComplete != sample.endgameComplete || decoded.playerStage != sample.playerStage ||
-			decoded.difficultyProfile != sample.difficultyProfile || decoded.curveId != sample.curveId ||
+			decoded.playerRank != sample.playerRank || decoded.playerXp != sample.playerXp || decoded.endgameComplete != sample.endgameComplete ||
+			decoded.playerStage != sample.playerStage || decoded.difficultyProfile != sample.difficultyProfile || decoded.curveId != sample.curveId ||
 			decoded.ladderOverrides.size() != 1 || decoded.ladderOverrides[0].key != sample.ladderOverrides[0].key ||
-			decoded.ladderOverrides[0].stage != sample.ladderOverrides[0].stage)
+			decoded.ladderOverrides[0].stage != sample.ladderOverrides[0].stage || decoded.skillRanks != sample.skillRanks || decoded.characterClass != sample.characterClass)
 			return { "CoSave.SelfTest", CheckStatus::Fail, "round-trip data mismatch" };
 
-		// Truncated input must be rejected, not crash.
 		auto truncated = encoded;
 		truncated.resize(truncated.size() / 2);
-		CoSaveState ignored;
-		if (Decode(truncated, ignored))
-			return { "CoSave.SelfTest", CheckStatus::Fail, "truncated payload was accepted" };
+		CoSaveState sentinel;
+		sentinel.playerRank = 77;
+		sentinel.playerXp = 123;
+		const auto sentinelBytes = Encode(sentinel);
+		if (Decode(truncated, sentinel) || Encode(sentinel) != sentinelBytes)
+			return { "CoSave.SelfTest", CheckStatus::Fail, "decode not failure-pure" };
 
-		return { "CoSave.SelfTest", CheckStatus::Pass, std::format("round-trip {} bytes; truncation rejected", encoded.size()) };
+		auto schemaZero = encoded;
+		schemaZero[4] = 0;
+		schemaZero[5] = 0;
+		CoSaveState reject;
+		if (Decode(schemaZero, reject))
+			return { "CoSave.SelfTest", CheckStatus::Fail, "schema 0 accepted" };
+		if (LoadRecord(encoded, 4, reject) || LoadRecord(encoded, 0, reject) == false)
+			return { "CoSave.SelfTest", CheckStatus::Fail, "record version gate invalid" };
+
+		// v2 migration fixture: 12-byte header, progression with runeTier=5, bossKillTier=2, no ladder.
+		std::vector<std::uint8_t> v2;
+		v2.insert(v2.end(), { 'R', 'N', 'F', 'S' });
+		PutU16(v2, 2); PutU16(v2, 2);
+		std::vector<std::vector<std::uint8_t>> v2sections;
+		std::vector<std::uint8_t> v2progress;
+		for (int i = 0; i < 9; ++i) PutI32(v2progress, 0);
+		PutI32(v2progress, 0); PutI32(v2progress, 0); PutI32(v2progress, 5); PutI32(v2progress, 2);
+		v2sections.push_back(BuildSection(kSectionProgression, v2progress));
+		std::vector<std::uint8_t> v2runes; for (int i = 0; i < 5; ++i) PutI32(v2runes, 0);
+		v2sections.push_back(BuildSection(kSectionRunes, v2runes));
+		std::vector<std::uint8_t> zeroCount; PutU32(zeroCount, 0);
+		v2sections.push_back(BuildSection(kSectionItems, zeroCount));
+		v2sections.push_back(BuildSection(kSectionHunt, zeroCount));
+		v2sections.push_back(BuildSection(kSectionMaterials, zeroCount));
+		v2sections.push_back(BuildSection(kSectionPackState, zeroCount));
+		std::vector<std::uint8_t> v2hash; PutU32(v2hash, 0); v2sections.push_back(BuildSection(kSectionConfigHash, v2hash));
+		v2sections.push_back(BuildSection(kSectionContainers, zeroCount));
+		v2sections.push_back(BuildSection(kSectionQuests, zeroCount));
+		PutU32(v2, static_cast<std::uint32_t>(v2sections.size()));
+		for (const auto& section : v2sections) v2.insert(v2.end(), section.begin(), section.end());
+		CoSaveState migrated;
+		if (!Decode(v2, migrated) || migrated.playerRank != 100 || migrated.playerStage != 100 ||
+			migrated.difficultyProfile != 255 || migrated.curveId != 1 || migrated.bossKillTier != 2)
+			return { "CoSave.SelfTest", CheckStatus::Fail, "v2 migration fixture failed" };
+
+		// Deterministic encoding independent of unordered_map insertion order.
+		CoSaveState reordered;
+		reordered.packVersions["unique"] = "0.2.0";
+		reordered.huntFirstKill["Dragon"] = 0;
+		reordered.huntFirstKill["Draugr"] = 1;
+		for (const auto& [key, value] : sample.skillRanks) reordered.skillRanks[key] = value;
+				reordered.characterClass = "warrior";
+		reordered.playerRank = 42;
+		reordered.playerStage = 42;
+		reordered.playerXp = 1234;
+		reordered.endgameComplete = true;
+		reordered.difficultyProfile = 2;
+		reordered.curveId = 1;
+		reordered.generatedContainers = { 0x00012345, 0x000ABCDE };
+		reordered.rewardedQuests = { 0x000F00D1 };
+		reordered.items = sample.items;
+		reordered.runes[0] = 11;
+		reordered.runes[4] = 1;
+		reordered.attributePoints = 5;
+		reordered.skillPoints = 2;
+		reordered.attributes[0] = 7;
+		reordered.attributes[8] = -3;
+		reordered.configHash = sample.configHash;
+		reordered.ladderOverrides = sample.ladderOverrides;
+		if (Encode(sample) != Encode(reordered))
+			return { "CoSave.SelfTest", CheckStatus::Fail, "encoding is not deterministic" };
+
+		// Encode caps and gate states.
+		CoSaveState tooManySkills = sample;
+		for (int i = 0; i < 258; ++i) tooManySkills.skillRanks["skill_" + std::to_string(i)] = 1;
+		if (!Encode(tooManySkills).empty())
+			return { "CoSave.SelfTest", CheckStatus::Fail, "skill cap not enforced" };
+		CoSaveState tooManyItems = sample;
+		for (int i = 0; i < 1025; ++i) tooManyItems.items.push_back(item);
+		if (!Encode(tooManyItems).empty())
+			return { "CoSave.SelfTest", CheckStatus::Fail, "item cap not enforced" };
+
+		// 1000-item Phase-0 case remains within the 1 MiB budget.
+		CoSaveState thousand;
+		thousand.playerRank = 1;
+		thousand.playerStage = 1;
+		thousand.curveId = 1;
+		for (int i = 1; i <= 1000; ++i) {
+			ItemMetadata cheap;
+			cheap.registryId = static_cast<std::uint32_t>(i);
+			cheap.baseFormId = 0x12EB7;
+			cheap.rarity = 0;
+			cheap.ilvl = 1;
+			cheap.tags = 0;
+			thousand.items.push_back(cheap);
+		}
+		const auto thousandBytes = Encode(thousand);
+		if (thousandBytes.empty() || thousandBytes.size() > kMaxEncodedBytes)
+			return { "CoSave.SelfTest", CheckStatus::Fail, "1000-item budget failed" };
+
+		// Eviction is smallest FormID, not FIFO.
+		auto savedContainers = CoSave::Get().State().generatedContainers;
+		CoSave::Get().State().generatedContainers.clear();
+		for (std::uint32_t id = 1; id <= 4096; ++id) CoSave::Get().RememberGeneratedContainer(id);
+		CoSave::Get().RememberGeneratedContainer(0xABCDEF);
+		if (CoSave::Get().HasGeneratedContainer(1) || !CoSave::Get().HasGeneratedContainer(0xABCDEF) ||
+			CoSave::Get().State().generatedContainers.size() != 4096)
+			return { "CoSave.SelfTest", CheckStatus::Fail, "eviction policy failed" };
+		CoSave::Get().State().generatedContainers = std::move(savedContainers);
+
+		return { "CoSave.SelfTest", CheckStatus::Pass,
+			std::format("round-trip {} bytes; header/sentinel/v2/deterministic/caps/budget/eviction OK", encoded.size()) };
 	}
 }

@@ -175,10 +175,11 @@ no target protection by default (THREAT-PROTECTION owns that policy).
 
 Canonical co-save schema **v3** (this section supersedes the older L4/ARCHITECTURE maps):
 
-- header: magic, u16 schema, u16 serialization version, **u32 flags**, u32 section count.
+- header (canonical, code order): magic, u16 schema, **u32 flags (schema 3, must be 0)**, u16 serialization version, u32 section count. Legacy v1/v2: magic, u16 schema, u16 serialization version, u32 section count (12-byte header, no flags).
 - sections: 1 progression, 2 rune wallet, 3 item registry, 4 hunt state, 5 materials,
   6 unique-source (reserved), 7 pack state, 8 config hash, 9 container state, 10 quest state,
   **11 ladder state**, 12 encounter state (reserved).
+- Co-save encoded budget: 1 MiB (kMaxEncodedBytes); record read cap 2 MiB; 1,000-item Phase-0 case ~<900 KiB.
 - section 11 payload: version, playerRank, playerStage, difficultyProfile, curveId, overrideCount;
   entries `{u64 key, u8 stage, u8 flags}`, cap 256.
 - Only player ladder state + manual overrides persist; generic actors and encounter actors are

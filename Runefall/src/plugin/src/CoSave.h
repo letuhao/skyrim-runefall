@@ -49,6 +49,11 @@ namespace Runefall
 		[[nodiscard]] const CoSaveState& State() const noexcept { return state; }
 		void Reset();
 
+		static constexpr std::uint32_t kMaxEncodedBytes = 1048576;
+		static constexpr std::uint32_t kMaxRecordBytes = 2097152;
+
+		[[nodiscard]] static bool LoadRecord(const std::vector<std::uint8_t>& a_bytes, std::uint32_t a_recordVersion, CoSaveState& a_out);
+
 		[[nodiscard]] bool HasGeneratedContainer(std::uint32_t a_formID) const;
 		bool               RememberGeneratedContainer(std::uint32_t a_formID);
 		void               ForgetGeneratedContainer(std::uint32_t a_formID);
@@ -64,6 +69,7 @@ namespace Runefall
 
 		static std::vector<std::uint8_t> Encode(const CoSaveState& a_state);
 		static bool                      Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out);
+		static bool                      DecodeImpl(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out);
 		static void                      MigrateLegacy(CoSaveState& a_state, std::uint16_t a_schema);
 		static std::uint32_t             HashConfig();
 

@@ -1,0 +1,10 @@
+[17:17:33.049] [info] [CoSave.cpp:782] co-save: header hex 524E465303000000000003000A000000
+[17:17:33.051] [info] [DebugHarness.cpp:155] [probe][PASS] CoSave.SelfTest: round-trip 442 bytes; header/sentinel/v2/deterministic/caps/budget/eviction OK
+[17:17:42.517] [info] [CoSave.cpp:704] co-save: loaded schema 1 (128 bytes, 0 item entries)
+[17:17:42.517] [info] [CoSave.cpp:705] co-save: state rank=1 stage=1 xp=0 class= endgame=0 containers=0 quests=0 items=0 materials=0 configHash=52464C31
+[17:18:04.838] [info] [CoSave.cpp:782] co-save: header hex 524E465303000000000003000A000000
+[17:18:04.840] [info] [DebugHarness.cpp:155] [probe][PASS] CoSave.SelfTest: round-trip 442 bytes; header/sentinel/v2/deterministic/caps/budget/eviction OK
+[17:18:13.064] [info] [CoSave.cpp:660] co-save: state rank=1 stage=1 xp=0 class= endgame=0 containers=1 quests=0 items=5 materials=31 configHash=52464C31
+[17:18:13.064] [info] [CoSave.cpp:670] co-save: wrote 1948 bytes (schema 3)
+[17:18:14.294] [info] [CoSave.cpp:704] co-save: loaded schema 3 (1948 bytes, 5 item entries)
+[17:18:14.294] [info] [CoSave.cpp:705] co-save: state rank=1 stage=1 xp=0 class= endgame=0 containers=1 quests=0 items=5 materials=31 configHash=52464C31

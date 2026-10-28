@@ -114,7 +114,7 @@ Fixed interface either way:
 
 ## 5. Co-save format
 
-Header: magic RNFS, u16 schema version, u16 save serialization version, u32 flags, u32 section count.
+Header (canonical, code order): magic RNFS, u16 schema, u32 flags (schema 3 only, must be 0), u16 serialization version, u32 section count. Legacy v1/v2: magic, u16 schema, u16 serialization version, u32 section count (12 bytes, no flags).
 Sections are TLV (id, length, payload); unknown sections are skipped (forward compatibility).
 Known sections:
 
@@ -131,7 +131,7 @@ Known sections:
     11 ladder state      player rank/stage, difficulty profile, manual stage overrides (cap 256)
     12 encounter state   reserved for the encounter module
 
-    Header (v3): magic RNFS, u16 schema=3, u16 serialization version, u32 flags, u32 section count.
+    Header (v3): magic RNFS, u16 schema=3, u32 flags=0, u16 serialization version=3, u32 section count. Encoded budget 1 MiB; record read cap 2 MiB.
     This section map supersedes earlier L4/ARCHITECTURE maps; the authoritative table is
     SPECS/POWER-LADDER.md section 9.
 

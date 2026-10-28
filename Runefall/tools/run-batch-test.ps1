@@ -254,6 +254,9 @@ Add-Check 'Co-save tracked containers' ($generatedBefore -gt 0) "count=$generate
 $saveProbe = Invoke-Mcp 'save_game' @{ saveName = 'RF_LOOT_PROBE' }
 Add-Check 'Save probe session' ($saveProbe -match '"success":true') ''
 Add-Check 'Co-save schema 3 written' (Wait-LogPattern 'co-save: wrote .*schema 3' 12) ''
+$stateRegex = 'co-save: state rank=(\d+) stage=(\d+) xp=(\d+) class=(\S*) endgame=(\d+) containers=(\d+) quests=(\d+) items=(\d+) materials=(\d+) configHash=([0-9A-F]+)'
+$saveStateMatches = [regex]::Matches((Get-LogText), $stateRegex)
+$saveState = if ($saveStateMatches.Count -gt 0) { $saveStateMatches[$saveStateMatches.Count - 1] } else { $null }
 $loadProbe = Invoke-Mcp 'load_save' @{ saveName = 'RF_LOOT_PROBE' }
 Add-Check 'Reload probe session' ($loadProbe -match '"loading":true') ''
 $reloadDeadline = (Get-Date).AddSeconds($LoadTimeoutSeconds)
@@ -264,6 +267,10 @@ while ((Get-Date) -lt $reloadDeadline) {
 }
 Start-Sleep -Seconds 12
 Add-Check 'Co-save schema 3 loaded' (Wait-LogPattern 'co-save: loaded schema 3' 15) ''
+$loadStateMatches = [regex]::Matches((Get-LogText), $stateRegex)
+$loadState = if ($loadStateMatches.Count -gt 0) { $loadStateMatches[$loadStateMatches.Count - 1] } else { $null }
+$fieldsMatch = $saveState -and $loadState -and (0..9 | ForEach-Object { $saveState.Groups[$_].Value -eq $loadState.Groups[$_].Value }) -notcontains $false
+Add-Check 'Co-save fields round-trip' $fieldsMatch $(if ($saveState -and $loadState) { "save=$($saveState.Value) load=$($loadState.Value)" } else { 'state log missing' })
 $null = Tap-Key 68
 Start-Sleep -Seconds 2
 $snapshotText = Get-LogText

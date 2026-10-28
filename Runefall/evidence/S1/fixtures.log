@@ -1,0 +1,7 @@
+schema2_tier5.bin 166 B846584A0BF34CBEA4ADC60070311DB329E9536B68BE27B4917FC7523AA80B81
+schema1_legacy.bin 158 C06AE63FF8E1D43F5E074179A34B259BE334D200D8F93C07021254BB7201DB2F
+baseline_v3.bin 190 76B8EAF50351E738EB0A6538C5C407D32EEA8872B2F9DB96C7BDE0066CEA6FA6
+fixtures written
+build/slices/S1/fixtures/schema2_tier5.bin {"schema": 2, "flags": null, "saveVersion": 2, "sectionCount": 9, "sections": [[1, 52], [2, 20], [3, 4], [4, 4], [5, 4], [7, 4], [8, 4], [9, 4], [10, 4]], "trailing": 0}
+build/slices/S1/fixtures/schema1_legacy.bin {"schema": 1, "flags": null, "saveVersion": 1, "sectionCount": 9, "sections": [[1, 44], [2, 20], [3, 4], [4, 4], [5, 4], [7, 4], [8, 4], [9, 4], [10, 4]], "trailing": 0}
+build/slices/S1/fixtures/baseline_v3.bin {"schema": 3, "flags": 0, "saveVersion": 3, "sectionCount": 10, "sections": [[1, 52], [2, 20], [3, 4], [4, 4], [5, 4], [7, 4], [8, 4], [9, 4], [10, 4], [11, 14]], "trailing": 0}
