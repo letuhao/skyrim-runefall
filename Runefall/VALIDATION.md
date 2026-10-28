@@ -1050,3 +1050,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - EncounterManager deterministic selection, exterior-only spawn, caps/cooldown; F5 debug spawn.
 - In-game boss_1 spawned at stage 10; batch 28/28, static gates 9/9.
 - Ambient cell-load integration and city/quest filtering are deferred to W2.3/W2.5 content.
+
+
+## W2.3 rare high-stage spawns - PASS (2026-10-28 08:59-09:08)
+
+- rare_spawns table with chance permille, stage range, condition tag seam.
+- Rare apex spawned at stage 91 in Tamriel; batch 29/29; static gates 9/9.

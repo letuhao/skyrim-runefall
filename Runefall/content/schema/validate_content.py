@@ -27,6 +27,7 @@ ENTITY_SCHEMA = {
     "penetrationProfiles": "penetration-profiles.schema.json",
     "worldBands": "world-bands.schema.json",
     "encounterTables": "encounter-tables.schema.json",
+    "rareSpawns": "rare-spawns.schema.json",
     "ratingProfiles": "rating-profiles.schema.json",
     "combatPaceProfiles": "combat-pace-profiles.schema.json",
     "ratingDisplayProfiles": "rating-display-profiles.schema.json",

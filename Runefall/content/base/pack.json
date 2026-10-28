@@ -84,6 +84,10 @@
     {
       "entity": "encounterTables",
       "file": "data/encounter_tables.json"
+    },
+    {
+      "entity": "rareSpawns",
+      "file": "data/rare_spawns.json"
     }
   ],
   "localization": []

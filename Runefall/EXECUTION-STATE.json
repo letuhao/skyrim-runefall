@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "W2.3",
-  "updatedAt": "2026-10-28T01:59:20.363Z",
+  "currentSlice": "W2.4",
+  "updatedAt": "2026-10-28T02:09:11.470Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -442,11 +442,24 @@
       "id": "W2.3",
       "layer": "L2",
       "slice": "Rare high-stage spawns",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "low-level zone can rarely spawn high stage; rate tunable",
       "depends": "W2.2",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/w2.3-rare-spawns-20261028.md",
+        "build/evidence/batch-test-20261028-090700.md",
+        "build/evidence/static-gates-20261028-090820.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "rate-table": "PASS",
+        "high-stage-stage-override": "PASS stage91",
+        "determinism": "PASS",
+        "conditions": "PASS reserved fail-closed",
+        "batch": "PASS 29/29",
+        "no-crash": "PASS",
+        "static-gates": "PASS"
+      }
     },
     "W2.4": {
       "id": "W2.4",
@@ -730,9 +743,9 @@
     }
   },
   "currentWork": {
-    "slice": "W2.3",
-    "step": "rare high-stage spawns",
-    "nextAction": "rate-table high-stage chance and condition hooks reserved for packs"
+    "slice": "W2.4",
+    "step": "hunt contracts",
+    "nextAction": "player-called hunt contracts, identity, reward/evidence, safety"
   },
   "blockers": [],
   "finalRelease": null

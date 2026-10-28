@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "rareSpawns": [
+    {
+      "schemaVersion": 1,
+      "rareId": "rare_tamriel_apex",
+      "bandId": "tamriel",
+      "actorEditorId": "RF_NPC_Boss_03",
+      "chancePermille": 1000,
+      "stageMin": 80,
+      "stageMax": 100,
+      "conditionTag": "",
+      "weight": 100,
+      "enabled": true
+    },
+    {
+      "schemaVersion": 1,
+      "rareId": "rare_tamriel_conditioned",
+      "bandId": "tamriel",
+      "actorEditorId": "RF_NPC_Boss_04",
+      "chancePermille": 0,
+      "stageMin": 60,
+      "stageMax": 80,
+      "conditionTag": "night",
+      "weight": 100,
+      "enabled": true
+    }
+  ]
+}

@@ -49,6 +49,7 @@ namespace Runefall
 		[[nodiscard]] std::uint32_t CellsPruned() const noexcept { return cellsPruned; }
 
 		[[nodiscard]] std::uint8_t StageForFormID(RE::FormID a_formID) const;
+		void SetActorStageOverride(RE::FormID a_formID, std::uint8_t a_stage);
 
 		[[nodiscard]] static SelfTestResult SelfTest();
 
@@ -79,6 +80,7 @@ namespace Runefall
 		std::unordered_set<RE::FormID>         processedActors;
 		std::unordered_map<RE::FormID, std::int32_t> actorRanks;
 		std::unordered_map<RE::FormID, std::uint8_t> actorStages;
+		std::unordered_map<RE::FormID, std::uint8_t> actorStageOverrides;
 		std::unordered_map<RE::FormID, std::uint32_t> cellLootCounts;
 		bool                                   hooksRegistered = false;
 

@@ -265,7 +265,8 @@ $latestCrash = Get-ChildItem $skseDir -Filter 'crash-*.log' -ErrorAction Silentl
 $crashed = $latestCrash -and $latestCrash.LastWriteTime -gt $startTime
 if ($TestEncounters) {
     $null = Tap-Key 63
-    Add-Check 'Encounter spawned' (Wait-LogPattern 'encounter: spawned ' 12) ''
+    Add-Check 'Encounter spawned' (Wait-LogPattern '(encounter: spawned|rare-spawn: spawned)' 12) ''
+    Add-Check 'Rare high-stage spawn' (Wait-LogPattern 'rare-spawn: spawned .* stage (8[0-9]|9[0-9]|100)' 12) ''
 }
 Add-Check 'No new crash log' (-not $crashed) ($(if ($latestCrash) { $latestCrash.Name + ' @ ' + $latestCrash.LastWriteTime } else { 'none' }))
 $stillRunning = Get-CimInstance Win32_Process -Filter "name='SkyrimSE.exe'" -ErrorAction SilentlyContinue |

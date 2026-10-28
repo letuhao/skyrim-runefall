@@ -387,8 +387,16 @@ namespace Runefall
 
 	std::uint8_t LootService::StageForFormID(RE::FormID a_formID) const
 	{
+		if (const auto override = actorStageOverrides.find(a_formID); override != actorStageOverrides.end())
+			return override->second;
 		const auto it = actorStages.find(a_formID);
 		return it == actorStages.end() ? 0 : it->second;
+	}
+
+	void LootService::SetActorStageOverride(RE::FormID a_formID, std::uint8_t a_stage)
+	{
+		if (a_formID != 0 && a_stage >= 1 && a_stage <= 100)
+			actorStageOverrides[a_formID] = a_stage;
 	}
 
 	std::uint8_t LootService::ResolveActorStage(RE::Actor* a_actor)

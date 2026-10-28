@@ -4,6 +4,8 @@
 #include "DataStore.h"
 #include "FormCatalog.h"
 #include "WorldBandEngine.h"
+#include "RareSpawnEngine.h"
+#include "LootService.h"
 
 #include "RE/P/PlayerCharacter.h"
 #include "RE/T/TESNPC.h"
@@ -136,6 +138,22 @@ namespace Runefall
 		if (stage == 0)
 			return false;
 		const auto seed = static_cast<std::uint64_t>(player->GetFormID()) ^ static_cast<std::uint64_t>(cell->GetFormID());
+		RareSpawn rare;
+		if (RareSpawnEngine::Get().TryPick("tamriel", seed, rare)) {
+			auto* rareBase = FormCatalog::Get().LookupAs<RE::TESNPC>(rare.actorEditorId);
+			if (rareBase) {
+				const auto placedRare = player->PlaceObjectAtMe(rareBase, true);
+				if (placedRare) {
+					LootService::Get().SetActorStageOverride(placedRare->GetFormID(), rare.stage);
+					// rare spawns use the debug spawn path but still obey one-per-cell semantics
+					const auto cellID = cell->GetFormID();
+					++cellCounts[cellID];
+					cooldowns[cellID] = std::chrono::steady_clock::now() + std::chrono::seconds(60);
+					logger::info("rare-spawn: spawned {} ({}) at {:08X} stage {}", rare.rareId, rare.actorEditorId, placedRare->GetFormID(), rare.stage);
+					return true;
+				}
+			}
+		}
 		const auto* entry = Select("tamriel", stage, seed);
 		if (!entry)
 			return false;

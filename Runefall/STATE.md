@@ -105,7 +105,8 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
 - C1.8 PASS: player stage input; penetration base/per10/cap; mage/weapon channels; batch 26/26.
 - L1 combat core C1.1-C1.8 complete. W2.1 PASS: data-driven world bands; Draugr stage12.
 - W2.2 PASS: encounter table, caps/cooldown, F5 spawn, batch 28/28.
-- Next: W2.3 rare high-stage spawns.
+- W2.3 PASS: rare spawn chance/stage/condition seam; apex stage91; batch 29/29.
+- Next: W2.4 hunt contracts.
 
 ## Next step
 

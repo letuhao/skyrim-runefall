@@ -48,6 +48,7 @@ namespace Runefall
 			"penetration_profiles.csv",
 			"world_bands.csv",
 			"encounter_tables.csv",
+			"rare_spawns.csv",
 		};
 	}
 

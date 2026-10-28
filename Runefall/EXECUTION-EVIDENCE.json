@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T01:59:20.367Z",
+  "updatedAt": "2026-10-28T02:09:11.474Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -432,6 +432,27 @@
       "slice": "W2.2",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-085836.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "W2.3",
+      "kind": "summary",
+      "path": "build/evidence/w2.3-rare-spawns-20261028.md",
+      "result": "PASS",
+      "detail": "rare apex stage91; chance table; conditions reserved"
+    },
+    {
+      "slice": "W2.3",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-090700.md",
+      "result": "PASS",
+      "detail": "29/29; rare spawn; no crash"
+    },
+    {
+      "slice": "W2.3",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-090820.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

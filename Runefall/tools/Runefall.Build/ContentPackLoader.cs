@@ -25,6 +25,7 @@ internal sealed class LoadedPack
     public List<string[]> PenetrationRows { get; } = new();
     public List<string[]> WorldBandRows { get; } = new();
     public List<string[]> EncounterRows { get; } = new();
+    public List<string[]> RareRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -79,6 +80,7 @@ internal static class ContentPackLoader
             ReadPenetration(pack, files, errors);
             ReadWorldBands(pack, files, errors);
             ReadEncounters(pack, files, errors);
+            ReadRareSpawns(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -554,6 +556,26 @@ internal static class ContentPackLoader
                 I(Int(item, "stageMin", path, errors)), I(Int(item, "stageMax", path, errors)),
                 F(Number(item, "weight", path, errors)), I(Int(item, "maxPerCell", path, errors)),
                 I(Int(item, "cooldownSeconds", path, errors)), B(Bool(item, "enabled", path, errors))
+            });
+        }
+    }
+
+
+    private static void ReadRareSpawns(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("rareSpawns", files, errors, "rareSpawns");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"rare_spawns.rareSpawns[{index++}]";
+            pack.RareRows.Add(new[]
+            {
+                Text(item, "rareId", path, errors), Text(item, "bandId", path, errors),
+                Text(item, "actorEditorId", path, errors), I(Int(item, "chancePermille", path, errors)),
+                I(Int(item, "stageMin", path, errors)), I(Int(item, "stageMax", path, errors)),
+                Text(item, "conditionTag", path, errors), F(Number(item, "weight", path, errors)),
+                B(Bool(item, "enabled", path, errors))
             });
         }
     }

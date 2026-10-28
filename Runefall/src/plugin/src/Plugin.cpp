@@ -19,6 +19,7 @@
 #include "CombatRatingEngine.h"
 #include "WorldBandEngine.h"
 #include "EncounterManager.h"
+#include "RareSpawnEngine.h"
 #include "HookManager.h"
 #include "MaterialRegistry.h"
 #include "RuneForge.h"
@@ -126,6 +127,7 @@ namespace
 		Runefall::CombatRatingEngine::Get().Load();
 		Runefall::WorldBandEngine::Get().Load();
 		Runefall::EncounterManager::Get().Load();
+		Runefall::RareSpawnEngine::Get().Load();
 		Runefall::MaterialRegistry::Get().LoadDefinitions();
 		Runefall::RuneForge::Get().ReloadSocketRecipes();
 		Runefall::LootEngine::Get().Reload();
