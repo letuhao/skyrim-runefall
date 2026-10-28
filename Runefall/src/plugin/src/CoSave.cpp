@@ -222,6 +222,11 @@ namespace Runefall
 
 	std::vector<std::uint8_t> CoSave::Encode(const CoSaveState& a_state)
 	{
+		return EncodeWithBudget(a_state, kMaxEncodedBytes);
+	}
+
+	std::vector<std::uint8_t> CoSave::EncodeWithBudget(const CoSaveState& a_state, std::size_t a_budget)
+	{
 		constexpr std::size_t kMaxItems = 1024;
 		constexpr std::size_t kMaxHunts = 256;
 		constexpr std::size_t kMaxMaterials = 256;
@@ -250,7 +255,7 @@ namespace Runefall
 			a_state.curveId < 1 || a_state.curveId > 5)
 			return {};
 		for (const auto& item : a_state.items) {
-			if (item.registryId == 0 || item.rarity > 5 || item.ilvl > 1000 || item.socketCount > 3 || item.enhancementCount > 5)
+			if (item.registryId == 0 || item.rarity > 5 || item.ilvl > 1000 || item.socketCount > 3 || item.enhancementCount > 5 || (item.tags & ~static_cast<std::uint16_t>(0x3F)) != 0)
 				return {};
 			for (int r = 0; r < 3; ++r)
 				if (item.socketRunes[r] < 0 || item.socketRunes[r] > 5) return {};
@@ -368,6 +373,7 @@ namespace Runefall
 		sections.push_back(BuildSection(kSectionLadder, ladder));
 		PutU32(out, static_cast<std::uint32_t>(sections.size()));
 		for (const auto& section : sections) out.insert(out.end(), section.begin(), section.end());
+		if (out.size() > a_budget) return {};
 		return out;
 	}
 
@@ -419,7 +425,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 			logger::error("co-save: reject version-mirror");
 			return false;
 		}
-		if (!reader.U32(sectionCount) || sectionCount == 0) return false;
+		if (!reader.U32(sectionCount) || sectionCount == 0) { logger::error("co-save: reject section-count 0"); return false; }
 		constexpr std::uint32_t kMaxSections = 64;
 		if (sectionCount > kMaxSections) { logger::error("co-save: reject section-count {}", sectionCount); return false; }
 		std::array<bool, 16> seenSections{};
@@ -675,9 +681,9 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 			logger::error("co-save: encoded bytes exceed budget {} > {}; save skipped", bytes.size(), kMaxEncodedBytes);
 			return;
 		}
-		logger::info("co-save: state rank={} stage={} xp={} class={} endgame={} containers={} quests={} items={} materials={} configHash={:08X}",
+		logger::info("co-save: state rank={} stage={} xp={} class={} endgame={} containers={} quests={} items={} materials={} configHash={:08X} difficulty={} curve={} overrides={}",
 			state.playerRank, state.playerStage, state.playerXp, state.characterClass, state.endgameComplete ? 1 : 0,
-			state.generatedContainers.size(), state.rewardedQuests.size(), state.items.size(), state.materials.size(), state.configHash);
+			state.generatedContainers.size(), state.rewardedQuests.size(), state.items.size(), state.materials.size(), state.configHash, state.difficultyProfile, state.curveId, state.ladderOverrides.size());
 		if (!a_intfc->OpenRecord(kSerializationRecord, kSaveVersion)) {
 			logger::error("co-save: failed to open record");
 			return;
@@ -721,7 +727,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 			logger::info("co-save: loaded schema {} ({} bytes, {} item entries)", version, payload.size(), candidate.items.size());
 			logger::info("co-save: state rank={} stage={} xp={} class={} endgame={} containers={} quests={} items={} materials={} configHash={:08X}",
 				candidate.playerRank, candidate.playerStage, candidate.playerXp, candidate.characterClass, candidate.endgameComplete ? 1 : 0,
-				candidate.generatedContainers.size(), candidate.rewardedQuests.size(), candidate.items.size(), candidate.materials.size(), candidate.configHash);
+				candidate.generatedContainers.size(), candidate.rewardedQuests.size(), candidate.items.size(), candidate.materials.size(), candidate.configHash, candidate.difficultyProfile, candidate.curveId, candidate.ladderOverrides.size());
 		}
 		if (!loaded) {
 			CoSave::Get().Reset();
@@ -936,6 +942,18 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 		std::vector<std::uint8_t> oversizedRecord(kMaxRecordBytes + 1, 0);
 		CoSaveState oversizedTarget;
 		if (LoadRecord(oversizedRecord, kSaveVersion, oversizedTarget)) return { "CoSave.SelfTest", CheckStatus::Fail, "oversized record accepted" };
+
+		if (!EncodeWithBudget(sample, 100).empty()) return { "CoSave.SelfTest", CheckStatus::Fail, "budget refusal not enforced" };
+		std::vector<std::uint8_t> semantic;
+		semantic.insert(semantic.end(), { 'R', 'N', 'F', 'S' });
+		PutU16(semantic, 3); PutU32(semantic, 0); PutU16(semantic, 3); PutU32(semantic, 1);
+		PutU16(semantic, 1); PutU32(semantic, 4);
+		for (int i = 0; i < 4; ++i) semantic.push_back(0);
+		CoSaveState semanticSentinel;
+		semanticSentinel.playerRank = 77;
+		const auto semanticBefore = Encode(semanticSentinel);
+		if (Decode(semantic, semanticSentinel) || Encode(semanticSentinel) != semanticBefore)
+			return { "CoSave.SelfTest", CheckStatus::Fail, "semantic-invalid decode not failure-pure" };
 
 		// Eviction is smallest FormID, not FIFO.
 		auto savedContainers = CoSave::Get().State().generatedContainers;

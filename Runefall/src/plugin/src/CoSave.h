@@ -68,6 +68,7 @@ namespace Runefall
 		static void OnRevert(SKSE::SerializationInterface* a_intfc);
 
 		static std::vector<std::uint8_t> Encode(const CoSaveState& a_state);
+		static std::vector<std::uint8_t> EncodeWithBudget(const CoSaveState& a_state, std::size_t a_budget);
 		static bool                      Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out);
 		static bool                      DecodeImpl(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out);
 		static void                      MigrateLegacy(CoSaveState& a_state, std::uint16_t a_schema);

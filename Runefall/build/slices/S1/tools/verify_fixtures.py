@@ -32,10 +32,12 @@ for name in ("schema2_tier5.bin","schema2_tier2.bin"):
     rank=100 if tier==5 else 40 if tier==2 else 1
     check(name, schema==2 and flags is None and ver==2, "v2 header")
     check(name, rank==want["playerRank"] and tier in (5,2), f"runeTier {tier} -> rank {rank}")
+b1=(FIX/"schema1_legacy.bin").read_bytes(); s1,_,v1,c1,o1=header(b1); check("schema1_legacy.bin", s1==1 and v1==1, "v1 header and legacy defaults (rank/stage 1)")
 b=(FIX/"baseline_v3.bin").read_bytes(); schema,flags,ver,count,off=header(b); secs=sections(b,off)
 lad=secs[11][0]
 version,rank,stage,diff,curve=lad[0],lad[1],lad[2],lad[3],lad[4]
 overrides=struct.unpack_from("<H",lad,5)[0]; xp=struct.unpack_from("<I",lad,7)[0]; classlen=struct.unpack_from("<H",lad,11)[0]; skillcount=struct.unpack_from("<H",lad,13+classlen)[0]; endgame=lad[15+classlen]
 check("baseline_v3.bin", schema==3 and flags==0 and ver==3, "v3 header")
+c=(FIX/"canonical_v3.bin").read_bytes(); check("canonical_v3.bin", c==b, "canonical v3 bytes equal baseline golden")
 check("baseline_v3.bin", rank==42 and stage==42 and diff==2 and curve==1 and overrides==0 and xp==0 and classlen==0 and skillcount==0 and endgame==0, "ladder fields")
 print("RESULT: PASS")
