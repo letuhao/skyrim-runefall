@@ -24,6 +24,10 @@ namespace Runefall
 		[[nodiscard]] std::int32_t BreakthroughBonus(std::int32_t a_tier) const;
 		[[nodiscard]] std::int32_t AttributeAwardForStageAdvance(std::int32_t a_newStage) const;
 		bool AwardStageAdvance(std::int32_t a_newStage);
+		[[nodiscard]] std::int32_t RuneLevel() const;
+		[[nodiscard]] std::uint32_t RuneXp() const;
+		[[nodiscard]] std::int32_t XpForNextLevel() const;
+		bool AddXp(std::int32_t a_amount);
 		[[nodiscard]] std::int32_t SkillPoints() const noexcept { return skillPoints; }
 		[[nodiscard]] std::int32_t RuneTier() const noexcept { return runeTier; }
 		[[nodiscard]] bool         BossKillReady() const noexcept { return bossKillTier >= runeTier; }
@@ -72,6 +76,9 @@ namespace Runefall
 		std::int32_t                  pointsPerLevel = 3;
 		std::int32_t                  maxRuneLevel = 100;
 		std::vector<std::int32_t>     breakthroughBonuses;
+		float                         xpBase = 100.0f;
+		float                         xpGrowth = 1.15f;
+		int                           bossBreakEvery = 10;
 		std::size_t                   attributeEffectCount = 0;
 	};
 }

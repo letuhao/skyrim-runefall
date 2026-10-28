@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T03:10:22.768Z",
+  "updatedAt": "2026-10-28T03:18:54.476Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -700,6 +700,27 @@
       "path": "build/evidence/a3.7-loot-acceptance-20261028.md",
       "result": "PASS",
       "detail": "end-to-end container/quest/actor/hunt/crafting/economy/co-save"
+    },
+    {
+      "slice": "P4.1",
+      "kind": "summary",
+      "path": "build/evidence/p4.1-player-rank-20261028.md",
+      "result": "PASS",
+      "detail": "rank1-100, XP curve/award, boss gate, co-save playerXp"
+    },
+    {
+      "slice": "P4.1",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-101642.md",
+      "result": "PASS",
+      "detail": "33/33; XP gained 10"
+    },
+    {
+      "slice": "P4.1",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-101809.md",
+      "result": "PASS",
+      "detail": "9/9"
     }
   ]
 }

@@ -319,6 +319,7 @@ namespace Runefall
 			PutU8(ladder, entry.stage);
 			PutU8(ladder, entry.flags);
 		}
+		PutU32(ladder, a_state.playerXp);
 		sections.push_back(BuildSection(kSectionLadder, ladder));
 
 		PutU32(out, static_cast<std::uint32_t>(sections.size()));
@@ -510,6 +511,10 @@ namespace Runefall
 						return false;
 					a_out.ladderOverrides.push_back(entry);
 				}
+				if (sectionReader.Remaining() >= 4) {
+					if (!sectionReader.U32(a_out.playerXp))
+						return false;
+				}
 				break;
 			}
 			default:
@@ -638,6 +643,7 @@ namespace Runefall
 		sample.generatedContainers = { 0x000ABCDE, 0x00012345 };
 		sample.rewardedQuests = { 0x000F00D1 };
 		sample.playerRank = 42;
+		sample.playerXp = 1234;
 		sample.playerStage = 42;
 		sample.difficultyProfile = 2;
 		sample.curveId = 1;
@@ -654,7 +660,7 @@ namespace Runefall
 			decoded.items[0].registryId != item.registryId || decoded.items[0].enhancements[0].affixId != item.enhancements[0].affixId ||
 			decoded.items[0].enhancements[0].magnitude != item.enhancements[0].magnitude || decoded.items[0].tags != item.tags ||
 			decoded.generatedContainers != sample.generatedContainers || decoded.rewardedQuests != sample.rewardedQuests ||
-			decoded.playerRank != sample.playerRank || decoded.playerStage != sample.playerStage ||
+			decoded.playerRank != sample.playerRank || decoded.playerXp != sample.playerXp || decoded.playerStage != sample.playerStage ||
 			decoded.difficultyProfile != sample.difficultyProfile || decoded.curveId != sample.curveId ||
 			decoded.ladderOverrides.size() != 1 || decoded.ladderOverrides[0].key != sample.ladderOverrides[0].key ||
 			decoded.ladderOverrides[0].stage != sample.ladderOverrides[0].stage)

@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "P4.1",
-  "updatedAt": "2026-10-28T03:10:22.764Z",
+  "currentSlice": "P4.2",
+  "updatedAt": "2026-10-28T03:18:54.472Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -733,11 +733,25 @@
       "id": "P4.1",
       "layer": "L4",
       "slice": "Rune Level progression",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "40-hour targets data-driven; breakthrough works",
       "depends": "C1.6/F0.5",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/p4.1-player-rank-20261028.md",
+        "build/evidence/batch-test-20261028-101642.md",
+        "build/evidence/static-gates-20261028-101809.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "rank-1-100": "PASS",
+        "xp-curve": "PASS",
+        "xp-award": "PASS 10/50",
+        "co-save-xp": "PASS 418B",
+        "boss-gate": "PASS code",
+        "attribute-award": "PASS",
+        "batch": "PASS 33/33",
+        "static-gates": "PASS"
+      }
     },
     "P4.2": {
       "id": "P4.2",
@@ -901,9 +915,9 @@
     }
   },
   "currentWork": {
-    "slice": "P4.1",
-    "step": "player rank and rune level",
-    "nextAction": "player rank 1-100, XP curve, attribute/skill awards, boss kill unlock, co-save persistence"
+    "slice": "P4.2",
+    "step": "classes and skills",
+    "nextAction": "class definitions, skill trees/ranks, respec and co-save persistence"
   },
   "blockers": [],
   "finalRelease": null

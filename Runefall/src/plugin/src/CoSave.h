@@ -30,6 +30,7 @@ namespace Runefall
 		std::uint32_t                                 configHash = 0;
 		std::uint8_t                                  playerRank = 1;
 		std::uint8_t                                  playerStage = 1;
+		std::uint32_t                                 playerXp = 0;
 		std::uint8_t                                  difficultyProfile = 255;
 		std::uint8_t                                  curveId = 1;
 		std::vector<LadderOverride>                   ladderOverrides;

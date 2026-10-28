@@ -6,7 +6,10 @@
     "schemaVersion",
     "pointsPerLevel",
     "maxRuneLevel",
-    "breakthroughBonuses"
+    "breakthroughBonuses",
+    "xpBase",
+    "xpGrowth",
+    "bossBreakEvery"
   ],
   "properties": {
     "schemaVersion": {
@@ -30,6 +33,19 @@
       },
       "minItems": 10,
       "maxItems": 10
+    },
+    "xpBase": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "xpGrowth": {
+      "type": "number",
+      "exclusiveMinimum": 0
+    },
+    "bossBreakEvery": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10
     }
   },
   "additionalProperties": true

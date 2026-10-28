@@ -443,6 +443,9 @@ internal static class ContentPackLoader
             {
                 I(Int(root, "pointsPerLevel", "player_progression", errors)),
                 I(Int(root, "maxRuneLevel", "player_progression", errors)),
+                F(Number(root, "xpBase", "player_progression", errors)),
+                F(Number(root, "xpGrowth", "player_progression", errors)),
+                I(Int(root, "bossBreakEvery", "player_progression", errors)),
                 bonuses
             });
         }

@@ -1138,3 +1138,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - One-session acceptance: container/quest/actor/hunt/crafting/economy/co-save all green.
 - Batch 33/33; static gates 9/9. L3 loot/crafting complete.
+
+
+## P4.1 player rank/rune level - PASS (2026-10-28 10:09-10:18)
+
+- Rank 1-100 + XP curve/award; boss-gated tier breaks; co-save playerXp.
+- Draugr kill awards 10 XP; batch 33/33; static gates 9/9.

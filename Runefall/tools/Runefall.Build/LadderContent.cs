@@ -78,7 +78,7 @@ internal static class LadderContent
 
     public static readonly string[] ProgressionColumns =
     {
-        "pointsPerLevel", "maxRuneLevel", "breakthroughBonuses"
+        "pointsPerLevel", "maxRuneLevel", "xpBase", "xpGrowth", "bossBreakEvery", "breakthroughBonuses"
     };
 
     public static readonly string[] RatingColumns =

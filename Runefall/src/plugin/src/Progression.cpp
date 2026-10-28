@@ -52,6 +52,9 @@ namespace Runefall
 	{
 		pointsPerLevel = 3;
 		maxRuneLevel = 100;
+		xpBase = 100.0f;
+		xpGrowth = 1.15f;
+		bossBreakEvery = 10;
 		breakthroughBonuses = { 9, 12, 15, 18, 21, 24, 27, 30, 33, 36 };
 		const auto* table = DataStore::Get().GetTable("player_progression.csv");
 		if (!table || table->rows.empty())
@@ -62,8 +65,11 @@ namespace Runefall
 		};
 		pointsPerLevel = static_cast<std::int32_t>(std::strtol(std::string{ cell(0) }.c_str(), nullptr, 10));
 		maxRuneLevel = static_cast<std::int32_t>(std::strtol(std::string{ cell(1) }.c_str(), nullptr, 10));
+		xpBase = std::strtof(std::string{ cell(2) }.c_str(), nullptr);
+		xpGrowth = std::strtof(std::string{ cell(3) }.c_str(), nullptr);
+		bossBreakEvery = static_cast<int>(std::strtol(std::string{ cell(4) }.c_str(), nullptr, 10));
 		breakthroughBonuses.clear();
-		std::stringstream stream{ std::string{ cell(2) } };
+		std::stringstream stream{ std::string{ cell(5) } };
 		std::string token;
 		while (std::getline(stream, token, '|')) {
 			if (!token.empty())
@@ -280,6 +286,47 @@ namespace Runefall
 		if (award <= 0)
 			return false;
 		return AddAttributePoint(award);
+	}
+
+	std::int32_t Progression::RuneLevel() const
+	{
+		return CoSave::Get().State().playerRank;
+	}
+
+	std::uint32_t Progression::RuneXp() const
+	{
+		return CoSave::Get().State().playerXp;
+	}
+
+	std::int32_t Progression::XpForNextLevel() const
+	{
+		const auto rank = (std::max)(1, RuneLevel());
+		return static_cast<std::int32_t>(std::lround(xpBase * std::pow(xpGrowth, static_cast<float>(rank - 1))));
+	}
+
+	bool Progression::AddXp(std::int32_t a_amount)
+	{
+		if (a_amount <= 0 || RuneLevel() >= maxRuneLevel)
+			return false;
+		auto& state = CoSave::Get().State();
+		state.playerXp += static_cast<std::uint32_t>(a_amount);
+		auto advanced = false;
+		while (RuneLevel() < maxRuneLevel) {
+			const auto threshold = static_cast<std::uint32_t>(XpForNextLevel());
+			if (state.playerXp < threshold)
+				break;
+			const auto nextRank = RuneLevel() + 1;
+			if (bossBreakEvery > 0 && nextRank % bossBreakEvery == 0) {
+				const auto tier = nextRank / bossBreakEvery;
+				if (state.bossKillTier < tier)
+					break; // boss kill gates tier breakthroughs; XP stays banked
+			}
+			state.playerXp -= threshold;
+			state.playerRank = static_cast<std::uint8_t>((std::min)(maxRuneLevel, nextRank));
+			AwardStageAdvance(state.playerRank);
+			advanced = true;
+		}
+		return advanced;
 	}
 
 	std::int32_t Progression::SoftCappedAttribute(std::int32_t a_raw)

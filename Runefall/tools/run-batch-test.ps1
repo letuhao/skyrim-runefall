@@ -230,6 +230,7 @@ if ($ExerciseDeathDrops) {
         $logText = Get-LogText
         Add-Check 'Hunt first kill' ($logText -match 'hunt: first kill family') ''
         Add-Check 'Hunt material grant' ($logText -match 'hunt: granted first-kill material') ''
+        Add-Check 'Progression XP gained' ($logText -match 'progression: gained \d+ xp') ''
         Add-Check 'Hunt unique item grant' ($logText -match 'hunt: granted unique affix') ''
         if ($TestHuntContract) { Add-Check 'Hunt contract completed' (Wait-LogPattern 'hunt-contract: completed ' 12) '' }
         $corpse = Invoke-Mcp 'get_npc_inventory' @{ refId = $ref }

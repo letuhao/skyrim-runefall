@@ -13,5 +13,8 @@
     30,
     33,
     36
-  ]
+  ],
+  "xpBase": 100,
+  "xpGrowth": 1.15,
+  "bossBreakEvery": 10
 }

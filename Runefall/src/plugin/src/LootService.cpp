@@ -897,6 +897,15 @@ namespace Runefall
 		processedActors.insert(formId);
 		HuntContractManager::Get().OnActorDeath(a_actor);
 		AnomalyEngine::Get().OnActorDeath(a_actor);
+		{
+			const auto isBoss = BossRegistry::Get().IsBossActor(a_actor);
+			const auto xp = isBoss ? 50 : 10;
+			const auto before = Progression::Get().RuneLevel();
+			Progression::Get().AddXp(xp);
+			logger::info("progression: gained {} xp rank {} -> {}", xp, before, Progression::Get().RuneLevel());
+			if (isBoss)
+				Progression::Get().MarkBossKill((std::max)(1, (Progression::Get().RuneLevel() / 10) + 1));
+		}
 		GrantHuntFirstKill(a_actor);
 		if (!SpawnForActor(a_actor))
 			logger::warn("loot: death roll failed for actor {:08X}", formId);
