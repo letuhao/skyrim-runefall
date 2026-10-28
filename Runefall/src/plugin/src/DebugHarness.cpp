@@ -9,6 +9,7 @@
 #include "RaceClassifier.h"
 #include "ActorPackageEngine.h"
 #include "ActorEquipmentDistributor.h"
+#include "CombatRatingEngine.h"
 #include "FormResolver.h"
 #include "ItemRegistry.h"
 #include "HuntEngine.h"
@@ -80,6 +81,7 @@ namespace Runefall
 		RaceClassifier::Get().Load();
 		ActorPackageEngine::Get().Load();
 		ActorEquipmentDistributor::Get().Load();
+		CombatRatingEngine::Get().Load();
 		results.push_back(DataStore::Get().SelfTest());
 		results.push_back(FormCatalog::SelfTest());
 		results.push_back(StageEngine::SelfTest());
@@ -88,6 +90,7 @@ namespace Runefall
 		results.push_back(RaceClassifier::SelfTest());
 		results.push_back(ActorPackageEngine::SelfTest());
 		results.push_back(ActorEquipmentDistributor::SelfTest());
+		results.push_back(CombatRatingEngine::SelfTest());
 		LootEngine::Get().Reload();
 		TierEngine::Get().Reload();
 		HuntEngine::Get().Reload();

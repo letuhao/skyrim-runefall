@@ -1022,3 +1022,10 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Data-driven pointsPerLevel=3 and breakthrough batches 9..36; award API and formula self-test.
 - Existing 9 attributes/effects/caps/respec retained. Batch 25/25, static gates 9/9.
 - Rune Level XP wiring remains P4.1.
+
+
+## C1.7 combat ratings - PASS (2026-10-28 08:23-08:28)
+
+- Data-driven PCR/NCR/RCR baseline, TTK/TTD/Q math, Skyrim/Action pace bands, display profile.
+- Self-test baseline PCR 100 at stage 10, scaling, TTK/TTD/Q and labels PASS.
+- Batch 26/26, static gates 9/9.

@@ -101,7 +101,8 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
 - C1.4 PASS: 20 packages, apply-once, elite/boss overlays, budget; Draugr package applied.
 - C1.5 PASS: 15 sets, 5 items+1 perk, toggle on/off, applied once; batch 25/25.
 - C1.6 PASS: 3 points/stage + 9/12/15 breakthrough batches; nine attributes/effects/caps/respec; batch 25/25.
-- Next: C1.7 combat ratings PCR/NCR/RCR/TTK/TTD.
+- C1.7 PASS: PCR/NCR/RCR, TTK/TTD/Q, 2 pace profiles, display; batch 26/26.
+- Next: C1.8 player attacker/penetration.
 
 ## Next step
 

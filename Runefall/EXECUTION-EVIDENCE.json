@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T01:23:45.420Z",
+  "updatedAt": "2026-10-28T01:29:02.431Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -348,6 +348,27 @@
       "slice": "C1.6",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-082304.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "C1.7",
+      "kind": "summary",
+      "path": "build/evidence/c1.7-combat-ratings-20261028.md",
+      "result": "PASS",
+      "detail": "PCR baseline 100; TTK/TTD/Q; 2 pace profiles; display"
+    },
+    {
+      "slice": "C1.7",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-082649.md",
+      "result": "PASS",
+      "detail": "26/26 self-tests"
+    },
+    {
+      "slice": "C1.7",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-082821.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

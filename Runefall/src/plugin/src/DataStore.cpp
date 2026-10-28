@@ -42,6 +42,9 @@ namespace Runefall
 			"enemy_packages.csv",
 			"equipment_sets.csv",
 			"player_progression.csv",
+			"rating_profiles.csv",
+			"combat_pace_profiles.csv",
+			"rating_display_profiles.csv",
 		};
 	}
 

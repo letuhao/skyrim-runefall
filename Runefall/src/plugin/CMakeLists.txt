@@ -86,6 +86,7 @@ else()
         src/RaceClassifier.cpp
         src/ActorPackageEngine.cpp
         src/ActorEquipmentDistributor.cpp
+        src/CombatRatingEngine.cpp
         src/RuntimeContentResolver.cpp
         src/CoSave.cpp
         src/ItemRegistry.cpp

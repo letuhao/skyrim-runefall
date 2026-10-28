@@ -81,6 +81,21 @@ internal static class LadderContent
         "pointsPerLevel", "maxRuneLevel", "breakthroughBonuses"
     };
 
+    public static readonly string[] RatingColumns =
+    {
+        "profileId", "baseDPS", "baseEHP", "offenseWeight", "defenseWeight", "utilityWeight", "mitigationCap", "sustainCap"
+    };
+
+    public static readonly string[] PaceColumns =
+    {
+        "profileId", "encounterClass", "ttkMin", "ttkMax", "ttdMin", "ttdMax", "qMin", "qMax"
+    };
+
+    public static readonly string[] DisplayColumns =
+    {
+        "profileId", "numberVisible", "labelVisible", "decimals"
+    };
+
     public static void WriteAll(string dir)
     {
         Directory.CreateDirectory(dir);
@@ -241,6 +256,9 @@ internal static class LadderContent
         WriteCsv(dir, "enemy_packages.csv", PackageColumns, pack.PackageRows);
         WriteCsv(dir, "equipment_sets.csv", EquipmentColumns, pack.EquipmentRows);
         WriteCsv(dir, "player_progression.csv", ProgressionColumns, pack.ProgressionRows);
+        WriteCsv(dir, "rating_profiles.csv", RatingColumns, pack.RatingRows);
+        WriteCsv(dir, "combat_pace_profiles.csv", PaceColumns, pack.PaceRows);
+        WriteCsv(dir, "rating_display_profiles.csv", DisplayColumns, pack.DisplayRows);
         return errors;
     }
 

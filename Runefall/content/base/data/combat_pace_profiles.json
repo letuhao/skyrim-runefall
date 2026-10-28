@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "profiles": [
+    {
+      "schemaVersion": 1,
+      "profileId": "skyrim",
+      "bands": [
+        {
+          "encounterClass": "normal_trash",
+          "ttkMin": 5,
+          "ttkMax": 10,
+          "ttdMin": 25,
+          "ttdMax": 40,
+          "qMin": 0.1,
+          "qMax": 0.4
+        },
+        {
+          "encounterClass": "normal_elite",
+          "ttkMin": 15,
+          "ttkMax": 30,
+          "ttdMin": 15,
+          "ttdMax": 25,
+          "qMin": 0.5,
+          "qMax": 1.5
+        },
+        {
+          "encounterClass": "rune_same_stage",
+          "ttkMin": 30,
+          "ttkMax": 60,
+          "ttdMin": 15,
+          "ttdMax": 25,
+          "qMin": 1.2,
+          "qMax": 4
+        },
+        {
+          "encounterClass": "rune_plus10",
+          "ttkMin": 60,
+          "ttkMax": 120,
+          "ttdMin": 8,
+          "ttdMax": 15,
+          "qMin": 4,
+          "qMax": 15
+        },
+        {
+          "encounterClass": "boss",
+          "ttkMin": 180,
+          "ttkMax": 360,
+          "ttdMin": 30,
+          "ttdMax": 60,
+          "qMin": 3,
+          "qMax": 10
+        }
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "profileId": "action",
+      "bands": [
+        {
+          "encounterClass": "normal_trash",
+          "ttkMin": 2,
+          "ttkMax": 4,
+          "ttdMin": 25,
+          "ttdMax": 40,
+          "qMin": 0.05,
+          "qMax": 0.2
+        },
+        {
+          "encounterClass": "normal_elite",
+          "ttkMin": 8,
+          "ttkMax": 15,
+          "ttdMin": 15,
+          "ttdMax": 25,
+          "qMin": 0.3,
+          "qMax": 1
+        },
+        {
+          "encounterClass": "rune_same_stage",
+          "ttkMin": 15,
+          "ttkMax": 25,
+          "ttdMin": 15,
+          "ttdMax": 25,
+          "qMin": 0.6,
+          "qMax": 1.5
+        },
+        {
+          "encounterClass": "rune_plus10",
+          "ttkMin": 30,
+          "ttkMax": 60,
+          "ttdMin": 8,
+          "ttdMax": 15,
+          "qMin": 2,
+          "qMax": 6
+        },
+        {
+          "encounterClass": "boss",
+          "ttkMin": 120,
+          "ttkMax": 240,
+          "ttdMin": 30,
+          "ttdMax": 60,
+          "qMin": 2,
+          "qMax": 6
+        }
+      ]
+    }
+  ]
+}

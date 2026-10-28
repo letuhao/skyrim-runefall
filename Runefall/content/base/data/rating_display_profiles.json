@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "profiles": [
+    {
+      "schemaVersion": 1,
+      "profileId": "default",
+      "numberVisible": true,
+      "labelVisible": true,
+      "decimals": 0
+    }
+  ]
+}

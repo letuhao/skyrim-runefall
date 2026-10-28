@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "profiles": [
+    {
+      "schemaVersion": 1,
+      "profileId": "default",
+      "baseDPS": 10,
+      "baseEHP": 150,
+      "offenseWeight": 0.5,
+      "defenseWeight": 0.5,
+      "utilityWeight": 1,
+      "mitigationCap": 0.8,
+      "sustainCap": 0.5
+    }
+  ]
+}

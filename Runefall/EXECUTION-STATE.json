@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "C1.7",
-  "updatedAt": "2026-10-28T01:23:45.416Z",
+  "currentSlice": "C1.8",
+  "updatedAt": "2026-10-28T01:29:02.427Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -343,11 +343,25 @@
       "id": "C1.7",
       "layer": "L1",
       "slice": "Combat ratings",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "ratings reproducible; formulas match data; display profiles",
       "depends": "C1.3/C1.6",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/c1.7-combat-ratings-20261028.md",
+        "build/evidence/batch-test-20261028-082649.md",
+        "build/evidence/static-gates-20261028-082821.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "rating-data": "PASS",
+        "pcr-ncr-rcr": "PASS",
+        "ttk-ttd-q": "PASS",
+        "pace-profiles": "PASS 2x5",
+        "display-profile": "PASS",
+        "self-test": "PASS",
+        "batch": "PASS 26/26",
+        "static-gates": "PASS"
+      }
     },
     "C1.8": {
       "id": "C1.8",
@@ -671,9 +685,9 @@
     }
   },
   "currentWork": {
-    "slice": "C1.7",
-    "step": "combat ratings PCR/NCR/RCR/TTK/TTD",
-    "nextAction": "implement rating math and pace/display profile data with self-tests and diagnostics"
+    "slice": "C1.8",
+    "step": "player attacker and penetration",
+    "nextAction": "player stage input, attack channel, penetration sources/cap, mage channel; verify damage hook integration"
   },
   "blockers": [],
   "finalRelease": null

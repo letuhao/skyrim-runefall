@@ -16,6 +16,7 @@
 #include "DamagePipeline.h"
 #include "ActorPackageEngine.h"
 #include "ActorEquipmentDistributor.h"
+#include "CombatRatingEngine.h"
 #include "HookManager.h"
 #include "MaterialRegistry.h"
 #include "RuneForge.h"
@@ -119,6 +120,7 @@ namespace
 		Runefall::DamagePipeline::Get().LoadProtection();
 		Runefall::ActorPackageEngine::Get().Load();
 		Runefall::ActorEquipmentDistributor::Get().Load();
+		Runefall::CombatRatingEngine::Get().Load();
 		Runefall::MaterialRegistry::Get().LoadDefinitions();
 		Runefall::RuneForge::Get().ReloadSocketRecipes();
 		Runefall::LootEngine::Get().Reload();

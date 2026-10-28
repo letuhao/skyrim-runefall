@@ -24,6 +24,9 @@ ENTITY_SCHEMA = {
     "enemyPackages": "enemy-packages.schema.json",
     "equipmentSets": "equipment-sets.schema.json",
     "playerProgression": "player-progression.schema.json",
+    "ratingProfiles": "rating-profiles.schema.json",
+    "combatPaceProfiles": "combat-pace-profiles.schema.json",
+    "ratingDisplayProfiles": "rating-display-profiles.schema.json",
 }
 
 def load(path: Path):

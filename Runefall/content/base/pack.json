@@ -60,6 +60,18 @@
     {
       "entity": "playerProgression",
       "file": "data/player_progression.json"
+    },
+    {
+      "entity": "ratingProfiles",
+      "file": "data/rating_profiles.json"
+    },
+    {
+      "entity": "combatPaceProfiles",
+      "file": "data/combat_pace_profiles.json"
+    },
+    {
+      "entity": "ratingDisplayProfiles",
+      "file": "data/rating_display_profiles.json"
     }
   ],
   "localization": []

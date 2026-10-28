@@ -19,6 +19,9 @@ internal sealed class LoadedPack
     public List<string[]> PackageRows { get; } = new();
     public List<string[]> EquipmentRows { get; } = new();
     public List<string[]> ProgressionRows { get; } = new();
+    public List<string[]> RatingRows { get; } = new();
+    public List<string[]> PaceRows { get; } = new();
+    public List<string[]> DisplayRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -69,6 +72,7 @@ internal static class ContentPackLoader
             ReadPackages(pack, files, errors);
             ReadEquipment(pack, files, errors);
             ReadPlayerProgression(pack, files, errors);
+            ReadRatings(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -429,6 +433,64 @@ internal static class ContentPackLoader
         catch (Exception exception)
         {
             errors.Add($"{path}: {exception.Message}");
+        }
+    }
+
+
+    private static void ReadRatings(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var rating = Root("ratingProfiles", files, errors, "profiles");
+        if (rating is not null)
+        {
+            var index = 0;
+            foreach (var item in rating.Value.EnumerateArray())
+            {
+                var path = $"rating_profiles.profiles[{index++}]";
+                pack.RatingRows.Add(new[]
+                {
+                    Text(item, "profileId", path, errors), F(Number(item, "baseDPS", path, errors)),
+                    F(Number(item, "baseEHP", path, errors)), F(Number(item, "offenseWeight", path, errors)),
+                    F(Number(item, "defenseWeight", path, errors)), F(Number(item, "utilityWeight", path, errors)),
+                    F(Number(item, "mitigationCap", path, errors)), F(Number(item, "sustainCap", path, errors))
+                });
+            }
+        }
+        var pace = Root("combatPaceProfiles", files, errors, "profiles");
+        if (pace is not null)
+        {
+            var index = 0;
+            foreach (var profile in pace.Value.EnumerateArray())
+            {
+                var profileId = Text(profile, "profileId", $"combat_pace.profiles[{index}]", errors);
+                var bands = profile.GetProperty("bands");
+                var bandIndex = 0;
+                foreach (var band in bands.EnumerateArray())
+                {
+                    var path = $"combat_pace.profiles[{index}].bands[{bandIndex++}]";
+                    pack.PaceRows.Add(new[]
+                    {
+                        profileId, Text(band, "encounterClass", path, errors),
+                        F(Number(band, "ttkMin", path, errors)), F(Number(band, "ttkMax", path, errors)),
+                        F(Number(band, "ttdMin", path, errors)), F(Number(band, "ttdMax", path, errors)),
+                        F(Number(band, "qMin", path, errors)), F(Number(band, "qMax", path, errors))
+                    });
+                }
+                ++index;
+            }
+        }
+        var display = Root("ratingDisplayProfiles", files, errors, "profiles");
+        if (display is not null)
+        {
+            var index = 0;
+            foreach (var item in display.Value.EnumerateArray())
+            {
+                var path = $"rating_display.profiles[{index++}]";
+                pack.DisplayRows.Add(new[]
+                {
+                    Text(item, "profileId", path, errors), B(Bool(item, "numberVisible", path, errors)),
+                    B(Bool(item, "labelVisible", path, errors)), I(Int(item, "decimals", path, errors))
+                });
+            }
         }
     }
 
