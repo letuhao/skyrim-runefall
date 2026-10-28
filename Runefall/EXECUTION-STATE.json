@@ -25,7 +25,7 @@
   },
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "S1",
-  "updatedAt": "2026-10-28T12:12:19.113Z",
+  "updatedAt": "2026-10-28T12:30:55.074Z",
   "remediation": {
     "S0": {
       "id": "S0",
@@ -153,6 +153,12 @@
           "path": "evidence/S1/crash-assessment.log",
           "sha256": "FFBCCD6D2F3B480F5B5BC4D4FF5D9AF70E92628DF96F45A29E16B5464960007F",
           "kind": "log",
+          "exists": true
+        },
+        {
+          "path": "build/audit/S1-batch-blocker.md",
+          "sha256": "DAC5C32ED8A6EE0F434DAC22B8A6295AE3A71A9124380475B9411636757BB3D1",
+          "kind": "report",
           "exists": true
         }
       ],
