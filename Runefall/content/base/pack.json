@@ -40,6 +40,10 @@
     {
       "entity": "raceProfiles",
       "file": "data/race_profiles.json"
+    },
+    {
+      "entity": "raceClassificationRules",
+      "file": "data/race_classification_rules.json"
     }
   ],
   "localization": []

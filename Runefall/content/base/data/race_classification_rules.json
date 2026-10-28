@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "rules": [
+    {
+      "ruleId": 1,
+      "keywordEditorId": "ActorTypeNPC",
+      "roleKey": "rf:role/humanoid",
+      "family": "humanoid",
+      "hostEligible": true,
+      "protectionEligible": true,
+      "provisional": false,
+      "priority": 100,
+      "schemaVersion": 1
+    },
+    {
+      "ruleId": 2,
+      "keywordEditorId": "ActorTypeCreature",
+      "roleKey": "rf:role/beast",
+      "family": "beast",
+      "hostEligible": true,
+      "protectionEligible": true,
+      "provisional": false,
+      "priority": 90,
+      "schemaVersion": 1
+    },
+    {
+      "ruleId": 3,
+      "keywordEditorId": "ActorTypeUndead",
+      "roleKey": "rf:role/undead",
+      "family": "undead",
+      "hostEligible": true,
+      "protectionEligible": true,
+      "provisional": false,
+      "priority": 80,
+      "schemaVersion": 1
+    },
+    {
+      "ruleId": 4,
+      "keywordEditorId": "ActorTypeDaedra",
+      "roleKey": "rf:role/daedra",
+      "family": "daedra",
+      "hostEligible": true,
+      "protectionEligible": true,
+      "provisional": false,
+      "priority": 70,
+      "schemaVersion": 1
+    },
+    {
+      "ruleId": 5,
+      "keywordEditorId": "ActorTypeDragon",
+      "roleKey": "rf:role/dragon",
+      "family": "dragon",
+      "hostEligible": true,
+      "protectionEligible": false,
+      "provisional": false,
+      "priority": 60,
+      "schemaVersion": 1
+    },
+    {
+      "ruleId": 6,
+      "keywordEditorId": "ActorTypeGhost",
+      "roleKey": "rf:role/spectral",
+      "family": "spectral",
+      "hostEligible": true,
+      "protectionEligible": false,
+      "provisional": false,
+      "priority": 50,
+      "schemaVersion": 1
+    },
+    {
+      "ruleId": 7,
+      "keywordEditorId": "ActorTypeFamiliar",
+      "roleKey": "rf:role/magical",
+      "family": "magical",
+      "hostEligible": true,
+      "protectionEligible": false,
+      "provisional": false,
+      "priority": 40,
+      "schemaVersion": 1
+    }
+  ]
+}

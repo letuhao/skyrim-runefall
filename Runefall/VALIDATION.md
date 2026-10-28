@@ -958,3 +958,14 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Batch 22/22 PASS, no crash: build/evidence/batch-test-20261028-070133.md.
 - Static gates 9/9 PASS: build/evidence/static-gates-20261028-070344.md.
 - Prior 0x68 attempt crashed and was removed; no unsafe hook remains.
+
+
+## C1.2 race classification - PASS (2026-10-28 07:05-07:13)
+
+- Added data-driven race_classification_rules (7 keyword rules) plus existing 19 race profiles and
+  15 roles.
+- RaceClassifier: explicit EditorID -> keyword priority -> armorParentRace -> morphRace ->
+  provisional unknown.
+- In-game Draugr classified explicit undead; self-test covers known NordRace and unknown fallback.
+- Batch 23/23 PASS, no crash: build/evidence/batch-test-20261028-071136.md.
+- Static gates 9/9 PASS: build/evidence/static-gates-20261028-071330.md.

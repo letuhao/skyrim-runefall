@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T00:04:28.744Z",
+  "updatedAt": "2026-10-28T00:14:12.862Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -208,6 +208,27 @@
       "slice": "C1.1",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-070344.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "C1.2",
+      "kind": "summary",
+      "path": "build/evidence/c1.2-race-classification-20261028.md",
+      "result": "PASS",
+      "detail": "15 roles/19 profiles/7 keyword rules; Draugr explicit undead; unknown fallback self-test"
+    },
+    {
+      "slice": "C1.2",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-071136.md",
+      "result": "PASS",
+      "detail": "23/23 self-tests"
+    },
+    {
+      "slice": "C1.2",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-071330.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

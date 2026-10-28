@@ -96,7 +96,8 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
 - F0.9 PASS: JSON-only data tree (0 CSV, 30 JSON), runtime JSON, batch 21/21, release verifier PASS.
 - L0 foundation complete (F0.1-F0.9).
 - C1.1 PASS: HandleHealthDamage 0x104 hook on Actor/Character/PlayerCharacter, apply-once, direct samples; batch 22/22.
-- Next: C1.2 race classification.
+- C1.2 PASS: 19 profiles + 7 keyword rules; Draugr explicit undead; unknown fallback; batch 23/23.
+- Next: C1.3 threat-protection implementation (stage-gap DR via damage hook).
 
 ## Next step
 

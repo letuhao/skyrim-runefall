@@ -14,6 +14,7 @@
 #include "TierEngine.h"
 #include "StageEngine.h"
 #include "RuntimeContentResolver.h"
+#include "RaceClassifier.h"
 
 #include "RE/C/ContainerMenu.h"
 
@@ -332,6 +333,11 @@ namespace Runefall
 			return;
 		if (actorRanks.contains(formID))
 			return;
+		if (const auto* race = a_actor->GetActorBase() ? a_actor->GetActorBase()->GetRace() : nullptr) {
+			const auto classification = RaceClassifier::Get().Classify(const_cast<RE::TESRace*>(race));
+			logger::info("race-classifier: rank-path actor {:08X} -> role {} family {} source {} provisional {}",
+				formID, classification.roleKey, classification.family, classification.source, classification.provisional);
+		}
 		const auto existing = RankFromSpells(a_actor);
 		if (existing >= 0) {
 			actorRanks[formID] = existing;
@@ -360,6 +366,13 @@ namespace Runefall
 	std::uint8_t LootService::ResolveActorStage(RE::Actor* a_actor)
 	{
 		RuntimeContentResolver::Get().MaybeStartupScan();
+		if (a_actor) {
+			if (const auto* race = a_actor->GetActorBase() ? a_actor->GetActorBase()->GetRace() : nullptr) {
+				const auto classification = RaceClassifier::Get().Classify(const_cast<RE::TESRace*>(race));
+				logger::info("race-classifier: actor {:08X} -> role {} family {} source {} provisional {}",
+					a_actor->GetFormID(), classification.roleKey, classification.family, classification.source, classification.provisional);
+			}
+		}
 		if (!a_actor)
 			return 1;
 		const auto formID = a_actor->GetFormID();

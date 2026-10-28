@@ -19,6 +19,7 @@ ENTITY_SCHEMA = {
     "legacyTierMap": "legacy-tier-map.schema.json",
     "roles": "roles.schema.json",
     "raceProfiles": "race-profiles.schema.json",
+    "raceClassificationRules": "race-classification-rules.schema.json",
 }
 
 def load(path: Path):

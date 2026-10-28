@@ -14,6 +14,7 @@ internal sealed class LoadedPack
     public List<string[]> LegacyTierRows { get; } = new();
     public List<string[]> RoleRows { get; } = new();
     public List<string[]> RaceProfileRows { get; } = new();
+    public List<string[]> RaceRuleRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -59,6 +60,7 @@ internal static class ContentPackLoader
             ReadLegacy(pack, files, errors);
             ReadRoles(pack, files, errors);
             ReadRaceProfiles(pack, files, errors);
+            ReadRaceRules(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -304,6 +306,26 @@ internal static class ContentPackLoader
             });
         }
         if (pack.RaceProfileRows.Count == 0) errors.Add("race_profiles: no rows");
+    }
+
+
+    private static void ReadRaceRules(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("raceClassificationRules", files, errors, "rules");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"race_classification_rules.rules[{index++}]";
+            pack.RaceRuleRows.Add(new[]
+            {
+                I(Int(item, "ruleId", path, errors)), Text(item, "keywordEditorId", path, errors),
+                Text(item, "roleKey", path, errors), Text(item, "family", path, errors),
+                B(Bool(item, "hostEligible", path, errors)), B(Bool(item, "protectionEligible", path, errors)),
+                B(Bool(item, "provisional", path, errors)), I(Int(item, "priority", path, errors))
+            });
+        }
+        if (pack.RaceRuleRows.Count == 0) errors.Add("race_classification_rules: no rows");
     }
 
     private static void ReadLegacy(LoadedPack pack, Dictionary<string, string> files, List<string> errors)

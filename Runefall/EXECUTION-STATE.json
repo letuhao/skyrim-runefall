@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "C1.2",
-  "updatedAt": "2026-10-28T00:04:28.740Z",
+  "currentSlice": "C1.3",
+  "updatedAt": "2026-10-28T00:14:12.858Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -218,11 +218,24 @@
       "id": "C1.2",
       "layer": "L1",
       "slice": "Roles and race classification",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "vanilla/DLC mapped; modded race defaults; no content gap",
       "depends": "F0.7",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/c1.2-race-classification-20261028.md",
+        "build/evidence/batch-test-20261028-071136.md",
+        "build/evidence/static-gates-20261028-071330.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "explicit-profiles": "PASS 19",
+        "keyword-rules": "PASS 7",
+        "unknown-fallback": "PASS",
+        "known-draugr-in-game": "PASS",
+        "batch": "PASS 23/23",
+        "no-crash": "PASS",
+        "static-gates": "PASS"
+      }
     },
     "C1.3": {
       "id": "C1.3",
@@ -596,9 +609,9 @@
     }
   },
   "currentWork": {
-    "slice": "C1.2",
-    "step": "race classification",
-    "nextAction": "implement host/anomaly/provisional race classifier and patch table over resolver"
+    "slice": "C1.3",
+    "step": "threat protection implementation",
+    "nextAction": "apply stage-gap DR using damage hook; 70% cap/3% per stage/5% floor/DoT 50%/reflected/environmental bypass; player/anomaly policy"
   },
   "blockers": [],
   "finalRelease": null

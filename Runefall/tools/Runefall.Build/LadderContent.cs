@@ -56,6 +56,11 @@ internal static class LadderContent
         "profileKey", "raceEditorId", "roles", "family", "priority"
     };
 
+    public static readonly string[] RaceRuleColumns =
+    {
+        "ruleId", "keywordEditorId", "roleKey", "family", "hostEligible", "protectionEligible", "provisional", "priority"
+    };
+
     public static void WriteAll(string dir)
     {
         Directory.CreateDirectory(dir);
@@ -211,6 +216,7 @@ internal static class LadderContent
         WriteCsv(dir, "legacy_rf_tier_map.csv", LegacyTierColumns, pack.LegacyTierRows);
         WriteCsv(dir, "roles.csv", RoleColumns, pack.RoleRows);
         WriteCsv(dir, "race_profiles.csv", RaceProfileColumns, pack.RaceProfileRows);
+        WriteCsv(dir, "race_classification_rules.csv", RaceRuleColumns, pack.RaceRuleRows);
         return errors;
     }
 

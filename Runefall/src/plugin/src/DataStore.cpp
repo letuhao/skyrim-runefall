@@ -37,6 +37,7 @@ namespace Runefall
 			"legacy_rf_tier_map.csv",
 			"roles.csv",
 			"race_profiles.csv",
+			"race_classification_rules.csv",
 		};
 	}
 
