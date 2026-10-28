@@ -34,6 +34,7 @@ for name in ("schema2_tier5.bin","schema2_tier2.bin"):
     check(name, rank==want["playerRank"] and tier in (5,2), f"runeTier {tier} -> rank {rank}")
 b1=(FIX/"schema1_legacy.bin").read_bytes(); s1,_,v1,c1,o1=header(b1); check("schema1_legacy.bin", s1==1 and v1==1 and struct.unpack_from("<I",b1,8)[0]==9, "v1 12-byte header, 9 sections, legacy defaults rank/stage 1")
 secs1=sections(b1,o1); check("schema1_legacy.bin", struct.unpack("<11i",secs1[1][0])==(0,)*11, "v1 progression payload has no runeTier/bossKillTier")
+check("schema1_legacy.bin", exp["schema1_legacy"]["playerRank"]==1 and exp["schema1_legacy"]["playerStage"]==1 and exp["schema1_legacy"]["difficultyProfile"]==255 and exp["schema1_legacy"]["curveId"]==1, "v1 expected migration fields rank/stage=1 difficulty=255 curve=1")
 b=(FIX/"baseline_v3.bin").read_bytes(); schema,flags,ver,count,off=header(b); secs=sections(b,off)
 lad=secs[11][0]
 version,rank,stage,diff,curve=lad[0],lad[1],lad[2],lad[3],lad[4]

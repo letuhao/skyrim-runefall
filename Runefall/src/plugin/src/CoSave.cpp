@@ -513,6 +513,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 					}
 					if (!sectionReader.U16(item.tags))
 						return false;
+					if ((item.tags & ~static_cast<std::uint16_t>(0x3F)) != 0) { logger::error("co-save: reject item.tags"); return false; }
 				}
 				break;
 			}
@@ -698,9 +699,11 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 		}
 		const auto firstContainer = state.generatedContainers.empty() ? 0u : state.generatedContainers.front();
 		const auto firstItem = state.items.empty() ? 0u : state.items.front().registryId;
-		logger::info("co-save: state rank={} stage={} xp={} class={} endgame={} containers={} quests={} items={} materials={} configHash={:08X} difficulty={} curve={} overrides={} skillCount={} firstContainer={} firstItem={}",
+		const auto firstSkillRank = state.skillRanks.empty() ? 0 : state.skillRanks.begin()->second;
+		const auto firstQuest = state.rewardedQuests.empty() ? 0u : state.rewardedQuests.front();
+		logger::info("co-save: state rank={} stage={} xp={} class={} endgame={} containers={} quests={} items={} materials={} configHash={:08X} difficulty={} curve={} overrides={} skillCount={} firstContainer={} firstItem={} skillRank={} firstQuest={}",
 			state.playerRank, state.playerStage, state.playerXp, state.characterClass, state.endgameComplete ? 1 : 0,
-			state.generatedContainers.size(), state.rewardedQuests.size(), state.items.size(), state.materials.size(), state.configHash, state.difficultyProfile, state.curveId, state.ladderOverrides.size(), state.skillRanks.size(), firstContainer, firstItem);
+			state.generatedContainers.size(), state.rewardedQuests.size(), state.items.size(), state.materials.size(), state.configHash, state.difficultyProfile, state.curveId, state.ladderOverrides.size(), state.skillRanks.size(), firstContainer, firstItem, firstSkillRank, firstQuest);
 		if (!a_intfc->OpenRecord(kSerializationRecord, kSaveVersion)) {
 			logger::error("co-save: failed to open record");
 			return;
@@ -737,16 +740,18 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 			logger::info("co-save: loaded schema {} ({} item entries)", loadedVersion, candidate.items.size());
 			const auto firstContainer = candidate.generatedContainers.empty() ? 0u : candidate.generatedContainers.front();
 			const auto firstItem = candidate.items.empty() ? 0u : candidate.items.front().registryId;
+			const auto firstSkillRank = candidate.skillRanks.empty() ? 0 : candidate.skillRanks.begin()->second;
+			const auto firstQuest = candidate.rewardedQuests.empty() ? 0u : candidate.rewardedQuests.front();
 			logger::info("co-save: state rank={} stage={} xp={} class={} endgame={} containers={} quests={} items={} materials={} configHash={:08X} difficulty={} curve={} overrides={} skillCount={} firstContainer={} firstItem={}",
 				candidate.playerRank, candidate.playerStage, candidate.playerXp, candidate.characterClass, candidate.endgameComplete ? 1 : 0,
 				candidate.generatedContainers.size(), candidate.rewardedQuests.size(), candidate.items.size(), candidate.materials.size(), candidate.configHash,
-				candidate.difficultyProfile, candidate.curveId, candidate.ladderOverrides.size(), candidate.skillRanks.size(), firstContainer, firstItem);
+				candidate.difficultyProfile, candidate.curveId, candidate.ladderOverrides.size(), candidate.skillRanks.size(), firstContainer, firstItem, firstSkillRank, firstQuest);
 		} else {
 			CoSave::Get().Reset();
 			ItemRegistry::Get().Clear();
 			Progression::Get().LoadFromCoSave();
 			MaterialRegistry::Get().LoadFromCoSave();
-			logger::info("co-save: no valid record; defaults");
+			logger::info("co-save: no record; defaults");
 		}
 	}
 
@@ -835,6 +840,8 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 			decoded.ladderOverrides.size() != 1 || decoded.ladderOverrides[0].key != sample.ladderOverrides[0].key ||
 			decoded.ladderOverrides[0].stage != sample.ladderOverrides[0].stage || decoded.skillRanks != sample.skillRanks || decoded.characterClass != sample.characterClass)
 			return { "CoSave.SelfTest", CheckStatus::Fail, "round-trip data mismatch" };
+		if (Encode(decoded) != encoded)
+			return { "CoSave.SelfTest", CheckStatus::Fail, "encode(decode(encode)) not byte-identical" };
 
 		auto truncated = encoded;
 		truncated.resize(truncated.size() / 2);
@@ -1004,6 +1011,11 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 		CoSaveState unknownTarget;
 		std::uint32_t unknownVersion = 0;
 		if (LoadRecords(unknownRecords, unknownTarget, unknownVersion)) return { "CoSave.SelfTest", CheckStatus::Fail, "unknown record accepted" };
+		std::vector<Record> repairRecords{ { kSerializationRecord, kSaveVersion, truncated }, { kSerializationRecord, kSaveVersion, encoded } };
+		CoSaveState repairTarget;
+		std::uint32_t repairVersion = 0;
+		if (!LoadRecords(repairRecords, repairTarget, repairVersion) || repairTarget.playerRank != sample.playerRank)
+			return { "CoSave.SelfTest", CheckStatus::Fail, "malformed-then-valid record did not recover" };
 
 		// Eviction is smallest FormID, not FIFO.
 		auto savedContainers = CoSave::Get().State().generatedContainers;
