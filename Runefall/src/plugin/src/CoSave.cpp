@@ -388,7 +388,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 
 	bool CoSave::LoadRecord(const std::vector<std::uint8_t>& a_bytes, std::uint32_t a_recordVersion, CoSaveState& a_out)
 	{
-		if (a_recordVersion > kSaveVersion) {
+		if (a_recordVersion == 0 || a_recordVersion > kSaveVersion) {
 			logger::error("co-save: reject record-version {}", a_recordVersion);
 			return false;
 		}
@@ -425,7 +425,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 			logger::error("co-save: reject version-mirror");
 			return false;
 		}
-		if (!reader.U32(sectionCount) || sectionCount == 0) { logger::error("co-save: reject section-count 0"); return false; }
+		if (!reader.U32(sectionCount) || sectionCount == 0) { logger::error("co-save: reject section-count"); return false; }
 		constexpr std::uint32_t kMaxSections = 64;
 		if (sectionCount > kMaxSections) { logger::error("co-save: reject section-count {}", sectionCount); return false; }
 		std::array<bool, 16> seenSections{};
@@ -664,6 +664,21 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 		logger::info("co-save: migrated schema {} runeTier {} to player rank/stage {}", a_schema, legacyTier, a_state.playerRank);
 	}
 
+	bool CoSave::LoadRecords(const std::vector<Record>& a_records, CoSaveState& a_out, std::uint32_t& a_recordVersion)
+	{
+		CoSaveState candidate;
+		bool loaded = false;
+		for (const auto& record : a_records) {
+			if (record.type != kSerializationRecord) continue;
+			if (loaded) { logger::info("co-save: duplicate record ignored"); continue; }
+			if (LoadRecord(record.bytes, record.version, candidate)) { loaded = true; a_recordVersion = record.version; }
+			else logger::error("co-save: reject record; defaults kept");
+		}
+		if (!loaded) { a_out = CoSaveState{}; return false; }
+		a_out = std::move(candidate);
+		return true;
+	}
+
 	void CoSave::OnSave(SKSE::SerializationInterface* a_intfc)
 	{
 		if (!a_intfc) return;
@@ -681,9 +696,11 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 			logger::error("co-save: encoded bytes exceed budget {} > {}; save skipped", bytes.size(), kMaxEncodedBytes);
 			return;
 		}
-		logger::info("co-save: state rank={} stage={} xp={} class={} endgame={} containers={} quests={} items={} materials={} configHash={:08X} difficulty={} curve={} overrides={}",
+		const auto firstContainer = state.generatedContainers.empty() ? 0u : state.generatedContainers.front();
+		const auto firstItem = state.items.empty() ? 0u : state.items.front().registryId;
+		logger::info("co-save: state rank={} stage={} xp={} class={} endgame={} containers={} quests={} items={} materials={} configHash={:08X} difficulty={} curve={} overrides={} skillCount={} firstContainer={} firstItem={}",
 			state.playerRank, state.playerStage, state.playerXp, state.characterClass, state.endgameComplete ? 1 : 0,
-			state.generatedContainers.size(), state.rewardedQuests.size(), state.items.size(), state.materials.size(), state.configHash, state.difficultyProfile, state.curveId, state.ladderOverrides.size());
+			state.generatedContainers.size(), state.rewardedQuests.size(), state.items.size(), state.materials.size(), state.configHash, state.difficultyProfile, state.curveId, state.ladderOverrides.size(), state.skillRanks.size(), firstContainer, firstItem);
 		if (!a_intfc->OpenRecord(kSerializationRecord, kSaveVersion)) {
 			logger::error("co-save: failed to open record");
 			return;
@@ -697,39 +714,34 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 	void CoSave::OnLoad(SKSE::SerializationInterface* a_intfc)
 	{
 		if (!a_intfc) return;
-
 		std::uint32_t type = 0;
 		std::uint32_t size = 0;
 		std::uint32_t version = 0;
-		CoSaveState candidate;
-		bool loaded = false;
+		std::vector<Record> records;
 		while (a_intfc->GetNextRecordInfo(type, version, size)) {
-			if (size > kMaxRecordBytes) {
-				logger::error("co-save: reject record-size {}", size);
-				continue;
-			}
-			std::vector<std::uint8_t> payload(size);
-			if (size > 0 && a_intfc->ReadRecordData(payload.data(), size) != size) {
+			if (size > kMaxRecordBytes) { logger::error("co-save: reject record-size {}", size); continue; }
+			Record record{ type, version, std::vector<std::uint8_t>(size) };
+			if (size > 0 && a_intfc->ReadRecordData(record.bytes.data(), size) != size) {
 				logger::error("co-save: short read on record {:08X}", type);
 				continue;
 			}
-			if (type != kSerializationRecord) continue;
-			if (loaded) { logger::info("co-save: duplicate record ignored"); continue; }
-			if (!LoadRecord(payload, version, candidate)) {
-				logger::error("co-save: reject record; defaults kept");
-				continue;
-			}
+			records.push_back(std::move(record));
+		}
+		CoSaveState candidate;
+		std::uint32_t loadedVersion = 0;
+		if (LoadRecords(records, candidate, loadedVersion)) {
 			CoSave::Get().State() = candidate;
 			ItemRegistry::Get().Load(candidate.items);
 			Progression::Get().LoadFromCoSave();
 			MaterialRegistry::Get().LoadFromCoSave();
-			loaded = true;
-			logger::info("co-save: loaded schema {} ({} bytes, {} item entries)", version, payload.size(), candidate.items.size());
-			logger::info("co-save: state rank={} stage={} xp={} class={} endgame={} containers={} quests={} items={} materials={} configHash={:08X}",
+			logger::info("co-save: loaded schema {} ({} item entries)", loadedVersion, candidate.items.size());
+			const auto firstContainer = candidate.generatedContainers.empty() ? 0u : candidate.generatedContainers.front();
+			const auto firstItem = candidate.items.empty() ? 0u : candidate.items.front().registryId;
+			logger::info("co-save: state rank={} stage={} xp={} class={} endgame={} containers={} quests={} items={} materials={} configHash={:08X} difficulty={} curve={} overrides={} skillCount={} firstContainer={} firstItem={}",
 				candidate.playerRank, candidate.playerStage, candidate.playerXp, candidate.characterClass, candidate.endgameComplete ? 1 : 0,
-				candidate.generatedContainers.size(), candidate.rewardedQuests.size(), candidate.items.size(), candidate.materials.size(), candidate.configHash, candidate.difficultyProfile, candidate.curveId, candidate.ladderOverrides.size());
-		}
-		if (!loaded) {
+				candidate.generatedContainers.size(), candidate.rewardedQuests.size(), candidate.items.size(), candidate.materials.size(), candidate.configHash,
+				candidate.difficultyProfile, candidate.curveId, candidate.ladderOverrides.size(), candidate.skillRanks.size(), firstContainer, firstItem);
+		} else {
 			CoSave::Get().Reset();
 			ItemRegistry::Get().Clear();
 			Progression::Get().LoadFromCoSave();
@@ -839,8 +851,12 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 		CoSaveState reject;
 		if (Decode(schemaZero, reject))
 			return { "CoSave.SelfTest", CheckStatus::Fail, "schema 0 accepted" };
-		if (LoadRecord(encoded, 4, reject) || LoadRecord(encoded, 0, reject) == false)
+		if (LoadRecord(encoded, 4, reject) || LoadRecord(encoded, 0, reject))
 			return { "CoSave.SelfTest", CheckStatus::Fail, "record version gate invalid" };
+		auto schemaFour = encoded;
+		schemaFour[4] = 4; schemaFour[5] = 0;
+		if (Decode(schemaFour, reject))
+			return { "CoSave.SelfTest", CheckStatus::Fail, "schema 4 accepted" };
 
 		// v2 migration fixture: 12-byte header, progression with runeTier=5, bossKillTier=2, no ladder.
 		std::vector<std::uint8_t> v2;
@@ -894,6 +910,20 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 		reordered.ladderOverrides = sample.ladderOverrides;
 		if (Encode(sample) != Encode(reordered))
 			return { "CoSave.SelfTest", CheckStatus::Fail, "encoding is not deterministic" };
+
+		CoSaveState canonical;
+		canonical.runeTier = 5;
+		canonical.bossKillTier = 2;
+		canonical.playerRank = 42;
+		canonical.playerStage = 42;
+		canonical.difficultyProfile = 2;
+		canonical.curveId = 1;
+		const std::string canonicalHex = "524E465303000000000003000A0000000100340000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000050000000200000002001400000000000000000000000000000000000000000000000300040000000000000004000400000000000000050004000000000000000700040000000000000008000400000000000000090004000000000000000A0004000000000000000B0010000000012A2A02010000000000000000000000";
+		std::vector<std::uint8_t> canonicalExpected;
+		for (std::size_t i = 0; i + 1 < canonicalHex.size(); i += 2)
+			canonicalExpected.push_back(static_cast<std::uint8_t>(std::stoul(canonicalHex.substr(i, 2), nullptr, 16)));
+		if (Encode(canonical) != canonicalExpected)
+			return { "CoSave.SelfTest", CheckStatus::Fail, "canonical golden mismatch" };
 
 		// Encode caps and gate states.
 		CoSaveState tooManySkills = sample;
@@ -954,6 +984,26 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 		const auto semanticBefore = Encode(semanticSentinel);
 		if (Decode(semantic, semanticSentinel) || Encode(semanticSentinel) != semanticBefore)
 			return { "CoSave.SelfTest", CheckStatus::Fail, "semantic-invalid decode not failure-pure" };
+
+		std::vector<Record> emptyRecords;
+		CoSaveState emptyTarget;
+		std::uint32_t emptyVersion = 0;
+		if (LoadRecords(emptyRecords, emptyTarget, emptyVersion)) return { "CoSave.SelfTest", CheckStatus::Fail, "empty records accepted" };
+		std::vector<Record> oneRecord{ { kSerializationRecord, kSaveVersion, encoded } };
+		CoSaveState oneTarget;
+		std::uint32_t oneVersion = 0;
+		if (!LoadRecords(oneRecord, oneTarget, oneVersion) || oneVersion != kSaveVersion || oneTarget.playerRank != sample.playerRank) return { "CoSave.SelfTest", CheckStatus::Fail, "single record load failed" };
+		CoSaveState secondState = sample;
+		secondState.playerRank = 99;
+		auto secondBytes = Encode(secondState);
+		std::vector<Record> manyRecords{ { kSerializationRecord, kSaveVersion, encoded }, { kSerializationRecord, kSaveVersion, secondBytes } };
+		CoSaveState manyTarget;
+		std::uint32_t manyVersion = 0;
+		if (!LoadRecords(manyRecords, manyTarget, manyVersion) || manyTarget.playerRank != sample.playerRank) return { "CoSave.SelfTest", CheckStatus::Fail, "multiple records did not keep first" };
+		std::vector<Record> unknownRecords{ { 0xDEADBEEF, kSaveVersion, encoded } };
+		CoSaveState unknownTarget;
+		std::uint32_t unknownVersion = 0;
+		if (LoadRecords(unknownRecords, unknownTarget, unknownVersion)) return { "CoSave.SelfTest", CheckStatus::Fail, "unknown record accepted" };
 
 		// Eviction is smallest FormID, not FIFO.
 		auto savedContainers = CoSave::Get().State().generatedContainers;

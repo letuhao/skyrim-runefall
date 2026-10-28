@@ -71,6 +71,8 @@ namespace Runefall
 		static std::vector<std::uint8_t> EncodeWithBudget(const CoSaveState& a_state, std::size_t a_budget);
 		static bool                      Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out);
 		static bool                      DecodeImpl(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out);
+		struct Record { std::uint32_t type; std::uint32_t version; std::vector<std::uint8_t> bytes; };
+		static bool                      LoadRecords(const std::vector<Record>& a_records, CoSaveState& a_out, std::uint32_t& a_recordVersion);
 		static void                      MigrateLegacy(CoSaveState& a_state, std::uint16_t a_schema);
 		static std::uint32_t             HashConfig();
 
