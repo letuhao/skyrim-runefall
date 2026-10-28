@@ -1144,3 +1144,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - Rank 1-100 + XP curve/award; boss-gated tier breaks; co-save playerXp.
 - Draugr kill awards 10 XP; batch 33/33; static gates 9/9.
+
+
+## P4.2 classes/skills - PASS (2026-10-28 10:18-10:28)
+
+- 3 classes with bonuses/skills; permanent selection; class+skill ranks in co-save.
+- Warrior applied in-game; batch 34/34; static gates 9/9.

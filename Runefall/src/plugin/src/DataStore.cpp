@@ -53,6 +53,7 @@ namespace Runefall
 			"bosses.csv",
 			"anomaly_families.csv",
 			"economy_profiles.csv",
+			"classes.csv",
 		};
 	}
 

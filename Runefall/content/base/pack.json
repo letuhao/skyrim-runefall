@@ -104,6 +104,10 @@
     {
       "entity": "economyProfiles",
       "file": "data/economy_profiles.json"
+    },
+    {
+      "entity": "classes",
+      "file": "data/classes.json"
     }
   ],
   "localization": []

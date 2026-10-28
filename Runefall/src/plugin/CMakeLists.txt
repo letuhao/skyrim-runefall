@@ -94,6 +94,7 @@ else()
         src/BossRegistry.cpp
         src/AnomalyEngine.cpp
         src/EconomyEngine.cpp
+        src/ClassRegistry.cpp
         src/RuntimeContentResolver.cpp
         src/CoSave.cpp
         src/ItemRegistry.cpp

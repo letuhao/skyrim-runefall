@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "classes.schema.json",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "classes"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "classes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "schemaVersion",
+          "classId",
+          "nameKey",
+          "primaryAttribute",
+          "attributeBonuses",
+          "startingSkills",
+          "roleTags"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "classId": {
+            "enum": [
+              "warrior",
+              "rogue",
+              "mage"
+            ]
+          },
+          "nameKey": {
+            "type": "string"
+          },
+          "primaryAttribute": {
+            "type": "string"
+          },
+          "attributeBonuses": {
+            "type": "string"
+          },
+          "startingSkills": {
+            "type": "string"
+          },
+          "roleTags": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "P4.2",
-  "updatedAt": "2026-10-28T03:18:54.472Z",
+  "currentSlice": "P4.3",
+  "updatedAt": "2026-10-28T03:28:47.833Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -757,11 +757,25 @@
       "id": "P4.2",
       "layer": "L4",
       "slice": "9 classes",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "9 classes data-driven; class build differs",
       "depends": "P4.1",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/p4.2-classes-20261028.md",
+        "build/evidence/batch-test-20261028-102643.md",
+        "build/evidence/static-gates-20261028-102804.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "class-data": "PASS 3",
+        "attribute-bonuses": "PASS",
+        "starting-skills": "PASS",
+        "class-permanent": "PASS",
+        "skill-ranks": "PASS 18 defs",
+        "co-save-class-skills": "PASS",
+        "batch": "PASS 34/34",
+        "static-gates": "PASS"
+      }
     },
     "P4.3": {
       "id": "P4.3",
@@ -915,9 +929,9 @@
     }
   },
   "currentWork": {
-    "slice": "P4.2",
-    "step": "classes and skills",
-    "nextAction": "class definitions, skill trees/ranks, respec and co-save persistence"
+    "slice": "P4.3",
+    "step": "skills and perks",
+    "nextAction": "skill perk effects, rank scaling, skill point awards, respec validation"
   },
   "blockers": [],
   "finalRelease": null

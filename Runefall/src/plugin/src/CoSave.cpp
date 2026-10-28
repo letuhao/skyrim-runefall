@@ -320,6 +320,12 @@ namespace Runefall
 			PutU8(ladder, entry.flags);
 		}
 		PutU32(ladder, a_state.playerXp);
+		PutString(ladder, a_state.characterClass);
+		PutU16(ladder, static_cast<std::uint16_t>((std::min)(a_state.skillRanks.size(), static_cast<std::size_t>(256))));
+		for (const auto& [skill, rank] : a_state.skillRanks) {
+			PutString(ladder, skill);
+			PutI32(ladder, rank);
+		}
 		sections.push_back(BuildSection(kSectionLadder, ladder));
 
 		PutU32(out, static_cast<std::uint32_t>(sections.size()));
@@ -514,6 +520,21 @@ namespace Runefall
 				if (sectionReader.Remaining() >= 4) {
 					if (!sectionReader.U32(a_out.playerXp))
 						return false;
+				}
+				if (sectionReader.Remaining() > 0) {
+					if (!sectionReader.String(a_out.characterClass) || a_out.characterClass.size() > 64)
+						return false;
+					std::uint16_t skillCount = 0;
+					if (!sectionReader.U16(skillCount) || skillCount > 256)
+						return false;
+					for (std::uint16_t s = 0; s < skillCount; ++s) {
+						std::string skill;
+						std::int32_t rank = 0;
+						if (!sectionReader.String(skill) || skill.size() > 64 || !sectionReader.I32(rank))
+							return false;
+						if (rank > 0)
+							a_out.skillRanks[skill] = rank;
+					}
 				}
 				break;
 			}

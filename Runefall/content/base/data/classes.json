@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "classes": [
+    {
+      "schemaVersion": 1,
+      "classId": "warrior",
+      "nameKey": "RF_CLASS_WARRIOR",
+      "primaryAttribute": "Might",
+      "attributeBonuses": "Might=5|Endurance=3",
+      "startingSkills": "Cleave|Block|HeavyArmor",
+      "roleTags": "warrior"
+    },
+    {
+      "schemaVersion": 1,
+      "classId": "rogue",
+      "nameKey": "RF_CLASS_ROGUE",
+      "primaryAttribute": "Precision",
+      "attributeBonuses": "Precision=5|Agility=3",
+      "startingSkills": "Sneak|Archery|LightArmor",
+      "roleTags": "rogue"
+    },
+    {
+      "schemaVersion": 1,
+      "classId": "mage",
+      "nameKey": "RF_CLASS_MAGE",
+      "primaryAttribute": "Intellect",
+      "attributeBonuses": "Intellect=5|Wisdom=3",
+      "startingSkills": "Destruction|Restoration|Illusion",
+      "roleTags": "mage"
+    }
+  ]
+}

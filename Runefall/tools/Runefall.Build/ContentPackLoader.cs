@@ -30,6 +30,7 @@ internal sealed class LoadedPack
     public List<string[]> BossRows { get; } = new();
     public List<string[]> AnomalyRows { get; } = new();
     public List<string[]> EconomyRows { get; } = new();
+    public List<string[]> ClassRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -89,6 +90,7 @@ internal static class ContentPackLoader
             ReadBosses(pack, files, errors);
             ReadAnomalies(pack, files, errors);
             ReadEconomy(pack, files, errors);
+            ReadClasses(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -665,6 +667,24 @@ internal static class ContentPackLoader
                 F(Number(item, "runeValue", path, errors)), F(Number(item, "materialValue", path, errors)),
                 F(Number(item, "respecBaseCost", path, errors)), F(Number(item, "respecCostPerLevel", path, errors)),
                 F(Number(item, "salvageValuePct", path, errors))
+            });
+        }
+    }
+
+
+    private static void ReadClasses(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("classes", files, errors, "classes");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"classes.classes[{index++}]";
+            pack.ClassRows.Add(new[]
+            {
+                Text(item, "classId", path, errors), Text(item, "nameKey", path, errors),
+                Text(item, "primaryAttribute", path, errors), Text(item, "attributeBonuses", path, errors),
+                Text(item, "startingSkills", path, errors), Text(item, "roleTags", path, errors)
             });
         }
     }

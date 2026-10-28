@@ -165,6 +165,10 @@ namespace Runefall
 		skillPoints = state.skillPoints;
 		runeTier = std::clamp(state.runeTier, 0, 5);
 		bossKillTier = state.bossKillTier;
+		characterClass = state.characterClass;
+		skills.clear();
+		for (const auto& [skill, rank] : state.skillRanks)
+			skills.push_back({ skill, rank });
 		SyncGlobals();
 	}
 
@@ -176,6 +180,11 @@ namespace Runefall
 		state.skillPoints = skillPoints;
 		state.runeTier = runeTier;
 		state.bossKillTier = bossKillTier;
+		state.characterClass = characterClass;
+		state.skillRanks.clear();
+		for (const auto& entry : skills)
+			if (!entry.skill.empty() && entry.rank > 0)
+				state.skillRanks[entry.skill] = entry.rank;
 		SyncGlobals();
 	}
 
@@ -200,6 +209,34 @@ namespace Runefall
 		++attributes[a_index];
 		--attributePoints;
 		SaveToCoSave();
+		return true;
+	}
+
+	void Progression::SetClassId(std::string a_class)
+	{
+		characterClass = std::move(a_class);
+		CoSave::Get().State().characterClass = characterClass;
+	}
+
+	bool Progression::UnlockSkill(std::string_view a_skill)
+	{
+		if (a_skill.empty())
+			return false;
+		for (auto& entry : skills) {
+			if (entry.skill == a_skill) {
+				entry.rank = (std::min)(5, entry.rank + 1);
+				return true;
+			}
+		}
+		skills.push_back({ std::string{ a_skill }, 1 });
+		return true;
+	}
+
+	bool Progression::AddAttribute(std::size_t a_index, std::int32_t a_amount)
+	{
+		if (a_index >= attributes.size() || a_amount == 0)
+			return false;
+		attributes[a_index] = (std::max)(0, attributes[a_index] + a_amount);
 		return true;
 	}
 

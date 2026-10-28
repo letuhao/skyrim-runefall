@@ -24,7 +24,8 @@ param(
     [switch]$DisableActorEquipment,
     [switch]$TestEncounters,
     [switch]$TestHuntContract,
-    [switch]$TestAnomaly
+    [switch]$TestAnomaly,
+    [switch]$TestClass
 )
 
 $ErrorActionPreference = 'Stop'
@@ -272,6 +273,10 @@ Add-Check 'Generated container set persisted' ($generatedAfter -ge $generatedBef
 $latestCrash = Get-ChildItem $skseDir -Filter 'crash-*.log' -ErrorAction SilentlyContinue |
     Sort-Object LastWriteTime -Descending | Select-Object -First 1
 $crashed = $latestCrash -and $latestCrash.LastWriteTime -gt $startTime
+if ($TestClass) {
+    $null = Tap-Key 60
+    Add-Check 'Class applied' (Wait-LogPattern 'class-registry: applied class warrior' 10) ''
+}
 if ($TestAnomaly) {
     $null = Tap-Key 61
     Add-Check 'Anomaly spawned' (Wait-LogPattern 'anomaly: spawned family ' 12) ''

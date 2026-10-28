@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T03:18:54.476Z",
+  "updatedAt": "2026-10-28T03:28:47.838Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -719,6 +719,27 @@
       "slice": "P4.1",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-101809.md",
+      "result": "PASS",
+      "detail": "9/9"
+    },
+    {
+      "slice": "P4.2",
+      "kind": "summary",
+      "path": "build/evidence/p4.2-classes-20261028.md",
+      "result": "PASS",
+      "detail": "warrior/rogue/mage; bonuses/skills; co-save class+skills"
+    },
+    {
+      "slice": "P4.2",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-102643.md",
+      "result": "PASS",
+      "detail": "34/34; class applied warrior"
+    },
+    {
+      "slice": "P4.2",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-102804.md",
       "result": "PASS",
       "detail": "9/9"
     }

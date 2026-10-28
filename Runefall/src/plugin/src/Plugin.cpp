@@ -24,6 +24,7 @@
 #include "BossRegistry.h"
 #include "AnomalyEngine.h"
 #include "EconomyEngine.h"
+#include "ClassRegistry.h"
 #include "HookManager.h"
 #include "MaterialRegistry.h"
 #include "RuneForge.h"
@@ -136,6 +137,7 @@ namespace
 		Runefall::BossRegistry::Get().Load();
 		Runefall::AnomalyEngine::Get().Load();
 		Runefall::EconomyEngine::Get().Load();
+		Runefall::ClassRegistry::Get().Load();
 		Runefall::MaterialRegistry::Get().LoadDefinitions();
 		Runefall::RuneForge::Get().ReloadSocketRecipes();
 		Runefall::LootEngine::Get().Reload();
