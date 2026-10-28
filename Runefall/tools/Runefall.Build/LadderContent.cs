@@ -126,6 +126,11 @@ internal static class LadderContent
         "bossId", "actorEditorId", "fixedStage", "unique", "questBand", "packageId", "enabled"
     };
 
+    public static readonly string[] AnomalyColumns =
+    {
+        "family", "nameKey", "stageOffset", "tierLabels", "coreItemEditorId", "trophyItemEditorId", "encounterActorEditorId", "enabled"
+    };
+
     public static void WriteAll(string dir)
     {
         Directory.CreateDirectory(dir);
@@ -295,6 +300,7 @@ internal static class LadderContent
         WriteCsv(dir, "rare_spawns.csv", RareColumns, pack.RareRows);
         WriteCsv(dir, "hunt_contracts.csv", ContractColumns, pack.ContractRows);
         WriteCsv(dir, "bosses.csv", BossColumns, pack.BossRows);
+        WriteCsv(dir, "anomaly_families.csv", AnomalyColumns, pack.AnomalyRows);
         return errors;
     }
 

@@ -3,7 +3,7 @@
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "W2.6",
-  "updatedAt": "2026-10-28T02:29:17.494Z",
+  "updatedAt": "2026-10-28T02:34:44.116Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -513,11 +513,27 @@
       "id": "W2.6",
       "layer": "L2",
       "slice": "Anomaly ladder",
-      "status": "PENDING",
+      "status": "IN_PROGRESS",
       "acceptance": "anomaly content works without host protection",
       "depends": "C1.2/W2.2",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/w2.6-anomaly-20261028.md",
+        "build/evidence/batch-test-20261028-093240.md",
+        "build/evidence/static-gates-20261028-093402.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "family-data": "PASS 5",
+        "stage-offset": "PASS",
+        "tier-labels": "PASS",
+        "core-trophy-ids": "PASS data",
+        "deterministic-family": "PASS",
+        "anomaly-spawn": "PENDING",
+        "no-host-protection": "PENDING",
+        "codex-feed": "PENDING",
+        "batch": "PASS 32/32",
+        "static-gates": "PASS"
+      }
     },
     "W2.7": {
       "id": "W2.7",
@@ -772,8 +788,8 @@
   },
   "currentWork": {
     "slice": "W2.6",
-    "step": "anomaly ladder",
-    "nextAction": "anomaly families/curves/tier labels and anomaly encounters without host protection"
+    "step": "anomaly data/engine done",
+    "nextAction": "spawn anomaly encounter, skip host protection, core/trophy rewards and codex feed"
   },
   "blockers": [],
   "finalRelease": null

@@ -51,6 +51,7 @@ namespace Runefall
 			"rare_spawns.csv",
 			"hunt_contracts.csv",
 			"bosses.csv",
+			"anomaly_families.csv",
 		};
 	}
 

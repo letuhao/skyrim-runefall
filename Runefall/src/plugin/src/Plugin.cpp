@@ -22,6 +22,7 @@
 #include "RareSpawnEngine.h"
 #include "HuntContractManager.h"
 #include "BossRegistry.h"
+#include "AnomalyEngine.h"
 #include "HookManager.h"
 #include "MaterialRegistry.h"
 #include "RuneForge.h"
@@ -132,6 +133,7 @@ namespace
 		Runefall::RareSpawnEngine::Get().Load();
 		Runefall::HuntContractManager::Get().Load();
 		Runefall::BossRegistry::Get().Load();
+		Runefall::AnomalyEngine::Get().Load();
 		Runefall::MaterialRegistry::Get().LoadDefinitions();
 		Runefall::RuneForge::Get().ReloadSocketRecipes();
 		Runefall::LootEngine::Get().Reload();

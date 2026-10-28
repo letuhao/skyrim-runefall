@@ -1070,3 +1070,10 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Data-driven bosses with fixed stages and FormID resolution; boss fixed stage overrides rare stage.
 - In-game boss_03 fixed stage 60; batch 31/31; static gates 9/9.
 - Quest-band placement remains content-pack data.
+
+
+## W2.6 anomaly ladder - partial (2026-10-28 09:28-09:34)
+
+- Added 5 anomaly families with stage offsets, tier labels and core/trophy IDs.
+- AnomalyEngine deterministic selection/stage/tier lookup; batch 32/32, static gates 9/9.
+- Anomaly spawns, no-host-protection policy, rewards and Codex remain pending.

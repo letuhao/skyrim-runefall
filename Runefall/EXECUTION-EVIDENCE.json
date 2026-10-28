@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T02:29:17.499Z",
+  "updatedAt": "2026-10-28T02:34:44.120Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -495,6 +495,27 @@
       "slice": "W2.5",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-092836.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "W2.6",
+      "kind": "summary",
+      "path": "build/evidence/w2.6-anomaly-20261028.md",
+      "result": "PARTIAL",
+      "detail": "5 families, stage/tier/core data; spawn/protection/codex pending"
+    },
+    {
+      "slice": "W2.6",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-093240.md",
+      "result": "PASS",
+      "detail": "32/32 self-tests"
+    },
+    {
+      "slice": "W2.6",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-093402.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

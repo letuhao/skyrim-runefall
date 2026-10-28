@@ -30,6 +30,7 @@ ENTITY_SCHEMA = {
     "rareSpawns": "rare-spawns.schema.json",
     "huntContracts": "hunt-contracts.schema.json",
     "bosses": "bosses.schema.json",
+    "anomalyFamilies": "anomaly-families.schema.json",
     "ratingProfiles": "rating-profiles.schema.json",
     "combatPaceProfiles": "combat-pace-profiles.schema.json",
     "ratingDisplayProfiles": "rating-display-profiles.schema.json",

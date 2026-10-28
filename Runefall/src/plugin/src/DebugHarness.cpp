@@ -15,6 +15,7 @@
 #include "RareSpawnEngine.h"
 #include "HuntContractManager.h"
 #include "BossRegistry.h"
+#include "AnomalyEngine.h"
 #include "FormResolver.h"
 #include "ItemRegistry.h"
 #include "HuntEngine.h"
@@ -92,6 +93,7 @@ namespace Runefall
 		RareSpawnEngine::Get().Load();
 		HuntContractManager::Get().Load();
 		BossRegistry::Get().Load();
+		AnomalyEngine::Get().Load();
 		results.push_back(DataStore::Get().SelfTest());
 		results.push_back(FormCatalog::SelfTest());
 		results.push_back(StageEngine::SelfTest());
@@ -106,6 +108,7 @@ namespace Runefall
 		results.push_back(RareSpawnEngine::SelfTest());
 		results.push_back(HuntContractManager::SelfTest());
 		results.push_back(BossRegistry::SelfTest());
+		results.push_back(AnomalyEngine::SelfTest());
 		LootEngine::Get().Reload();
 		TierEngine::Get().Reload();
 		HuntEngine::Get().Reload();

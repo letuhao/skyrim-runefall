@@ -96,6 +96,10 @@
     {
       "entity": "bosses",
       "file": "data/bosses.json"
+    },
+    {
+      "entity": "anomalyFamilies",
+      "file": "data/anomaly_families.json"
     }
   ],
   "localization": []

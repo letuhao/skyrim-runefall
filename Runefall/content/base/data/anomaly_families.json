@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "families": [
+    {
+      "schemaVersion": 1,
+      "family": "ember",
+      "nameKey": "RF_ANOMALY_EMBER",
+      "stageOffset": 10,
+      "tierLabels": "Cinder|Blaze|Pyre",
+      "coreItemEditorId": "RF_MISC_Anomaly_Ember_Core",
+      "trophyItemEditorId": "RF_MISC_Anomaly_Ember_Trophy",
+      "encounterActorEditorId": "RF_NPC_Boss_04",
+      "enabled": true
+    },
+    {
+      "schemaVersion": 1,
+      "family": "rime",
+      "nameKey": "RF_ANOMALY_RIME",
+      "stageOffset": 12,
+      "tierLabels": "Frost|Glacier|Whiteout",
+      "coreItemEditorId": "RF_MISC_Anomaly_Rime_Core",
+      "trophyItemEditorId": "RF_MISC_Anomaly_Rime_Trophy",
+      "encounterActorEditorId": "RF_NPC_Boss_04",
+      "enabled": true
+    },
+    {
+      "schemaVersion": 1,
+      "family": "umbral",
+      "nameKey": "RF_ANOMALY_UMBRAL",
+      "stageOffset": 15,
+      "tierLabels": "Shade|Eclipse|Black Sun",
+      "coreItemEditorId": "RF_MISC_Anomaly_Umbral_Core",
+      "trophyItemEditorId": "RF_MISC_Anomaly_Umbral_Trophy",
+      "encounterActorEditorId": "RF_NPC_Boss_04",
+      "enabled": true
+    },
+    {
+      "schemaVersion": 1,
+      "family": "verdant",
+      "nameKey": "RF_ANOMALY_VERDANT",
+      "stageOffset": 8,
+      "tierLabels": "Bloom|Thorn|Wildwood",
+      "coreItemEditorId": "RF_MISC_Anomaly_Verdant_Core",
+      "trophyItemEditorId": "RF_MISC_Anomaly_Verdant_Trophy",
+      "encounterActorEditorId": "RF_NPC_Boss_04",
+      "enabled": true
+    },
+    {
+      "schemaVersion": 1,
+      "family": "tempest",
+      "nameKey": "RF_ANOMALY_TEMPEST",
+      "stageOffset": 14,
+      "tierLabels": "Gale|Storm|Maelstrom",
+      "coreItemEditorId": "RF_MISC_Anomaly_Tempest_Core",
+      "trophyItemEditorId": "RF_MISC_Anomaly_Tempest_Trophy",
+      "encounterActorEditorId": "RF_NPC_Boss_04",
+      "enabled": true
+    }
+  ]
+}

@@ -28,6 +28,7 @@ internal sealed class LoadedPack
     public List<string[]> RareRows { get; } = new();
     public List<string[]> ContractRows { get; } = new();
     public List<string[]> BossRows { get; } = new();
+    public List<string[]> AnomalyRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -85,6 +86,7 @@ internal static class ContentPackLoader
             ReadRareSpawns(pack, files, errors);
             ReadHuntContracts(pack, files, errors);
             ReadBosses(pack, files, errors);
+            ReadAnomalies(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -618,6 +620,25 @@ internal static class ContentPackLoader
                 I(Int(item, "fixedStage", path, errors)), B(Bool(item, "unique", path, errors)),
                 I(Int(item, "questBand", path, errors)), Text(item, "packageId", path, errors),
                 B(Bool(item, "enabled", path, errors))
+            });
+        }
+    }
+
+
+    private static void ReadAnomalies(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("anomalyFamilies", files, errors, "families");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"anomaly_families.families[{index++}]";
+            pack.AnomalyRows.Add(new[]
+            {
+                Text(item, "family", path, errors), Text(item, "nameKey", path, errors),
+                I(Int(item, "stageOffset", path, errors)), Text(item, "tierLabels", path, errors),
+                Text(item, "coreItemEditorId", path, errors), Text(item, "trophyItemEditorId", path, errors),
+                Text(item, "encounterActorEditorId", path, errors), B(Bool(item, "enabled", path, errors))
             });
         }
     }
