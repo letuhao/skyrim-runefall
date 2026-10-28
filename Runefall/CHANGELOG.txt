@@ -1,6 +1,19 @@
 Runefall CHANGELOG
 ==================
 
+0.1.0 internal candidate addendum - 2026-10-28 (not published)
+- Completed the ULTIMATE-PLAN v2 implementation pass on top of the 0.1.0 POC base:
+  combat ratings/penetration, world bands/encounters/rare spawns/hunts/bosses/anomalies,
+  loot/crafting/economy, player rank/class/skills/perks, Prisma UI contracts and HUD/menus,
+  content packs, compatibility profiles, endgame and localization validation.
+- Runtime batch 38/38 PASS; static gates 10/10 PASS; archive verifier 25/25 PASS.
+- Co-save schema 3 persists generated containers/quests, rank/XP, class/skill ranks and
+  endgame completion.
+- Known limitations: full 3,700-mod MO2 profile and PrismaUI visual host not verified in this
+  environment; final-boss scripted kill not run; English-only v1.
+- Internal candidate archive Runefall-0.1.0.zip sha256
+  27241B9D7D71A6BA00B5262FBE68CD9A570DA4DEDE5478A55B3CC7CF57B940F2; no upload/tag/push.
+
 0.1.0 - 2026-10-27 (first public release; ladder runtime 2026-10-28)
 - Public release of the Runefall four-pillar RPG overhaul for Skyrim SE/AE 1.6.1170.
 - 100-stage/10-tier power ladder runtime: generated seven ladder tables, StageEngine, deterministic

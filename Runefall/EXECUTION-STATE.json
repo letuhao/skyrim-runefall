@@ -1,9 +1,9 @@
 {
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
-  "overallStatus": "IN_PROGRESS",
-  "currentSlice": "R6.4",
-  "updatedAt": "2026-10-28T04:41:46.531Z",
+  "overallStatus": "PASS",
+  "currentSlice": "COMPLETE",
+  "updatedAt": "2026-10-28T04:45:49.108Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -1119,18 +1119,44 @@
       "id": "R6.4",
       "layer": "L6",
       "slice": "Release packaging",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "ship gate PASS; archive verified",
       "depends": "R6.1-R6.3",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/r6.4-release-20261028.md",
+        "build/evidence/release-verify-20261028-114412.md",
+        "build/evidence/static-gates-20261028-114102.md",
+        "build/evidence/batch-test-20261028-113956.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "version": "PASS 0.1.0",
+        "changelog": "PASS",
+        "readiness-doc": "PASS",
+        "release-tree": "PASS",
+        "archive": "PASS",
+        "archive-verify": "PASS 25/25",
+        "form-catalog": "PASS 573",
+        "static-gates": "PASS 10/10",
+        "batch": "PASS 38/38",
+        "publication": "NOT PUBLISHED (user decision)"
+      }
     }
   },
   "currentWork": {
-    "slice": "R6.4",
-    "step": "release gate",
-    "nextAction": "version/changelog, archive, verify release tree, final evidence"
+    "slice": "COMPLETE",
+    "step": "all required slices PASS",
+    "nextAction": "user-side publication decision and full MO2/Prisma visual acceptance"
   },
   "blockers": [],
-  "finalRelease": null
+  "finalRelease": null,
+  "release": {
+    "version": "0.1.0",
+    "archive": "build/release/Runefall-0.1.0.zip",
+    "sha256": "27241B9D7D71A6BA00B5262FBE68CD9A570DA4DEDE5478A55B3CC7CF57B940F2",
+    "bytes": 714385,
+    "verified": true,
+    "published": false,
+    "verificationEvidence": "build/evidence/release-verify-20261028-114412.md"
+  }
 }

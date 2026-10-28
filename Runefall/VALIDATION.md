@@ -1233,3 +1233,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - 37.4h to rank100 at 600 XP/h; PCR +10 1.16x, +20 1.35x; 10 pace bands valid.
 - xpGrowth calibrated to 1.015; batch 38/38; static gates 10/10.
+
+
+## R6.4 release gate - PASS (internal candidate) (2026-10-28 11:41-11:45)
+
+- Runefall-0.1.0.zip 714,385 B sha256 27241B9D...F2; verify-release 25/25; gates 10/10; batch 38/38.
+- Changelog/readiness updated. No upload, tag or push.

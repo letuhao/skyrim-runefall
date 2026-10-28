@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T04:41:46.536Z",
+  "updatedAt": "2026-10-28T04:45:49.113Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -1015,6 +1015,20 @@
       "path": "build/evidence/static-gates-20261028-114102.md",
       "result": "PASS",
       "detail": "10/10"
+    },
+    {
+      "slice": "R6.4",
+      "kind": "summary",
+      "path": "build/evidence/r6.4-release-20261028.md",
+      "result": "PASS",
+      "detail": "internal candidate archive verified 25/25; no publication"
+    },
+    {
+      "slice": "R6.4",
+      "kind": "archive-verify",
+      "path": "build/evidence/release-verify-20261028-114412.md",
+      "result": "PASS",
+      "detail": "Runefall-0.1.0.zip sha256 27241B9D...F2"
     }
   ]
 }
