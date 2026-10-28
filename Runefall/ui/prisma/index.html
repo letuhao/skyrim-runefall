@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Runefall</title>
+  <style>
+    html, body { margin: 0; height: 100%; background: transparent; color: #e8ddc6; font: 13px/1.4 "Segoe UI", sans-serif; }
+    #runefall { position: fixed; left: 18px; bottom: 18px; padding: 10px 14px; border: 1px solid #8a6a2f; background: rgba(12, 10, 8, 0.86); border-radius: 6px; }
+    .rank { color: #f0c96b; font-weight: 600; }
+    .muted { color: #a89b82; }
+  </style>
+</head>
+<body>
+  <div id="runefall">
+    <div>Runefall <span class="muted" id="version">v0.1.0</span></div>
+    <div><span class="rank" id="rank">Rank 1</span> <span class="muted" id="class"></span></div>
+    <div class="muted" id="xp"></div>
+  </div>
+  <script>
+    // The native Prisma bridge writes Data/Runefall/ui/view-model.json.
+    // PrismaUI host supplies the fetch/transport; this file only renders the contract.
+    async function refresh() {
+      try {
+        const response = await fetch('../Runefall/ui/view-model.json', { cache: 'no-store' });
+        if (!response.ok) return;
+        const model = await response.json();
+        document.getElementById('rank').textContent = 'Rank ' + (model.playerRank || 1);
+        document.getElementById('class').textContent = model.classId ? '· ' + model.classId : '';
+        document.getElementById('xp').textContent = model.playerXp != null ? model.playerXp + ' XP' : '';
+      } catch (error) {
+        // PrismaUI host absent: the game remains fully playable; HUD simply stays hidden.
+      }
+    }
+    refresh();
+    setInterval(refresh, 1000);
+  </script>
+</body>
+</html>

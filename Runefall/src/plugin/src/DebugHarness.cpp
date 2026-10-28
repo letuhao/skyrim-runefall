@@ -18,6 +18,7 @@
 #include "AnomalyEngine.h"
 #include "EconomyEngine.h"
 #include "ClassRegistry.h"
+#include "PrismaUIBridge.h"
 #include "SkillPerkEngine.h"
 #include "FormResolver.h"
 #include "ItemRegistry.h"
@@ -117,6 +118,7 @@ namespace Runefall
 		results.push_back(AnomalyEngine::SelfTest());
 		results.push_back(EconomyEngine::SelfTest());
 		results.push_back(ClassRegistry::SelfTest());
+		results.push_back(PrismaUIBridge::SelfTest());
 		results.push_back(SkillPerkEngine::SelfTest());
 		LootEngine::Get().Reload();
 		TierEngine::Get().Reload();

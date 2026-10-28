@@ -182,6 +182,7 @@ if (-not $NoInputHotkeys) {
 Start-Sleep -Milliseconds 700
 Add-Check 'Runtime content rescan' (Wait-LogPattern 'runtime-resolver: manual rescan removed' 10) ''
 Add-Check 'F10 menu snapshot' $okF10 ''
+Add-Check 'Prisma view model' (Wait-LogPattern 'prisma-ui: wrote view model' 10) ''
 Add-Check 'Delayed runtime scan' (Wait-LogPattern 'runtime-resolver: delayed startup scan complete' 15) ''
     Add-Check 'F11 selftest rerun' $okF11 ''
     Add-Check 'F12 probe path' $okF12 ''

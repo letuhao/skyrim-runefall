@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "P4.4",
-  "updatedAt": "2026-10-28T03:33:47.980Z",
+  "currentSlice": "P4.5",
+  "updatedAt": "2026-10-28T03:41:46.061Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -804,11 +804,24 @@
       "id": "P4.4",
       "layer": "L4",
       "slice": "Prisma UI foundation",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "UI loads; read-only snapshot works; no gameplay in UI",
       "depends": "F0.8",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/p4.4-prisma-shell-20261028.md",
+        "build/evidence/batch-test-20261028-103943.md",
+        "build/evidence/static-gates-20261028-104102.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "prisma-dependency": "PASS declared",
+        "view-model": "PASS runefall-hud",
+        "menu-snapshot-rank-class": "PASS",
+        "ui-shell": "PASS source",
+        "fail-closed": "PASS",
+        "batch": "PASS 36/36",
+        "static-gates": "PASS"
+      }
     },
     "P4.5": {
       "id": "P4.5",
@@ -942,9 +955,9 @@
     }
   },
   "currentWork": {
-    "slice": "P4.4",
-    "step": "Prisma UI shell",
-    "nextAction": "Prisma UI bridge/screens, data contract, fail-closed fallback"
+    "slice": "P4.5",
+    "step": "HUD widgets",
+    "nextAction": "HUD rank/xp/combat/threat/target widgets from view model"
   },
   "blockers": [],
   "finalRelease": null

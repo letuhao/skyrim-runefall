@@ -1155,3 +1155,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 ## P4.3 skills/perks - PASS (2026-10-28 10:29-10:33)
 
 - 6 rank-gated perks; DerivedValue includes perk bonuses; batch 35/35; static gates 9/9.
+
+
+## P4.4 Prisma UI shell - PASS (2026-10-28 10:34-10:41)
+
+- View-model contract runefall-hud with rank/xp/class/snapshot; UI shell source; F10 writes it.
+- Batch 36/36; static gates 9/9. HUD widgets in P4.5.

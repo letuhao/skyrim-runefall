@@ -25,6 +25,7 @@
 #include "AnomalyEngine.h"
 #include "EconomyEngine.h"
 #include "ClassRegistry.h"
+#include "PrismaUIBridge.h"
 #include "SkillPerkEngine.h"
 #include "HookManager.h"
 #include "MaterialRegistry.h"

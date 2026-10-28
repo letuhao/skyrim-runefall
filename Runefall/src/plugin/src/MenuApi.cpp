@@ -27,6 +27,9 @@ namespace Runefall
 		out += std::to_string(kApiVersion);
 		out += ",\"tier\":";
 		out += std::to_string(Progression::Get().RuneTier());
+		out += ",\"rank\":" + std::to_string(Progression::Get().RuneLevel());
+		out += ",\"xp\":" + std::to_string(Progression::Get().RuneXp());
+		out += ",\"classId\":\"" + Progression::Get().ClassId() + "\"";
 		out += ",\"attributePoints\":";
 		out += std::to_string(Progression::Get().AttributePoints());
 		out += ",\"skillPoints\":";

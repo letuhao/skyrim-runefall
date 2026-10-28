@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T03:33:47.985Z",
+  "updatedAt": "2026-10-28T03:41:46.066Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -761,6 +761,27 @@
       "slice": "P4.3",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-103304.md",
+      "result": "PASS",
+      "detail": "9/9"
+    },
+    {
+      "slice": "P4.4",
+      "kind": "summary",
+      "path": "build/evidence/p4.4-prisma-shell-20261028.md",
+      "result": "PASS",
+      "detail": "view-model contract + shell; F10 write; batch 36/36"
+    },
+    {
+      "slice": "P4.4",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-103943.md",
+      "result": "PASS",
+      "detail": "36/36; Prisma view model"
+    },
+    {
+      "slice": "P4.4",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-104102.md",
       "result": "PASS",
       "detail": "9/9"
     }
