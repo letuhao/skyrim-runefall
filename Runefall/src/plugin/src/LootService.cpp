@@ -401,6 +401,17 @@ namespace Runefall
 			actorStageOverrides[a_formID] = a_stage;
 	}
 
+	void LootService::MarkAnomalyFormID(RE::FormID a_formID)
+	{
+		if (a_formID != 0)
+			anomalyActors.insert(a_formID);
+	}
+
+	bool LootService::IsAnomalyFormID(RE::FormID a_formID) const
+	{
+		return anomalyActors.contains(a_formID);
+	}
+
 	std::uint8_t LootService::ResolveActorStage(RE::Actor* a_actor)
 	{
 		RuntimeContentResolver::Get().MaybeStartupScan();

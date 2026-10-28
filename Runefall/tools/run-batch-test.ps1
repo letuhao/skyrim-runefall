@@ -23,7 +23,8 @@ param(
     [switch]$NoInputHotkeys,
     [switch]$DisableActorEquipment,
     [switch]$TestEncounters,
-    [switch]$TestHuntContract
+    [switch]$TestHuntContract,
+    [switch]$TestAnomaly
 )
 
 $ErrorActionPreference = 'Stop'
@@ -270,6 +271,10 @@ Add-Check 'Generated container set persisted' ($generatedAfter -ge $generatedBef
 $latestCrash = Get-ChildItem $skseDir -Filter 'crash-*.log' -ErrorAction SilentlyContinue |
     Sort-Object LastWriteTime -Descending | Select-Object -First 1
 $crashed = $latestCrash -and $latestCrash.LastWriteTime -gt $startTime
+if ($TestAnomaly) {
+    $null = Tap-Key 61
+    Add-Check 'Anomaly spawned' (Wait-LogPattern 'anomaly: spawned family ' 12) ''
+}
 if ($TestEncounters) {
     $null = Tap-Key 63
     Add-Check 'Encounter spawned' (Wait-LogPattern '(encounter: spawned|rare-spawn: spawned)' 12) ''

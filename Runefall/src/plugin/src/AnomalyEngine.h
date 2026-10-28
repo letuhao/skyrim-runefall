@@ -15,6 +15,7 @@ namespace Runefall
 		[[nodiscard]] std::string TierLabel(std::uint8_t a_stage, std::string_view a_family) const;
 		[[nodiscard]] std::string CoreItem(std::string_view a_family) const;
 		[[nodiscard]] std::string EncounterActor(std::string_view a_family) const;
+		bool DebugSpawn();
 		[[nodiscard]] static SelfTestResult SelfTest();
 
 	private:

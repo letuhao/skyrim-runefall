@@ -1077,3 +1077,10 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Added 5 anomaly families with stage offsets, tier labels and core/trophy IDs.
 - AnomalyEngine deterministic selection/stage/tier lookup; batch 32/32, static gates 9/9.
 - Anomaly spawns, no-host-protection policy, rewards and Codex remain pending.
+
+
+## W2.6 anomaly ladder - progress (2026-10-28 09:34-09:39)
+
+- 5 families; F3 anomaly spawn stage20; target marked anomaly -> host protection skipped.
+- Batch 32/32; static gates 9/9.
+- Core/trophy rewards, Codex feed and anomaly curve evaluation remain pending; W2.6 not PASS yet.

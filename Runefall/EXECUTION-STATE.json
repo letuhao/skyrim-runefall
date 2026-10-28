@@ -3,7 +3,7 @@
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "W2.6",
-  "updatedAt": "2026-10-28T02:34:44.116Z",
+  "updatedAt": "2026-10-28T02:40:27.845Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -518,19 +518,20 @@
       "depends": "C1.2/W2.2",
       "evidence": [
         "build/evidence/w2.6-anomaly-20261028.md",
-        "build/evidence/batch-test-20261028-093240.md",
-        "build/evidence/static-gates-20261028-093402.md"
+        "build/evidence/batch-test-20261028-093809.md",
+        "build/evidence/static-gates-20261028-093932.md"
       ],
       "notes": "",
       "checklist": {
         "family-data": "PASS 5",
         "stage-offset": "PASS",
         "tier-labels": "PASS",
+        "anomaly-spawn": "PASS F3",
+        "no-host-protection": "PASS code path",
         "core-trophy-ids": "PASS data",
-        "deterministic-family": "PASS",
-        "anomaly-spawn": "PENDING",
-        "no-host-protection": "PENDING",
+        "core-trophy-rewards": "PENDING forms",
         "codex-feed": "PENDING",
+        "anomaly-curve": "PENDING",
         "batch": "PASS 32/32",
         "static-gates": "PASS"
       }
@@ -788,8 +789,8 @@
   },
   "currentWork": {
     "slice": "W2.6",
-    "step": "anomaly data/engine done",
-    "nextAction": "spawn anomaly encounter, skip host protection, core/trophy rewards and codex feed"
+    "step": "spawn and no-protection done",
+    "nextAction": "add core/trophy reward forms, codex feed, anomaly curve evaluation"
   },
   "blockers": [],
   "finalRelease": null

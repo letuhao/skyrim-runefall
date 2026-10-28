@@ -1,6 +1,9 @@
 #include "AnomalyEngine.h"
 
 #include "DataStore.h"
+#include "FormCatalog.h"
+#include "LootService.h"
+#include "WorldBandEngine.h"
 
 #include <algorithm>
 #include <format>
@@ -137,6 +140,33 @@ namespace Runefall
 	{
 		const auto* fam = Find(a_family);
 		return fam ? fam->encounterActor : std::string{};
+	}
+
+	bool AnomalyEngine::DebugSpawn()
+	{
+		if (!loaded)
+			return false;
+		auto* player = RE::PlayerCharacter::GetSingleton();
+		if (!player)
+			return false;
+		auto* cell = player->GetParentCell();
+		if (!cell || !cell->IsExteriorCell())
+			return false;
+		const auto family = FamilyForSeed(player->GetFormID());
+		if (family.empty())
+			return false;
+		const auto baseStage = WorldBandEngine::Get().StageForCell(cell, player->GetFormID());
+		const auto stage = AdjustStage(baseStage > 0 ? baseStage : 10, family);
+		auto* actorBase = FormCatalog::Get().LookupAs<RE::TESNPC>(EncounterActor(family));
+		if (!actorBase)
+			return false;
+		const auto placed = player->PlaceObjectAtMe(actorBase, true);
+		if (!placed)
+			return false;
+		LootService::Get().SetActorStageOverride(placed->GetFormID(), stage);
+		LootService::Get().MarkAnomalyFormID(placed->GetFormID());
+		logger::info("anomaly: spawned family {} at {:08X} stage {} tier {}", family, placed->GetFormID(), static_cast<int>(stage), TierLabel(stage, family));
+		return true;
 	}
 
 	SelfTestResult AnomalyEngine::SelfTest()

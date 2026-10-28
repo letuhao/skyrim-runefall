@@ -207,6 +207,8 @@ namespace Runefall
 	{
 		if (!protectionLoaded || a_damage == 0.0f)
 			return a_damage;
+		if (LootService::Get().IsAnomalyFormID(a_target))
+			return a_damage;
 		const bool targetIsPlayer = a_target == 0x14;
 		if (targetIsPlayer && !playerProtected)
 			return a_damage;
