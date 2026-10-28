@@ -1,6 +1,6 @@
 # STATE - Runefall
 
-STATUS: v0.2 remediation — S0 truth reset — audit in progress — NOT RELEASED.
+STATUS: v0.2 remediation — S0 PASS (audited 65ee033) — S1 pending — NOT RELEASED.
 
 Last updated: 2026-10-28
 
@@ -10,7 +10,8 @@ Last updated: 2026-10-28
 - Baseline commit: a50b2b6.
 - Baseline audit: 7 PASS, 30 PARTIAL, 11 FAIL (build/audit/plan-gaps.md, runtime-gaps.md).
 - The previous all-slices PASS and verified release claim are RETRACTED.
-- Current slice: S0 truth reset and audit harness — implementation, pending independent audit.
+- S0 truth reset and audit harness: PASS, independently audited at 65ee033.
+- Current slice: S1 co-save correctness — specification next.
 
 ## What is actually proven
 

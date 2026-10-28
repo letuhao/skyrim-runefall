@@ -1,6 +1,6 @@
 # Runefall - release readiness
 
-STATUS: v0.2 remediation — S0 truth reset — audit in progress — NOT RELEASED.
+STATUS: v0.2 remediation — S0 PASS (audited 65ee033) — S1 pending — NOT RELEASED.
 
 **The 0.1.0 internal candidate release claim is RETRACTED (2026-10-28 audit).** No archive in
 build/release is currently release-ready; no Nexus upload, git tag or push has been made.
@@ -9,7 +9,7 @@ build/release is currently release-ready; no Nexus upload, git tag or push has b
 
 - Program: PROGRAM.md v0.2 remediation.
 - Baseline: a50b2b6, audit 7 PASS / 30 PARTIAL / 11 FAIL.
-- Current: S0 truth reset and audit harness, pending independent implementation audit.
+- Current: S0 PASS (subject 65ee033, audit build/audit/S0-audit.md); S1 next.
 - Release block: version 0.1.0, archive null, verified false, published false, retracted true.
 
 ## Verified baseline (not a release)
