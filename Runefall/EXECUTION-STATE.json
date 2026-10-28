@@ -25,7 +25,7 @@
   },
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "S1",
-  "updatedAt": "2026-10-28T22:13:25.549Z",
+  "updatedAt": "2026-10-28T22:28:18.098Z",
   "remediation": {
     "S0": {
       "id": "S0",
@@ -111,13 +111,13 @@
         "recordCommit": null
       },
       "implementationAudit": {
-        "path": "build/audit/S1-audit-7.md",
-        "sha256": "7263322BC1530482872CE0B0EA33B862F4F22D7230A775E49D493DB851FAAC57",
+        "path": "build/audit/S1-audit-8.md",
+        "sha256": "24F1908A02ACE087DFBC84ADACC41DC5860BDF38A52594B3E334B728C8AD565D",
         "verdict": "PARTIAL",
-        "subjectCommit": "19e0abc",
+        "subjectCommit": "e819ecd",
         "recordCommit": null
       },
-      "commit": "e819ecd",
+      "commit": "4e3094d",
       "evidence": [
         {
           "path": "build/slices/S1/spec.md",
@@ -180,12 +180,6 @@
           "exists": true
         },
         {
-          "path": "evidence/S1/batch-20261029-050933.md",
-          "sha256": "2C321EE427FDF3AAF16273537F57BB63665DDBB0F6FB39B58F06F33D2E60BC92",
-          "kind": "log",
-          "exists": true
-        },
-        {
           "path": "evidence/S1/build-proof-20261029-0443.log",
           "sha256": "20C1C6752E13C733DBAEFA4627FC0C5FF96BF1B44ADCCC32F590DDB5C7F5D69C",
           "kind": "log",
@@ -194,6 +188,30 @@
         {
           "path": "build/audit/LESSONS-LEARNED-2026-10-29.md",
           "sha256": "38FB787204D16F9214FCE217A94F96FFA58D96E037C00D08812E3863C47FBC14",
+          "kind": "report",
+          "exists": true
+        },
+        {
+          "path": "evidence/S1/batch-20261029-052516.md",
+          "sha256": "2D33779E97829BAED6096567F203E7EE7D23AE7A637B82A0431DB2CC4F4B95F7",
+          "kind": "log",
+          "exists": true
+        },
+        {
+          "path": "evidence/S1/build-proof-20261029-0525.log",
+          "sha256": "C91C00257D84206E4388555A7EFE8FC368EB70B565768A674BF119B068DC3554",
+          "kind": "log",
+          "exists": true
+        },
+        {
+          "path": "evidence/S1/crash-assessment.log",
+          "sha256": "011B261FBFE71CA2BC909AE68EB8725C219069E0E917516370087E76D7F7010F",
+          "kind": "log",
+          "exists": true
+        },
+        {
+          "path": "build/audit/F7-waiver.md",
+          "sha256": "D05D3A91AF662420BDCC0CEE53A53D149BF4F8ABB49D18FE9674DC01CB7D1CAC",
           "kind": "report",
           "exists": true
         }
