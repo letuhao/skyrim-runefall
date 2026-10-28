@@ -18,6 +18,7 @@ internal sealed class LoadedPack
     public List<string[]> ProtectionRows { get; } = new();
     public List<string[]> PackageRows { get; } = new();
     public List<string[]> EquipmentRows { get; } = new();
+    public List<string[]> ProgressionRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -67,6 +68,7 @@ internal static class ContentPackLoader
             ReadProtection(pack, files, errors);
             ReadPackages(pack, files, errors);
             ReadEquipment(pack, files, errors);
+            ReadPlayerProgression(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -397,6 +399,37 @@ internal static class ContentPackLoader
             });
         }
         if (pack.EquipmentRows.Count == 0) errors.Add("equipment_sets: no rows");
+    }
+
+
+    private static void ReadPlayerProgression(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        if (!files.TryGetValue("playerProgression", out var path))
+        {
+            errors.Add("pack missing entity 'playerProgression'");
+            return;
+        }
+        try
+        {
+            using var document = JsonDocument.Parse(File.ReadAllText(path));
+            var root = document.RootElement;
+            if (root.GetProperty("schemaVersion").GetInt32() != 1)
+            {
+                errors.Add($"{path}: unsupported schemaVersion");
+                return;
+            }
+            var bonuses = string.Join("|", root.GetProperty("breakthroughBonuses").EnumerateArray().Select(x => x.GetInt32().ToString(CultureInfo.InvariantCulture)));
+            pack.ProgressionRows.Add(new[]
+            {
+                I(Int(root, "pointsPerLevel", "player_progression", errors)),
+                I(Int(root, "maxRuneLevel", "player_progression", errors)),
+                bonuses
+            });
+        }
+        catch (Exception exception)
+        {
+            errors.Add($"{path}: {exception.Message}");
+        }
     }
 
     private static void ReadLegacy(LoadedPack pack, Dictionary<string, string> files, List<string> errors)

@@ -23,6 +23,7 @@ ENTITY_SCHEMA = {
     "threatProtection": "threat-protection.schema.json",
     "enemyPackages": "enemy-packages.schema.json",
     "equipmentSets": "equipment-sets.schema.json",
+    "playerProgression": "player-progression.schema.json",
 }
 
 def load(path: Path):

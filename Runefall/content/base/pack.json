@@ -56,6 +56,10 @@
     {
       "entity": "equipmentSets",
       "file": "data/equipment_sets.json"
+    },
+    {
+      "entity": "playerProgression",
+      "file": "data/player_progression.json"
     }
   ],
   "localization": []

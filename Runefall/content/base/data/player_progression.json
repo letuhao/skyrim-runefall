@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "pointsPerLevel": 3,
+  "maxRuneLevel": 100,
+  "breakthroughBonuses": [
+    9,
+    12,
+    15,
+    18,
+    21,
+    24,
+    27,
+    30,
+    33,
+    36
+  ]
+}

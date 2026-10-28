@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "C1.6",
-  "updatedAt": "2026-10-28T01:14:21.938Z",
+  "currentSlice": "C1.7",
+  "updatedAt": "2026-10-28T01:23:45.416Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -319,11 +319,25 @@
       "id": "C1.6",
       "layer": "L1",
       "slice": "Player attributes",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "attribute budget data-driven; PCR follows gear/class",
       "depends": "F0.4",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/c1.6-player-attributes-20261028.md",
+        "build/evidence/batch-test-20261028-082144.md",
+        "build/evidence/static-gates-20261028-082304.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "nine-attributes": "PASS",
+        "points-per-level-3": "PASS",
+        "breakthrough-9-12-15": "PASS",
+        "effects-caps-respec": "PASS existing",
+        "stage-award-api": "PASS",
+        "self-test": "PASS",
+        "batch": "PASS 25/25",
+        "static-gates": "PASS"
+      }
     },
     "C1.7": {
       "id": "C1.7",
@@ -657,9 +671,9 @@
     }
   },
   "currentWork": {
-    "slice": "C1.6",
-    "step": "player attributes",
-    "nextAction": "implement nine-attribute definitions/effects, 3 points per Rune Level, breakthrough batches, respec data seam"
+    "slice": "C1.7",
+    "step": "combat ratings PCR/NCR/RCR/TTK/TTD",
+    "nextAction": "implement rating math and pace/display profile data with self-tests and diagnostics"
   },
   "blockers": [],
   "finalRelease": null

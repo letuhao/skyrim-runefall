@@ -41,6 +41,7 @@ namespace Runefall
 			"threat_protection.csv",
 			"enemy_packages.csv",
 			"equipment_sets.csv",
+			"player_progression.csv",
 		};
 	}
 

@@ -1,7 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "player-progression.schema.json",
-  "title": "Player progression",
   "type": "object",
   "required": [
     "schemaVersion",
@@ -31,30 +30,6 @@
       },
       "minItems": 10,
       "maxItems": 10
-    },
-    "rankCurve": {
-      "type": "array",
-      "items": {
-        "type": "object"
-      }
-    },
-    "attributeDefs": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "classRefs": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "skillTreeRefs": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
     }
   },
   "additionalProperties": true

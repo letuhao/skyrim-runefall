@@ -1015,3 +1015,10 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Disabled batch: equipment suppressed by bEnableActorEquipment=0.
 - Batch PASS 25/25 both runs; static gates 9/9.
 - Toggle semantics: future application only; existing vanilla equipment is not mass-removed.
+
+
+## C1.6 player attributes - PASS (2026-10-28 08:14-08:23)
+
+- Data-driven pointsPerLevel=3 and breakthrough batches 9..36; award API and formula self-test.
+- Existing 9 attributes/effects/caps/respec retained. Batch 25/25, static gates 9/9.
+- Rune Level XP wiring remains P4.1.

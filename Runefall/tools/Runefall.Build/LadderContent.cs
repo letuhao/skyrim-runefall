@@ -76,6 +76,11 @@ internal static class LadderContent
         "setId", "roleKey", "stageMin", "stageMax", "itemEditorIds", "perkEditorIds", "weight", "applyChance"
     };
 
+    public static readonly string[] ProgressionColumns =
+    {
+        "pointsPerLevel", "maxRuneLevel", "breakthroughBonuses"
+    };
+
     public static void WriteAll(string dir)
     {
         Directory.CreateDirectory(dir);
@@ -235,6 +240,7 @@ internal static class LadderContent
         WriteCsv(dir, "threat_protection.csv", ProtectionColumns, pack.ProtectionRows);
         WriteCsv(dir, "enemy_packages.csv", PackageColumns, pack.PackageRows);
         WriteCsv(dir, "equipment_sets.csv", EquipmentColumns, pack.EquipmentRows);
+        WriteCsv(dir, "player_progression.csv", ProgressionColumns, pack.ProgressionRows);
         return errors;
     }
 

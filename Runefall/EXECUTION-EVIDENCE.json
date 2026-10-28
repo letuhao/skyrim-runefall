@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T01:14:21.942Z",
+  "updatedAt": "2026-10-28T01:23:45.420Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -334,6 +334,20 @@
       "slice": "C1.5",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-081340.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "C1.6",
+      "kind": "summary",
+      "path": "build/evidence/c1.6-player-attributes-20261028.md",
+      "result": "PASS",
+      "detail": "3/stage + 9/12/15 breakthrough batches; formula self-test; batch 25/25"
+    },
+    {
+      "slice": "C1.6",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-082304.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

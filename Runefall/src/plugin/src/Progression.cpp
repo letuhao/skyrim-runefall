@@ -48,6 +48,29 @@ namespace Runefall
 		return singleton;
 	}
 
+	void Progression::LoadPlayerProgression()
+	{
+		pointsPerLevel = 3;
+		maxRuneLevel = 100;
+		breakthroughBonuses = { 9, 12, 15, 18, 21, 24, 27, 30, 33, 36 };
+		const auto* table = DataStore::Get().GetTable("player_progression.csv");
+		if (!table || table->rows.empty())
+			return;
+		const auto& row = table->rows.front();
+		auto cell = [&](std::size_t index) -> std::string_view {
+			return index < row.size() ? row[index] : std::string_view{};
+		};
+		pointsPerLevel = static_cast<std::int32_t>(std::strtol(std::string{ cell(0) }.c_str(), nullptr, 10));
+		maxRuneLevel = static_cast<std::int32_t>(std::strtol(std::string{ cell(1) }.c_str(), nullptr, 10));
+		breakthroughBonuses.clear();
+		std::stringstream stream{ std::string{ cell(2) } };
+		std::string token;
+		while (std::getline(stream, token, '|')) {
+			if (!token.empty())
+				breakthroughBonuses.push_back(static_cast<std::int32_t>(std::strtol(token.c_str(), nullptr, 10)));
+		}
+	}
+
 	void Progression::LoadAttributeDefinitions()
 	{
 		attributeEffects.clear();
@@ -129,6 +152,7 @@ namespace Runefall
 	void Progression::LoadFromCoSave()
 	{
 		LoadAttributeDefinitions();
+		LoadPlayerProgression();
 		const auto& state = CoSave::Get().State();
 		attributes = state.attributes;
 		attributePoints = state.attributePoints;
@@ -233,6 +257,31 @@ namespace Runefall
 		return true;
 	}
 
+	std::int32_t Progression::BreakthroughBonus(std::int32_t a_tier) const
+	{
+		if (a_tier < 1 || a_tier > static_cast<std::int32_t>(breakthroughBonuses.size()))
+			return 0;
+		return breakthroughBonuses[static_cast<std::size_t>(a_tier - 1)];
+	}
+
+	std::int32_t Progression::AttributeAwardForStageAdvance(std::int32_t a_newStage) const
+	{
+		if (a_newStage < 1 || a_newStage > maxRuneLevel)
+			return 0;
+		auto award = pointsPerLevel;
+		if (a_newStage % 10 == 0)
+			award += BreakthroughBonus(a_newStage / 10);
+		return award;
+	}
+
+	bool Progression::AwardStageAdvance(std::int32_t a_newStage)
+	{
+		const auto award = AttributeAwardForStageAdvance(a_newStage);
+		if (award <= 0)
+			return false;
+		return AddAttributePoint(award);
+	}
+
 	std::int32_t Progression::SoftCappedAttribute(std::int32_t a_raw)
 	{
 		if (a_raw <= 30)
@@ -269,6 +318,11 @@ namespace Runefall
 	SelfTestResult Progression::SelfTest()
 	{
 		Progression model;
+		model.LoadPlayerProgression();
+		if (model.PointsPerLevel() != 3 || model.MaxRuneLevel() != 100)
+			return { "Progression.SelfTest", CheckStatus::Fail, "player progression defaults are wrong" };
+		if (model.AttributeAwardForStageAdvance(10) != 12 || model.AttributeAwardForStageAdvance(20) != 15 || model.AttributeAwardForStageAdvance(7) != 3)
+			return { "Progression.SelfTest", CheckStatus::Fail, "attribute award formula is wrong" };
 		model.attributePoints = 3;
 		model.skillPoints = 2;
 		for (int i = 0; i < 3; ++i) {

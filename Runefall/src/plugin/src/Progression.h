@@ -19,6 +19,11 @@ namespace Runefall
 
 		[[nodiscard]] std::int32_t Attribute(std::size_t a_index) const;
 		[[nodiscard]] std::int32_t AttributePoints() const noexcept { return attributePoints; }
+		[[nodiscard]] std::int32_t PointsPerLevel() const noexcept { return pointsPerLevel; }
+		[[nodiscard]] std::int32_t MaxRuneLevel() const noexcept { return maxRuneLevel; }
+		[[nodiscard]] std::int32_t BreakthroughBonus(std::int32_t a_tier) const;
+		[[nodiscard]] std::int32_t AttributeAwardForStageAdvance(std::int32_t a_newStage) const;
+		bool AwardStageAdvance(std::int32_t a_newStage);
 		[[nodiscard]] std::int32_t SkillPoints() const noexcept { return skillPoints; }
 		[[nodiscard]] std::int32_t RuneTier() const noexcept { return runeTier; }
 		[[nodiscard]] bool         BossKillReady() const noexcept { return bossKillTier >= runeTier; }
@@ -47,6 +52,7 @@ namespace Runefall
 
 	private:
 		void LoadAttributeDefinitions();
+		void LoadPlayerProgression();
 		void SyncGlobals();
 
 		std::array<std::int32_t, 9>   attributes{};
@@ -63,6 +69,9 @@ namespace Runefall
 		};
 
 		std::vector<AttributeEffect>  attributeEffects;
+		std::int32_t                  pointsPerLevel = 3;
+		std::int32_t                  maxRuneLevel = 100;
+		std::vector<std::int32_t>     breakthroughBonuses;
 		std::size_t                   attributeEffectCount = 0;
 	};
 }
