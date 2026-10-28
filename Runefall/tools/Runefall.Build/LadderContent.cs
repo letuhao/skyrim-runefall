@@ -96,6 +96,11 @@ internal static class LadderContent
         "profileId", "numberVisible", "labelVisible", "decimals"
     };
 
+    public static readonly string[] PenetrationColumns =
+    {
+        "profileId", "base", "per10Stages", "cap", "mageChannel", "weaponChannel", "consumableChannel"
+    };
+
     public static void WriteAll(string dir)
     {
         Directory.CreateDirectory(dir);
@@ -259,6 +264,7 @@ internal static class LadderContent
         WriteCsv(dir, "rating_profiles.csv", RatingColumns, pack.RatingRows);
         WriteCsv(dir, "combat_pace_profiles.csv", PaceColumns, pack.PaceRows);
         WriteCsv(dir, "rating_display_profiles.csv", DisplayColumns, pack.DisplayRows);
+        WriteCsv(dir, "penetration_profiles.csv", PenetrationColumns, pack.PenetrationRows);
         return errors;
     }
 

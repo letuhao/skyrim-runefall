@@ -118,6 +118,7 @@ namespace
 		Runefall::RuntimeContentResolver::Get().Load();
 		Runefall::RaceClassifier::Get().Load();
 		Runefall::DamagePipeline::Get().LoadProtection();
+		Runefall::DamagePipeline::Get().LoadPenetration();
 		Runefall::ActorPackageEngine::Get().Load();
 		Runefall::ActorEquipmentDistributor::Get().Load();
 		Runefall::CombatRatingEngine::Get().Load();

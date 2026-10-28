@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "C1.8",
-  "updatedAt": "2026-10-28T01:29:02.427Z",
+  "currentSlice": "W2.1",
+  "updatedAt": "2026-10-28T01:35:03.917Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -367,11 +367,26 @@
       "id": "C1.8",
       "layer": "L1",
       "slice": "Player attacker/penetration",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "warrior/mage both penetrate; player no protection default",
       "depends": "C1.3/C1.6",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/c1.8-player-penetration-20261028.md",
+        "build/evidence/batch-test-20261028-083300.md",
+        "build/evidence/static-gates-20261028-083423.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "player-stage-input": "PASS",
+        "penetration-data": "PASS",
+        "formula": "PASS",
+        "mage-channel": "PASS data",
+        "weapon-channel": "PASS data",
+        "consumable-channel": "data seam false",
+        "self-test": "PASS",
+        "batch": "PASS 26/26",
+        "static-gates": "PASS"
+      }
     },
     "W2.1": {
       "id": "W2.1",
@@ -685,9 +700,9 @@
     }
   },
   "currentWork": {
-    "slice": "C1.8",
-    "step": "player attacker and penetration",
-    "nextAction": "player stage input, attack channel, penetration sources/cap, mage channel; verify damage hook integration"
+    "slice": "W2.1",
+    "step": "world bands",
+    "nextAction": "map encounter zones/cells to stage bands and wire content bands/exclusions"
   },
   "blockers": [],
   "finalRelease": null

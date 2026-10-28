@@ -27,6 +27,8 @@ namespace Runefall
 
 		[[nodiscard]] bool Install();
 		void LoadProtection();
+		void LoadPenetration();
+		[[nodiscard]] int PlayerPenetration() const;
 		[[nodiscard]] float AdjustDamage(RE::FormID a_target, RE::FormID a_attacker, float a_damage, std::uint16_t a_flags) const;
 		[[nodiscard]] float ComputeMultiplier(int a_targetStage, int a_attackerStage, std::uint16_t a_flags, int a_penetration) const;
 		[[nodiscard]] bool ProtectionLoaded() const noexcept { return protectionLoaded; }
@@ -56,6 +58,11 @@ namespace Runefall
 		bool anomalyProtected = false;
 		int penetrationCap = 20;
 		bool protectionEnabled = true;
+		int penetrationBase = 1;
+		int penetrationPer10Stages = 1;
+		bool penetrationMage = true;
+		bool penetrationWeapon = true;
+		bool penetrationConsumable = false;
 		std::atomic_bool hitEventFallback{ true };
 		std::atomic<std::uint32_t> samples{ 0 };
 		std::atomic<std::uint32_t> directSamples{ 0 };

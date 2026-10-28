@@ -72,6 +72,10 @@
     {
       "entity": "ratingDisplayProfiles",
       "file": "data/rating_display_profiles.json"
+    },
+    {
+      "entity": "penetrationProfiles",
+      "file": "data/penetration_profiles.json"
     }
   ],
   "localization": []

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "profiles": [
+    {
+      "schemaVersion": 1,
+      "profileId": "default",
+      "base": 1,
+      "per10Stages": 1,
+      "cap": 20,
+      "mageChannel": true,
+      "weaponChannel": true,
+      "consumableChannel": false
+    }
+  ]
+}

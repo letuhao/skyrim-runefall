@@ -22,6 +22,7 @@ internal sealed class LoadedPack
     public List<string[]> RatingRows { get; } = new();
     public List<string[]> PaceRows { get; } = new();
     public List<string[]> DisplayRows { get; } = new();
+    public List<string[]> PenetrationRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -73,6 +74,7 @@ internal static class ContentPackLoader
             ReadEquipment(pack, files, errors);
             ReadPlayerProgression(pack, files, errors);
             ReadRatings(pack, files, errors);
+            ReadPenetration(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -491,6 +493,25 @@ internal static class ContentPackLoader
                     B(Bool(item, "labelVisible", path, errors)), I(Int(item, "decimals", path, errors))
                 });
             }
+        }
+    }
+
+
+    private static void ReadPenetration(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("penetrationProfiles", files, errors, "profiles");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"penetration_profiles.profiles[{index++}]";
+            pack.PenetrationRows.Add(new[]
+            {
+                Text(item, "profileId", path, errors), I(Int(item, "base", path, errors)),
+                I(Int(item, "per10Stages", path, errors)), I(Int(item, "cap", path, errors)),
+                B(Bool(item, "mageChannel", path, errors)), B(Bool(item, "weaponChannel", path, errors)),
+                B(Bool(item, "consumableChannel", path, errors))
+            });
         }
     }
 

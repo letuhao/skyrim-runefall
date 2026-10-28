@@ -45,6 +45,7 @@ namespace Runefall
 			"rating_profiles.csv",
 			"combat_pace_profiles.csv",
 			"rating_display_profiles.csv",
+			"penetration_profiles.csv",
 		};
 	}
 

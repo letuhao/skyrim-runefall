@@ -152,6 +152,40 @@ namespace Runefall
 			protectionCap, protectionPerStage, protectionFloor, protectionDotFactor, playerProtected, anomalyProtected);
 	}
 
+
+	void DamagePipeline::LoadPenetration()
+	{
+		const auto* table = DataStore::Get().GetTable("penetration_profiles.csv");
+		if (!table || table->rows.empty())
+			return;
+		const auto find = [&](std::string_view name) {
+			for (std::size_t i = 0; i < table->headers.size(); ++i)
+				if (table->headers[i] == name)
+					return static_cast<int>(i);
+			return -1;
+		};
+		const auto& row = table->rows.front();
+		const auto cell = [&](std::string_view name) {
+			const auto index = find(name);
+			return index >= 0 && static_cast<std::size_t>(index) < row.size() ? row[static_cast<std::size_t>(index)] : std::string{};
+		};
+		penetrationBase = static_cast<int>(std::strtol(cell("base").c_str(), nullptr, 10));
+		penetrationPer10Stages = static_cast<int>(std::strtol(cell("per10Stages").c_str(), nullptr, 10));
+		penetrationCap = static_cast<int>(std::strtol(cell("cap").c_str(), nullptr, 10));
+		penetrationMage = cell("mageChannel") == "1";
+		penetrationWeapon = cell("weaponChannel") == "1";
+		penetrationConsumable = cell("consumableChannel") == "1";
+		logger::info("damage-pipeline: penetration loaded base={} per10={} cap={} mage={} weapon={}",
+			penetrationBase, penetrationPer10Stages, penetrationCap, penetrationMage, penetrationWeapon);
+	}
+
+	int DamagePipeline::PlayerPenetration() const
+	{
+		const auto stage = static_cast<int>(CoSave::Get().State().playerStage);
+		const auto raw = penetrationBase + (std::max)(0, stage / 10) * penetrationPer10Stages;
+		return (std::clamp)(raw, 0, penetrationCap);
+	}
+
 	float DamagePipeline::ComputeMultiplier(int a_targetStage, int a_attackerStage, std::uint16_t a_flags, int a_penetration) const
 	{
 		if (!protectionLoaded || !protectionEnabled || a_targetStage <= 0 || a_attackerStage <= 0)
@@ -185,7 +219,8 @@ namespace Runefall
 		const auto attackerStage = stageOf(a_attacker);
 		if (targetStage <= 0 || attackerStage <= 0)
 			return a_damage;
-		const auto multiplier = ComputeMultiplier(targetStage, attackerStage, a_flags, 0);
+		const auto penetration = a_attacker == 0x14 ? PlayerPenetration() : 0;
+		const auto multiplier = ComputeMultiplier(targetStage, attackerStage, a_flags, penetration);
 		return a_damage * multiplier;
 	}
 
@@ -236,8 +271,11 @@ namespace Runefall
 		const auto capped = protection.ComputeMultiplier(50, 1, kDamageFlagNone, 0);
 		const auto dot = protection.ComputeMultiplier(11, 1, kDamageFlagDot, 0);
 		const auto bypass = protection.ComputeMultiplier(50, 1, kDamageFlagReflected, 0);
+		const auto gap20 = protection.ComputeMultiplier(21, 1, kDamageFlagNone, 0);
+		const auto gap20pen10 = protection.ComputeMultiplier(21, 1, kDamageFlagNone, 10);
 		if (std::fabs(noGap - 1.0f) > 1e-4f || std::fabs(gap10 - 0.70f) > 1e-3f ||
-			std::fabs(capped - 0.30f) > 1e-3f || std::fabs(dot - 0.85f) > 1e-3f || std::fabs(bypass - 1.0f) > 1e-4f)
+			std::fabs(capped - 0.30f) > 1e-3f || std::fabs(dot - 0.85f) > 1e-3f || std::fabs(bypass - 1.0f) > 1e-4f ||
+			std::fabs(gap20 - 0.40f) > 1e-3f || std::fabs(gap20pen10 - 0.70f) > 1e-3f)
 			return { "DamagePipeline.SelfTest", CheckStatus::Fail, "protection multiplier output is wrong" };
 		return { "DamagePipeline.SelfTest", CheckStatus::Pass, "classification + stage-gap protection (cap 70%, 3%/stage, 5% floor, DoT 50%)" };
 	}

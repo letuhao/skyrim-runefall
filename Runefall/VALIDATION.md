@@ -1029,3 +1029,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Data-driven PCR/NCR/RCR baseline, TTK/TTD/Q math, Skyrim/Action pace bands, display profile.
 - Self-test baseline PCR 100 at stage 10, scaling, TTK/TTD/Q and labels PASS.
 - Batch 26/26, static gates 9/9.
+
+
+## C1.8 player attacker/penetration - PASS (2026-10-28 08:28-08:34)
+
+- Player stage from CoSave used in damage hook; data penetration base/per10/cap with mage+weapon channels.
+- Self-test gap20 0.40 vs pen10 0.70; batch 26/26; static gates 9/9.

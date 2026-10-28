@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T01:29:02.431Z",
+  "updatedAt": "2026-10-28T01:35:03.921Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -369,6 +369,27 @@
       "slice": "C1.7",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-082821.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "C1.8",
+      "kind": "summary",
+      "path": "build/evidence/c1.8-player-penetration-20261028.md",
+      "result": "PASS",
+      "detail": "player stage input; pen base+stage/10 cap20; mage/weapon channels"
+    },
+    {
+      "slice": "C1.8",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-083300.md",
+      "result": "PASS",
+      "detail": "26/26 self-tests"
+    },
+    {
+      "slice": "C1.8",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-083423.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

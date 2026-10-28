@@ -102,7 +102,8 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
 - C1.5 PASS: 15 sets, 5 items+1 perk, toggle on/off, applied once; batch 25/25.
 - C1.6 PASS: 3 points/stage + 9/12/15 breakthrough batches; nine attributes/effects/caps/respec; batch 25/25.
 - C1.7 PASS: PCR/NCR/RCR, TTK/TTD/Q, 2 pace profiles, display; batch 26/26.
-- Next: C1.8 player attacker/penetration.
+- C1.8 PASS: player stage input; penetration base/per10/cap; mage/weapon channels; batch 26/26.
+- L1 combat core slices C1.1-C1.8 complete. Next: W2.1 world bands.
 
 ## Next step
 
