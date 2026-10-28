@@ -52,6 +52,10 @@
     {
       "entity": "enemyPackages",
       "file": "data/enemy_packages.json"
+    },
+    {
+      "entity": "equipmentSets",
+      "file": "data/equipment_sets.json"
     }
   ],
   "localization": []

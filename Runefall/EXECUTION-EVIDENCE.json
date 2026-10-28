@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T00:41:06.464Z",
+  "updatedAt": "2026-10-28T01:05:52.972Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -285,6 +285,27 @@
       "slice": "C1.4",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-074023.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "C1.5",
+      "kind": "summary",
+      "path": "build/evidence/c1.5-equipment-20261028.md",
+      "result": "PARTIAL",
+      "detail": "15 sets; Draugr 5 items equipped; perks/random/cleanup pending"
+    },
+    {
+      "slice": "C1.5",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-080331.md",
+      "result": "PASS",
+      "detail": "25/25; equipment applied; no crash"
+    },
+    {
+      "slice": "C1.5",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-080509.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

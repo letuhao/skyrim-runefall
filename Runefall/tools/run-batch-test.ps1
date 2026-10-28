@@ -200,6 +200,7 @@ Add-Check 'Rune item aggregated' (Wait-LogPattern 'runes: aggregated 1 x R3' 12)
 $spawn = Invoke-Mcp 'execute_console_command' @{ command = 'player.placeatme 000EBC2D 1' }
 Add-Check 'Spawn test Draugr' ($spawn -match '"executed":true') ''
 Add-Check 'Actor package applied' (Wait-LogPattern 'actor-packager: package .* applied once' 12) ''
+Add-Check 'Actor equipment applied' (Wait-LogPattern 'equipment: set .* applied' 12) ''
 Start-Sleep -Seconds 2
 
 if ($ExerciseDeathDrops) {

@@ -25,6 +25,7 @@ namespace Runefall
 		[[nodiscard]] bool        EnableRuntimeLoot() const noexcept { return enableRuntimeLoot; }
 		[[nodiscard]] bool        EnableContainerLoot() const noexcept { return enableContainerLoot; }
 		[[nodiscard]] bool        EnableActorRanks() const noexcept { return enableActorRanks; }
+		[[nodiscard]] bool        EnableActorEquipment() const noexcept { return enableActorEquipment; }
 		[[nodiscard]] bool        EnableQuestDrops() const noexcept { return enableQuestDrops; }
 		[[nodiscard]] int         ContainerLootPerCell() const noexcept { return containerLootPerCell; }
 		[[nodiscard]] int         LootAuthority() const noexcept { return lootAuthority; }
@@ -41,6 +42,7 @@ namespace Runefall
 		bool        enableRuntimeLoot = true;
 		bool        enableContainerLoot = true;
 		bool        enableActorRanks = true;
+		bool        enableActorEquipment = true;
 		bool        enableQuestDrops = true;
 		int         containerLootPerCell = 8;
 		bool        enableMenu = true;

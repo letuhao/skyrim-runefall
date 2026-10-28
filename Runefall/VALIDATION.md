@@ -997,3 +997,12 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - 20 packages across roles and stage bands; apply-once; elite/boss overlay hooks; budget field.
 - Draugr package undead_1_20 applied once; self-test 24/24; batch PASS; static gates 9/9.
 - Perk arrays are the data seam for future safe NPC perks; current stat/ability effects are spells.
+
+
+## C1.5 actor equipment - partial (2026-10-28 07:40-08:05)
+
+- 15 equipment sets; master FormID gear resolution; Draugr equipped with 5 Iron items.
+- Toggle bEnableActorEquipment=1; batch 25/25, save/reload round-trip, no crash.
+- Static gates 9/9.
+- C1.5 remains IN_PROGRESS: perks, random apply tables, cleanup/tag report and explicit
+  toggle-off/save-reload duplicate audit are pending.

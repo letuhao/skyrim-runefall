@@ -15,6 +15,7 @@
 #include "RaceClassifier.h"
 #include "DamagePipeline.h"
 #include "ActorPackageEngine.h"
+#include "ActorEquipmentDistributor.h"
 #include "HookManager.h"
 #include "MaterialRegistry.h"
 #include "RuneForge.h"
@@ -117,6 +118,7 @@ namespace
 		Runefall::RaceClassifier::Get().Load();
 		Runefall::DamagePipeline::Get().LoadProtection();
 		Runefall::ActorPackageEngine::Get().Load();
+		Runefall::ActorEquipmentDistributor::Get().Load();
 		Runefall::MaterialRegistry::Get().LoadDefinitions();
 		Runefall::RuneForge::Get().ReloadSocketRecipes();
 		Runefall::LootEngine::Get().Reload();

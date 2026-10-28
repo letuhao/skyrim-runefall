@@ -216,6 +216,7 @@ internal static class Program
             "bEnableRuntimeLoot=1\n" +
             "bEnableContainerLoot=1\n" +
             "bEnableActorRanks=1\n" +
+            "bEnableActorEquipment=1\n" +
             "bEnableQuestDrops=1\n" +
             "bEnableDebugNatives=0\n" +
             "iContainerLootPerCell=8\n\n" +

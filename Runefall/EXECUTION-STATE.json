@@ -3,7 +3,7 @@
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "C1.5",
-  "updatedAt": "2026-10-28T00:41:06.460Z",
+  "updatedAt": "2026-10-28T01:05:52.968Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -292,11 +292,26 @@
       "id": "C1.5",
       "layer": "L1",
       "slice": "Actor equipment distribution",
-      "status": "PENDING",
+      "status": "IN_PROGRESS",
       "acceptance": "selected actors get gear/perks; toggle safe; save/load safe",
       "depends": "C1.4",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/c1.5-equipment-20261028.md",
+        "build/evidence/batch-test-20261028-080331.md",
+        "build/evidence/static-gates-20261028-080509.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "equipment-data": "PASS 15",
+        "gear-apply": "PASS 5 items",
+        "vanilla-lootable": "PASS (inventory items)",
+        "toggle-config": "PASS (not yet off-tested)",
+        "perks": "PENDING",
+        "random-apply": "PENDING",
+        "cleanup": "PENDING",
+        "save-load-duplicate-audit": "PENDING",
+        "batch": "PASS 25/25"
+      }
     },
     "C1.6": {
       "id": "C1.6",
@@ -641,8 +656,8 @@
   },
   "currentWork": {
     "slice": "C1.5",
-    "step": "actor equipment distribution",
-    "nextAction": "apply gear/outfit distribution without breaking vanilla lootability"
+    "step": "gear distribution works",
+    "nextAction": "add perk/random apply, cleanup tag, toggle-off/save-reload duplicate tests"
   },
   "blockers": [],
   "finalRelease": null

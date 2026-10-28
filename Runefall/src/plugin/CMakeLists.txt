@@ -85,6 +85,7 @@ else()
         src/DamagePipeline.cpp
         src/RaceClassifier.cpp
         src/ActorPackageEngine.cpp
+        src/ActorEquipmentDistributor.cpp
         src/RuntimeContentResolver.cpp
         src/CoSave.cpp
         src/ItemRegistry.cpp

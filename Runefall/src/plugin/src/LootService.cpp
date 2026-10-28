@@ -16,6 +16,7 @@
 #include "RuntimeContentResolver.h"
 #include "RaceClassifier.h"
 #include "ActorPackageEngine.h"
+#include "ActorEquipmentDistributor.h"
 
 #include "RE/C/ContainerMenu.h"
 
@@ -352,6 +353,7 @@ namespace Runefall
 			if (const auto* race = a_actor->GetActorBase() ? a_actor->GetActorBase()->GetRace() : nullptr) {
 				const auto classification = RaceClassifier::Get().Classify(const_cast<RE::TESRace*>(race));
 				(void)ActorPackageEngine::Get().Apply(a_actor, classification.roleKey, stageForPackage, existing);
+				(void)ActorEquipmentDistributor::Get().Apply(a_actor, classification.roleKey, stageForPackage);
 			}
 			return;
 		}
@@ -363,6 +365,7 @@ namespace Runefall
 			(void)ActorPackageEngine::Get().Apply(a_actor, classification.roleKey, stageForPackage, rank);
 			logger::info("package-rank-path: actor {:08X} role {} stage {} rank {} package {}",
 				formID, classification.roleKey, stageForPackage, rank, ActorPackageEngine::Get().SelectPackageId(classification.roleKey, stageForPackage));
+			(void)ActorEquipmentDistributor::Get().Apply(a_actor, classification.roleKey, stageForPackage);
 		}
 		if (rank <= 0)
 			return;

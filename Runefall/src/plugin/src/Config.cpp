@@ -23,6 +23,8 @@ namespace Runefall
 				enableRuntimeLoot = a_value == "1" || a_value == "true";
 			else if (a_key == "bEnableContainerLoot")
 				enableContainerLoot = a_value == "1" || a_value == "true";
+			else if (a_key == "bEnableActorEquipment")
+				enableActorEquipment = a_value == "1" || a_value == "true";
 			else if (a_key == "bEnableActorRanks")
 				enableActorRanks = a_value == "1" || a_value == "true";
 			else if (a_key == "bEnableQuestDrops")

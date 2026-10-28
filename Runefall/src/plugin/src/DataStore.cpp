@@ -40,6 +40,7 @@ namespace Runefall
 			"race_classification_rules.csv",
 			"threat_protection.csv",
 			"enemy_packages.csv",
+			"equipment_sets.csv",
 		};
 	}
 

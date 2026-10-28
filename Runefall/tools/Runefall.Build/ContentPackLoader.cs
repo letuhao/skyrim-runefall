@@ -17,6 +17,7 @@ internal sealed class LoadedPack
     public List<string[]> RaceRuleRows { get; } = new();
     public List<string[]> ProtectionRows { get; } = new();
     public List<string[]> PackageRows { get; } = new();
+    public List<string[]> EquipmentRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -65,6 +66,7 @@ internal static class ContentPackLoader
             ReadRaceRules(pack, files, errors);
             ReadProtection(pack, files, errors);
             ReadPackages(pack, files, errors);
+            ReadEquipment(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -374,6 +376,26 @@ internal static class ContentPackLoader
             });
         }
         if (pack.PackageRows.Count == 0) errors.Add("enemy_packages: no rows");
+    }
+
+
+    private static void ReadEquipment(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("equipmentSets", files, errors, "sets");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"equipment_sets.sets[{index++}]";
+            var items = string.Join("|", item.TryGetProperty("itemEditorIds", out var itemArray) && itemArray.ValueKind == JsonValueKind.Array ? itemArray.EnumerateArray().Select(x => x.GetString() ?? "") : Enumerable.Empty<string>());
+            pack.EquipmentRows.Add(new[]
+            {
+                Text(item, "setId", path, errors), Text(item, "roleKey", path, errors),
+                I(Int(item, "stageMin", path, errors)), I(Int(item, "stageMax", path, errors)),
+                items, F(Number(item, "weight", path, errors))
+            });
+        }
+        if (pack.EquipmentRows.Count == 0) errors.Add("equipment_sets: no rows");
     }
 
     private static void ReadLegacy(LoadedPack pack, Dictionary<string, string> files, List<string> errors)

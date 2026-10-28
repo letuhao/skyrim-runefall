@@ -1,0 +1,230 @@
+{
+  "schemaVersion": 1,
+  "sets": [
+    {
+      "schemaVersion": 1,
+      "setId": "humanoid_1_20",
+      "roleKey": "rf:role/humanoid",
+      "stageMin": 1,
+      "stageMax": 20,
+      "itemEditorIds": [
+        "Skyrim.esm:0x00012EB7",
+        "Skyrim.esm:0x00012E49",
+        "Skyrim.esm:0x00012E4D",
+        "Skyrim.esm:0x00012E46",
+        "Skyrim.esm:0x00012E4B"
+      ],
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "setId": "humanoid_21_40",
+      "roleKey": "rf:role/humanoid",
+      "stageMin": 21,
+      "stageMax": 40,
+      "itemEditorIds": [
+        "Skyrim.esm:0x00012EB7",
+        "Skyrim.esm:0x00012E49",
+        "Skyrim.esm:0x00012E4D",
+        "Skyrim.esm:0x00012E46",
+        "Skyrim.esm:0x00012E4B"
+      ],
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "setId": "humanoid_41_60",
+      "roleKey": "rf:role/humanoid",
+      "stageMin": 41,
+      "stageMax": 60,
+      "itemEditorIds": [
+        "Skyrim.esm:0x00012EB7",
+        "Skyrim.esm:0x00012E49",
+        "Skyrim.esm:0x00012E4D",
+        "Skyrim.esm:0x00012E46",
+        "Skyrim.esm:0x00012E4B"
+      ],
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "setId": "humanoid_61_80",
+      "roleKey": "rf:role/humanoid",
+      "stageMin": 61,
+      "stageMax": 80,
+      "itemEditorIds": [
+        "Skyrim.esm:0x00012EB7",
+        "Skyrim.esm:0x00012E49",
+        "Skyrim.esm:0x00012E4D",
+        "Skyrim.esm:0x00012E46",
+        "Skyrim.esm:0x00012E4B"
+      ],
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "setId": "humanoid_81_100",
+      "roleKey": "rf:role/humanoid",
+      "stageMin": 81,
+      "stageMax": 100,
+      "itemEditorIds": [
+        "Skyrim.esm:0x00012EB7",
+        "Skyrim.esm:0x00012E49",
+        "Skyrim.esm:0x00012E4D",
+        "Skyrim.esm:0x00012E46",
+        "Skyrim.esm:0x00012E4B"
+      ],
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "setId": "undead_1_20",
+      "roleKey": "rf:role/undead",
+      "stageMin": 1,
+      "stageMax": 20,
+      "itemEditorIds": [
+        "Skyrim.esm:0x00012EB7",
+        "Skyrim.esm:0x00012E49",
+        "Skyrim.esm:0x00012E4D",
+        "Skyrim.esm:0x00012E46",
+        "Skyrim.esm:0x00012E4B"
+      ],
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "setId": "undead_21_40",
+      "roleKey": "rf:role/undead",
+      "stageMin": 21,
+      "stageMax": 40,
+      "itemEditorIds": [
+        "Skyrim.esm:0x00012EB7",
+        "Skyrim.esm:0x00012E49",
+        "Skyrim.esm:0x00012E4D",
+        "Skyrim.esm:0x00012E46",
+        "Skyrim.esm:0x00012E4B"
+      ],
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "setId": "undead_41_60",
+      "roleKey": "rf:role/undead",
+      "stageMin": 41,
+      "stageMax": 60,
+      "itemEditorIds": [
+        "Skyrim.esm:0x00012EB7",
+        "Skyrim.esm:0x00012E49",
+        "Skyrim.esm:0x00012E4D",
+        "Skyrim.esm:0x00012E46",
+        "Skyrim.esm:0x00012E4B"
+      ],
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "setId": "undead_61_80",
+      "roleKey": "rf:role/undead",
+      "stageMin": 61,
+      "stageMax": 80,
+      "itemEditorIds": [
+        "Skyrim.esm:0x00012EB7",
+        "Skyrim.esm:0x00012E49",
+        "Skyrim.esm:0x00012E4D",
+        "Skyrim.esm:0x00012E46",
+        "Skyrim.esm:0x00012E4B"
+      ],
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "setId": "undead_81_100",
+      "roleKey": "rf:role/undead",
+      "stageMin": 81,
+      "stageMax": 100,
+      "itemEditorIds": [
+        "Skyrim.esm:0x00012EB7",
+        "Skyrim.esm:0x00012E49",
+        "Skyrim.esm:0x00012E4D",
+        "Skyrim.esm:0x00012E46",
+        "Skyrim.esm:0x00012E4B"
+      ],
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "setId": "any_1_20",
+      "roleKey": "any",
+      "stageMin": 1,
+      "stageMax": 20,
+      "itemEditorIds": [
+        "Skyrim.esm:0x00012EB7",
+        "Skyrim.esm:0x00012E49",
+        "Skyrim.esm:0x00012E4D",
+        "Skyrim.esm:0x00012E46",
+        "Skyrim.esm:0x00012E4B"
+      ],
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "setId": "any_21_40",
+      "roleKey": "any",
+      "stageMin": 21,
+      "stageMax": 40,
+      "itemEditorIds": [
+        "Skyrim.esm:0x00012EB7",
+        "Skyrim.esm:0x00012E49",
+        "Skyrim.esm:0x00012E4D",
+        "Skyrim.esm:0x00012E46",
+        "Skyrim.esm:0x00012E4B"
+      ],
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "setId": "any_41_60",
+      "roleKey": "any",
+      "stageMin": 41,
+      "stageMax": 60,
+      "itemEditorIds": [
+        "Skyrim.esm:0x00012EB7",
+        "Skyrim.esm:0x00012E49",
+        "Skyrim.esm:0x00012E4D",
+        "Skyrim.esm:0x00012E46",
+        "Skyrim.esm:0x00012E4B"
+      ],
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "setId": "any_61_80",
+      "roleKey": "any",
+      "stageMin": 61,
+      "stageMax": 80,
+      "itemEditorIds": [
+        "Skyrim.esm:0x00012EB7",
+        "Skyrim.esm:0x00012E49",
+        "Skyrim.esm:0x00012E4D",
+        "Skyrim.esm:0x00012E46",
+        "Skyrim.esm:0x00012E4B"
+      ],
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "setId": "any_81_100",
+      "roleKey": "any",
+      "stageMin": 81,
+      "stageMax": 100,
+      "itemEditorIds": [
+        "Skyrim.esm:0x00012EB7",
+        "Skyrim.esm:0x00012E49",
+        "Skyrim.esm:0x00012E4D",
+        "Skyrim.esm:0x00012E46",
+        "Skyrim.esm:0x00012E4B"
+      ],
+      "weight": 100
+    }
+  ]
+}
