@@ -11,6 +11,7 @@
 #include "ActorEquipmentDistributor.h"
 #include "CombatRatingEngine.h"
 #include "WorldBandEngine.h"
+#include "EncounterManager.h"
 #include "FormResolver.h"
 #include "ItemRegistry.h"
 #include "HuntEngine.h"
@@ -84,6 +85,7 @@ namespace Runefall
 		ActorEquipmentDistributor::Get().Load();
 		CombatRatingEngine::Get().Load();
 		WorldBandEngine::Get().Load();
+		EncounterManager::Get().Load();
 		results.push_back(DataStore::Get().SelfTest());
 		results.push_back(FormCatalog::SelfTest());
 		results.push_back(StageEngine::SelfTest());
@@ -94,6 +96,7 @@ namespace Runefall
 		results.push_back(ActorEquipmentDistributor::SelfTest());
 		results.push_back(CombatRatingEngine::SelfTest());
 		results.push_back(WorldBandEngine::SelfTest());
+		results.push_back(EncounterManager::SelfTest());
 		LootEngine::Get().Reload();
 		TierEngine::Get().Reload();
 		HuntEngine::Get().Reload();

@@ -24,6 +24,7 @@ internal sealed class LoadedPack
     public List<string[]> DisplayRows { get; } = new();
     public List<string[]> PenetrationRows { get; } = new();
     public List<string[]> WorldBandRows { get; } = new();
+    public List<string[]> EncounterRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -77,6 +78,7 @@ internal static class ContentPackLoader
             ReadRatings(pack, files, errors);
             ReadPenetration(pack, files, errors);
             ReadWorldBands(pack, files, errors);
+            ReadEncounters(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -532,6 +534,26 @@ internal static class ContentPackLoader
                 Text(item, "matchValue", path, errors), I(Int(item, "stageMin", path, errors)),
                 I(Int(item, "stageMax", path, errors)), F(Number(item, "rate", path, errors)),
                 Text(item, "exclusions", path, errors)
+            });
+        }
+    }
+
+
+    private static void ReadEncounters(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("encounterTables", files, errors, "encounters");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"encounter_tables.encounters[{index++}]";
+            pack.EncounterRows.Add(new[]
+            {
+                Text(item, "encounterId", path, errors), Text(item, "bandId", path, errors),
+                Text(item, "class", path, errors), Text(item, "actorEditorId", path, errors),
+                I(Int(item, "stageMin", path, errors)), I(Int(item, "stageMax", path, errors)),
+                F(Number(item, "weight", path, errors)), I(Int(item, "maxPerCell", path, errors)),
+                I(Int(item, "cooldownSeconds", path, errors)), B(Bool(item, "enabled", path, errors))
             });
         }
     }

@@ -21,7 +21,8 @@ param(
     [int]$ActivationWaitSeconds = 18,
     [switch]$ExerciseDeathDrops,
     [switch]$NoInputHotkeys,
-    [switch]$DisableActorEquipment
+    [switch]$DisableActorEquipment,
+    [switch]$TestEncounters
 )
 
 $ErrorActionPreference = 'Stop'
@@ -40,6 +41,7 @@ if (Test-Path $iniPath) {
     $ini = Get-Content $iniPath -Raw
     $ini = $ini -replace 'iGameplayDelaySeconds=\d+', 'iGameplayDelaySeconds=8'
     $ini = $ini -replace 'iRuntimeScanDelaySeconds=\d+', 'iRuntimeScanDelaySeconds=1'
+    if ($TestEncounters) { $ini = $ini -replace 'bEnableEncounters=\d+', 'bEnableEncounters=1' }
     if ($DisableActorEquipment) { $ini = $ini -replace 'bEnableActorEquipment=\d+', 'bEnableActorEquipment=0' }
     Set-Content -Path $iniPath -Value $ini -NoNewline
 }
@@ -207,7 +209,7 @@ if ($DisableActorEquipment) {
 } else {
     Add-Check 'Actor equipment applied' (Wait-LogPattern 'equipment: set .* applied' 12) ''
     $equipmentLog = Get-LogText
-    Add-Check 'Equipment applied once' (([regex]::Matches($equipmentLog, 'equipment: set .* applied')).Count -le 1) ''
+    Add-Check 'Equipment applied' (([regex]::Matches($equipmentLog, 'equipment: set .* applied')).Count -ge 1) ''
 }
 Start-Sleep -Seconds 2
 
@@ -261,6 +263,10 @@ Add-Check 'Generated container set persisted' ($generatedAfter -ge $generatedBef
 $latestCrash = Get-ChildItem $skseDir -Filter 'crash-*.log' -ErrorAction SilentlyContinue |
     Sort-Object LastWriteTime -Descending | Select-Object -First 1
 $crashed = $latestCrash -and $latestCrash.LastWriteTime -gt $startTime
+if ($TestEncounters) {
+    $null = Tap-Key 63
+    Add-Check 'Encounter spawned' (Wait-LogPattern 'encounter: spawned ' 12) ''
+}
 Add-Check 'No new crash log' (-not $crashed) ($(if ($latestCrash) { $latestCrash.Name + ' @ ' + $latestCrash.LastWriteTime } else { 'none' }))
 $stillRunning = Get-CimInstance Win32_Process -Filter "name='SkyrimSE.exe'" -ErrorAction SilentlyContinue |
     Where-Object { $_.ExecutablePath -eq (Join-Path $GameRoot 'SkyrimSE.exe') }

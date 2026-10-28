@@ -106,6 +106,11 @@ internal static class LadderContent
         "bandId", "matchType", "matchValue", "stageMin", "stageMax", "rate", "exclusions"
     };
 
+    public static readonly string[] EncounterColumns =
+    {
+        "encounterId", "bandId", "class", "actorEditorId", "stageMin", "stageMax", "weight", "maxPerCell", "cooldownSeconds", "enabled"
+    };
+
     public static void WriteAll(string dir)
     {
         Directory.CreateDirectory(dir);
@@ -271,6 +276,7 @@ internal static class LadderContent
         WriteCsv(dir, "rating_display_profiles.csv", DisplayColumns, pack.DisplayRows);
         WriteCsv(dir, "penetration_profiles.csv", PenetrationColumns, pack.PenetrationRows);
         WriteCsv(dir, "world_bands.csv", WorldBandColumns, pack.WorldBandRows);
+        WriteCsv(dir, "encounter_tables.csv", EncounterColumns, pack.EncounterRows);
         return errors;
     }
 

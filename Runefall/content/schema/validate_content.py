@@ -26,6 +26,7 @@ ENTITY_SCHEMA = {
     "playerProgression": "player-progression.schema.json",
     "penetrationProfiles": "penetration-profiles.schema.json",
     "worldBands": "world-bands.schema.json",
+    "encounterTables": "encounter-tables.schema.json",
     "ratingProfiles": "rating-profiles.schema.json",
     "combatPaceProfiles": "combat-pace-profiles.schema.json",
     "ratingDisplayProfiles": "rating-display-profiles.schema.json",

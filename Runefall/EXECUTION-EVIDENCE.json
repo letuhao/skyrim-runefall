@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T01:43:58.734Z",
+  "updatedAt": "2026-10-28T01:59:20.367Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -411,6 +411,27 @@
       "slice": "W2.1",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-084316.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "W2.2",
+      "kind": "summary",
+      "path": "build/evidence/w2.2-encounters-20261028.md",
+      "result": "PASS",
+      "detail": "3 encounter entries; caps/cooldown; F5 spawn boss_1; batch 28/28"
+    },
+    {
+      "slice": "W2.2",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-085704.md",
+      "result": "PASS",
+      "detail": "28/28 including encounter spawned"
+    },
+    {
+      "slice": "W2.2",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-085836.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

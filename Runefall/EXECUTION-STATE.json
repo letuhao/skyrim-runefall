@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "W2.2",
-  "updatedAt": "2026-10-28T01:43:58.730Z",
+  "currentSlice": "W2.3",
+  "updatedAt": "2026-10-28T01:59:20.363Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -416,11 +416,27 @@
       "id": "W2.2",
       "layer": "L2",
       "slice": "Spawn and encounter system",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "spawns follow data; reload-safe; no city/quest leaks",
       "depends": "W2.1",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/w2.2-encounters-20261028.md",
+        "build/evidence/batch-test-20261028-085704.md",
+        "build/evidence/static-gates-20261028-085836.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "encounter-data": "PASS 3",
+        "selection": "PASS deterministic",
+        "spawn": "PASS debug F5",
+        "caps": "PASS maxPerCell",
+        "cooldown": "PASS 60s",
+        "exterior-only": "PASS",
+        "config": "PASS default off",
+        "batch": "PASS 28/28",
+        "ambient-hook": "DEFERRED W2.3/W2.5",
+        "city-quest-filter": "DEFERRED W2.3/W2.5"
+      }
     },
     "W2.3": {
       "id": "W2.3",
@@ -714,9 +730,9 @@
     }
   },
   "currentWork": {
-    "slice": "W2.2",
-    "step": "spawn and encounter system",
-    "nextAction": "rate tables, encounter classes, caps/cooldowns, identity/cleanup, safe locations"
+    "slice": "W2.3",
+    "step": "rare high-stage spawns",
+    "nextAction": "rate-table high-stage chance and condition hooks reserved for packs"
   },
   "blockers": [],
   "finalRelease": null

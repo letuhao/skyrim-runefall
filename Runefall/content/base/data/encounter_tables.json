@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "encounters": [
+    {
+      "schemaVersion": 1,
+      "encounterId": "boss_1",
+      "bandId": "tamriel",
+      "class": "boss",
+      "actorEditorId": "RF_NPC_Boss_01",
+      "stageMin": 1,
+      "stageMax": 20,
+      "weight": 100,
+      "maxPerCell": 1,
+      "cooldownSeconds": 60,
+      "enabled": true
+    },
+    {
+      "schemaVersion": 1,
+      "encounterId": "boss_2",
+      "bandId": "tamriel",
+      "class": "boss",
+      "actorEditorId": "RF_NPC_Boss_02",
+      "stageMin": 1,
+      "stageMax": 20,
+      "weight": 100,
+      "maxPerCell": 1,
+      "cooldownSeconds": 60,
+      "enabled": true
+    },
+    {
+      "schemaVersion": 1,
+      "encounterId": "boss_3",
+      "bandId": "tamriel",
+      "class": "boss",
+      "actorEditorId": "RF_NPC_Boss_03",
+      "stageMin": 1,
+      "stageMax": 20,
+      "weight": 100,
+      "maxPerCell": 1,
+      "cooldownSeconds": 60,
+      "enabled": true
+    }
+  ]
+}

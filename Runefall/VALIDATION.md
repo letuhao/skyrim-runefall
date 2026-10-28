@@ -1042,3 +1042,11 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Data-driven world bands with encounterZone/cell/worldspace/default matching and exclusions.
 - Draugr in cell 00009732 resolved to stage 12; package/equipment applied once.
 - Batch 27/27, static gates 9/9.
+
+
+## W2.2 encounter system - PASS (2026-10-28 08:44-08:58)
+
+- Data-driven 3-entry encounter table with stage/weight/cap/cooldown.
+- EncounterManager deterministic selection, exterior-only spawn, caps/cooldown; F5 debug spawn.
+- In-game boss_1 spawned at stage 10; batch 28/28, static gates 9/9.
+- Ambient cell-load integration and city/quest filtering are deferred to W2.3/W2.5 content.

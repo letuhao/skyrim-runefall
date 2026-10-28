@@ -80,6 +80,10 @@
     {
       "entity": "worldBands",
       "file": "data/world_bands.json"
+    },
+    {
+      "entity": "encounterTables",
+      "file": "data/encounter_tables.json"
     }
   ],
   "localization": []
