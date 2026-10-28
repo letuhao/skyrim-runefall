@@ -10,6 +10,8 @@ namespace Runefall
 		std::int32_t tier = 0;
 		std::string family;
 		std::string itemEditorId;
+		std::int32_t salvageYieldMin = 1;
+		std::int32_t salvageYieldMax = 3;
 	};
 
 	class MaterialRegistry
@@ -29,6 +31,7 @@ namespace Runefall
 		bool Add(std::string_view a_id, std::int32_t a_amount);
 		bool Consume(std::string_view a_id, std::int32_t a_amount);
 		bool AddDefaultForTier(std::int32_t a_tier, std::int32_t a_amount);
+		[[nodiscard]] std::int32_t SalvageYieldForTier(std::int32_t a_tier) const;
 
 		[[nodiscard]] static SelfTestResult SelfTest();
 

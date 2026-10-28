@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T02:54:53.067Z",
+  "updatedAt": "2026-10-28T03:01:13.279Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -602,6 +602,27 @@
       "path": "build/evidence/static-gates-20261028-095413.md",
       "result": "PASS",
       "detail": "9/9 gates"
+    },
+    {
+      "slice": "A3.2",
+      "kind": "summary",
+      "path": "build/evidence/a3.2-materials-20261028.md",
+      "result": "PASS",
+      "detail": "31 materials; data-driven salvage yields; recipes/COBJ sink"
+    },
+    {
+      "slice": "A3.2",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-095912.md",
+      "result": "PASS",
+      "detail": "32/32"
+    },
+    {
+      "slice": "A3.2",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-100032.md",
+      "result": "PASS",
+      "detail": "9/9"
     }
   ]
 }

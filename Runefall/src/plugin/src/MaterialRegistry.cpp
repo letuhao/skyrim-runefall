@@ -38,6 +38,8 @@ namespace Runefall
 		const int cTier = column("tier");
 		const int cFamily = column("family");
 		const int cItem = column("itemEditorId");
+		const int cSalvageMin = column("salvageYieldMin");
+		const int cSalvageMax = column("salvageYieldMax");
 		for (const auto& row : table->rows) {
 			auto cell = [&](int c) -> std::string {
 				return c >= 0 && static_cast<std::size_t>(c) < row.size() ? row[static_cast<std::size_t>(c)] : std::string{};
@@ -48,6 +50,8 @@ namespace Runefall
 			def.family = cell(cFamily);
 			def.itemEditorId = cell(cItem);
 			def.tier = std::atoi(cell(cTier).c_str());
+			def.salvageYieldMin = (std::max)(1, std::atoi(cell(cSalvageMin).c_str()));
+			def.salvageYieldMax = (std::max)(def.salvageYieldMin, std::atoi(cell(cSalvageMax).c_str()));
 			if (!def.id.empty())
 				definitions.push_back(std::move(def));
 		}
@@ -109,6 +113,14 @@ namespace Runefall
 			return false;
 		it->second -= a_amount;
 		return true;
+	}
+
+	std::int32_t MaterialRegistry::SalvageYieldForTier(std::int32_t a_tier) const
+	{
+		for (const auto& def : definitions)
+			if (def.tier == a_tier)
+				return (def.salvageYieldMin + def.salvageYieldMax) / 2;
+		return 0;
 	}
 
 	bool MaterialRegistry::AddDefaultForTier(std::int32_t a_tier, std::int32_t a_amount)

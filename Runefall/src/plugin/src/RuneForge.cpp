@@ -146,7 +146,7 @@ namespace Runefall
 
 	std::pair<std::int32_t, std::int32_t> RuneForge::SalvageYield(const ItemMetadata& a_item)
 	{
-		const std::int32_t materials = 1 + a_item.rarity / 2 + a_item.ilvl / 20;
+		const auto materials = MaterialRegistry::Get().SalvageYieldForTier(a_item.rarity);
 		const std::int32_t runes = 10 + a_item.rarity * 5;
 		return { materials, runes };
 	}

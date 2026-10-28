@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "A3.2",
-  "updatedAt": "2026-10-28T02:54:53.063Z",
+  "currentSlice": "A3.3",
+  "updatedAt": "2026-10-28T03:01:13.274Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -586,11 +586,24 @@
       "id": "A3.2",
       "layer": "L3",
       "slice": "Materials and tokens",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "materials are items; unknown roles get tokens",
       "depends": "C1.2",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/a3.2-materials-20261028.md",
+        "build/evidence/batch-test-20261028-095912.md",
+        "build/evidence/static-gates-20261028-100032.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "material-data": "PASS 31",
+        "tiers-families": "PASS 4x3",
+        "salvage-yield-data": "PASS",
+        "salvage-engine": "PASS RuneForge",
+        "material-sink": "PASS recipes/COBJ",
+        "batch": "PASS 32/32",
+        "static-gates": "PASS"
+      }
     },
     "A3.3": {
       "id": "A3.3",
@@ -814,9 +827,9 @@
     }
   },
   "currentWork": {
-    "slice": "A3.2",
-    "step": "materials and salvage",
-    "nextAction": "material tiers, dismantle/salvage yields, material sinks"
+    "slice": "A3.3",
+    "step": "crafting and rune forge",
+    "nextAction": "recipe costs, upgrade/socket/extract/convert operations, station validation"
   },
   "blockers": [],
   "finalRelease": null

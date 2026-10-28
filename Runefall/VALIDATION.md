@@ -1102,3 +1102,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - Audited 600 affixes, 6 rarities, 36 rarity weights, 36 general drop rows.
 - LootEngine synthetic weighted-rarity self-test PASS; batch 32/32; static gates 9/9.
+
+
+## A3.2 materials/salvage - PASS (2026-10-28 09:54-10:00)
+
+- 31 materials with data-driven salvage ranges; RuneForge uses tier salvage yield.
+- Batch 32/32; static gates 9/9.
