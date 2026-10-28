@@ -1035,3 +1035,10 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - Player stage from CoSave used in damage hook; data penetration base/per10/cap with mage+weapon channels.
 - Self-test gap20 0.40 vs pen10 0.70; batch 26/26; static gates 9/9.
+
+
+## W2.1 world bands - PASS (2026-10-28 08:35-08:43)
+
+- Data-driven world bands with encounterZone/cell/worldspace/default matching and exclusions.
+- Draugr in cell 00009732 resolved to stage 12; package/equipment applied once.
+- Batch 27/27, static gates 9/9.

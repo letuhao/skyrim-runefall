@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "W2.1",
-  "updatedAt": "2026-10-28T01:35:03.917Z",
+  "currentSlice": "W2.2",
+  "updatedAt": "2026-10-28T01:43:58.730Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -392,11 +392,25 @@
       "id": "W2.1",
       "layer": "L2",
       "slice": "World bands",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "data drives area stage; vanilla zones respected",
       "depends": "C1.4",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/w2.1-world-bands-20261028.md",
+        "build/evidence/batch-test-20261028-084146.md",
+        "build/evidence/static-gates-20261028-084316.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "world-band-data": "PASS 2",
+        "matcher": "PASS zone/cell/worldspace/default",
+        "exclusions": "PASS",
+        "deterministic-stage": "PASS",
+        "actor-stage-wired": "PASS stage12",
+        "fallback": "PASS",
+        "batch": "PASS 27/27",
+        "static-gates": "PASS"
+      }
     },
     "W2.2": {
       "id": "W2.2",
@@ -700,9 +714,9 @@
     }
   },
   "currentWork": {
-    "slice": "W2.1",
-    "step": "world bands",
-    "nextAction": "map encounter zones/cells to stage bands and wire content bands/exclusions"
+    "slice": "W2.2",
+    "step": "spawn and encounter system",
+    "nextAction": "rate tables, encounter classes, caps/cooldowns, identity/cleanup, safe locations"
   },
   "blockers": [],
   "finalRelease": null

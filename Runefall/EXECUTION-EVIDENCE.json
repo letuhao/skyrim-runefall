@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T01:35:03.921Z",
+  "updatedAt": "2026-10-28T01:43:58.734Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -390,6 +390,27 @@
       "slice": "C1.8",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-083423.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "W2.1",
+      "kind": "summary",
+      "path": "build/evidence/w2.1-world-bands-20261028.md",
+      "result": "PASS",
+      "detail": "world bands; Draugr stage12 from cell; deterministic"
+    },
+    {
+      "slice": "W2.1",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-084146.md",
+      "result": "PASS",
+      "detail": "27/27 self-tests"
+    },
+    {
+      "slice": "W2.1",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-084316.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

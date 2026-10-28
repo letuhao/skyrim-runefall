@@ -17,6 +17,7 @@
 #include "RaceClassifier.h"
 #include "ActorPackageEngine.h"
 #include "ActorEquipmentDistributor.h"
+#include "WorldBandEngine.h"
 
 #include "RE/C/ContainerMenu.h"
 
@@ -405,6 +406,14 @@ namespace Runefall
 		const auto formID = a_actor->GetFormID();
 		if (const auto it = actorStages.find(formID); it != actorStages.end())
 			return it->second;
+		if (auto* cell = a_actor->GetParentCell()) {
+			const auto worldStage = WorldBandEngine::Get().StageForCell(cell, formID);
+			if (worldStage > 0) {
+				actorStages[formID] = worldStage;
+				logger::info("world-band: actor {:08X} cell {:08X} -> stage {}", formID, cell->GetFormID(), worldStage);
+				return worldStage;
+			}
+		}
 		const auto rfTier = (std::clamp)(Progression::Get().RuneTier(), 0, 5);
 		StageRequest request;
 		request.source = StageSource::WorldBand;

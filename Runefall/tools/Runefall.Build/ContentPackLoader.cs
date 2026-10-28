@@ -23,6 +23,7 @@ internal sealed class LoadedPack
     public List<string[]> PaceRows { get; } = new();
     public List<string[]> DisplayRows { get; } = new();
     public List<string[]> PenetrationRows { get; } = new();
+    public List<string[]> WorldBandRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -75,6 +76,7 @@ internal static class ContentPackLoader
             ReadPlayerProgression(pack, files, errors);
             ReadRatings(pack, files, errors);
             ReadPenetration(pack, files, errors);
+            ReadWorldBands(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -511,6 +513,25 @@ internal static class ContentPackLoader
                 I(Int(item, "per10Stages", path, errors)), I(Int(item, "cap", path, errors)),
                 B(Bool(item, "mageChannel", path, errors)), B(Bool(item, "weaponChannel", path, errors)),
                 B(Bool(item, "consumableChannel", path, errors))
+            });
+        }
+    }
+
+
+    private static void ReadWorldBands(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("worldBands", files, errors, "bands");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"world_bands.bands[{index++}]";
+            pack.WorldBandRows.Add(new[]
+            {
+                Text(item, "bandId", path, errors), Text(item, "matchType", path, errors),
+                Text(item, "matchValue", path, errors), I(Int(item, "stageMin", path, errors)),
+                I(Int(item, "stageMax", path, errors)), F(Number(item, "rate", path, errors)),
+                Text(item, "exclusions", path, errors)
             });
         }
     }

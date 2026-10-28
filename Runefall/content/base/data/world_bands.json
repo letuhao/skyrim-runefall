@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "bands": [
+    {
+      "schemaVersion": 1,
+      "bandId": "default",
+      "matchType": "default",
+      "matchValue": "",
+      "stageMin": 1,
+      "stageMax": 20,
+      "rate": 100,
+      "exclusions": ""
+    },
+    {
+      "schemaVersion": 1,
+      "bandId": "tamriel",
+      "matchType": "worldspace",
+      "matchValue": "Tamriel",
+      "stageMin": 1,
+      "stageMax": 20,
+      "rate": 100,
+      "exclusions": ""
+    }
+  ]
+}

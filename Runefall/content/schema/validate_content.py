@@ -25,6 +25,7 @@ ENTITY_SCHEMA = {
     "equipmentSets": "equipment-sets.schema.json",
     "playerProgression": "player-progression.schema.json",
     "penetrationProfiles": "penetration-profiles.schema.json",
+    "worldBands": "world-bands.schema.json",
     "ratingProfiles": "rating-profiles.schema.json",
     "combatPaceProfiles": "combat-pace-profiles.schema.json",
     "ratingDisplayProfiles": "rating-display-profiles.schema.json",

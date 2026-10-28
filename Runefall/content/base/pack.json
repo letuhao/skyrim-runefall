@@ -76,6 +76,10 @@
     {
       "entity": "penetrationProfiles",
       "file": "data/penetration_profiles.json"
+    },
+    {
+      "entity": "worldBands",
+      "file": "data/world_bands.json"
     }
   ],
   "localization": []
