@@ -29,6 +29,7 @@ internal sealed class LoadedPack
     public List<string[]> ContractRows { get; } = new();
     public List<string[]> BossRows { get; } = new();
     public List<string[]> AnomalyRows { get; } = new();
+    public List<string[]> EconomyRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -87,6 +88,7 @@ internal static class ContentPackLoader
             ReadHuntContracts(pack, files, errors);
             ReadBosses(pack, files, errors);
             ReadAnomalies(pack, files, errors);
+            ReadEconomy(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -639,6 +641,27 @@ internal static class ContentPackLoader
                 I(Int(item, "stageOffset", path, errors)), Text(item, "tierLabels", path, errors),
                 Text(item, "coreItemEditorId", path, errors), Text(item, "trophyItemEditorId", path, errors),
                 Text(item, "encounterActorEditorId", path, errors), B(Bool(item, "enabled", path, errors))
+            });
+        }
+    }
+
+
+    private static void ReadEconomy(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("economyProfiles", files, errors, "profiles");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"economy_profiles.profiles[{index++}]";
+            pack.EconomyRows.Add(new[]
+            {
+                Text(item, "profileId", path, errors), F(Number(item, "baseItemValue", path, errors)),
+                F(Number(item, "valuePerIlvl", path, errors)), Text(item, "rarityMultipliers", path, errors),
+                F(Number(item, "vendorBuyMultiplier", path, errors)), F(Number(item, "vendorSellMultiplier", path, errors)),
+                F(Number(item, "runeValue", path, errors)), F(Number(item, "materialValue", path, errors)),
+                F(Number(item, "respecBaseCost", path, errors)), F(Number(item, "respecCostPerLevel", path, errors)),
+                F(Number(item, "salvageValuePct", path, errors))
             });
         }
     }

@@ -131,6 +131,11 @@ internal static class LadderContent
         "family", "nameKey", "stageOffset", "tierLabels", "coreItemEditorId", "trophyItemEditorId", "encounterActorEditorId", "enabled"
     };
 
+    public static readonly string[] EconomyColumns =
+    {
+        "profileId", "baseItemValue", "valuePerIlvl", "rarityMultipliers", "vendorBuyMultiplier", "vendorSellMultiplier", "runeValue", "materialValue", "respecBaseCost", "respecCostPerLevel", "salvageValuePct"
+    };
+
     public static void WriteAll(string dir)
     {
         Directory.CreateDirectory(dir);
@@ -301,6 +306,7 @@ internal static class LadderContent
         WriteCsv(dir, "hunt_contracts.csv", ContractColumns, pack.ContractRows);
         WriteCsv(dir, "bosses.csv", BossColumns, pack.BossRows);
         WriteCsv(dir, "anomaly_families.csv", AnomalyColumns, pack.AnomalyRows);
+        WriteCsv(dir, "economy_profiles.csv", EconomyColumns, pack.EconomyRows);
         return errors;
     }
 

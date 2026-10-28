@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T03:03:36.726Z",
+  "updatedAt": "2026-10-28T03:08:24.097Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -663,6 +663,27 @@
       "slice": "A3.4",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-100032.md",
+      "result": "PASS",
+      "detail": "9/9"
+    },
+    {
+      "slice": "A3.5",
+      "kind": "summary",
+      "path": "build/evidence/a3.5-economy-20261028.md",
+      "result": "PASS",
+      "detail": "economy profile; item/vendor/respec formulas; self-test 33"
+    },
+    {
+      "slice": "A3.5",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-100626.md",
+      "result": "PASS",
+      "detail": "33/33; economy self-test"
+    },
+    {
+      "slice": "A3.5",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-100744.md",
       "result": "PASS",
       "detail": "9/9"
     }

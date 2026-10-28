@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "profiles": [
+    {
+      "schemaVersion": 1,
+      "profileId": "default",
+      "baseItemValue": 25,
+      "valuePerIlvl": 5,
+      "rarityMultipliers": "1|1.5|2.5|4|6|9",
+      "vendorBuyMultiplier": 1.5,
+      "vendorSellMultiplier": 0.35,
+      "runeValue": 10,
+      "materialValue": 5,
+      "respecBaseCost": 500,
+      "respecCostPerLevel": 100,
+      "salvageValuePct": 0.25
+    }
+  ]
+}

@@ -31,6 +31,7 @@ ENTITY_SCHEMA = {
     "huntContracts": "hunt-contracts.schema.json",
     "bosses": "bosses.schema.json",
     "anomalyFamilies": "anomaly-families.schema.json",
+    "economyProfiles": "economy-profiles.schema.json",
     "ratingProfiles": "rating-profiles.schema.json",
     "combatPaceProfiles": "combat-pace-profiles.schema.json",
     "ratingDisplayProfiles": "rating-display-profiles.schema.json",

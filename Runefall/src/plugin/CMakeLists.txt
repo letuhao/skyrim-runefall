@@ -93,6 +93,7 @@ else()
         src/HuntContractManager.cpp
         src/BossRegistry.cpp
         src/AnomalyEngine.cpp
+        src/EconomyEngine.cpp
         src/RuntimeContentResolver.cpp
         src/CoSave.cpp
         src/ItemRegistry.cpp

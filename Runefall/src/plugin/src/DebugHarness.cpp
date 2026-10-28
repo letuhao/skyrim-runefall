@@ -16,6 +16,7 @@
 #include "HuntContractManager.h"
 #include "BossRegistry.h"
 #include "AnomalyEngine.h"
+#include "EconomyEngine.h"
 #include "FormResolver.h"
 #include "ItemRegistry.h"
 #include "HuntEngine.h"
@@ -94,6 +95,7 @@ namespace Runefall
 		HuntContractManager::Get().Load();
 		BossRegistry::Get().Load();
 		AnomalyEngine::Get().Load();
+		EconomyEngine::Get().Load();
 		results.push_back(DataStore::Get().SelfTest());
 		results.push_back(FormCatalog::SelfTest());
 		results.push_back(StageEngine::SelfTest());
@@ -109,6 +111,7 @@ namespace Runefall
 		results.push_back(HuntContractManager::SelfTest());
 		results.push_back(BossRegistry::SelfTest());
 		results.push_back(AnomalyEngine::SelfTest());
+		results.push_back(EconomyEngine::SelfTest());
 		LootEngine::Get().Reload();
 		TierEngine::Get().Reload();
 		HuntEngine::Get().Reload();

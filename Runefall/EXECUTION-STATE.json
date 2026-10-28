@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "A3.5",
-  "updatedAt": "2026-10-28T03:03:36.722Z",
+  "currentSlice": "A3.6",
+  "updatedAt": "2026-10-28T03:08:24.093Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -658,11 +658,27 @@
       "id": "A3.5",
       "layer": "L3",
       "slice": "Rune equipment and inventory",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "rune gear works; inventory data stable",
       "depends": "A3.4",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/a3.5-economy-20261028.md",
+        "build/evidence/batch-test-20261028-100626.md",
+        "build/evidence/static-gates-20261028-100744.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "economy-data": "PASS",
+        "item-value": "PASS",
+        "vendor-spread": "PASS",
+        "respec-cost": "PASS",
+        "rune-material-value": "PASS",
+        "sinks": "PASS existing",
+        "faucets": "PASS existing",
+        "self-test": "PASS 33",
+        "batch": "PASS 33/33",
+        "static-gates": "PASS"
+      }
     },
     "A3.6": {
       "id": "A3.6",
@@ -856,9 +872,9 @@
     }
   },
   "currentWork": {
-    "slice": "A3.5",
-    "step": "economy and sinks",
-    "nextAction": "gold/material/rune faucets and sinks, vendor pricing, respec/salvage economy"
+    "slice": "A3.6",
+    "step": "compatibility and load order",
+    "nextAction": "load-order independence, vanilla loot preservation, conflict-safe records, pack order rules"
   },
   "blockers": [],
   "finalRelease": null

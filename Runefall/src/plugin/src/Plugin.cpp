@@ -23,6 +23,7 @@
 #include "HuntContractManager.h"
 #include "BossRegistry.h"
 #include "AnomalyEngine.h"
+#include "EconomyEngine.h"
 #include "HookManager.h"
 #include "MaterialRegistry.h"
 #include "RuneForge.h"
@@ -134,6 +135,7 @@ namespace
 		Runefall::HuntContractManager::Get().Load();
 		Runefall::BossRegistry::Get().Load();
 		Runefall::AnomalyEngine::Get().Load();
+		Runefall::EconomyEngine::Get().Load();
 		Runefall::MaterialRegistry::Get().LoadDefinitions();
 		Runefall::RuneForge::Get().ReloadSocketRecipes();
 		Runefall::LootEngine::Get().Reload();
