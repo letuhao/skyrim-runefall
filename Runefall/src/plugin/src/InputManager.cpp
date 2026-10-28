@@ -73,8 +73,8 @@ namespace Runefall
 							tasks->AddTask([]() {
 								const auto diagnostics = MenuApi::BuildDiagnosticsJson();
 								logger::info("input: diagnostics {}", diagnostics);
-								if (auto* console = RE::ConsoleLog::GetSingleton())
-									console->Print("[Runefall] diagnostics: %s", diagnostics.c_str());
+								// F7 hotfix: do not pass multi-kilobyte diagnostics through ConsoleLog::Print;
+								// it crashes inside the game console string path. Full JSON stays in Runefall.log.
 							});
 						} else if (code == kKeyF8) {
 							tasks->AddTask([]() {
