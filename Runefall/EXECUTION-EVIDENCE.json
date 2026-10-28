@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T01:05:52.972Z",
+  "updatedAt": "2026-10-28T01:14:21.942Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -306,6 +306,34 @@
       "slice": "C1.5",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-080509.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "C1.5",
+      "kind": "summary",
+      "path": "build/evidence/c1.5-equipment-20261028.md",
+      "result": "PASS",
+      "detail": "15 sets; 5 items+1 perk; toggle on/off; applied once"
+    },
+    {
+      "slice": "C1.5",
+      "kind": "batch-on",
+      "path": "build/evidence/batch-test-20261028-081220.md",
+      "result": "PASS",
+      "detail": "25/25; equipment applied once"
+    },
+    {
+      "slice": "C1.5",
+      "kind": "batch-off",
+      "path": "build/evidence/batch-test-20261028-081054.md",
+      "result": "PASS",
+      "detail": "equipment suppressed with toggle off"
+    },
+    {
+      "slice": "C1.5",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-081340.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

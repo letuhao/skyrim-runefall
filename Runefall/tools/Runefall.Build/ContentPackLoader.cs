@@ -388,11 +388,12 @@ internal static class ContentPackLoader
         {
             var path = $"equipment_sets.sets[{index++}]";
             var items = string.Join("|", item.TryGetProperty("itemEditorIds", out var itemArray) && itemArray.ValueKind == JsonValueKind.Array ? itemArray.EnumerateArray().Select(x => x.GetString() ?? "") : Enumerable.Empty<string>());
+            var perks = string.Join("|", item.TryGetProperty("perkEditorIds", out var perkArray) && perkArray.ValueKind == JsonValueKind.Array ? perkArray.EnumerateArray().Select(x => x.GetString() ?? "") : Enumerable.Empty<string>());
             pack.EquipmentRows.Add(new[]
             {
                 Text(item, "setId", path, errors), Text(item, "roleKey", path, errors),
                 I(Int(item, "stageMin", path, errors)), I(Int(item, "stageMax", path, errors)),
-                items, F(Number(item, "weight", path, errors))
+                items, perks, F(Number(item, "weight", path, errors)), F(Number(item, "applyChance", path, errors))
             });
         }
         if (pack.EquipmentRows.Count == 0) errors.Add("equipment_sets: no rows");

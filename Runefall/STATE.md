@@ -99,7 +99,8 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
 - C1.2 PASS: 19 profiles + 7 keyword rules; Draugr explicit undead; unknown fallback; batch 23/23.
 - C1.3 PASS: data-driven DR 70%/3%/5%, DoT 50%, player unprotected, NPC 13->11.7; batch 23/23.
 - C1.4 PASS: 20 packages, apply-once, elite/boss overlays, budget; Draugr package applied.
-- C1.5 partial: 15 sets, Draugr equipped with 5 Iron items, toggle config; perks/random/cleanup pending.
+- C1.5 PASS: 15 sets, 5 items+1 perk, toggle on/off, applied once; batch 25/25.
+- Next: C1.6 player attributes.
 
 ## Next step
 

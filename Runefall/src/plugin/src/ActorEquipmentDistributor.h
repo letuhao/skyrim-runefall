@@ -23,7 +23,9 @@ namespace Runefall
 			std::uint8_t stageMin = 1;
 			std::uint8_t stageMax = 100;
 			std::vector<std::string> items;
+			std::vector<std::string> perks;
 			float weight = 0.0f;
+			float applyChance = 100.0f;
 		};
 		[[nodiscard]] const SetDef* Select(std::string_view a_roleKey, std::uint8_t a_stage) const;
 

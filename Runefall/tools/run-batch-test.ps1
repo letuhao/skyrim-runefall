@@ -20,7 +20,8 @@ param(
     [int]$LoadTimeoutSeconds = 40,
     [int]$ActivationWaitSeconds = 18,
     [switch]$ExerciseDeathDrops,
-    [switch]$NoInputHotkeys
+    [switch]$NoInputHotkeys,
+    [switch]$DisableActorEquipment
 )
 
 $ErrorActionPreference = 'Stop'
@@ -39,6 +40,7 @@ if (Test-Path $iniPath) {
     $ini = Get-Content $iniPath -Raw
     $ini = $ini -replace 'iGameplayDelaySeconds=\d+', 'iGameplayDelaySeconds=8'
     $ini = $ini -replace 'iRuntimeScanDelaySeconds=\d+', 'iRuntimeScanDelaySeconds=1'
+    if ($DisableActorEquipment) { $ini = $ini -replace 'bEnableActorEquipment=\d+', 'bEnableActorEquipment=0' }
     Set-Content -Path $iniPath -Value $ini -NoNewline
 }
 
@@ -200,7 +202,13 @@ Add-Check 'Rune item aggregated' (Wait-LogPattern 'runes: aggregated 1 x R3' 12)
 $spawn = Invoke-Mcp 'execute_console_command' @{ command = 'player.placeatme 000EBC2D 1' }
 Add-Check 'Spawn test Draugr' ($spawn -match '"executed":true') ''
 Add-Check 'Actor package applied' (Wait-LogPattern 'actor-packager: package .* applied once' 12) ''
-Add-Check 'Actor equipment applied' (Wait-LogPattern 'equipment: set .* applied' 12) ''
+if ($DisableActorEquipment) {
+    Add-Check 'Equipment suppressed' (-not ((Get-LogText) -match 'equipment: set .* applied')) ''
+} else {
+    Add-Check 'Actor equipment applied' (Wait-LogPattern 'equipment: set .* applied' 12) ''
+    $equipmentLog = Get-LogText
+    Add-Check 'Equipment applied once' (([regex]::Matches($equipmentLog, 'equipment: set .* applied')).Count -le 1) ''
+}
 Start-Sleep -Seconds 2
 
 if ($ExerciseDeathDrops) {

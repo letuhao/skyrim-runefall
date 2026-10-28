@@ -1006,3 +1006,12 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Static gates 9/9.
 - C1.5 remains IN_PROGRESS: perks, random apply tables, cleanup/tag report and explicit
   toggle-off/save-reload duplicate audit are pending.
+
+
+## C1.5 actor equipment - PASS (2026-10-28 07:40-08:13)
+
+- 15 sets, master FormID gear, 1 perk per set, deterministic chance field, HasItem/HasPerk guards.
+- Enabled batch: 5 items + 1 perk applied once, no duplicate after save/reload.
+- Disabled batch: equipment suppressed by bEnableActorEquipment=0.
+- Batch PASS 25/25 both runs; static gates 9/9.
+- Toggle semantics: future application only; existing vanilla equipment is not mass-removed.

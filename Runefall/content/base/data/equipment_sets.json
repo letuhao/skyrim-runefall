@@ -14,7 +14,11 @@
         "Skyrim.esm:0x00012E46",
         "Skyrim.esm:0x00012E4B"
       ],
-      "weight": 100
+      "weight": 100,
+      "perkEditorIds": [
+        "RF_PERK_Skill_ironclad_1"
+      ],
+      "applyChance": 100
     },
     {
       "schemaVersion": 1,
@@ -29,7 +33,11 @@
         "Skyrim.esm:0x00012E46",
         "Skyrim.esm:0x00012E4B"
       ],
-      "weight": 100
+      "weight": 100,
+      "perkEditorIds": [
+        "RF_PERK_Skill_ironclad_1"
+      ],
+      "applyChance": 100
     },
     {
       "schemaVersion": 1,
@@ -44,7 +52,11 @@
         "Skyrim.esm:0x00012E46",
         "Skyrim.esm:0x00012E4B"
       ],
-      "weight": 100
+      "weight": 100,
+      "perkEditorIds": [
+        "RF_PERK_Skill_ironclad_1"
+      ],
+      "applyChance": 100
     },
     {
       "schemaVersion": 1,
@@ -59,7 +71,11 @@
         "Skyrim.esm:0x00012E46",
         "Skyrim.esm:0x00012E4B"
       ],
-      "weight": 100
+      "weight": 100,
+      "perkEditorIds": [
+        "RF_PERK_Skill_ironclad_1"
+      ],
+      "applyChance": 100
     },
     {
       "schemaVersion": 1,
@@ -74,7 +90,11 @@
         "Skyrim.esm:0x00012E46",
         "Skyrim.esm:0x00012E4B"
       ],
-      "weight": 100
+      "weight": 100,
+      "perkEditorIds": [
+        "RF_PERK_Skill_ironclad_1"
+      ],
+      "applyChance": 100
     },
     {
       "schemaVersion": 1,
@@ -89,7 +109,11 @@
         "Skyrim.esm:0x00012E46",
         "Skyrim.esm:0x00012E4B"
       ],
-      "weight": 100
+      "weight": 100,
+      "perkEditorIds": [
+        "RF_PERK_Skill_ironclad_1"
+      ],
+      "applyChance": 100
     },
     {
       "schemaVersion": 1,
@@ -104,7 +128,11 @@
         "Skyrim.esm:0x00012E46",
         "Skyrim.esm:0x00012E4B"
       ],
-      "weight": 100
+      "weight": 100,
+      "perkEditorIds": [
+        "RF_PERK_Skill_ironclad_1"
+      ],
+      "applyChance": 100
     },
     {
       "schemaVersion": 1,
@@ -119,7 +147,11 @@
         "Skyrim.esm:0x00012E46",
         "Skyrim.esm:0x00012E4B"
       ],
-      "weight": 100
+      "weight": 100,
+      "perkEditorIds": [
+        "RF_PERK_Skill_ironclad_1"
+      ],
+      "applyChance": 100
     },
     {
       "schemaVersion": 1,
@@ -134,7 +166,11 @@
         "Skyrim.esm:0x00012E46",
         "Skyrim.esm:0x00012E4B"
       ],
-      "weight": 100
+      "weight": 100,
+      "perkEditorIds": [
+        "RF_PERK_Skill_ironclad_1"
+      ],
+      "applyChance": 100
     },
     {
       "schemaVersion": 1,
@@ -149,7 +185,11 @@
         "Skyrim.esm:0x00012E46",
         "Skyrim.esm:0x00012E4B"
       ],
-      "weight": 100
+      "weight": 100,
+      "perkEditorIds": [
+        "RF_PERK_Skill_ironclad_1"
+      ],
+      "applyChance": 100
     },
     {
       "schemaVersion": 1,
@@ -164,7 +204,11 @@
         "Skyrim.esm:0x00012E46",
         "Skyrim.esm:0x00012E4B"
       ],
-      "weight": 100
+      "weight": 100,
+      "perkEditorIds": [
+        "RF_PERK_Skill_ironclad_1"
+      ],
+      "applyChance": 100
     },
     {
       "schemaVersion": 1,
@@ -179,7 +223,11 @@
         "Skyrim.esm:0x00012E46",
         "Skyrim.esm:0x00012E4B"
       ],
-      "weight": 100
+      "weight": 100,
+      "perkEditorIds": [
+        "RF_PERK_Skill_ironclad_1"
+      ],
+      "applyChance": 100
     },
     {
       "schemaVersion": 1,
@@ -194,7 +242,11 @@
         "Skyrim.esm:0x00012E46",
         "Skyrim.esm:0x00012E4B"
       ],
-      "weight": 100
+      "weight": 100,
+      "perkEditorIds": [
+        "RF_PERK_Skill_ironclad_1"
+      ],
+      "applyChance": 100
     },
     {
       "schemaVersion": 1,
@@ -209,7 +261,11 @@
         "Skyrim.esm:0x00012E46",
         "Skyrim.esm:0x00012E4B"
       ],
-      "weight": 100
+      "weight": 100,
+      "perkEditorIds": [
+        "RF_PERK_Skill_ironclad_1"
+      ],
+      "applyChance": 100
     },
     {
       "schemaVersion": 1,
@@ -224,7 +280,11 @@
         "Skyrim.esm:0x00012E46",
         "Skyrim.esm:0x00012E4B"
       ],
-      "weight": 100
+      "weight": 100,
+      "perkEditorIds": [
+        "RF_PERK_Skill_ironclad_1"
+      ],
+      "applyChance": 100
     }
   ]
 }

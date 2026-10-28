@@ -73,7 +73,7 @@ internal static class LadderContent
 
     public static readonly string[] EquipmentColumns =
     {
-        "setId", "roleKey", "stageMin", "stageMax", "itemEditorIds", "weight"
+        "setId", "roleKey", "stageMin", "stageMax", "itemEditorIds", "perkEditorIds", "weight", "applyChance"
     };
 
     public static void WriteAll(string dir)

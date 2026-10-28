@@ -2,10 +2,12 @@
 
 #include "Config.h"
 #include "DataStore.h"
+#include "FormCatalog.h"
 #include "FormResolver.h"
 
 #include "RE/A/Actor.h"
 #include "RE/A/ActorEquipManager.h"
+#include "RE/B/BGSPerk.h"
 #include "RE/T/TESBoundObject.h"
 #include "RE/T/TESDataHandler.h"
 #include "RE/T/TESObjectARMO.h"
@@ -108,7 +110,9 @@ namespace Runefall
 		const int sMin = FindColumn(*table, "stageMin");
 		const int sMax = FindColumn(*table, "stageMax");
 		const int sItems = FindColumn(*table, "itemEditorIds");
+		const int sPerks = FindColumn(*table, "perkEditorIds");
 		const int sWeight = FindColumn(*table, "weight");
+		const int sChance = FindColumn(*table, "applyChance");
 		for (const auto& row : table->rows) {
 			SetDef def;
 			def.setId = Cell(row, sId);
@@ -116,7 +120,9 @@ namespace Runefall
 			def.stageMin = static_cast<std::uint8_t>((std::clamp)(Int(row, sMin, 1), 1, 100));
 			def.stageMax = static_cast<std::uint8_t>((std::clamp)(Int(row, sMax, 100), 1, 100));
 			def.items = Split(Cell(row, sItems));
+			def.perks = Split(Cell(row, sPerks));
 			def.weight = std::strtof(Cell(row, sWeight).c_str(), nullptr);
+			def.applyChance = std::strtof(Cell(row, sChance).c_str(), nullptr);
 			if (!def.setId.empty() && def.stageMin <= def.stageMax)
 				sets.push_back(std::move(def));
 		}
@@ -157,6 +163,11 @@ namespace Runefall
 		auto* equipManager = RE::ActorEquipManager::GetSingleton();
 		if (!equipManager)
 			return false;
+		if (set->applyChance < 100.0f) {
+			const auto roll = static_cast<float>(a_actor->GetFormID() % 100u);
+			if (roll >= set->applyChance)
+				return false;
+		}
 		std::size_t added = 0;
 		for (const auto& editorId : set->items) {
 			auto* item = ResolveItem(editorId);
@@ -167,9 +178,19 @@ namespace Runefall
 			equipManager->EquipObject(a_actor, item, nullptr, 1, nullptr, false, false, false, true);
 			++added;
 		}
-		if (added > 0)
-			logger::info("equipment: set {} applied to {:08X} ({} items, stage {})", set->setId, a_actor->GetFormID(), added, a_stage);
-		return added > 0;
+		std::size_t perksAdded = 0;
+		for (const auto& editorId : set->perks) {
+			auto* perk = FormCatalog::Get().LookupAs<RE::BGSPerk>(editorId);
+			if (!perk)
+				continue;
+			if (!a_actor->HasPerk(perk)) {
+				a_actor->AddPerk(perk, 1);
+				++perksAdded;
+			}
+		}
+		if (added > 0 || perksAdded > 0)
+			logger::info("equipment: set {} applied to {:08X} ({} items, {} perks, stage {})", set->setId, a_actor->GetFormID(), added, perksAdded, a_stage);
+		return added > 0 || perksAdded > 0;
 	}
 
 	SelfTestResult ActorEquipmentDistributor::SelfTest()

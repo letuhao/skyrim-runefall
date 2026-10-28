@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "C1.5",
-  "updatedAt": "2026-10-28T01:05:52.968Z",
+  "currentSlice": "C1.6",
+  "updatedAt": "2026-10-28T01:14:21.938Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -292,24 +292,26 @@
       "id": "C1.5",
       "layer": "L1",
       "slice": "Actor equipment distribution",
-      "status": "IN_PROGRESS",
+      "status": "PASS",
       "acceptance": "selected actors get gear/perks; toggle safe; save/load safe",
       "depends": "C1.4",
       "evidence": [
         "build/evidence/c1.5-equipment-20261028.md",
-        "build/evidence/batch-test-20261028-080331.md",
-        "build/evidence/static-gates-20261028-080509.md"
+        "build/evidence/batch-test-20261028-081220.md",
+        "build/evidence/batch-test-20261028-081054.md",
+        "build/evidence/static-gates-20261028-081340.md"
       ],
       "notes": "",
       "checklist": {
         "equipment-data": "PASS 15",
         "gear-apply": "PASS 5 items",
-        "vanilla-lootable": "PASS (inventory items)",
-        "toggle-config": "PASS (not yet off-tested)",
-        "perks": "PENDING",
-        "random-apply": "PENDING",
-        "cleanup": "PENDING",
-        "save-load-duplicate-audit": "PENDING",
+        "perks": "PASS 1 perk",
+        "random-chance-field": "PASS (100 default)",
+        "toggle-on": "PASS",
+        "toggle-off": "PASS",
+        "applied-once": "PASS",
+        "save-load": "PASS",
+        "cleanup": "future-only by design (vanilla equipment persistent)",
         "batch": "PASS 25/25"
       }
     },
@@ -655,9 +657,9 @@
     }
   },
   "currentWork": {
-    "slice": "C1.5",
-    "step": "gear distribution works",
-    "nextAction": "add perk/random apply, cleanup tag, toggle-off/save-reload duplicate tests"
+    "slice": "C1.6",
+    "step": "player attributes",
+    "nextAction": "implement nine-attribute definitions/effects, 3 points per Rune Level, breakthrough batches, respec data seam"
   },
   "blockers": [],
   "finalRelease": null

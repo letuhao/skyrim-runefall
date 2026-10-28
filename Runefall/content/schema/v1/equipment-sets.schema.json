@@ -23,7 +23,9 @@
           "stageMin",
           "stageMax",
           "itemEditorIds",
-          "weight"
+          "weight",
+          "perkEditorIds",
+          "applyChance"
         ],
         "properties": {
           "schemaVersion": {
@@ -55,6 +57,17 @@
           "weight": {
             "type": "number",
             "minimum": 0
+          },
+          "perkEditorIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "applyChance": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
           }
         },
         "additionalProperties": false
