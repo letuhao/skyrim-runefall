@@ -24,13 +24,13 @@
     "normalisation": "UNVERIFIED and PARTIAL/UNVERIFIED -> PARTIAL"
   },
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "S0",
-  "updatedAt": "2026-10-28T09:17:55.496Z",
+  "currentSlice": "S1",
+  "updatedAt": "2026-10-28T09:28:26.145Z",
   "remediation": {
     "S0": {
       "id": "S0",
-      "state": "IMPLEMENTING",
-      "status": "NOT_STARTED",
+      "state": "PASS",
+      "status": "PASS",
       "contract": {
         "path": "build/slices/S0/spec.md",
         "sha256": "D543CCEC5EB18013245DF9F0F55C3A3CDF1DA4ECBBCA164E318CA7EB1D7359A0"
@@ -41,8 +41,14 @@
         "verdict": "APPROVED",
         "recordCommit": null
       },
-      "implementationAudit": null,
-      "commit": null,
+      "implementationAudit": {
+        "path": "build/audit/S0-audit.md",
+        "sha256": "BC3ADB7C5B1C111542F3F412F76E30A5F1553E4988512CEE90F8847FF0FB4DF0",
+        "verdict": "PASS",
+        "subjectCommit": "65ee033",
+        "recordCommit": "2d606c2"
+      },
+      "commit": "65ee033",
       "evidence": [
         {
           "path": "build/slices/S0/spec.md",
@@ -54,6 +60,36 @@
           "path": "build/audit/S0-spec-audit-5.md",
           "sha256": "A1DA0F2E6305F009F1C51131A20DC995DF0233E765FC0224EAFD9D6F9E72DDED",
           "kind": "report",
+          "exists": true
+        },
+        {
+          "path": "build/audit/S0-audit.md",
+          "sha256": "BC3ADB7C5B1C111542F3F412F76E30A5F1553E4988512CEE90F8847FF0FB4DF0",
+          "kind": "report",
+          "exists": true
+        },
+        {
+          "path": "build/evidence/S0/audit-gate.log",
+          "sha256": "3C3C0B39DA531FE66E52AD65E87DE00876E5CC496943302F544BB933BAC6B25F",
+          "kind": "log",
+          "exists": true
+        },
+        {
+          "path": "build/evidence/S0/negative-fixtures.log",
+          "sha256": "5CE00E0E5D304F43EAFB25DEE0D137F8013032A49959BB668EE0FB6859D652A0",
+          "kind": "log",
+          "exists": true
+        },
+        {
+          "path": "build/audit/normalize_legacy.output.json",
+          "sha256": "3381BDC19A56C97038CC2BF7AC1C42F4749750888A46344242CD594CBE8CB201",
+          "kind": "data",
+          "exists": true
+        },
+        {
+          "path": "build/TRACEABILITY.json",
+          "sha256": "D03C514F721745AC67076E52266601D38CA38AFC2B9AA6234B49204CC92728FE",
+          "kind": "data",
           "exists": true
         }
       ],
