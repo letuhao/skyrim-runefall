@@ -182,11 +182,11 @@ internal static class Program
             .Concat(content.HuntRecords.Where(e => e.StartsWith("RF_MISC_", StringComparison.Ordinal)))
             .Distinct(StringComparer.Ordinal).ToArray();
         WriteManifest(Path.Combine(packDir, "base.json"), "base", "Runefall.esp",
-            new[] { "data/form_ids.csv", "data/stage_ladder.csv", "data/rarity.csv", "data/affixes.csv" }, 495, Array.Empty<string>());
+            new[] { "data/form_ids.json", "data/stage_ladder.json", "data/rarity.json", "data/affixes.json" }, 495, Array.Empty<string>());
         WriteManifest(Path.Combine(packDir, "unique.json"), "unique", "Runefall - Unique.esp",
-            new[] { "data/unique_affixes.csv", "data/unique_sources.csv" }, uniqueEditors.Length, uniqueEditors);
+            new[] { "data/unique_affixes.json", "data/unique_sources.json" }, uniqueEditors.Length, uniqueEditors);
         WriteManifest(Path.Combine(packDir, "hunt.json"), "hunt", "Runefall - Hunt.esp",
-            new[] { "data/race_groups.csv", "data/drops_races.csv", "data/materials.csv" }, huntEditors.Length, huntEditors);
+            new[] { "data/race_groups.json", "data/drops_races.json", "data/materials.json" }, huntEditors.Length, huntEditors);
     }
 
     private static void WriteManifest(string path, string packId, string plugin, string[] files, int count, IEnumerable<string> editors)

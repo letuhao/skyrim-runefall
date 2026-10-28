@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "R5.4",
-  "updatedAt": "2026-10-28T04:10:30.513Z",
+  "currentSlice": "R5.5",
+  "updatedAt": "2026-10-28T04:15:04.668Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -973,11 +973,23 @@
       "id": "R5.4",
       "layer": "L5",
       "slice": "Agent skills and criteria",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "agent pack produced, validated, built, tested",
       "depends": "R5.1/F0.6",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/r5.4-agent-skills-20261028.md",
+        "build/evidence/batch-test-20261028-111316.md",
+        "build/evidence/static-gates-20261028-111422.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "content-skill": "PASS",
+        "pack-skill": "PASS",
+        "pack-validator": "PASS 3",
+        "runtime-json-content-paths": "PASS",
+        "batch": "PASS 37/37",
+        "static-gates": "PASS"
+      }
     },
     "R5.5": {
       "id": "R5.5",
@@ -1041,9 +1053,9 @@
     }
   },
   "currentWork": {
-    "slice": "R5.4",
-    "step": "agent skills",
-    "nextAction": "agent skill definitions/training/cooldown and co-save persistence"
+    "slice": "R5.5",
+    "step": "endgame progression",
+    "nextAction": "endgame tiers, final boss, reward loop and completion state"
   },
   "blockers": [],
   "finalRelease": null

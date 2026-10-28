@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T04:10:30.518Z",
+  "updatedAt": "2026-10-28T04:15:04.673Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -908,6 +908,27 @@
       "slice": "R5.3",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-110945.md",
+      "result": "PASS",
+      "detail": "9/9"
+    },
+    {
+      "slice": "R5.4",
+      "kind": "summary",
+      "path": "build/evidence/r5.4-agent-skills-20261028.md",
+      "result": "PASS",
+      "detail": "content/pack skills + fail-closed pack validator 3 manifests"
+    },
+    {
+      "slice": "R5.4",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-111316.md",
+      "result": "PASS",
+      "detail": "37/37"
+    },
+    {
+      "slice": "R5.4",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-111422.md",
       "result": "PASS",
       "detail": "9/9"
     }

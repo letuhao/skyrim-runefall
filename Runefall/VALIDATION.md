@@ -1197,3 +1197,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - 3 compatibility profiles; runtime detection active vanilla; additive loot/protect vanilla.
 - Batch 37/37; static gates 9/9. Full 3,700-mod list test remains R6.1.
+
+
+## R5.4 agent skills - PASS (2026-10-28 11:09-11:14)
+
+- Project-local content/pack authoring skills and fail-closed pack validator.
+- 3 manifests PASS; batch 37/37; static gates 9/9.
