@@ -980,3 +980,13 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Batch 23/23 PASS, no crash: build/evidence/batch-test-20261028-072114.md.
 - Static gates 9/9 PASS: build/evidence/static-gates-20261028-072307.md.
 - Penetration sources remain 0 until C1.8; anomaly protection is data-disabled pending its module.
+
+
+## C1.4 enemy packages - partial (2026-10-28 07:24-07:34)
+
+- Added 20 data-driven enemy packages (humanoid/beast/undead/any x five stage bands).
+- ActorPackageEngine selects exact role then any, applies spells/perks once.
+- Draugr package undead_1_20 applied once in-game; batch 24/24, no crash.
+- Static gates 9/9.
+- C1.4 remains IN_PROGRESS: perk/stat/ability content, elite/boss overlays and budget validation
+  are still pending.

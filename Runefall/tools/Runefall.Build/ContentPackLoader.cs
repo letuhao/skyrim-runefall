@@ -16,6 +16,7 @@ internal sealed class LoadedPack
     public List<string[]> RaceProfileRows { get; } = new();
     public List<string[]> RaceRuleRows { get; } = new();
     public List<string[]> ProtectionRows { get; } = new();
+    public List<string[]> PackageRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -63,6 +64,7 @@ internal static class ContentPackLoader
             ReadRaceProfiles(pack, files, errors);
             ReadRaceRules(pack, files, errors);
             ReadProtection(pack, files, errors);
+            ReadPackages(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -349,6 +351,27 @@ internal static class ContentPackLoader
             });
         }
         if (pack.ProtectionRows.Count == 0) errors.Add("threat_protection: no rows");
+    }
+
+
+    private static void ReadPackages(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("enemyPackages", files, errors, "packages");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"enemy_packages.packages[{index++}]";
+            var spells = string.Join("|", item.TryGetProperty("spellEditorIds", out var spellArray) && spellArray.ValueKind == JsonValueKind.Array ? spellArray.EnumerateArray().Select(x => x.GetString() ?? "") : Enumerable.Empty<string>());
+            var perks = string.Join("|", item.TryGetProperty("perkEditorIds", out var perkArray) && perkArray.ValueKind == JsonValueKind.Array ? perkArray.EnumerateArray().Select(x => x.GetString() ?? "") : Enumerable.Empty<string>());
+            pack.PackageRows.Add(new[]
+            {
+                Text(item, "packageId", path, errors), Text(item, "roleKey", path, errors),
+                I(Int(item, "stageMin", path, errors)), I(Int(item, "stageMax", path, errors)),
+                spells, perks, Text(item, "lootTable", path, errors), F(Number(item, "weight", path, errors))
+            });
+        }
+        if (pack.PackageRows.Count == 0) errors.Add("enemy_packages: no rows");
     }
 
     private static void ReadLegacy(LoadedPack pack, Dictionary<string, string> files, List<string> errors)

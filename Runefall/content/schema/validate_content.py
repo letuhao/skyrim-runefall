@@ -21,6 +21,7 @@ ENTITY_SCHEMA = {
     "raceProfiles": "race-profiles.schema.json",
     "raceClassificationRules": "race-classification-rules.schema.json",
     "threatProtection": "threat-protection.schema.json",
+    "enemyPackages": "enemy-packages.schema.json",
 }
 
 def load(path: Path):

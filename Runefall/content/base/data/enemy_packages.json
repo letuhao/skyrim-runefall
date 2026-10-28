@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 1,
+  "packages": [
+    {
+      "schemaVersion": 1,
+      "packageId": "humanoid_1_20",
+      "roleKey": "rf:role/humanoid",
+      "stageMin": 1,
+      "stageMax": 20,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_1"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/humanoid_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "humanoid_21_40",
+      "roleKey": "rf:role/humanoid",
+      "stageMin": 21,
+      "stageMax": 40,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_2"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/humanoid_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "humanoid_41_60",
+      "roleKey": "rf:role/humanoid",
+      "stageMin": 41,
+      "stageMax": 60,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_3"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/humanoid_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "humanoid_61_80",
+      "roleKey": "rf:role/humanoid",
+      "stageMin": 61,
+      "stageMax": 80,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_4"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/humanoid_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "humanoid_81_100",
+      "roleKey": "rf:role/humanoid",
+      "stageMin": 81,
+      "stageMax": 100,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_5"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/humanoid_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "beast_1_20",
+      "roleKey": "rf:role/beast",
+      "stageMin": 1,
+      "stageMax": 20,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_1"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/beast_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "beast_21_40",
+      "roleKey": "rf:role/beast",
+      "stageMin": 21,
+      "stageMax": 40,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_2"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/beast_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "beast_41_60",
+      "roleKey": "rf:role/beast",
+      "stageMin": 41,
+      "stageMax": 60,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_3"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/beast_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "beast_61_80",
+      "roleKey": "rf:role/beast",
+      "stageMin": 61,
+      "stageMax": 80,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_4"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/beast_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "beast_81_100",
+      "roleKey": "rf:role/beast",
+      "stageMin": 81,
+      "stageMax": 100,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_5"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/beast_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "undead_1_20",
+      "roleKey": "rf:role/undead",
+      "stageMin": 1,
+      "stageMax": 20,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_1"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/undead_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "undead_21_40",
+      "roleKey": "rf:role/undead",
+      "stageMin": 21,
+      "stageMax": 40,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_2"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/undead_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "undead_41_60",
+      "roleKey": "rf:role/undead",
+      "stageMin": 41,
+      "stageMax": 60,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_3"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/undead_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "undead_61_80",
+      "roleKey": "rf:role/undead",
+      "stageMin": 61,
+      "stageMax": 80,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_4"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/undead_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "undead_81_100",
+      "roleKey": "rf:role/undead",
+      "stageMin": 81,
+      "stageMax": 100,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_5"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/undead_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "any_1_20",
+      "roleKey": "any",
+      "stageMin": 1,
+      "stageMax": 20,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_1"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/any_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "any_21_40",
+      "roleKey": "any",
+      "stageMin": 21,
+      "stageMax": 40,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_2"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/any_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "any_41_60",
+      "roleKey": "any",
+      "stageMin": 41,
+      "stageMax": 60,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_3"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/any_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "any_61_80",
+      "roleKey": "any",
+      "stageMin": 61,
+      "stageMax": 80,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_4"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/any_role",
+      "weight": 100
+    },
+    {
+      "schemaVersion": 1,
+      "packageId": "any_81_100",
+      "roleKey": "any",
+      "stageMin": 81,
+      "stageMax": 100,
+      "spellEditorIds": [
+        "RF_SPEL_Rank_5"
+      ],
+      "perkEditorIds": [],
+      "lootTable": "rf:loot/any_role",
+      "weight": 100
+    }
+  ]
+}

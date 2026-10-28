@@ -66,6 +66,11 @@ internal static class LadderContent
         "profileId", "cap", "perStage", "floor", "dotFactor", "playerProtected", "anomalyProtected", "penetrationCap", "enabled"
     };
 
+    public static readonly string[] PackageColumns =
+    {
+        "packageId", "roleKey", "stageMin", "stageMax", "spellEditorIds", "perkEditorIds", "lootTable", "weight"
+    };
+
     public static void WriteAll(string dir)
     {
         Directory.CreateDirectory(dir);
@@ -223,6 +228,7 @@ internal static class LadderContent
         WriteCsv(dir, "race_profiles.csv", RaceProfileColumns, pack.RaceProfileRows);
         WriteCsv(dir, "race_classification_rules.csv", RaceRuleColumns, pack.RaceRuleRows);
         WriteCsv(dir, "threat_protection.csv", ProtectionColumns, pack.ProtectionRows);
+        WriteCsv(dir, "enemy_packages.csv", PackageColumns, pack.PackageRows);
         return errors;
     }
 

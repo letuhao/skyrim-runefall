@@ -15,6 +15,7 @@
 #include "StageEngine.h"
 #include "RuntimeContentResolver.h"
 #include "RaceClassifier.h"
+#include "ActorPackageEngine.h"
 
 #include "RE/C/ContainerMenu.h"
 
@@ -338,6 +339,13 @@ namespace Runefall
 			logger::info("race-classifier: rank-path actor {:08X} -> role {} family {} source {} provisional {}",
 				formID, classification.roleKey, classification.family, classification.source, classification.provisional);
 		}
+		const auto stageForPackage = ResolveActorStage(a_actor);
+		if (const auto* race = a_actor->GetActorBase() ? a_actor->GetActorBase()->GetRace() : nullptr) {
+			const auto classification = RaceClassifier::Get().Classify(const_cast<RE::TESRace*>(race));
+			(void)ActorPackageEngine::Get().Apply(a_actor, classification.roleKey, stageForPackage);
+			logger::info("package-rank-path: actor {:08X} role {} stage {} package {}",
+				formID, classification.roleKey, stageForPackage, ActorPackageEngine::Get().SelectPackageId(classification.roleKey, stageForPackage));
+		}
 		const auto existing = RankFromSpells(a_actor);
 		if (existing >= 0) {
 			actorRanks[formID] = existing;
@@ -393,6 +401,10 @@ namespace Runefall
 		const auto profile = StageEngine::Get().RequestStage(request);
 		const auto stage = (profile.flags & kStageProfileRejected) ? static_cast<std::uint8_t>(1) : profile.stage;
 		actorStages[formID] = stage;
+		if (const auto* race = a_actor->GetActorBase() ? a_actor->GetActorBase()->GetRace() : nullptr) {
+			const auto classification = RaceClassifier::Get().Classify(const_cast<RE::TESRace*>(race));
+			ActorPackageEngine::Get().Apply(a_actor, classification.roleKey, stage);
+		}
 		return stage;
 	}
 

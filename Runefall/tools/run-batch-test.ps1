@@ -199,7 +199,7 @@ Add-Check 'Rune item aggregated' (Wait-LogPattern 'runes: aggregated 1 x R3' 12)
 # Actor-rank path: spawned actor must receive a rank spell at Load3D.
 $spawn = Invoke-Mcp 'execute_console_command' @{ command = 'player.placeatme 000EBC2D 1' }
 Add-Check 'Spawn test Draugr' ($spawn -match '"executed":true') ''
-Add-Check 'Actor rank assigned' (Wait-LogPattern 'actor: rank \d+ buff applied' 12) ''
+Add-Check 'Actor package applied' (Wait-LogPattern 'actor-packager: package .* applied once' 12) ''
 Start-Sleep -Seconds 2
 
 if ($ExerciseDeathDrops) {

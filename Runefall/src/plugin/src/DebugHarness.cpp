@@ -7,6 +7,7 @@
 #include "RuntimeContentResolver.h"
 #include "DamagePipeline.h"
 #include "RaceClassifier.h"
+#include "ActorPackageEngine.h"
 #include "FormResolver.h"
 #include "ItemRegistry.h"
 #include "HuntEngine.h"
@@ -76,12 +77,14 @@ namespace Runefall
 		StageEngine::Get().Load();
 		RuntimeContentResolver::Get().Load();
 		RaceClassifier::Get().Load();
+		ActorPackageEngine::Get().Load();
 		results.push_back(DataStore::Get().SelfTest());
 		results.push_back(FormCatalog::SelfTest());
 		results.push_back(StageEngine::SelfTest());
 		results.push_back(RuntimeContentResolver::SelfTest());
 		results.push_back(DamagePipeline::SelfTest());
 		results.push_back(RaceClassifier::SelfTest());
+		results.push_back(ActorPackageEngine::SelfTest());
 		LootEngine::Get().Reload();
 		TierEngine::Get().Reload();
 		HuntEngine::Get().Reload();
