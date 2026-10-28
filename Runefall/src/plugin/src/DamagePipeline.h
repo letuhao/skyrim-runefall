@@ -26,6 +26,10 @@ namespace Runefall
 		static DamagePipeline& Get();
 
 		[[nodiscard]] bool Install();
+		void LoadProtection();
+		[[nodiscard]] float AdjustDamage(RE::FormID a_target, RE::FormID a_attacker, float a_damage, std::uint16_t a_flags) const;
+		[[nodiscard]] float ComputeMultiplier(int a_targetStage, int a_attackerStage, std::uint16_t a_flags, int a_penetration) const;
+		[[nodiscard]] bool ProtectionLoaded() const noexcept { return protectionLoaded; }
 		[[nodiscard]] bool Installed() const noexcept { return installed; }
 		void SetHitEventFallback(bool a_enabled) noexcept { hitEventFallback.store(a_enabled); }
 		[[nodiscard]] bool HitEventFallback() const noexcept { return hitEventFallback.load(); }
@@ -43,6 +47,15 @@ namespace Runefall
 
 	private:
 		bool installed = false;
+		bool protectionLoaded = false;
+		float protectionCap = 0.70f;
+		float protectionPerStage = 0.03f;
+		float protectionFloor = 0.05f;
+		float protectionDotFactor = 0.50f;
+		bool playerProtected = false;
+		bool anomalyProtected = false;
+		int penetrationCap = 20;
+		bool protectionEnabled = true;
 		std::atomic_bool hitEventFallback{ true };
 		std::atomic<std::uint32_t> samples{ 0 };
 		std::atomic<std::uint32_t> directSamples{ 0 };

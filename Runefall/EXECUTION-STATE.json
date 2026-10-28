@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "C1.3",
-  "updatedAt": "2026-10-28T00:14:12.858Z",
+  "currentSlice": "C1.4",
+  "updatedAt": "2026-10-28T00:23:54.651Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -241,11 +241,27 @@
       "id": "C1.3",
       "layer": "L1",
       "slice": "Threat protection",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "staged fights respect gap; apply-once; no crash",
       "depends": "C1.1/C1.2",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/c1.3-threat-protection-20261028.md",
+        "build/evidence/batch-test-20261028-072114.md",
+        "build/evidence/static-gates-20261028-072307.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "formula": "PASS",
+        "cap-70-per-stage-3-floor-5": "PASS",
+        "dot-50": "PASS (classifier flag)",
+        "reflected-environmental-bypass": "PASS (classifier flag)",
+        "player-no-protection": "PASS in-game 25 unchanged",
+        "npc-protection": "PASS 13->11.7",
+        "anomaly-policy": "DATA false pending anomaly module",
+        "penetration-sources": "PENDING C1.8",
+        "batch": "PASS 23/23",
+        "no-crash": "PASS"
+      }
     },
     "C1.4": {
       "id": "C1.4",
@@ -609,9 +625,9 @@
     }
   },
   "currentWork": {
-    "slice": "C1.3",
-    "step": "threat protection implementation",
-    "nextAction": "apply stage-gap DR using damage hook; 70% cap/3% per stage/5% floor/DoT 50%/reflected/environmental bypass; player/anomaly policy"
+    "slice": "C1.4",
+    "step": "enemy packages",
+    "nextAction": "apply one data-driven NPC package per actor (stage/role/perks/gear/loot) without deep simulation"
   },
   "blockers": [],
   "finalRelease": null

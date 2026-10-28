@@ -20,6 +20,7 @@ ENTITY_SCHEMA = {
     "roles": "roles.schema.json",
     "raceProfiles": "race-profiles.schema.json",
     "raceClassificationRules": "race-classification-rules.schema.json",
+    "threatProtection": "threat-protection.schema.json",
 }
 
 def load(path: Path):

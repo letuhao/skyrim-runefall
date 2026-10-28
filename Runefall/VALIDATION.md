@@ -969,3 +969,14 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - In-game Draugr classified explicit undead; self-test covers known NordRace and unknown fallback.
 - Batch 23/23 PASS, no crash: build/evidence/batch-test-20261028-071136.md.
 - Static gates 9/9 PASS: build/evidence/static-gates-20261028-071330.md.
+
+
+## C1.3 threat protection - PASS (2026-10-28 07:14-07:23)
+
+- Added data-driven threat_protection.json (cap 0.70, 3%/stage, floor 0.05, DoT factor 0.50,
+  player/anomaly policy, penetration cap 20).
+- DamagePipeline applies stage-gap DR before original HandleHealthDamage; self-test vectors PASS.
+- In-game: player damage 25 unchanged (no player protection); wolf target 13.00 -> 11.70 (NPC DR).
+- Batch 23/23 PASS, no crash: build/evidence/batch-test-20261028-072114.md.
+- Static gates 9/9 PASS: build/evidence/static-gates-20261028-072307.md.
+- Penetration sources remain 0 until C1.8; anomaly protection is data-disabled pending its module.

@@ -6,6 +6,10 @@
 #include "RE/A/Actor.h"
 #include "RE/C/Character.h"
 #include "RE/P/PlayerCharacter.h"
+
+#include "CoSave.h"
+#include "LootService.h"
+#include "DataStore.h"
 #include "REL/Relocation.h"
 
 namespace
@@ -24,9 +28,10 @@ namespace
 		const auto attacker = a_attacker ? a_attacker->GetFormID() : 0;
 		const std::uint16_t flags = attacker == 0 ? Runefall::kDamageFlagEnvironmental :
 			(attacker == target ? Runefall::kDamageFlagReflected : Runefall::kDamageFlagNone);
+		const auto adjusted = Runefall::DamagePipeline::Get().AdjustDamage(target, attacker, a_damage, flags);
 		if (a_original)
-			a_original(a_self, a_attacker, a_damage);
-		Runefall::DamagePipeline::Get().Record(target, attacker, a_damage, flags);
+			a_original(a_self, a_attacker, adjusted);
+		Runefall::DamagePipeline::Get().Record(target, attacker, adjusted, flags);
 		(void)a_player;
 	}
 
@@ -105,6 +110,85 @@ namespace Runefall
 		}
 	}
 
+	void DamagePipeline::LoadProtection()
+	{
+		protectionLoaded = false;
+		const auto* table = DataStore::Get().GetTable("threat_protection.csv");
+		if (!table || table->rows.empty()) {
+			logger::error("damage-pipeline: threat_protection.csv missing; protection disabled");
+			return;
+		}
+		const auto find = [&](std::string_view name) {
+			for (std::size_t i = 0; i < table->headers.size(); ++i)
+				if (table->headers[i] == name)
+					return static_cast<int>(i);
+			return -1;
+		};
+		const auto& row = table->rows.front();
+		const auto cell = [&](std::string_view name) {
+			const auto index = find(name);
+			return index >= 0 && static_cast<std::size_t>(index) < row.size() ? row[static_cast<std::size_t>(index)] : std::string{};
+		};
+		const auto toFloat = [](const std::string& text, float fallback) {
+			char* end = nullptr;
+			const auto value = std::strtof(text.c_str(), &end);
+			return end == text.c_str() ? fallback : value;
+		};
+		const auto toInt = [](const std::string& text, int fallback) {
+			char* end = nullptr;
+			const auto value = std::strtol(text.c_str(), &end, 10);
+			return end == text.c_str() ? fallback : static_cast<int>(value);
+		};
+		protectionCap = toFloat(cell("cap"), 0.70f);
+		protectionPerStage = toFloat(cell("perStage"), 0.03f);
+		protectionFloor = toFloat(cell("floor"), 0.05f);
+		protectionDotFactor = toFloat(cell("dotFactor"), 0.50f);
+		playerProtected = cell("playerProtected") == "1";
+		anomalyProtected = cell("anomalyProtected") == "1";
+		penetrationCap = toInt(cell("penetrationCap"), 20);
+		protectionEnabled = cell("enabled") == "1";
+		protectionLoaded = true;
+		logger::info("damage-pipeline: protection loaded cap={} perStage={} floor={} dotFactor={} playerProtected={} anomalyProtected={}",
+			protectionCap, protectionPerStage, protectionFloor, protectionDotFactor, playerProtected, anomalyProtected);
+	}
+
+	float DamagePipeline::ComputeMultiplier(int a_targetStage, int a_attackerStage, std::uint16_t a_flags, int a_penetration) const
+	{
+		if (!protectionLoaded || !protectionEnabled || a_targetStage <= 0 || a_attackerStage <= 0)
+			return 1.0f;
+		if ((a_flags & kDamageFlagEnvironmental) != 0 || (a_flags & kDamageFlagReflected) != 0)
+			return 1.0f;
+		const auto penetration = (std::clamp)(a_penetration, 0, penetrationCap);
+		const auto gap = (std::max)(0, a_targetStage - a_attackerStage - penetration);
+		if (gap <= 0)
+			return 1.0f;
+		auto dr = (std::min)(protectionCap, protectionPerStage * static_cast<float>(gap));
+		if ((a_flags & kDamageFlagDot) != 0)
+			dr *= protectionDotFactor;
+		dr = (std::max)(dr, 0.0f);
+		return (std::max)(1.0f - dr, protectionFloor);
+	}
+
+	float DamagePipeline::AdjustDamage(RE::FormID a_target, RE::FormID a_attacker, float a_damage, std::uint16_t a_flags) const
+	{
+		if (!protectionLoaded || a_damage == 0.0f)
+			return a_damage;
+		const bool targetIsPlayer = a_target == 0x14;
+		if (targetIsPlayer && !playerProtected)
+			return a_damage;
+		const auto stageOf = [](RE::FormID a_formID) -> int {
+			if (a_formID == 0x14)
+				return static_cast<int>(CoSave::Get().State().playerStage);
+			return static_cast<int>(LootService::Get().StageForFormID(a_formID));
+		};
+		const auto targetStage = stageOf(a_target);
+		const auto attackerStage = stageOf(a_attacker);
+		if (targetStage <= 0 || attackerStage <= 0)
+			return a_damage;
+		const auto multiplier = ComputeMultiplier(targetStage, attackerStage, a_flags, 0);
+		return a_damage * multiplier;
+	}
+
 	DamageCategory DamagePipeline::Classify(RE::FormID a_target, RE::FormID a_attacker, float a_damage, std::uint16_t a_flags)
 	{
 		if (a_target == 0 || a_damage == 0.0f)
@@ -146,6 +230,15 @@ namespace Runefall
 			return { "DamagePipeline.SelfTest", CheckStatus::Fail, "environmental classification failed" };
 		if (Classify(0, 0x100, 10.0f, kDamageFlagNone) != DamageCategory::Invalid)
 			return { "DamagePipeline.SelfTest", CheckStatus::Fail, "invalid classification failed" };
-		return { "DamagePipeline.SelfTest", CheckStatus::Pass, "direct/DoT/reflected/environmental/invalid classification; HandleHealthDamage and TESHitEvent paths available" };
+		const auto& protection = Get();
+		const auto noGap = protection.ComputeMultiplier(10, 10, kDamageFlagNone, 0);
+		const auto gap10 = protection.ComputeMultiplier(11, 1, kDamageFlagNone, 0);
+		const auto capped = protection.ComputeMultiplier(50, 1, kDamageFlagNone, 0);
+		const auto dot = protection.ComputeMultiplier(11, 1, kDamageFlagDot, 0);
+		const auto bypass = protection.ComputeMultiplier(50, 1, kDamageFlagReflected, 0);
+		if (std::fabs(noGap - 1.0f) > 1e-4f || std::fabs(gap10 - 0.70f) > 1e-3f ||
+			std::fabs(capped - 0.30f) > 1e-3f || std::fabs(dot - 0.85f) > 1e-3f || std::fabs(bypass - 1.0f) > 1e-4f)
+			return { "DamagePipeline.SelfTest", CheckStatus::Fail, "protection multiplier output is wrong" };
+		return { "DamagePipeline.SelfTest", CheckStatus::Pass, "classification + stage-gap protection (cap 70%, 3%/stage, 5% floor, DoT 50%)" };
 	}
 }

@@ -44,6 +44,10 @@
     {
       "entity": "raceClassificationRules",
       "file": "data/race_classification_rules.json"
+    },
+    {
+      "entity": "threatProtection",
+      "file": "data/threat_protection.json"
     }
   ],
   "localization": []

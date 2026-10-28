@@ -48,6 +48,8 @@ namespace Runefall
 		[[nodiscard]] std::uint32_t RuneItemsAggregated() const noexcept { return runeItemsAggregated; }
 		[[nodiscard]] std::uint32_t CellsPruned() const noexcept { return cellsPruned; }
 
+		[[nodiscard]] std::uint8_t StageForFormID(RE::FormID a_formID) const;
+
 		[[nodiscard]] static SelfTestResult SelfTest();
 
 	private:

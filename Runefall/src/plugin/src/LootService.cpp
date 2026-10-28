@@ -363,6 +363,12 @@ namespace Runefall
 		logger::info("actor: rank {} buff applied to {:08X}", rank, formID);
 	}
 
+	std::uint8_t LootService::StageForFormID(RE::FormID a_formID) const
+	{
+		const auto it = actorStages.find(a_formID);
+		return it == actorStages.end() ? 0 : it->second;
+	}
+
 	std::uint8_t LootService::ResolveActorStage(RE::Actor* a_actor)
 	{
 		RuntimeContentResolver::Get().MaybeStartupScan();

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "protections": [
+    {
+      "profileId": "default",
+      "cap": 0.7,
+      "perStage": 0.03,
+      "floor": 0.05,
+      "dotFactor": 0.5,
+      "playerProtected": false,
+      "anomalyProtected": false,
+      "penetrationCap": 20,
+      "enabled": true,
+      "schemaVersion": 1
+    }
+  ]
+}

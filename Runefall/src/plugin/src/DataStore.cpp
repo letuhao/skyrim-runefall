@@ -38,6 +38,7 @@ namespace Runefall
 			"roles.csv",
 			"race_profiles.csv",
 			"race_classification_rules.csv",
+			"threat_protection.csv",
 		};
 	}
 

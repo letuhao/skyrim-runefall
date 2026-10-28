@@ -13,6 +13,7 @@
 #include "StageEngine.h"
 #include "RuntimeContentResolver.h"
 #include "RaceClassifier.h"
+#include "DamagePipeline.h"
 #include "HookManager.h"
 #include "MaterialRegistry.h"
 #include "RuneForge.h"
@@ -113,6 +114,7 @@ namespace
 		Runefall::StageEngine::Get().Load();
 		Runefall::RuntimeContentResolver::Get().Load();
 		Runefall::RaceClassifier::Get().Load();
+		Runefall::DamagePipeline::Get().LoadProtection();
 		Runefall::MaterialRegistry::Get().LoadDefinitions();
 		Runefall::RuneForge::Get().ReloadSocketRecipes();
 		Runefall::LootEngine::Get().Reload();

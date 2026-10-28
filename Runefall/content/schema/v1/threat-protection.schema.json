@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "threat-protection.schema.json",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "protections"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "protections": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "schemaVersion",
+          "profileId",
+          "cap",
+          "perStage",
+          "floor",
+          "dotFactor",
+          "playerProtected",
+          "anomalyProtected",
+          "penetrationCap",
+          "enabled"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "profileId": {
+            "type": "string"
+          },
+          "cap": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 0.95
+          },
+          "perStage": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 0.2
+          },
+          "floor": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "dotFactor": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "playerProtected": {
+            "type": "boolean"
+          },
+          "anomalyProtected": {
+            "type": "boolean"
+          },
+          "penetrationCap": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

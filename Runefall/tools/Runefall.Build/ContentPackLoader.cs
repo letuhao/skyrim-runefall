@@ -15,6 +15,7 @@ internal sealed class LoadedPack
     public List<string[]> RoleRows { get; } = new();
     public List<string[]> RaceProfileRows { get; } = new();
     public List<string[]> RaceRuleRows { get; } = new();
+    public List<string[]> ProtectionRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -61,6 +62,7 @@ internal static class ContentPackLoader
             ReadRoles(pack, files, errors);
             ReadRaceProfiles(pack, files, errors);
             ReadRaceRules(pack, files, errors);
+            ReadProtection(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -326,6 +328,27 @@ internal static class ContentPackLoader
             });
         }
         if (pack.RaceRuleRows.Count == 0) errors.Add("race_classification_rules: no rows");
+    }
+
+
+    private static void ReadProtection(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("threatProtection", files, errors, "protections");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"threat_protection.protections[{index++}]";
+            pack.ProtectionRows.Add(new[]
+            {
+                Text(item, "profileId", path, errors), F(Number(item, "cap", path, errors)),
+                F(Number(item, "perStage", path, errors)), F(Number(item, "floor", path, errors)),
+                F(Number(item, "dotFactor", path, errors)), B(Bool(item, "playerProtected", path, errors)),
+                B(Bool(item, "anomalyProtected", path, errors)), I(Int(item, "penetrationCap", path, errors)),
+                B(Bool(item, "enabled", path, errors))
+            });
+        }
+        if (pack.ProtectionRows.Count == 0) errors.Add("threat_protection: no rows");
     }
 
     private static void ReadLegacy(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
