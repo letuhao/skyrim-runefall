@@ -1215,3 +1215,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - 262 English strings, unique/non-empty/balanced placeholders; new English string table gate.
 - Static gates 10/10; batch 38/38. English-only v1 policy.
+
+
+## R6.1 compatibility test - PASS (bounded) (2026-10-28 11:28-11:32)
+
+- DiabloRim 1.0.7 + SPID/KID/SkyPatcher in J: test env; all smoke paths PASS; no crash.
+- Full 3,700-mod MO2 profile not run (user-side); limitation recorded.

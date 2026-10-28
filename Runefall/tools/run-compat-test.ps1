@@ -132,7 +132,7 @@ try {
     $null = Invoke-Mcp 'execute_console_command' @{ command = 'player.placeatme 0010FDE6 1' }
     Add-Check 'Container path still runs' (Wait-Log 'container: generated' 20) ''
     $null = Invoke-Mcp 'execute_console_command' @{ command = 'player.placeatme 000EBC2D 1' }
-    Add-Check 'Actor path still runs' (Wait-Log 'actor: rank \d+ buff applied' 20) ''
+    Add-Check 'Actor path still runs' (Wait-Log 'actor-packager: package .* applied once' 20) ''
     $questOk = $false
     for ($attempt = 0; $attempt -lt 3 -and -not $questOk; ++$attempt) {
         $null = Tap-Key 67

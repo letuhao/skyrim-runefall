@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "R6.1",
-  "updatedAt": "2026-10-28T04:28:45.109Z",
+  "currentSlice": "R6.2",
+  "updatedAt": "2026-10-28T04:33:07.219Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -1044,11 +1044,29 @@
       "id": "R6.1",
       "layer": "L6",
       "slice": "Compatibility matrix",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "target smoke PASS; conflicts documented",
       "depends": "all gameplay",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/r6.1-compat-20261028.md",
+        "build/evidence/compat-DiabloRim-20261028-113214.md",
+        "build/evidence/compat-DiabloRim-20261028-113214-loadorder.txt",
+        "build/evidence/static-gates-20261028-112802.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "clean-save": "PASS",
+        "external-mod": "PASS DiabloRim",
+        "spid": "PASS",
+        "kid": "PASS",
+        "skypatcher": "PASS",
+        "container": "PASS",
+        "actor": "PASS",
+        "quest": "PASS",
+        "rune": "PASS",
+        "no-crash": "PASS",
+        "full-mo2-list": "NOT RUN (user-side)"
+      }
     },
     "R6.2": {
       "id": "R6.2",
@@ -1082,9 +1100,9 @@
     }
   },
   "currentWork": {
-    "slice": "R6.1",
-    "step": "compatibility test",
-    "nextAction": "full MO2 MantrasOfMara compatibility run, OWL/SPID/KID conflict check, crash-free load"
+    "slice": "R6.2",
+    "step": "save/uninstall",
+    "nextAction": "save compatibility, clean uninstall, orphan cleanup and reinstall safety"
   },
   "blockers": [],
   "finalRelease": null
