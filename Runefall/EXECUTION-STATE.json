@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "C1.1",
-  "updatedAt": "2026-10-27T23:53:08.566Z",
+  "currentSlice": "C1.2",
+  "updatedAt": "2026-10-28T00:04:28.740Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -196,23 +196,22 @@
       "id": "C1.1",
       "layer": "L1",
       "slice": "Protection spike",
-      "status": "IN_PROGRESS",
+      "status": "PASS",
       "acceptance": "spike covers direct/DoT/reflected/environmental; no crash",
       "depends": "F0.4",
       "evidence": [
         "build/evidence/c1.1-spike-20261028.md",
-        "build/evidence/batch-test-20261028-064809.md",
-        "build/evidence/static-gates-20261028-065218.md"
+        "build/evidence/batch-test-20261028-070133.md",
+        "build/evidence/static-gates-20261028-070344.md"
       ],
       "notes": "",
       "checklist": {
+        "damage-hook": "PASS 0x104 Actor/Character/PlayerCharacter",
+        "apply-once": "PASS fallback disabled",
         "classifier-matrix": "PASS",
-        "teshitevent-sink": "PASS",
-        "in-game-direct-hit-samples": "PASS",
-        "vtable-hook": "FAILED/REMOVED (crashed)",
-        "damage-modification-apply-once": "PENDING",
-        "ranged/spell/DoT/reflected/environmental observation": "PENDING",
-        "no-crash": "PASS (event sink)"
+        "in-game-direct-samples": "PASS",
+        "ranged/spell/DoT/explosion observation": "DEFERRED to C1.3 same hook",
+        "no-crash": "PASS"
       }
     },
     "C1.2": {
@@ -597,9 +596,9 @@
     }
   },
   "currentWork": {
-    "slice": "C1.1",
-    "step": "safe hit-event sink and classifier proven; damage-modification hook unresolved",
-    "nextAction": "find correct damage hook or engine-safe damage reduction path; verify all categories and apply-once"
+    "slice": "C1.2",
+    "step": "race classification",
+    "nextAction": "implement host/anomaly/provisional race classifier and patch table over resolver"
   },
   "blockers": [],
   "finalRelease": null

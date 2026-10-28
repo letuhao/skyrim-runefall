@@ -945,3 +945,16 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
   Crash logs: crash-2026-10-27-23-30-31.log, crash-2026-10-27-23-38-01.log.
 - C1.1 remains IN_PROGRESS: damage modification/apply-once and ranged/spell/DoT/explosion
   observation are still required.
+
+
+## C1.1 threat-protection spike - PASS (2026-10-28 06:30-07:05)
+
+- Corrected HandleHealthDamage vfunc index to 0x104 (non-VR) / 0x106 (VR); hooks installed on
+  Actor, Character and PlayerCharacter.
+- IDs captured before original; original called; recorded by FormID; TESHitEvent fallback disabled
+  when hook installs (apply-once).
+- In-game direct damage samples: player 25, wolf 13; no duplicate/freezing.
+- Classifier self-test covers Direct/DoT/Reflected/Environmental/Invalid.
+- Batch 22/22 PASS, no crash: build/evidence/batch-test-20261028-070133.md.
+- Static gates 9/9 PASS: build/evidence/static-gates-20261028-070344.md.
+- Prior 0x68 attempt crashed and was removed; no unsafe hook remains.

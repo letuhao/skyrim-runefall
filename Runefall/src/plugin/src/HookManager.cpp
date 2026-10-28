@@ -50,6 +50,8 @@ namespace Runefall
 				if (!a_event)
 					return RE::BSEventNotifyControl::kContinue;
 				g_damageEvents.fetch_add(1);
+				if (!DamagePipeline::Get().HitEventFallback())
+					return RE::BSEventNotifyControl::kContinue;
 				const auto target = a_event->target ? a_event->target->GetFormID() : 0;
 				const auto attacker = a_event->cause ? a_event->cause->GetFormID() : 0;
 				DamagePipeline::Get().Record(target, attacker, 1.0f, kDamageFlagNone);
@@ -270,6 +272,10 @@ namespace Runefall
 		holder->AddEventSink<RE::TESQuestStageEvent>(&g_questSink);
 		g_load3dInstalled.store(InstallLoad3DHooks());
 		logger::info("damage-pipeline: TESHitEvent sink registered (classification spike, no damage mutation)");
+		const auto damageHook = DamagePipeline::Get().Install();
+		DamagePipeline::Get().SetHitEventFallback(!damageHook);
+		if (!damageHook)
+			logger::warn("hooks: HandleHealthDamage pipeline disabled; hit sink only");
 		logger::info("hooks: event sinks registered (container/menu/cell/object/reset/quest)");
 	}
 

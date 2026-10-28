@@ -147,6 +147,7 @@ $activation = if ($logText -match 'gameplay activation scheduled in (\d+) second
 Add-Check 'Gameplay activation scheduled' ($activation -ge 0) "delay=$activation sec"
 Add-Check 'Gameplay ready' (Wait-LogPattern 'gameplay-ready=true' 12) ''
 Add-Check 'Damage event sink' (Wait-LogPattern 'damage-pipeline: TESHitEvent sink registered' 10) ''
+Add-Check 'Damage hook installed' (Wait-LogPattern 'damage-pipeline: installed HandleHealthDamage hooks' 10) ''
 Add-Check 'Load3D hooks installed' ($logText -match 'Load3D vtable hooks installed') ''
 Add-Check 'Stage ladder loaded' ($logText -match 'stage-engine: loaded 100 stages, 10 tiers') ''
 

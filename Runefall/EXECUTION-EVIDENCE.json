@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-27T23:53:08.570Z",
+  "updatedAt": "2026-10-28T00:04:28.744Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -187,6 +187,27 @@
       "slice": "C1.1",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-065218.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "C1.1",
+      "kind": "spike",
+      "path": "build/evidence/c1.1-spike-20261028.md",
+      "result": "PASS",
+      "detail": "HandleHealthDamage 0x104 hook; apply-once; direct samples; no crash"
+    },
+    {
+      "slice": "C1.1",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-070133.md",
+      "result": "PASS",
+      "detail": "22/22; damage hook installed"
+    },
+    {
+      "slice": "C1.1",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-070344.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

@@ -95,8 +95,8 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
 - F0.8 PASS: manual/automatic cache rescan + delayed startup scan (configurable, 600s prod/1s test).
 - F0.9 PASS: JSON-only data tree (0 CSV, 30 JSON), runtime JSON, batch 21/21, release verifier PASS.
 - L0 foundation complete (F0.1-F0.9).
-- C1.1 partial: TESHitEvent sink + classifier proven; unsafe vtable damage hook crashed and was removed.
-- Next: solve damage-modification hook safely or choose an engine-safe protection path.
+- C1.1 PASS: HandleHealthDamage 0x104 hook on Actor/Character/PlayerCharacter, apply-once, direct samples; batch 22/22.
+- Next: C1.2 race classification.
 
 ## Next step
 

@@ -25,6 +25,10 @@ namespace Runefall
 	public:
 		static DamagePipeline& Get();
 
+		[[nodiscard]] bool Install();
+		[[nodiscard]] bool Installed() const noexcept { return installed; }
+		void SetHitEventFallback(bool a_enabled) noexcept { hitEventFallback.store(a_enabled); }
+		[[nodiscard]] bool HitEventFallback() const noexcept { return hitEventFallback.load(); }
 		void Record(RE::FormID a_target, RE::FormID a_attacker, float a_damage, std::uint16_t a_flags = kDamageFlagNone);
 
 		[[nodiscard]] static DamageCategory Classify(RE::FormID a_target, RE::FormID a_attacker, float a_damage, std::uint16_t a_flags);
@@ -38,6 +42,8 @@ namespace Runefall
 		[[nodiscard]] std::uint32_t InvalidSamples() const noexcept { return invalidSamples; }
 
 	private:
+		bool installed = false;
+		std::atomic_bool hitEventFallback{ true };
 		std::atomic<std::uint32_t> samples{ 0 };
 		std::atomic<std::uint32_t> directSamples{ 0 };
 		std::atomic<std::uint32_t> dotSamples{ 0 };
