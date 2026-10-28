@@ -1,5 +1,10 @@
 # VALIDATION - Runefall
 
+STATUS: v0.2 remediation — S0 truth reset — audit in progress — NOT RELEASED.
+
+The historical PASS entries below are baseline evidence only and do NOT establish current
+completion. The 2026-10-28 audit found 7 PASS / 30 PARTIAL / 11 FAIL; see build/audit/.
+
 Evidence discipline: a claim is only PASS with a command output, log line, file hash or
 in-game observation recorded here. Structural validation is not runtime confirmation.
 

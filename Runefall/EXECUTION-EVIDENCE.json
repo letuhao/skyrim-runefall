@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T04:45:49.113Z",
+  "updatedAt": "2026-10-28T08:58:49.733Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -1029,6 +1029,34 @@
       "path": "build/evidence/release-verify-20261028-114412.md",
       "result": "PASS",
       "detail": "Runefall-0.1.0.zip sha256 27241B9D...F2"
+    },
+    {
+      "slice": "AUDIT",
+      "kind": "baseline",
+      "path": "build/audit/plan-gaps.md",
+      "result": "BASELINE",
+      "detail": "2026-10-28 audit: F0-C1-W2 4 PASS/17 PARTIAL/3 FAIL"
+    },
+    {
+      "slice": "AUDIT",
+      "kind": "baseline",
+      "path": "build/audit/runtime-gaps.md",
+      "result": "BASELINE",
+      "detail": "2026-10-28 audit: A3-R6 3 PASS/13 PARTIAL/8 FAIL"
+    },
+    {
+      "slice": "AUDIT",
+      "kind": "retraction",
+      "path": "RELEASE-READINESS.md",
+      "result": "RETRACTED",
+      "detail": "prior 48/48 PASS and release claim invalidated"
+    },
+    {
+      "slice": "S0",
+      "kind": "spec-audit",
+      "path": "build/audit/S0-spec-audit-5.md",
+      "result": "APPROVED",
+      "detail": "revision 5 approved by independent spec auditor"
     }
   ]
 }

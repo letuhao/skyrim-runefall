@@ -1,39 +1,27 @@
-# Runefall - internal release candidate status (2026-10-28)
+# Runefall - release readiness
 
-**Internal candidate only. No Nexus upload, git tag or push has been made.** The archive below is
-verified locally; publication remains a user decision.
+STATUS: v0.2 remediation — S0 truth reset — audit in progress — NOT RELEASED.
 
-## Version
+**The 0.1.0 internal candidate release claim is RETRACTED (2026-10-28 audit).** No archive in
+build/release is currently release-ready; no Nexus upload, git tag or push has been made.
 
-- CURRENT.txt: Runefall 0.1.0
-- FOMOD info.xml: 0.1.0
-- Archive: build/release/Runefall-0.1.0.zip (714,385 bytes)
-- SHA-256: 27241B9D7D71A6BA00B5262FBE68CD9A570DA4DEDE5478A55B3CC7CF57B940F2
-- Archive verifier: 25/25 PASS, build/evidence/release-verify-20261028-114412.md
+## Current status
 
-## Verified
+- Program: PROGRAM.md v0.2 remediation.
+- Baseline: a50b2b6, audit 7 PASS / 30 PARTIAL / 11 FAIL.
+- Current: S0 truth reset and audit harness, pending independent implementation audit.
+- Release block: version 0.1.0, archive null, verified false, published false, retracted true.
 
-| Area | Evidence |
-|---|---|
-| Static gates (DLL, generator, JSON, strings, host, Papyrus, FOMOD, release tree) | 10/10 PASS, static-gates-20261028-114102 |
-| In-game batch | 38/38 PASS, batch-test-20261028-113956 |
-| Runtime content cache/manifest | W2.7 evidence |
-| Co-save schema 3 + XP/class/skill/endgame fields | CoSave.SelfTest PASS |
-| Compatibility smoke (DiabloRim + SPID/KID/SkyPatcher) | r6.1-compat-20261028 |
-| Uninstall matrix (pack-disable / dll-remove / all-remove) | r6.2-save-uninstall-20261028 |
-| Balance calibration (37.4h, PCR +10 1.16x, +20 1.35x) | r6.3-balance-20261028 |
-| English strings (262 keys) | R5.6 validator + static gate |
+## Verified baseline (not a release)
 
-## Not verified in this environment
+- F0.1, F0.4, C1.4, C1.5, R5.1, R5.4, R5.6 passed the prior audit.
+- Runtime hook 0x104, 49 tables/2,120 rows, schema-1 to schema-3 migration, package/equipment
+  application observed in-game.
+- Everything else is PARTIAL/FAIL per the audit reports in build/audit/.
 
-- Full 3,700-mod Mantras of Mara MO2 profile; only a bounded external-mod smoke test was run.
-- PrismaUI host visual rendering/screenshots; JSON contracts and shell source only.
-- Scripted final-boss kill; endgame completion path is self-test/engine verified.
-- English-only v1; other languages out of scope.
+## Required before any release claim
 
-## Remaining work for public release
-
-- User-side PrismaUI visual acceptance and final media gallery.
-- Full MO2 profile compatibility pass, including OWL/SPID/KID conflict-heavy lists.
-- Final boss encounter content pass and any remaining balance tuning in real play.
-- Publication metadata/push decision.
+- S0-S15 independently audited and PASS.
+- Real PrismaUI host evidence, full MO2 compatibility decision, final-boss/endgame evidence,
+  item identity, co-save v2 migration, damage-category live evidence.
+- Reconciled version/changelog/FOMOD/archive and a fresh release audit.

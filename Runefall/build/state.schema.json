@@ -1,0 +1,524 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "runefall-state-v2.schema.json",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "program",
+    "sourceRevision",
+    "baseline",
+    "overallStatus",
+    "currentSlice",
+    "remediation",
+    "slices",
+    "auditHistory",
+    "release"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": {
+      "const": 2
+    },
+    "program": {
+      "type": "string"
+    },
+    "plan": {
+      "type": "string"
+    },
+    "planVersion": {
+      "type": "string"
+    },
+    "sourceRevision": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{7,40}$"
+    },
+    "baseline": {
+      "type": "object",
+      "required": [
+        "verifiedAt",
+        "reports",
+        "counts",
+        "normalisation"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "verifiedAt": {
+          "type": "string"
+        },
+        "reports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "counts": {
+          "type": "object",
+          "required": [
+            "PASS",
+            "PARTIAL",
+            "FAIL"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "PASS": {
+              "type": "integer"
+            },
+            "PARTIAL": {
+              "type": "integer"
+            },
+            "FAIL": {
+              "type": "integer"
+            }
+          }
+        },
+        "normalisation": {
+          "type": "string"
+        }
+      }
+    },
+    "overallStatus": {
+      "enum": [
+        "IN_PROGRESS",
+        "BLOCKED",
+        "COMPLETE"
+      ]
+    },
+    "currentSlice": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "remediation": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^S([0-9]|1[0-5])$": {
+          "type": "object",
+          "required": [
+            "id",
+            "state",
+            "status",
+            "contract",
+            "specAudit",
+            "implementationAudit",
+            "commit",
+            "evidence",
+            "blockers",
+            "followups"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^S([0-9]|1[0-5])$"
+            },
+            "state": {
+              "enum": [
+                "PENDING",
+                "SPEC_AUDIT",
+                "READY",
+                "IMPLEMENTING",
+                "LOCAL_CHECKS",
+                "AUDIT_PENDING",
+                "PASS",
+                "PARTIAL",
+                "FAIL",
+                "BLOCKED"
+              ]
+            },
+            "status": {
+              "enum": [
+                "PASS",
+                "PARTIAL",
+                "FAIL",
+                "NOT_STARTED",
+                "BLOCKED"
+              ]
+            },
+            "contract": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "required": [
+                "path",
+                "sha256"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "sha256": {
+                  "type": "string"
+                }
+              }
+            },
+            "specAudit": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "required": [
+                "path",
+                "sha256",
+                "verdict"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "sha256": {
+                  "type": "string"
+                },
+                "verdict": {
+                  "enum": [
+                    "PASS",
+                    "PARTIAL",
+                    "FAIL",
+                    "BLOCKED",
+                    "APPROVED",
+                    "REJECTED"
+                  ]
+                },
+                "recordCommit": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "subjectCommit": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "implementationAudit": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "required": [
+                "path",
+                "sha256",
+                "verdict"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "sha256": {
+                  "type": "string"
+                },
+                "verdict": {
+                  "enum": [
+                    "PASS",
+                    "PARTIAL",
+                    "FAIL",
+                    "BLOCKED",
+                    "APPROVED",
+                    "REJECTED"
+                  ]
+                },
+                "recordCommit": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "subjectCommit": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "commit": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "path",
+                  "sha256",
+                  "kind",
+                  "exists"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "kind": {
+                    "enum": [
+                      "log",
+                      "report",
+                      "code",
+                      "data"
+                    ]
+                  },
+                  "exists": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            },
+            "blockers": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "followups": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        }
+      }
+    },
+    "slices": {
+      "type": "object",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^(F0\\.[1-9]|C1\\.[1-8]|W2\\.[1-7]|A3\\.[1-7]|P4\\.[1-7]|R5\\.[1-6]|R6\\.[1-4])$": {
+          "type": "object",
+          "required": [
+            "id",
+            "layer",
+            "slice",
+            "status",
+            "baselineAudit",
+            "commit",
+            "evidence",
+            "blockers",
+            "followups",
+            "checklist"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "layer": {
+              "type": "string"
+            },
+            "slice": {
+              "type": "string"
+            },
+            "status": {
+              "enum": [
+                "PASS",
+                "PARTIAL",
+                "FAIL",
+                "NOT_STARTED",
+                "BLOCKED"
+              ]
+            },
+            "baselineAudit": {
+              "type": "object",
+              "required": [
+                "reports",
+                "commit"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "reports": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "report",
+                      "verdict",
+                      "sha256"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                      "report": {
+                        "type": "string"
+                      },
+                      "verdict": {
+                        "enum": [
+                          "PASS",
+                          "PARTIAL",
+                          "FAIL"
+                        ]
+                      },
+                      "sha256": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "commit": {
+                  "type": "string"
+                }
+              }
+            },
+            "commit": {
+              "type": "string"
+            },
+            "evidence": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "path",
+                  "sha256",
+                  "kind",
+                  "exists"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "kind": {
+                    "enum": [
+                      "log",
+                      "report",
+                      "code",
+                      "data"
+                    ]
+                  },
+                  "exists": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            },
+            "blockers": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "followups": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            },
+            "checklist": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "required": [
+                  "criterionStatus",
+                  "detail"
+                ],
+                "additionalProperties": false,
+                "properties": {
+                  "criterionStatus": {
+                    "enum": [
+                      "PASS",
+                      "PARTIAL",
+                      "FAIL",
+                      "BLOCKED",
+                      "NOT_RUN",
+                      "NOT_VERIFIED",
+                      "DEFERRED",
+                      "NOT_APPLICABLE"
+                    ]
+                  },
+                  "detail": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "acceptance": {
+              "type": "string"
+            },
+            "depends": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "auditHistory": {
+      "type": "string"
+    },
+    "release": {
+      "type": "object",
+      "required": [
+        "version",
+        "archive",
+        "sha256",
+        "verified",
+        "published",
+        "retracted",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "archive": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "verified": {
+          "type": "boolean"
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "retracted": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

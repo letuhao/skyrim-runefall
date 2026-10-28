@@ -1,0 +1,13 @@
+path=Runefall/build/audit/plan-gaps.md pattern=.gitignore:94:!Runefall/build/audit/**	Runefall/build/audit/plan-gaps.md
+path=Runefall/build/audit/S0-spec-audit-5.md pattern=.gitignore:94:!Runefall/build/audit/**	Runefall/build/audit/S0-spec-audit-5.md
+path=Runefall/build/slices/S0/spec.md pattern=.gitignore:96:!Runefall/build/slices/**	Runefall/build/slices/S0/spec.md
+path=Runefall/build/evidence/S0/audit-gate-positive.log pattern=.gitignore:98:!Runefall/build/evidence/**	Runefall/build/evidence/S0/audit-gate-positive.log
+path=Runefall/build/TRACEABILITY.json pattern=.gitignore:99:!Runefall/build/TRACEABILITY.json	Runefall/build/TRACEABILITY.json
+path=Runefall/build/state.schema.json pattern=.gitignore:100:!Runefall/build/state.schema.json	Runefall/build/state.schema.json
+gitAddDryRun:
+add 'Runefall/build/TRACEABILITY.json'
+add 'Runefall/build/audit/S0-spec-audit-5.md'
+add 'Runefall/build/audit/plan-gaps.md'
+add 'Runefall/build/evidence/S0/audit-gate-positive.log'
+add 'Runefall/build/slices/S0/spec.md'
+add 'Runefall/build/state.schema.json'

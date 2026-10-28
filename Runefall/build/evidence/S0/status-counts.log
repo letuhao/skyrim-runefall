@@ -1,0 +1,6 @@
+schemaVersion 2
+overallStatus IN_PROGRESS
+currentSlice S0
+slices 48
+statusCounts {'PASS': 7, 'PARTIAL': 30, 'FAIL': 11}
+remediation 16

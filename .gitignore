@@ -86,3 +86,15 @@ Runefall 0.*/build/
 # Runefall evidence logs are intentionally tracked
 !Runefall/evidence/
 !Runefall/evidence/**
+
+# Runefall v0.2 governance artifacts (S0) - keep durable
+!Runefall/build/
+Runefall/build/*
+!Runefall/build/audit/
+!Runefall/build/audit/**
+!Runefall/build/slices/
+!Runefall/build/slices/**
+!Runefall/build/evidence/
+!Runefall/build/evidence/**
+!Runefall/build/TRACEABILITY.json
+!Runefall/build/state.schema.json

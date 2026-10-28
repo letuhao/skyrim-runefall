@@ -1,0 +1,980 @@
+{
+  "schemaVersion": 1,
+  "program": "Runefall v0.2 Remediation Program",
+  "planPath": "SPECS/ULTIMATE-PLAN.md",
+  "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+  "expectedSliceCount": 48,
+  "rowCount": 48,
+  "rows": [
+    {
+      "sliceId": "F0.1",
+      "layer": "L0",
+      "title": "Ladder audit fixes (first slice)",
+      "planRow": "| F0.1 | L0 | Ladder audit fixes (first slice) | fix difficulty default, full RequestStage ABI, curve/legacy load, validation, actor-stage loot bridge, co-save v3 ladder state, retire old tier keywords, generator validator, host data/benchmark | audit blockers closed, 20+ self-tests, batch PASS, stage drives actor loot ilvl, no crash; legacy rank tables remain a documented shim until A3.1 |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PASS",
+      "acceptanceClauses": [
+        "audit blockers closed",
+        "20+ self-tests",
+        "batch PASS",
+        "stage drives actor loot ilvl",
+        "no crash",
+        "legacy rank tables remain a documented shim until A3.1"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/batch-test-20261028-050132.md",
+        "build/evidence/static-gates-20261028-050307.md",
+        "build/evidence/f0.1-evidence-20261028.md",
+        "build/evidence/batch-test-20261028-050606.md"
+      ],
+      "followupSlice": "S4",
+      "currentStatus": "PASS"
+    },
+    {
+      "sliceId": "F0.2",
+      "layer": "L0",
+      "title": "Freeze JSON schema",
+      "planRow": "| F0.2 | L0 | Freeze JSON schema | one JSON Schema per entity; pack manifest; versioning; examples | all current content represented; schema validation passes; no CSV authoring |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "all current content represented",
+        "schema validation passes",
+        "no CSV authoring"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/static-gates-20261028-051731.md",
+        "content/schema/validate_content.py"
+      ],
+      "followupSlice": "S4",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "F0.3",
+      "layer": "L0",
+      "title": "JSON content pipeline",
+      "planRow": "| F0.3 | L0 | JSON content pipeline | generator CLI validate/build/preview; JSON to ESP/data/manifest; deterministic IDs | base pack builds from JSON; invalid pack fails with path/line |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "base pack builds from JSON",
+        "invalid pack fails with path/line"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/static-gates-20261028-052338.md",
+        "build/evidence/batch-test-20261028-052420.md"
+      ],
+      "followupSlice": "S4",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "F0.4",
+      "layer": "L0",
+      "title": "JSON runtime loader",
+      "planRow": "| F0.4 | L0 | JSON runtime loader | DataStore JSON reader; table registry; schema version checks; no CSV code path | runtime loads JSON; missing/corrupt table fails closed |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PASS",
+      "acceptanceClauses": [
+        "runtime loads JSON",
+        "missing/corrupt table fails closed"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/static-gates-20261028-053119.md",
+        "build/evidence/batch-test-20261028-053201.md"
+      ],
+      "followupSlice": "S4",
+      "currentStatus": "PASS"
+    },
+    {
+      "sliceId": "F0.5",
+      "layer": "L0",
+      "title": "Co-save v3",
+      "planRow": "| F0.5 | L0 | Co-save v3 | section registry; ladder state; migration v2 to v3; caps/truncation; downgrade log | old save loads; corruption rejected; save size budget |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "old save loads",
+        "corruption rejected",
+        "save size budget"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/batch-test-20261028-053201.md"
+      ],
+      "followupSlice": "S1",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "F0.6",
+      "layer": "L0",
+      "title": "Host core and tests",
+      "planRow": "| F0.6 | L0 | Host core and tests | RunefallCoreHost target; Catch2; benchmarks; no-allocation gates; static schema tests | host CI PASS; load/lookup budgets measured |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "host CI PASS",
+        "load/lookup budgets measured"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/static-gates-20261028-054252.md"
+      ],
+      "followupSlice": "S14",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "F0.7",
+      "layer": "L0",
+      "title": "Runtime content resolver",
+      "planRow": "| F0.7 | L0 | Runtime content resolver | identity/role resolver; deterministic fallback; cache; pack override; unknown race path | unknown race resolves; repeatable; cache reload; no crash |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "FAIL",
+      "acceptanceClauses": [
+        "unknown race resolves",
+        "repeatable",
+        "cache reload",
+        "no crash"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/batch-test-20261028-055842.md",
+        "build/evidence/static-gates-20261028-060036.md",
+        "J:/SkyrimTest/1.6.1170/Data/Runefall/runtime"
+      ],
+      "followupSlice": "S6",
+      "currentStatus": "FAIL"
+    },
+    {
+      "sliceId": "F0.8",
+      "layer": "L0",
+      "title": "Diagnostics and rescan",
+      "planRow": "| F0.8 | L0 | Diagnostics and rescan | read-only snapshot; settings Rescan button; automatic rescan on pack/version change; delayed startup scan | manual and automatic rescan work; no load spike |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "manual and automatic rescan work",
+        "no load spike"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/batch-test-20261028-061918.md",
+        "build/evidence/static-gates-20261028-062043.md"
+      ],
+      "followupSlice": "S6",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "F0.9",
+      "layer": "L0",
+      "title": "POC JSON migration",
+      "planRow": "| F0.9 | L0 | POC JSON migration | convert all current CSV content/balance to JSON; keep POC behavior; deprecate CSV | generator and runtime both use JSON only; regression PASS |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "FAIL",
+      "acceptanceClauses": [
+        "generator and runtime both use JSON only",
+        "regression PASS"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/static-gates-20261028-062414.md",
+        "build/evidence/batch-test-20261028-062459.md",
+        "build/evidence/release-verify-20261028-062621.md"
+      ],
+      "followupSlice": "S4",
+      "currentStatus": "FAIL"
+    },
+    {
+      "sliceId": "C1.1",
+      "layer": "L1",
+      "title": "Protection spike",
+      "planRow": "| C1.1 | L1 | Protection spike | damage hook proof; category matrix; apply-once; pipeline position; perf | spike covers direct/DoT/reflected/environmental; no crash |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "spike covers direct/DoT/reflected/environmental",
+        "no crash"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/c1.1-spike-20261028.md",
+        "build/evidence/batch-test-20261028-070133.md",
+        "build/evidence/static-gates-20261028-070344.md"
+      ],
+      "followupSlice": "S3",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "C1.2",
+      "layer": "L1",
+      "title": "Roles and race classification",
+      "planRow": "| C1.2 | L1 | Roles and race classification | primary role + tags; host/anomaly/provisional; unknown fallback; patch table | vanilla/DLC mapped; modded race defaults; no content gap |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "vanilla/DLC mapped",
+        "modded race defaults",
+        "no content gap"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/c1.2-race-classification-20261028.md",
+        "build/evidence/batch-test-20261028-071136.md",
+        "build/evidence/static-gates-20261028-071330.md"
+      ],
+      "followupSlice": "S4",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "C1.3",
+      "layer": "L1",
+      "title": "Threat protection",
+      "planRow": "| C1.3 | L1 | Threat protection | 70% cap, 3%/stage, 5% floor, 50% DoT, reflected/environmental bypass, penetration; player/anomaly policy | staged fights respect gap; apply-once; no crash |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "staged fights respect gap",
+        "apply-once",
+        "no crash"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/c1.3-threat-protection-20261028.md",
+        "build/evidence/batch-test-20261028-072114.md",
+        "build/evidence/static-gates-20261028-072307.md"
+      ],
+      "followupSlice": "S3",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "C1.4",
+      "layer": "L1",
+      "title": "NPC packages",
+      "planRow": "| C1.4 | L1 | NPC packages | spawn stage + role package + 2-4 perks + gear/outfit + loot; light archetype tag; no deep sim | humanoid/creature packages apply once; gear remains vanilla-lootable |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PASS",
+      "acceptanceClauses": [
+        "humanoid/creature packages apply once",
+        "gear remains vanilla-lootable"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/c1.4-enemy-packages-20261028.md",
+        "build/evidence/batch-test-20261028-073859.md",
+        "build/evidence/static-gates-20261028-074023.md"
+      ],
+      "followupSlice": "S12",
+      "currentStatus": "PASS"
+    },
+    {
+      "sliceId": "C1.5",
+      "layer": "L1",
+      "title": "Actor equipment distribution",
+      "planRow": "| C1.5 | L1 | Actor equipment distribution | equipment sets/outfits; random archetype variation; toggles/cleanup; performance caps | selected actors get gear/perks; toggle safe; save/load safe |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PASS",
+      "acceptanceClauses": [
+        "selected actors get gear/perks",
+        "toggle safe",
+        "save/load safe"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/c1.5-equipment-20261028.md",
+        "build/evidence/batch-test-20261028-081220.md",
+        "build/evidence/batch-test-20261028-081054.md",
+        "build/evidence/static-gates-20261028-081340.md"
+      ],
+      "followupSlice": "S12",
+      "currentStatus": "PASS"
+    },
+    {
+      "sliceId": "C1.6",
+      "layer": "L1",
+      "title": "Player attributes",
+      "planRow": "| C1.6 | L1 | Player attributes | 9 attributes; 3 points/stage; breakthroughs 9/12/15...; effects and caps; respec | attribute budget data-driven; PCR follows gear/class |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "attribute budget data-driven",
+        "PCR follows gear/class"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/c1.6-player-attributes-20261028.md",
+        "build/evidence/batch-test-20261028-082144.md",
+        "build/evidence/static-gates-20261028-082304.md"
+      ],
+      "followupSlice": "S6",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "C1.7",
+      "layer": "L1",
+      "title": "Combat ratings",
+      "planRow": "| C1.7 | L1 | Combat ratings | PCR/NCR/RCR; TTK/TTD/Q; Skyrim and Action pace profiles; both number+label; data JSON | ratings reproducible; formulas match data; display profiles |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "ratings reproducible",
+        "formulas match data",
+        "display profiles"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/c1.7-combat-ratings-20261028.md",
+        "build/evidence/batch-test-20261028-082649.md",
+        "build/evidence/static-gates-20261028-082821.md"
+      ],
+      "followupSlice": "S6",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "C1.8",
+      "layer": "L1",
+      "title": "Player attacker/penetration",
+      "planRow": "| C1.8 | L1 | Player attacker/penetration | player stage input; attack channel; penetration sources/cap; mage channel | warrior/mage both penetrate; player no protection default |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "warrior/mage both penetrate",
+        "player no protection default"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/c1.8-player-penetration-20261028.md",
+        "build/evidence/batch-test-20261028-083300.md",
+        "build/evidence/static-gates-20261028-083423.md"
+      ],
+      "followupSlice": "S6",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "W2.1",
+      "layer": "L2",
+      "title": "World bands",
+      "planRow": "| W2.1 | L2 | World bands | encounter zones/cells/regions to stage bands; content bands; exclusions | data drives area stage; vanilla zones respected |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "data drives area stage",
+        "vanilla zones respected"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/w2.1-world-bands-20261028.md",
+        "build/evidence/batch-test-20261028-084146.md",
+        "build/evidence/static-gates-20261028-084316.md"
+      ],
+      "followupSlice": "S12",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "W2.2",
+      "layer": "L2",
+      "title": "Spawn and encounter system",
+      "planRow": "| W2.2 | L2 | Spawn and encounter system | spawn rate tables; encounter classes; caps/cooldowns; identity/cleanup; safe locations | spawns follow data; reload-safe; no city/quest leaks |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "FAIL",
+      "acceptanceClauses": [
+        "spawns follow data",
+        "reload-safe",
+        "no city/quest leaks"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/w2.2-encounters-20261028.md",
+        "build/evidence/batch-test-20261028-085704.md",
+        "build/evidence/static-gates-20261028-085836.md"
+      ],
+      "followupSlice": "S12",
+      "currentStatus": "FAIL"
+    },
+    {
+      "sliceId": "W2.3",
+      "layer": "L2",
+      "title": "Rare high-stage spawns",
+      "planRow": "| W2.3 | L2 | Rare high-stage spawns | rate-table high-stage chance; condition hooks reserved for packs | low-level zone can rarely spawn high stage; rate tunable |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "low-level zone can rarely spawn high stage",
+        "rate tunable"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/w2.3-rare-spawns-20261028.md",
+        "build/evidence/batch-test-20261028-090700.md",
+        "build/evidence/static-gates-20261028-090820.md"
+      ],
+      "followupSlice": "S12",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "W2.4",
+      "layer": "L2",
+      "title": "Hunt contracts",
+      "planRow": "| W2.4 | L2 | Hunt contracts | player-called hunts; hunt identity; reward/evidence; safety | hunts work end-to-end; no duplicate rewards |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "hunts work end-to-end",
+        "no duplicate rewards"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/w2.4-hunt-contracts-20261028.md",
+        "build/evidence/batch-test-20261028-091456.md",
+        "build/evidence/static-gates-20261028-091637.md"
+      ],
+      "followupSlice": "S12",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "W2.5",
+      "layer": "L2",
+      "title": "Bosses and unique actors",
+      "planRow": "| W2.5 | L2 | Bosses and unique actors | fixed-stage overrides; unique FormID refs allowed; boss packages; quest bands | authored bosses at designed stage; unique refs resolve |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "authored bosses at designed stage",
+        "unique refs resolve"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/w2.5-bosses-20261028.md",
+        "build/evidence/batch-test-20261028-092715.md",
+        "build/evidence/static-gates-20261028-092836.md"
+      ],
+      "followupSlice": "S12",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "W2.6",
+      "layer": "L2",
+      "title": "Anomaly ladder",
+      "planRow": "| W2.6 | L2 | Anomaly ladder | families, curves, tier labels, anomaly encounters, cores/trophies | anomaly content works without host protection |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "anomaly content works without host protection"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/w2.6-anomaly-20261028.md",
+        "build/evidence/batch-test-20261028-094437.md",
+        "build/evidence/static-gates-20261028-094603.md"
+      ],
+      "followupSlice": "S12",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "W2.7",
+      "layer": "L2",
+      "title": "Runtime cache lifecycle",
+      "planRow": "| W2.7 | L2 | Runtime cache lifecycle | race-role JSON cache; pack/version invalidation; manual rescan; old cache migration | cache correct after pack change; rescan safe |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "cache correct after pack change",
+        "rescan safe"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/w2.7-runtime-cache-20261028.md",
+        "build/evidence/batch-test-20261028-094909.md",
+        "build/evidence/static-gates-20261028-095152.md"
+      ],
+      "followupSlice": "S12",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "A3.1",
+      "layer": "L3",
+      "title": "Ladder-driven loot",
+      "planRow": "| A3.1 | L3 | Ladder-driven loot | loot tables by stage/ilvl; containers/quests/bosses; budgets | loot follows stage and data; no hardcoded values |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "loot follows stage and data",
+        "no hardcoded values"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/a3.1-loot-tables-20261028.md",
+        "build/evidence/batch-test-20261028-094909.md",
+        "build/evidence/static-gates-20261028-095413.md"
+      ],
+      "followupSlice": "S5",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "A3.2",
+      "layer": "L3",
+      "title": "Materials and tokens",
+      "planRow": "| A3.2 | L3 | Materials and tokens | real MISC items; family/grade parts; fallback tokens; inventory ledger | materials are items; unknown roles get tokens |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "materials are items",
+        "unknown roles get tokens"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/a3.2-materials-20261028.md",
+        "build/evidence/batch-test-20261028-095912.md",
+        "build/evidence/static-gates-20261028-100032.md"
+      ],
+      "followupSlice": "S5",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "A3.3",
+      "layer": "L3",
+      "title": "Runtime item generation",
+      "planRow": "| A3.3 | L3 | Runtime item generation | item instances from base forms; stats/affixes/runewords; no new item records for ordinary crafting | generated item persists; visuals/name correct; no crash |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "FAIL",
+      "acceptanceClauses": [
+        "generated item persists",
+        "visuals/name correct",
+        "no crash"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/a3.3-crafting-20261028.md",
+        "build/evidence/batch-test-20261028-095912.md",
+        "build/evidence/static-gates-20261028-100032.md"
+      ],
+      "followupSlice": "S7",
+      "currentStatus": "FAIL"
+    },
+    {
+      "sliceId": "A3.4",
+      "layer": "L3",
+      "title": "Crafting system",
+      "planRow": "| A3.4 | L3 | Crafting system | MH/Last Epoch style destroy-and-create; recipes/stations/currencies; validation | full crafting loop; transaction-safe |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "full crafting loop",
+        "transaction-safe"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/a3.4-rune-gear-20261028.md",
+        "build/evidence/batch-test-20261028-095912.md",
+        "build/evidence/static-gates-20261028-100032.md"
+      ],
+      "followupSlice": "S5",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "A3.5",
+      "layer": "L3",
+      "title": "Rune equipment and inventory",
+      "planRow": "| A3.5 | L3 | Rune equipment and inventory | rune gear generation; sockets/runewords; rune inventory UI data | rune gear works; inventory data stable |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "rune gear works",
+        "inventory data stable"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/a3.5-economy-20261028.md",
+        "build/evidence/batch-test-20261028-100626.md",
+        "build/evidence/static-gates-20261028-100744.md"
+      ],
+      "followupSlice": "S7",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "A3.6",
+      "layer": "L3",
+      "title": "Rune economy and attunement",
+      "planRow": "| A3.6 | L3 | Rune economy and attunement | rune XP, wallet, attunement, respec, glob mirrors | progression with ladder; save-safe |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "progression with ladder",
+        "save-safe"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/a3.6-compatibility-20261028.md",
+        "build/evidence/batch-test-20261028-100626.md",
+        "build/evidence/static-gates-20261028-100744.md"
+      ],
+      "followupSlice": "S5",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "A3.7",
+      "layer": "L3",
+      "title": "Loot authority compat",
+      "planRow": "| A3.7 | L3 | Loot authority compat | additive/takeover modes; OWL and major loot mods; pricing | compatibility smoke PASS; no crash |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "FAIL",
+      "acceptanceClauses": [
+        "compatibility smoke PASS",
+        "no crash"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/a3.7-loot-acceptance-20261028.md",
+        "build/evidence/batch-test-20261028-100626.md",
+        "build/evidence/static-gates-20261028-100744.md"
+      ],
+      "followupSlice": "S13",
+      "currentStatus": "FAIL"
+    },
+    {
+      "sliceId": "P4.1",
+      "layer": "L4",
+      "title": "Rune Level progression",
+      "planRow": "| P4.1 | L4 | Rune Level progression | XP gauge; kills/potions/quests hooks; 40-hour pacing; tier breakthroughs | 40-hour targets data-driven; breakthrough works |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "40-hour targets data-driven",
+        "breakthrough works"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/p4.1-player-rank-20261028.md",
+        "build/evidence/batch-test-20261028-101642.md",
+        "build/evidence/static-gates-20261028-101809.md"
+      ],
+      "followupSlice": "S8",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "P4.2",
+      "layer": "L4",
+      "title": "9 classes",
+      "planRow": "| P4.2 | L4 | 9 classes | class identities, tiers, advantages, class quests, respec | 9 classes data-driven; class build differs |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "FAIL",
+      "acceptanceClauses": [
+        "9 classes data-driven",
+        "class build differs"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/p4.2-classes-20261028.md",
+        "build/evidence/batch-test-20261028-102643.md",
+        "build/evidence/static-gates-20261028-102804.md"
+      ],
+      "followupSlice": "S8",
+      "currentStatus": "FAIL"
+    },
+    {
+      "sliceId": "P4.3",
+      "layer": "L4",
+      "title": "Skills and passives",
+      "planRow": "| P4.3 | L4 | Skills and passives | player skill tree; active skills; NPC packages separate; no shared player nodes | builds playable; no NPC skill contamination |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "builds playable",
+        "no NPC skill contamination"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/p4.3-skill-perks-20261028.md",
+        "build/evidence/batch-test-20261028-103144.md",
+        "build/evidence/static-gates-20261028-103304.md"
+      ],
+      "followupSlice": "S8",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "P4.4",
+      "layer": "L4",
+      "title": "Prisma UI foundation",
+      "planRow": "| P4.4 | L4 | Prisma UI foundation | hard dependency; web UI shell; settings/rescan; data bridge | UI loads; read-only snapshot works; no gameplay in UI |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "FAIL",
+      "acceptanceClauses": [
+        "UI loads",
+        "read-only snapshot works",
+        "no gameplay in UI"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/p4.4-prisma-shell-20261028.md",
+        "build/evidence/batch-test-20261028-103943.md",
+        "build/evidence/static-gates-20261028-104102.md"
+      ],
+      "followupSlice": "S9",
+      "currentStatus": "FAIL"
+    },
+    {
+      "sliceId": "P4.5",
+      "layer": "L4",
+      "title": "Character/HUD/indicators",
+      "planRow": "| P4.5 | L4 | Character/HUD/indicators | character page; PCR/NCR labels/numbers; HUD indicators | ratings display correct; HUD optional/low cost |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "FAIL",
+      "acceptanceClauses": [
+        "ratings display correct",
+        "HUD optional/low cost"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/p4.5-hud-20261028.md",
+        "build/evidence/batch-test-20261028-104512.md",
+        "build/evidence/static-gates-20261028-104637.md"
+      ],
+      "followupSlice": "S9",
+      "currentStatus": "FAIL"
+    },
+    {
+      "sliceId": "P4.6",
+      "layer": "L4",
+      "title": "Breakthrough/class menus",
+      "planRow": "| P4.6 | L4 | Breakthrough/class menus | breakthrough UI; class/tier/advantage UI; materials/raid gates | menus complete; no Papyrus polling |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "FAIL",
+      "acceptanceClauses": [
+        "menus complete",
+        "no Papyrus polling"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/p4.6-menus-20261028.md",
+        "build/evidence/batch-test-20261028-104930.md",
+        "build/evidence/static-gates-20261028-105049.md"
+      ],
+      "followupSlice": "S9",
+      "currentStatus": "FAIL"
+    },
+    {
+      "sliceId": "P4.7",
+      "layer": "L4",
+      "title": "Codex/inspect/tooltip",
+      "planRow": "| P4.7 | L4 | Codex/inspect/tooltip | anomaly codex; item inspect; tooltip slices; rune details | pages work; data from registry only |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "FAIL",
+      "acceptanceClauses": [
+        "pages work",
+        "data from registry only"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/p4.7-ui-acceptance-20261028.md",
+        "build/evidence/batch-test-20261028-104930.md",
+        "build/evidence/static-gates-20261028-105049.md"
+      ],
+      "followupSlice": "S9",
+      "currentStatus": "FAIL"
+    },
+    {
+      "sliceId": "R5.1",
+      "layer": "L5",
+      "title": "Pack tooling",
+      "planRow": "| R5.1 | L5 | Pack tooling | pack format, build/preview, versioning, dependency checks, conflict diagnostics | base + test pack; no load-order language |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PASS",
+      "acceptanceClauses": [
+        "base + test pack",
+        "no load-order language"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/r5.1-pack-format-20261028.md",
+        "build/evidence/batch-test-20261028-104930.md",
+        "build/evidence/static-gates-20261028-105049.md"
+      ],
+      "followupSlice": "S13",
+      "currentStatus": "PASS"
+    },
+    {
+      "sliceId": "R5.2",
+      "layer": "L5",
+      "title": "Base content packs",
+      "planRow": "| R5.2 | L5 | Base content packs | Skyrim + official DLC foundation packs; races/roles/encounters/loot | base world fully staged; no gaps |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "base world fully staged",
+        "no gaps"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/r5.2-base-packs-20261028.md",
+        "build/evidence/batch-test-20261028-105557.md",
+        "build/evidence/static-gates-20261028-105717.md"
+      ],
+      "followupSlice": "S13",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "R5.3",
+      "layer": "L5",
+      "title": "Famous-mod packs",
+      "planRow": "| R5.3 | L5 | Famous-mod packs | pack per supported mod; race/role/loot additions; patchable overrides | supported mod smoke PASS |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "FAIL",
+      "acceptanceClauses": [
+        "supported mod smoke PASS"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/r5.3-mod-packs-20261028.md",
+        "build/evidence/batch-test-20261028-110825.md",
+        "build/evidence/static-gates-20261028-110945.md"
+      ],
+      "followupSlice": "S13",
+      "currentStatus": "FAIL"
+    },
+    {
+      "sliceId": "R5.4",
+      "layer": "L5",
+      "title": "Agent skills and criteria",
+      "planRow": "| R5.4 | L5 | Agent skills and criteria | content skills per entity; criteria rules; generator prompts; validation loop | agent pack produced, validated, built, tested |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PASS",
+      "acceptanceClauses": [
+        "agent pack produced",
+        "validated",
+        "built",
+        "tested"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/r5.4-agent-skills-20261028.md",
+        "build/evidence/batch-test-20261028-111316.md",
+        "build/evidence/static-gates-20261028-111422.md"
+      ],
+      "followupSlice": "S13",
+      "currentStatus": "PASS"
+    },
+    {
+      "sliceId": "R5.5",
+      "layer": "L5",
+      "title": "Endgame, raids, quests",
+      "planRow": "| R5.5 | L5 | Endgame, raids, quests | raid bosses; quests; endgame maps; dungeon hunts; unique rewards | endgame loop complete |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "endgame loop complete"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/r5.5-endgame-20261028.md",
+        "build/evidence/batch-test-20261028-112209.md",
+        "build/evidence/static-gates-20261028-112337.md"
+      ],
+      "followupSlice": "S13",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "R5.6",
+      "layer": "L5",
+      "title": "Localization structure",
+      "planRow": "| R5.6 | L5 | Localization structure | English only; string keys; optional language packs reserved | all player text localized by key; no unsupported language claim |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PASS",
+      "acceptanceClauses": [
+        "all player text localized by key",
+        "no unsupported language claim"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/r5.6-localization-20261028.md",
+        "build/evidence/static-gates-20261028-112802.md",
+        "build/evidence/batch-test-20261028-112209.md"
+      ],
+      "followupSlice": "S13",
+      "currentStatus": "PASS"
+    },
+    {
+      "sliceId": "R6.1",
+      "layer": "L6",
+      "title": "Compatibility matrix",
+      "planRow": "| R6.1 | L6 | Compatibility matrix | OWL, Worlds Dawn, Fortunate Foes, KYE2, loot/combat mods; load-order profiles | target smoke PASS; conflicts documented |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "target smoke PASS",
+        "conflicts documented"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/r6.1-compat-20261028.md",
+        "build/evidence/compat-DiabloRim-20261028-113214.md",
+        "build/evidence/compat-DiabloRim-20261028-113214-loadorder.txt",
+        "build/evidence/static-gates-20261028-112802.md"
+      ],
+      "followupSlice": "S15",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "R6.2",
+      "layer": "L6",
+      "title": "Save/upgrade/uninstall",
+      "planRow": "| R6.2 | L6 | Save/upgrade/uninstall | old save migration; pack disable; DLL remove; downgrade | all uninstall modes PASS |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "all uninstall modes PASS"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/r6.2-save-uninstall-20261028.md",
+        "build/evidence/uninstall-pack-disable-20261028-113404.md",
+        "build/evidence/uninstall-dll-remove-20261028-113448.md",
+        "build/evidence/uninstall-all-remove-20261028-113533.md",
+        "build/evidence/static-gates-20261028-112802.md"
+      ],
+      "followupSlice": "S15",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "R6.3",
+      "layer": "L6",
+      "title": "Balance calibration",
+      "planRow": "| R6.3 | L6 | Balance calibration | PCR/NCR/TTK/TTD report; 40-hour pacing; pace profiles; playtest tuning | targets met or documented |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "targets met or documented"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/r6.3-balance-20261028.md",
+        "build/evidence/batch-test-20261028-113956.md",
+        "build/evidence/static-gates-20261028-114102.md"
+      ],
+      "followupSlice": "S15",
+      "currentStatus": "PARTIAL"
+    },
+    {
+      "sliceId": "R6.4",
+      "layer": "L6",
+      "title": "Release packaging",
+      "planRow": "| R6.4 | L6 | Release packaging | version; FOMOD; Nexus assets; archive verification; ship gate | ship gate PASS; archive verified |",
+      "planSha256": "0B6CE5BA0190E717EA89E471456B764F8CBCF22D79F92A94665D45E0DA24750A",
+      "baselineStatus": "PARTIAL",
+      "acceptanceClauses": [
+        "ship gate PASS",
+        "archive verified"
+      ],
+      "verification": "Independent slice audit per PROGRAM.md; baseline evidence in state",
+      "evidence": [
+        "build/evidence/r6.4-release-20261028.md",
+        "build/evidence/release-verify-20261028-114412.md",
+        "build/evidence/static-gates-20261028-114102.md",
+        "build/evidence/batch-test-20261028-113956.md"
+      ],
+      "followupSlice": "S15",
+      "currentStatus": "PARTIAL"
+    }
+  ]
+}

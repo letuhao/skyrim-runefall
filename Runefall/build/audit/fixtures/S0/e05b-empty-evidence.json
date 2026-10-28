@@ -1,0 +1,3792 @@
+{
+  "schemaVersion": 2,
+  "program": "Runefall v0.2 Remediation Program",
+  "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
+  "planVersion": "v2",
+  "sourceRevision": "a50b2b6",
+  "baseline": {
+    "verifiedAt": "2026-10-28",
+    "reports": [
+      {
+        "path": "build/audit/plan-gaps.md",
+        "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+      },
+      {
+        "path": "build/audit/runtime-gaps.md",
+        "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+      }
+    ],
+    "counts": {
+      "PASS": 7,
+      "PARTIAL": 30,
+      "FAIL": 11
+    },
+    "normalisation": "UNVERIFIED and PARTIAL/UNVERIFIED -> PARTIAL"
+  },
+  "overallStatus": "IN_PROGRESS",
+  "currentSlice": "S0",
+  "updatedAt": "2026-10-28T09:00:00Z",
+  "remediation": {
+    "S0": {
+      "id": "S0",
+      "state": "IMPLEMENTING",
+      "status": "NOT_STARTED",
+      "contract": {
+        "path": "build/slices/S0/spec.md",
+        "sha256": "D543CCEC5EB18013245DF9F0F55C3A3CDF1DA4ECBBCA164E318CA7EB1D7359A0"
+      },
+      "specAudit": {
+        "path": "build/audit/S0-spec-audit-5.md",
+        "sha256": "A1DA0F2E6305F009F1C51131A20DC995DF0233E765FC0224EAFD9D6F9E72DDED",
+        "verdict": "APPROVED",
+        "recordCommit": null
+      },
+      "implementationAudit": {
+        "path": "build/audit/S0-audit.md",
+        "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "verdict": "PASS",
+        "subjectCommit": "a50b2b6",
+        "recordCommit": null
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/audit/fixtures/S0/empty.log",
+          "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855",
+          "kind": "log",
+          "exists": true
+        }
+      ],
+      "blockers": [],
+      "followups": []
+    },
+    "S1": {
+      "id": "S1",
+      "state": "PENDING",
+      "status": "NOT_STARTED",
+      "contract": null,
+      "specAudit": null,
+      "implementationAudit": null,
+      "commit": null,
+      "evidence": [],
+      "blockers": [],
+      "followups": []
+    },
+    "S2": {
+      "id": "S2",
+      "state": "PENDING",
+      "status": "NOT_STARTED",
+      "contract": null,
+      "specAudit": null,
+      "implementationAudit": null,
+      "commit": null,
+      "evidence": [],
+      "blockers": [],
+      "followups": []
+    },
+    "S3": {
+      "id": "S3",
+      "state": "PENDING",
+      "status": "NOT_STARTED",
+      "contract": null,
+      "specAudit": null,
+      "implementationAudit": null,
+      "commit": null,
+      "evidence": [],
+      "blockers": [],
+      "followups": []
+    },
+    "S4": {
+      "id": "S4",
+      "state": "PENDING",
+      "status": "NOT_STARTED",
+      "contract": null,
+      "specAudit": null,
+      "implementationAudit": null,
+      "commit": null,
+      "evidence": [],
+      "blockers": [],
+      "followups": []
+    },
+    "S5": {
+      "id": "S5",
+      "state": "PENDING",
+      "status": "NOT_STARTED",
+      "contract": null,
+      "specAudit": null,
+      "implementationAudit": null,
+      "commit": null,
+      "evidence": [],
+      "blockers": [],
+      "followups": []
+    },
+    "S6": {
+      "id": "S6",
+      "state": "PENDING",
+      "status": "NOT_STARTED",
+      "contract": null,
+      "specAudit": null,
+      "implementationAudit": null,
+      "commit": null,
+      "evidence": [],
+      "blockers": [],
+      "followups": []
+    },
+    "S7": {
+      "id": "S7",
+      "state": "PENDING",
+      "status": "NOT_STARTED",
+      "contract": null,
+      "specAudit": null,
+      "implementationAudit": null,
+      "commit": null,
+      "evidence": [],
+      "blockers": [],
+      "followups": []
+    },
+    "S8": {
+      "id": "S8",
+      "state": "PENDING",
+      "status": "NOT_STARTED",
+      "contract": null,
+      "specAudit": null,
+      "implementationAudit": null,
+      "commit": null,
+      "evidence": [],
+      "blockers": [],
+      "followups": []
+    },
+    "S9": {
+      "id": "S9",
+      "state": "PENDING",
+      "status": "NOT_STARTED",
+      "contract": null,
+      "specAudit": null,
+      "implementationAudit": null,
+      "commit": null,
+      "evidence": [],
+      "blockers": [],
+      "followups": []
+    },
+    "S10": {
+      "id": "S10",
+      "state": "PENDING",
+      "status": "NOT_STARTED",
+      "contract": null,
+      "specAudit": null,
+      "implementationAudit": null,
+      "commit": null,
+      "evidence": [],
+      "blockers": [],
+      "followups": []
+    },
+    "S11": {
+      "id": "S11",
+      "state": "PENDING",
+      "status": "NOT_STARTED",
+      "contract": null,
+      "specAudit": null,
+      "implementationAudit": null,
+      "commit": null,
+      "evidence": [],
+      "blockers": [],
+      "followups": []
+    },
+    "S12": {
+      "id": "S12",
+      "state": "PENDING",
+      "status": "NOT_STARTED",
+      "contract": null,
+      "specAudit": null,
+      "implementationAudit": null,
+      "commit": null,
+      "evidence": [],
+      "blockers": [],
+      "followups": []
+    },
+    "S13": {
+      "id": "S13",
+      "state": "PENDING",
+      "status": "NOT_STARTED",
+      "contract": null,
+      "specAudit": null,
+      "implementationAudit": null,
+      "commit": null,
+      "evidence": [],
+      "blockers": [],
+      "followups": []
+    },
+    "S14": {
+      "id": "S14",
+      "state": "PENDING",
+      "status": "NOT_STARTED",
+      "contract": null,
+      "specAudit": null,
+      "implementationAudit": null,
+      "commit": null,
+      "evidence": [],
+      "blockers": [],
+      "followups": []
+    },
+    "S15": {
+      "id": "S15",
+      "state": "PENDING",
+      "status": "NOT_STARTED",
+      "contract": null,
+      "specAudit": null,
+      "implementationAudit": null,
+      "commit": null,
+      "evidence": [],
+      "blockers": [],
+      "followups": []
+    }
+  },
+  "slices": {
+    "F0.1": {
+      "id": "F0.1",
+      "layer": "L0",
+      "slice": "Ladder audit fixes (first slice)",
+      "status": "PASS",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PASS",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/batch-test-20261028-050132.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-050307.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/f0.1-evidence-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-050606.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "request-abi": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "default-difficulty": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "curve-legacy-load": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "table-validation": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "co-save-v3": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "tier-keyword-retirement": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "generator-validator": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch-no-crash": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "wire-into-loot-rank": {
+          "criterionStatus": "PASS",
+          "detail": "PASS_BRIDGE"
+        },
+        "host-core-tests-benchmark": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "audit blockers closed, 20+ self-tests, batch PASS, no dual system, no crash",
+      "depends": "current"
+    },
+    "F0.2": {
+      "id": "F0.2",
+      "layer": "L0",
+      "slice": "Freeze JSON schema",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/static-gates-20261028-051731.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "content/schema/validate_content.py",
+          "sha256": null,
+          "kind": "report",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "schemas": {
+          "criterionStatus": "PASS",
+          "detail": "PASS_28"
+        },
+        "base-pack": {
+          "criterionStatus": "PASS",
+          "detail": "PASS_7_entities"
+        },
+        "validation": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "static-gate": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "all current content represented; schema validation passes; no CSV authoring",
+      "depends": "F0.1"
+    },
+    "F0.3": {
+      "id": "F0.3",
+      "layer": "L0",
+      "slice": "JSON content pipeline",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/static-gates-20261028-052338.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-052420.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "pack-loader": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "valid-pack-build": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "invalid-pack-rejection-path": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "static-gate": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch-regression": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "base pack builds from JSON; invalid pack fails with path/line",
+      "depends": "F0.2"
+    },
+    "F0.4": {
+      "id": "F0.4",
+      "layer": "L0",
+      "slice": "JSON runtime loader",
+      "status": "PASS",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PASS",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/static-gates-20261028-053119.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-053201.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "runtime-json-loader": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "csv-parser-removed": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "json-generation": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "runtime loads JSON; missing/corrupt table fails closed",
+      "depends": "F0.3"
+    },
+    "F0.5": {
+      "id": "F0.5",
+      "layer": "L0",
+      "slice": "Co-save v3",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/batch-test-20261028-053201.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "section-11": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "v2-to-v3-migration": {
+          "criterionStatus": "PASS",
+          "detail": "PASS (schema1 observed)"
+        },
+        "truncation-test": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "save-size": {
+          "criterionStatus": "FAIL",
+          "detail": "1939 bytes observed"
+        }
+      },
+      "acceptance": "old save loads; corruption rejected; save size budget",
+      "depends": "F0.4"
+    },
+    "F0.6": {
+      "id": "F0.6",
+      "layer": "L0",
+      "slice": "Host core and tests",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/static-gates-20261028-054252.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "host-core-target": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "json-data-test": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "zero-allocation": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "lookup-benchmark": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 1.53ns"
+        },
+        "static-gate": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "host CI PASS; load/lookup budgets measured",
+      "depends": "F0.3-F0.5"
+    },
+    "F0.7": {
+      "id": "F0.7",
+      "layer": "L0",
+      "slice": "Runtime content resolver",
+      "status": "FAIL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "FAIL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/batch-test-20261028-055842.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-060036.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "J:/SkyrimTest/1.6.1170/Data/Runefall/runtime",
+          "sha256": null,
+          "kind": "report",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "roles": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 15"
+        },
+        "race-profiles": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 19"
+        },
+        "unknown-provisional": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "known-humanoid": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "cache-write-read": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "self-test": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 21/21"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "unknown race resolves; repeatable; cache reload; no crash",
+      "depends": "F0.4/F0.6"
+    },
+    "F0.8": {
+      "id": "F0.8",
+      "layer": "L0",
+      "slice": "Diagnostics and rescan",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/batch-test-20261028-061918.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-062043.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "automatic-cache-invalidation": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "manual-rescan-hotkey": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "diagnostics-resolver-fields": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch-rescan-check": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "delayed-startup-scan": {
+          "criterionStatus": "PASS",
+          "detail": "PASS (1s test config; production 600s)"
+        }
+      },
+      "acceptance": "manual and automatic rescan work; no load spike",
+      "depends": "F0.7"
+    },
+    "F0.9": {
+      "id": "F0.9",
+      "layer": "L0",
+      "slice": "POC JSON migration",
+      "status": "FAIL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "FAIL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/static-gates-20261028-062414.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-062459.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/release-verify-20261028-062621.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "json-only-data-tree": {
+          "criterionStatus": "PASS",
+          "detail": "PASS (0 CSV, 30 JSON)"
+        },
+        "runtime-json": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "poc-regression": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 21/21"
+        },
+        "release-verifier-json": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "generator and runtime both use JSON only; regression PASS",
+      "depends": "F0.3/F0.4"
+    },
+    "C1.1": {
+      "id": "C1.1",
+      "layer": "L1",
+      "slice": "Protection spike",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/c1.1-spike-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-070133.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-070344.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "damage-hook": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 0x104 Actor/Character/PlayerCharacter"
+        },
+        "apply-once": {
+          "criterionStatus": "PASS",
+          "detail": "PASS fallback disabled"
+        },
+        "classifier-matrix": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "in-game-direct-samples": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "ranged/spell/DoT/explosion observation": {
+          "criterionStatus": "DEFERRED",
+          "detail": "DEFERRED to C1.3 same hook"
+        },
+        "no-crash": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "spike covers direct/DoT/reflected/environmental; no crash",
+      "depends": "F0.4"
+    },
+    "C1.2": {
+      "id": "C1.2",
+      "layer": "L1",
+      "slice": "Roles and race classification",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/c1.2-race-classification-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-071136.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-071330.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "explicit-profiles": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 19"
+        },
+        "keyword-rules": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 7"
+        },
+        "unknown-fallback": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "known-draugr-in-game": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 23/23"
+        },
+        "no-crash": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "vanilla/DLC mapped; modded race defaults; no content gap",
+      "depends": "F0.7"
+    },
+    "C1.3": {
+      "id": "C1.3",
+      "layer": "L1",
+      "slice": "Threat protection",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/c1.3-threat-protection-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-072114.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-072307.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "formula": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "cap-70-per-stage-3-floor-5": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "dot-50": {
+          "criterionStatus": "PASS",
+          "detail": "PASS (classifier flag)"
+        },
+        "reflected-environmental-bypass": {
+          "criterionStatus": "PASS",
+          "detail": "PASS (classifier flag)"
+        },
+        "player-no-protection": {
+          "criterionStatus": "PASS",
+          "detail": "PASS in-game 25 unchanged"
+        },
+        "npc-protection": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 13->11.7"
+        },
+        "anomaly-policy": {
+          "criterionStatus": "FAIL",
+          "detail": "DATA false pending anomaly module"
+        },
+        "penetration-sources": {
+          "criterionStatus": "FAIL",
+          "detail": "PENDING C1.8"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 23/23"
+        },
+        "no-crash": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "staged fights respect gap; apply-once; no crash",
+      "depends": "C1.1/C1.2"
+    },
+    "C1.4": {
+      "id": "C1.4",
+      "layer": "L1",
+      "slice": "NPC packages",
+      "status": "PASS",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PASS",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/c1.4-enemy-packages-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-073859.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-074023.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "package-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 20"
+        },
+        "selection": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "apply-once": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "spell-stat-ability": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "perk-data-seam": {
+          "criterionStatus": "PASS",
+          "detail": "PASS (empty until content)"
+        },
+        "elite-boss-overlays": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "budget-validation": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 24/24"
+        },
+        "no-crash": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "humanoid/creature packages apply once; gear remains vanilla-lootable",
+      "depends": "C1.3"
+    },
+    "C1.5": {
+      "id": "C1.5",
+      "layer": "L1",
+      "slice": "Actor equipment distribution",
+      "status": "PASS",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PASS",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/c1.5-equipment-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-081220.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-081054.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-081340.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "equipment-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 15"
+        },
+        "gear-apply": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 5 items"
+        },
+        "perks": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 1 perk"
+        },
+        "random-chance-field": {
+          "criterionStatus": "PASS",
+          "detail": "PASS (100 default)"
+        },
+        "toggle-on": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "toggle-off": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "applied-once": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "save-load": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "cleanup": {
+          "criterionStatus": "FAIL",
+          "detail": "future-only by design (vanilla equipment persistent)"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 25/25"
+        }
+      },
+      "acceptance": "selected actors get gear/perks; toggle safe; save/load safe",
+      "depends": "C1.4"
+    },
+    "C1.6": {
+      "id": "C1.6",
+      "layer": "L1",
+      "slice": "Player attributes",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/c1.6-player-attributes-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-082144.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-082304.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "nine-attributes": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "points-per-level-3": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "breakthrough-9-12-15": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "effects-caps-respec": {
+          "criterionStatus": "PASS",
+          "detail": "PASS existing"
+        },
+        "stage-award-api": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "self-test": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 25/25"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "attribute budget data-driven; PCR follows gear/class",
+      "depends": "F0.4"
+    },
+    "C1.7": {
+      "id": "C1.7",
+      "layer": "L1",
+      "slice": "Combat ratings",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/c1.7-combat-ratings-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-082649.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-082821.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "rating-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "pcr-ncr-rcr": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "ttk-ttd-q": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "pace-profiles": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 2x5"
+        },
+        "display-profile": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "self-test": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 26/26"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "ratings reproducible; formulas match data; display profiles",
+      "depends": "C1.3/C1.6"
+    },
+    "C1.8": {
+      "id": "C1.8",
+      "layer": "L1",
+      "slice": "Player attacker/penetration",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/c1.8-player-penetration-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-083300.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-083423.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "player-stage-input": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "penetration-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "formula": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "mage-channel": {
+          "criterionStatus": "PASS",
+          "detail": "PASS data"
+        },
+        "weapon-channel": {
+          "criterionStatus": "PASS",
+          "detail": "PASS data"
+        },
+        "consumable-channel": {
+          "criterionStatus": "FAIL",
+          "detail": "data seam false"
+        },
+        "self-test": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 26/26"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "warrior/mage both penetrate; player no protection default",
+      "depends": "C1.3/C1.6"
+    },
+    "W2.1": {
+      "id": "W2.1",
+      "layer": "L2",
+      "slice": "World bands",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/w2.1-world-bands-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-084146.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-084316.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "world-band-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 2"
+        },
+        "matcher": {
+          "criterionStatus": "PASS",
+          "detail": "PASS zone/cell/worldspace/default"
+        },
+        "exclusions": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "deterministic-stage": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "actor-stage-wired": {
+          "criterionStatus": "PASS",
+          "detail": "PASS stage12"
+        },
+        "fallback": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 27/27"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "data drives area stage; vanilla zones respected",
+      "depends": "C1.4"
+    },
+    "W2.2": {
+      "id": "W2.2",
+      "layer": "L2",
+      "slice": "Spawn and encounter system",
+      "status": "FAIL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "FAIL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/w2.2-encounters-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-085704.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-085836.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "encounter-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 3"
+        },
+        "selection": {
+          "criterionStatus": "PASS",
+          "detail": "PASS deterministic"
+        },
+        "spawn": {
+          "criterionStatus": "PASS",
+          "detail": "PASS debug F5"
+        },
+        "caps": {
+          "criterionStatus": "PASS",
+          "detail": "PASS maxPerCell"
+        },
+        "cooldown": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 60s"
+        },
+        "exterior-only": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "config": {
+          "criterionStatus": "PASS",
+          "detail": "PASS default off"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 28/28"
+        },
+        "ambient-hook": {
+          "criterionStatus": "DEFERRED",
+          "detail": "DEFERRED W2.3/W2.5"
+        },
+        "city-quest-filter": {
+          "criterionStatus": "DEFERRED",
+          "detail": "DEFERRED W2.3/W2.5"
+        }
+      },
+      "acceptance": "spawns follow data; reload-safe; no city/quest leaks",
+      "depends": "W2.1"
+    },
+    "W2.3": {
+      "id": "W2.3",
+      "layer": "L2",
+      "slice": "Rare high-stage spawns",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/w2.3-rare-spawns-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-090700.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-090820.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "rate-table": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "high-stage-stage-override": {
+          "criterionStatus": "PASS",
+          "detail": "PASS stage91"
+        },
+        "determinism": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "conditions": {
+          "criterionStatus": "PASS",
+          "detail": "PASS reserved fail-closed"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 29/29"
+        },
+        "no-crash": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "low-level zone can rarely spawn high stage; rate tunable",
+      "depends": "W2.2"
+    },
+    "W2.4": {
+      "id": "W2.4",
+      "layer": "L2",
+      "slice": "Hunt contracts",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/w2.4-hunt-contracts-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-091456.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-091637.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "contract-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 2"
+        },
+        "start": {
+          "criterionStatus": "PASS",
+          "detail": "PASS F4"
+        },
+        "identity": {
+          "criterionStatus": "PASS",
+          "detail": "PASS family"
+        },
+        "completion": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "reward": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 2 runes"
+        },
+        "cooldown": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 30/30"
+        },
+        "persistence": {
+          "criterionStatus": "FAIL",
+          "detail": "session-scoped (co-save deferred)"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "hunts work end-to-end; no duplicate rewards",
+      "depends": "W2.2"
+    },
+    "W2.5": {
+      "id": "W2.5",
+      "layer": "L2",
+      "slice": "Bosses and unique actors",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/w2.5-bosses-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-092715.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-092836.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "boss-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 5"
+        },
+        "fixed-stage": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "formid-resolution": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "unique-flag": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "quest-band-field": {
+          "criterionStatus": "PASS",
+          "detail": "PASS reserved"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 31/31"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "authored bosses at designed stage; unique refs resolve",
+      "depends": "W2.2/W2.4"
+    },
+    "W2.6": {
+      "id": "W2.6",
+      "layer": "L2",
+      "slice": "Anomaly ladder",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/w2.6-anomaly-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-094437.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-094603.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "family-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 5"
+        },
+        "stage-offset-curve": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "tier-labels": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "anomaly-spawn": {
+          "criterionStatus": "PASS",
+          "detail": "PASS F3"
+        },
+        "no-host-protection": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "core-trophy-rewards": {
+          "criterionStatus": "PASS",
+          "detail": "PASS corpse"
+        },
+        "codex-feed": {
+          "criterionStatus": "PASS",
+          "detail": "PASS data (UI P4.6)"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 32/32"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "anomaly content works without host protection",
+      "depends": "C1.2/W2.2"
+    },
+    "W2.7": {
+      "id": "W2.7",
+      "layer": "L2",
+      "slice": "Runtime cache lifecycle",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/plan-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4117EC7C861635412F1B260CFD0E5B0208C1C2D4C70AEF4DA8828CF3FC0B3C17"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/w2.7-runtime-cache-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-094909.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-095152.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "cache-key": {
+          "criterionStatus": "PASS",
+          "detail": "PASS load-order independent"
+        },
+        "data-version-invalidation": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "manifest": {
+          "criterionStatus": "PASS",
+          "detail": "PASS self-test"
+        },
+        "f6-rescan": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "delayed-startup-scan": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 32/32"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "cache correct after pack change; rescan safe",
+      "depends": "F0.7/W2.2"
+    },
+    "A3.1": {
+      "id": "A3.1",
+      "layer": "L3",
+      "slice": "Ladder-driven loot",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/a3.1-loot-tables-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-094909.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-095413.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "affix-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 600"
+        },
+        "rarity-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 6"
+        },
+        "rarity-weights": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 36"
+        },
+        "general-drops": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 36"
+        },
+        "weighted-rarity-test": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "deterministic-rng": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "container-actor-quest": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 32/32"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "loot follows stage and data; no hardcoded values",
+      "depends": "W2.2/C1.4"
+    },
+    "A3.2": {
+      "id": "A3.2",
+      "layer": "L3",
+      "slice": "Materials and tokens",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/a3.2-materials-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-095912.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-100032.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "material-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 31"
+        },
+        "tiers-families": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 4x3"
+        },
+        "salvage-yield-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "salvage-engine": {
+          "criterionStatus": "PASS",
+          "detail": "PASS RuneForge"
+        },
+        "material-sink": {
+          "criterionStatus": "PASS",
+          "detail": "PASS recipes/COBJ"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 32/32"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "materials are items; unknown roles get tokens",
+      "depends": "C1.2"
+    },
+    "A3.3": {
+      "id": "A3.3",
+      "layer": "L3",
+      "slice": "Runtime item generation",
+      "status": "FAIL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "FAIL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/a3.3-crafting-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-095912.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-100032.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "reroll": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "upgrade": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "socket": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "extract": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "convert": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "salvage": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "recipes": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 8"
+        },
+        "rune-costs": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 32/32"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "generated item persists; visuals/name correct; no crash",
+      "depends": "A3.2/F0.7"
+    },
+    "A3.4": {
+      "id": "A3.4",
+      "layer": "L3",
+      "slice": "Crafting system",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/a3.4-rune-gear-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-095912.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-100032.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "affix-budget": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "rarity-enhancements": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "socket-budget": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "affix-tier-cap": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "progression-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 32/32"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "full crafting loop; transaction-safe",
+      "depends": "A3.3"
+    },
+    "A3.5": {
+      "id": "A3.5",
+      "layer": "L3",
+      "slice": "Rune equipment and inventory",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/a3.5-economy-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-100626.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-100744.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "economy-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "item-value": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "vendor-spread": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "respec-cost": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "rune-material-value": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "sinks": {
+          "criterionStatus": "PASS",
+          "detail": "PASS existing"
+        },
+        "faucets": {
+          "criterionStatus": "PASS",
+          "detail": "PASS existing"
+        },
+        "self-test": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 33"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 33/33"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "rune gear works; inventory data stable",
+      "depends": "A3.4"
+    },
+    "A3.6": {
+      "id": "A3.6",
+      "layer": "L3",
+      "slice": "Rune economy and attunement",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/a3.6-compatibility-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-100626.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-100744.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "formid-catalog": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 573"
+        },
+        "plugin-relative-ids": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "load-order-independent-cache": {
+          "criterionStatus": "PASS",
+          "detail": "PASS W2.7"
+        },
+        "pack-manifests": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 2"
+        },
+        "vanilla-loot-preserved": {
+          "criterionStatus": "PASS",
+          "detail": "PASS design"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 33/33"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 9/9"
+        }
+      },
+      "acceptance": "progression with ladder; save-safe",
+      "depends": "A3.1"
+    },
+    "A3.7": {
+      "id": "A3.7",
+      "layer": "L3",
+      "slice": "Loot authority compat",
+      "status": "FAIL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "FAIL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/a3.7-loot-acceptance-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-100626.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-100744.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "container": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "quest": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "actor": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "hunt": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "crafting": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "economy": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "co-save": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "no-crash": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 33/33"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "compatibility smoke PASS; no crash",
+      "depends": "A3.1"
+    },
+    "P4.1": {
+      "id": "P4.1",
+      "layer": "L4",
+      "slice": "Rune Level progression",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/p4.1-player-rank-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-101642.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-101809.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "rank-1-100": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "xp-curve": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "xp-award": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 10/50"
+        },
+        "co-save-xp": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 418B"
+        },
+        "boss-gate": {
+          "criterionStatus": "PASS",
+          "detail": "PASS code"
+        },
+        "attribute-award": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 33/33"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "40-hour targets data-driven; breakthrough works",
+      "depends": "C1.6/F0.5"
+    },
+    "P4.2": {
+      "id": "P4.2",
+      "layer": "L4",
+      "slice": "9 classes",
+      "status": "FAIL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "FAIL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/p4.2-classes-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-102643.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-102804.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "class-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 3"
+        },
+        "attribute-bonuses": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "starting-skills": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "class-permanent": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "skill-ranks": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 18 defs"
+        },
+        "co-save-class-skills": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 34/34"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "9 classes data-driven; class build differs",
+      "depends": "P4.1"
+    },
+    "P4.3": {
+      "id": "P4.3",
+      "layer": "L4",
+      "slice": "Skills and passives",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/p4.3-skill-perks-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-103144.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-103304.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "perk-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 6"
+        },
+        "rank-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "derived-bonus": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "skill-defs": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 18"
+        },
+        "self-test": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 35"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 35/35"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "builds playable; no NPC skill contamination",
+      "depends": "P4.2"
+    },
+    "P4.4": {
+      "id": "P4.4",
+      "layer": "L4",
+      "slice": "Prisma UI foundation",
+      "status": "FAIL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "FAIL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/p4.4-prisma-shell-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-103943.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-104102.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "prisma-dependency": {
+          "criterionStatus": "PASS",
+          "detail": "PASS declared"
+        },
+        "view-model": {
+          "criterionStatus": "PASS",
+          "detail": "PASS runefall-hud"
+        },
+        "menu-snapshot-rank-class": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "ui-shell": {
+          "criterionStatus": "PASS",
+          "detail": "PASS source"
+        },
+        "fail-closed": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 36/36"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "UI loads; read-only snapshot works; no gameplay in UI",
+      "depends": "F0.8"
+    },
+    "P4.5": {
+      "id": "P4.5",
+      "layer": "L4",
+      "slice": "Character/HUD/indicators",
+      "status": "FAIL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "FAIL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/p4.5-hud-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-104512.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-104637.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "rank-widget": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "xp-bar": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "stats": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "target-threat": {
+          "criterionStatus": "PASS",
+          "detail": "PASS data"
+        },
+        "fail-closed": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 36/36"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "visual-host": {
+          "criterionStatus": "NOT_VERIFIED",
+          "detail": "NOT VERIFIED (no Prisma host screenshot)"
+        }
+      },
+      "acceptance": "ratings display correct; HUD optional/low cost",
+      "depends": "P4.4/C1.7"
+    },
+    "P4.6": {
+      "id": "P4.6",
+      "layer": "L4",
+      "slice": "Breakthrough/class menus",
+      "status": "FAIL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "FAIL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/p4.6-menus-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-104930.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-105049.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "menu-model": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 4 tabs"
+        },
+        "character-tab": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "skills-tab": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "gear-tab": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "anomaly-codex": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "menu-shell": {
+          "criterionStatus": "PASS",
+          "detail": "PASS source"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 36/36"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "visual-host": {
+          "criterionStatus": "NOT_VERIFIED",
+          "detail": "NOT VERIFIED"
+        }
+      },
+      "acceptance": "menus complete; no Papyrus polling",
+      "depends": "P4.4/P4.2"
+    },
+    "P4.7": {
+      "id": "P4.7",
+      "layer": "L4",
+      "slice": "Codex/inspect/tooltip",
+      "status": "FAIL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "FAIL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/p4.7-ui-acceptance-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-104930.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-105049.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "hud-contract": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "menu-contract": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "codex": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "fail-closed": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 36/36"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "visual-host": {
+          "criterionStatus": "NOT_VERIFIED",
+          "detail": "NOT VERIFIED (no Prisma host screenshot)"
+        }
+      },
+      "acceptance": "pages work; data from registry only",
+      "depends": "A3.5/P4.4"
+    },
+    "R5.1": {
+      "id": "R5.1",
+      "layer": "L5",
+      "slice": "Pack tooling",
+      "status": "PASS",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "PASS",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/r5.1-pack-format-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-104930.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-105049.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "format-1": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "manifest": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 2"
+        },
+        "min-base-version": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "content-files": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "record-count-editors": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "base-present": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "last-loaded-wins": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 36/36"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "base + test pack; no load-order language",
+      "depends": "F0.3/F0.9"
+    },
+    "R5.2": {
+      "id": "R5.2",
+      "layer": "L5",
+      "slice": "Base content packs",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/r5.2-base-packs-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-105557.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-105717.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "base-manifest": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "format-1": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "content-files": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "base-present": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "unique-hunt-packs": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 36/36"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "base world fully staged; no gaps",
+      "depends": "R5.1/A3.7"
+    },
+    "R5.3": {
+      "id": "R5.3",
+      "layer": "L5",
+      "slice": "Famous-mod packs",
+      "status": "FAIL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "FAIL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/r5.3-mod-packs-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-110825.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-110945.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "compat-profiles": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 3"
+        },
+        "owl-profile": {
+          "criterionStatus": "PASS",
+          "detail": "PASS data"
+        },
+        "spid-kid-profile": {
+          "criterionStatus": "PASS",
+          "detail": "PASS data"
+        },
+        "detection": {
+          "criterionStatus": "PASS",
+          "detail": "PASS vanilla in test env"
+        },
+        "loot-mode": {
+          "criterionStatus": "PASS",
+          "detail": "PASS additive"
+        },
+        "protect-vanilla": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "self-test": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 37"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 37/37"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "full-list-test": {
+          "criterionStatus": "DEFERRED",
+          "detail": "DEFERRED R6.1"
+        }
+      },
+      "acceptance": "supported mod smoke PASS",
+      "depends": "R5.1/C1.2"
+    },
+    "R5.4": {
+      "id": "R5.4",
+      "layer": "L5",
+      "slice": "Agent skills and criteria",
+      "status": "PASS",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "PASS",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/r5.4-agent-skills-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-111316.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-111422.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "content-skill": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "pack-skill": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "pack-validator": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 3"
+        },
+        "runtime-json-content-paths": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 37/37"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        }
+      },
+      "acceptance": "agent pack produced, validated, built, tested",
+      "depends": "R5.1/F0.6"
+    },
+    "R5.5": {
+      "id": "R5.5",
+      "layer": "L5",
+      "slice": "Endgame, raids, quests",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/r5.5-endgame-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-112209.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-112337.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "endgame-data": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "final-boss": {
+          "criterionStatus": "PASS",
+          "detail": "PASS boss_5 stage95"
+        },
+        "rank-gate": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 90"
+        },
+        "boss-tier-gate": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 5"
+        },
+        "reward": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 50 runes"
+        },
+        "completion-state": {
+          "criterionStatus": "PASS",
+          "detail": "PASS co-save"
+        },
+        "self-test": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 38"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 38/38"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "scripted-final-kill": {
+          "criterionStatus": "NOT_RUN",
+          "detail": "NOT RUN"
+        }
+      },
+      "acceptance": "endgame loop complete",
+      "depends": "W2.5/W2.6/A3.6"
+    },
+    "R5.6": {
+      "id": "R5.6",
+      "layer": "L5",
+      "slice": "Localization structure",
+      "status": "PASS",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "PASS",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/r5.6-localization-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-112802.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-112209.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "string-table": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 262"
+        },
+        "unique-keys": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "english-only": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "placeholders": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "coverage-gate": {
+          "criterionStatus": "PASS",
+          "detail": "PASS >=250"
+        },
+        "static-gate": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 10/10"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 38/38"
+        }
+      },
+      "acceptance": "all player text localized by key; no unsupported language claim",
+      "depends": "R5.1"
+    },
+    "R6.1": {
+      "id": "R6.1",
+      "layer": "L6",
+      "slice": "Compatibility matrix",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/r6.1-compat-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/compat-DiabloRim-20261028-113214.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/compat-DiabloRim-20261028-113214-loadorder.txt",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-112802.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "clean-save": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "external-mod": {
+          "criterionStatus": "PASS",
+          "detail": "PASS DiabloRim"
+        },
+        "spid": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "kid": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "skypatcher": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "container": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "actor": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "quest": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "rune": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "no-crash": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "full-mo2-list": {
+          "criterionStatus": "NOT_RUN",
+          "detail": "NOT RUN (user-side)"
+        }
+      },
+      "acceptance": "target smoke PASS; conflicts documented",
+      "depends": "all gameplay"
+    },
+    "R6.2": {
+      "id": "R6.2",
+      "layer": "L6",
+      "slice": "Save/upgrade/uninstall",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/r6.2-save-uninstall-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/uninstall-pack-disable-20261028-113404.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/uninstall-dll-remove-20261028-113448.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/uninstall-all-remove-20261028-113533.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-112802.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "pack-disable": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "dll-remove": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "all-remove": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "save-load-after-removal": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "no-crash": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "reinstall-safe": {
+          "criterionStatus": "PASS",
+          "detail": "PASS design"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 10/10"
+        }
+      },
+      "acceptance": "all uninstall modes PASS",
+      "depends": "F0.5/A3.7"
+    },
+    "R6.3": {
+      "id": "R6.3",
+      "layer": "L6",
+      "slice": "Balance calibration",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/r6.3-balance-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-113956.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-114102.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "40h-pacing": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 37.4h"
+        },
+        "stage-curve": {
+          "criterionStatus": "PASS",
+          "detail": "PASS +10 1.16x/+20 1.35x"
+        },
+        "pace-bands": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 10"
+        },
+        "xp-growth-calibrated": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 1.015"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 38/38"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 10/10"
+        }
+      },
+      "acceptance": "targets met or documented",
+      "depends": "C1.7/P4.1/P4.2"
+    },
+    "R6.4": {
+      "id": "R6.4",
+      "layer": "L6",
+      "slice": "Release packaging",
+      "status": "PARTIAL",
+      "baselineAudit": {
+        "reports": [
+          {
+            "report": "build/audit/runtime-gaps.md",
+            "verdict": "PARTIAL",
+            "sha256": "4AEE2879FE7090096306D4548721B233DF4AAB655E0AE5BD9FD85711CAA8AE6A"
+          }
+        ],
+        "commit": "a50b2b6"
+      },
+      "commit": "a50b2b6",
+      "evidence": [
+        {
+          "path": "build/evidence/r6.4-release-20261028.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/release-verify-20261028-114412.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/static-gates-20261028-114102.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        },
+        {
+          "path": "build/evidence/batch-test-20261028-113956.md",
+          "sha256": null,
+          "kind": "log",
+          "exists": false
+        }
+      ],
+      "blockers": [],
+      "followups": [],
+      "checklist": {
+        "version": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 0.1.0"
+        },
+        "changelog": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "readiness-doc": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "release-tree": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "archive": {
+          "criterionStatus": "PASS",
+          "detail": "PASS"
+        },
+        "archive-verify": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 25/25"
+        },
+        "form-catalog": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 573"
+        },
+        "static-gates": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 10/10"
+        },
+        "batch": {
+          "criterionStatus": "PASS",
+          "detail": "PASS 38/38"
+        },
+        "publication": {
+          "criterionStatus": "FAIL",
+          "detail": "NOT PUBLISHED (user decision)"
+        }
+      },
+      "acceptance": "ship gate PASS; archive verified",
+      "depends": "R6.1-R6.3"
+    }
+  },
+  "auditHistory": "build/audit/HISTORY.jsonl",
+  "release": {
+    "version": "0.1.0",
+    "archive": null,
+    "sha256": null,
+    "verified": false,
+    "published": false,
+    "retracted": true,
+    "reason": "2026-10-28 audit invalidated the previous PASS claim"
+  }
+}
