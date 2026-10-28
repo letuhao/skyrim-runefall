@@ -194,6 +194,21 @@ namespace Runefall
 		spawnedFamilies.erase(it);
 	}
 
+	std::string AnomalyEngine::CodexJson() const
+	{
+		std::string out = "[";
+		for (std::size_t i = 0; i < families.size(); ++i) {
+			if (i)
+				out += ',';
+			const auto& fam = families[i];
+			out += "{\"family\":\"" + fam.family + "\",\"nameKey\":\"" + fam.nameKey + "\"";
+			out += ",\"stageOffset\":" + std::to_string(fam.stageOffset);
+			out += ",\"core\":\"" + fam.coreItem + "\",\"trophy\":\"" + fam.trophyItem + "\"}";
+		}
+		out += "]";
+		return out;
+	}
+
 	SelfTestResult AnomalyEngine::SelfTest()
 	{
 		auto& engine = Get();

@@ -1167,3 +1167,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - Rank/XP bar/stats/target threat widgets; target stage from crosshair.
 - Batch 36/36; static gates 9/9. Visual Prisma-host screenshot not available.
+
+
+## P4.6 menus/codex - PASS (2026-10-28 10:47-10:50)
+
+- Menu model 4 tabs + anomaly codex; menus.html shell; batch 36/36; static gates 9/9.
+- Visual Prisma-host screenshot not available.

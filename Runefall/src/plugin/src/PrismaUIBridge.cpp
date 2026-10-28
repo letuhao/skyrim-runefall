@@ -4,6 +4,9 @@
 #include "MenuApi.h"
 #include "Progression.h"
 #include "LootService.h"
+#include "CoSave.h"
+#include "ItemRegistry.h"
+#include "AnomalyEngine.h"
 
 #include "RE/C/CrosshairPickData.h"
 #include "RE/A/Actor.h"
@@ -78,10 +81,59 @@ namespace Runefall
 		return lastWriteOk;
 	}
 
+	bool PrismaUIBridge::WriteMenuModel()
+	{
+		const auto path = ViewModelPath();
+		const auto menuPath = (fs::path{ path }.parent_path() / "menu-model.json").string();
+		std::ofstream file{ menuPath, std::ios::trunc };
+		if (!file) {
+			logger::error("prisma-ui: cannot open menu model {}", menuPath);
+			lastWriteOk = false;
+			return false;
+		}
+		const auto& state = CoSave::Get().State();
+		file << "{\n  \"schemaVersion\": 1,\n  \"menuId\": \"runefall-menu\",\n";
+		file << "  \"tabs\": [\"character\", \"skills\", \"gear\", \"codex\"],\n";
+		file << "  \"character\": {\"rank\": " << Progression::Get().RuneLevel()
+		     << ", \"xp\": " << Progression::Get().RuneXp()
+		     << ", \"xpToNext\": " << Progression::Get().XpForNextLevel()
+		     << ", \"classId\": \"" << Progression::Get().ClassId() << "\""
+		     << ", \"attributePoints\": " << Progression::Get().AttributePoints()
+		     << ", \"skillPoints\": " << Progression::Get().SkillPoints()
+		     << ", \"attributes\": [";
+		for (std::size_t i = 0; i < state.attributes.size(); ++i) {
+			if (i) file << ',';
+			file << state.attributes[i];
+		}
+		file << "]},\n";
+		file << "  \"skills\": [";
+		std::size_t index = 0;
+		for (const auto& [skill, rank] : state.skillRanks) {
+			if (index++) file << ',';
+			file << "{\"skill\":\"" << skill << "\",\"rank\":" << rank << "}";
+		}
+		file << "],\n";
+		file << "  \"gear\": {\"items\": " << ItemRegistry::Get().Size()
+		     << ", \"runes\": [";
+		for (std::size_t i = 0; i < state.runes.size(); ++i) {
+			if (i) file << ',';
+			file << state.runes[i];
+		}
+		file << "]},\n";
+		file << "  \"codex\": {\"anomalies\": " << AnomalyEngine::Get().CodexJson() << "}\n";
+		file << "}\n";
+		lastWriteOk = static_cast<bool>(file);
+		if (lastWriteOk)
+			logger::info("prisma-ui: wrote menu model {}", menuPath);
+		else
+			logger::error("prisma-ui: failed writing menu model {}", menuPath);
+		return lastWriteOk;
+	}
+
 	SelfTestResult PrismaUIBridge::SelfTest()
 	{
 		auto& bridge = Get();
-		if (!bridge.WriteViewModel() || !bridge.LastWriteOk())
+		if (!bridge.WriteViewModel() || !bridge.WriteMenuModel() || !bridge.LastWriteOk())
 			return { "PrismaUIBridge.SelfTest", CheckStatus::Fail, "view model was not written" };
 		std::ifstream file{ bridge.ViewModelPath() };
 		if (!file)

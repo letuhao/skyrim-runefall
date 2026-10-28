@@ -92,6 +92,7 @@ namespace Runefall
 							tasks->AddTask([]() {
 								const auto snapshot = MenuApi::BuildSnapshotJson();
 						PrismaUIBridge::Get().WriteViewModel();
+						PrismaUIBridge::Get().WriteMenuModel();
 								logger::info("input: menu snapshot {}", snapshot);
 								if (auto* console = RE::ConsoleLog::GetSingleton())
 									console->Print("[Runefall] %s", snapshot.c_str());

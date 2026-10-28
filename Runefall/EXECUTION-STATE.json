@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "P4.6",
-  "updatedAt": "2026-10-28T03:47:21.365Z",
+  "currentSlice": "P4.7",
+  "updatedAt": "2026-10-28T03:51:30.180Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -851,11 +851,26 @@
       "id": "P4.6",
       "layer": "L4",
       "slice": "Breakthrough/class menus",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "menus complete; no Papyrus polling",
       "depends": "P4.4/P4.2",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/p4.6-menus-20261028.md",
+        "build/evidence/batch-test-20261028-104930.md",
+        "build/evidence/static-gates-20261028-105049.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "menu-model": "PASS 4 tabs",
+        "character-tab": "PASS",
+        "skills-tab": "PASS",
+        "gear-tab": "PASS",
+        "anomaly-codex": "PASS",
+        "menu-shell": "PASS source",
+        "batch": "PASS 36/36",
+        "static-gates": "PASS",
+        "visual-host": "NOT VERIFIED"
+      }
     },
     "P4.7": {
       "id": "P4.7",
@@ -969,9 +984,9 @@
     }
   },
   "currentWork": {
-    "slice": "P4.6",
-    "step": "menus and codex",
-    "nextAction": "Prisma menus for attributes/class/skills/gear/codex and anomaly codex feed"
+    "slice": "P4.7",
+    "step": "player UI acceptance and polish",
+    "nextAction": "end-to-end player UI acceptance: HUD, menus, codex, fail-closed behavior"
   },
   "blockers": [],
   "finalRelease": null

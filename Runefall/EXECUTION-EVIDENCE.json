@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T03:47:21.370Z",
+  "updatedAt": "2026-10-28T03:51:30.185Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -803,6 +803,27 @@
       "slice": "P4.5",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-104637.md",
+      "result": "PASS",
+      "detail": "9/9"
+    },
+    {
+      "slice": "P4.6",
+      "kind": "summary",
+      "path": "build/evidence/p4.6-menus-20261028.md",
+      "result": "PASS",
+      "detail": "menu-model 4 tabs + anomaly codex; shell source"
+    },
+    {
+      "slice": "P4.6",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-104930.md",
+      "result": "PASS",
+      "detail": "36/36; Prisma menu model"
+    },
+    {
+      "slice": "P4.6",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-105049.md",
       "result": "PASS",
       "detail": "9/9"
     }

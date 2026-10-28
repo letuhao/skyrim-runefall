@@ -10,6 +10,7 @@ namespace Runefall
 		void Load();
 		[[nodiscard]] bool Loaded() const noexcept { return loaded; }
 		[[nodiscard]] std::size_t FamilyCount() const noexcept { return families.size(); }
+		[[nodiscard]] std::string CodexJson() const;
 		[[nodiscard]] const std::string& FamilyForSeed(std::uint64_t a_seed) const;
 		[[nodiscard]] std::uint8_t AdjustStage(std::uint8_t a_baseStage, std::string_view a_family) const;
 		[[nodiscard]] std::string TierLabel(std::uint8_t a_stage, std::string_view a_family) const;
