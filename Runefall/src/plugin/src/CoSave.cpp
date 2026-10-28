@@ -621,7 +621,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 				}
 				if (sectionReader.Remaining() > 0) {
 					if (!sectionReader.String(a_out.characterClass) || a_out.characterClass.size() > 64) {
-					    MarkReject("co-save: reject string.class"); logger::error("co-save: reject string.class"); return false;
+					    MarkReject("co-save: reject string"); logger::error("co-save: reject string"); return false;
 					}
 					std::uint16_t skillCount = 0;
 					if (!sectionReader.U16(skillCount) || skillCount > 256) {
@@ -1118,8 +1118,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 			"co-save: reject item.tags",
 			"co-save: reject hunt-count",
 			"co-save: reject string.map-key",
-			"co-save: reject string.material",
-			"co-save: reject string.hunt",
+			"co-save: reject string",
 			"co-save: reject material-count",
 			"co-save: reject pack-count",
 			"co-save: reject string.pack",
