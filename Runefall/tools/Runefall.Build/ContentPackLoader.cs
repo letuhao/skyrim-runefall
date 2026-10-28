@@ -31,6 +31,7 @@ internal sealed class LoadedPack
     public List<string[]> AnomalyRows { get; } = new();
     public List<string[]> EconomyRows { get; } = new();
     public List<string[]> ClassRows { get; } = new();
+    public List<string[]> CompatRows { get; } = new();
     public List<string[]> PerkRows { get; } = new();
 }
 
@@ -92,6 +93,7 @@ internal static class ContentPackLoader
             ReadAnomalies(pack, files, errors);
             ReadEconomy(pack, files, errors);
             ReadClasses(pack, files, errors);
+            ReadCompatProfiles(pack, files, errors);
             ReadSkillPerks(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
@@ -705,6 +707,24 @@ internal static class ContentPackLoader
                 Text(item, "perkId", path, errors), Text(item, "skill", path, errors),
                 I(Int(item, "rankRequired", path, errors)), Text(item, "effectKey", path, errors),
                 F(Number(item, "magnitude", path, errors)), Text(item, "descriptionKey", path, errors)
+            });
+        }
+    }
+
+
+    private static void ReadCompatProfiles(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("compatProfiles", files, errors, "profiles");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"compat_profiles.profiles[{index++}]";
+            pack.CompatRows.Add(new[]
+            {
+                Text(item, "profileId", path, errors), Text(item, "requiredPlugins", path, errors),
+                Text(item, "optionalPlugins", path, errors), Text(item, "lootMode", path, errors),
+                B(Bool(item, "protectVanillaLoot", path, errors)), Text(item, "notes", path, errors)
             });
         }
     }

@@ -112,6 +112,10 @@
     {
       "entity": "skillPerks",
       "file": "data/skill_perks.json"
+    },
+    {
+      "entity": "compatProfiles",
+      "file": "data/compat_profiles.json"
     }
   ],
   "localization": []

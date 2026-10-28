@@ -55,6 +55,7 @@ namespace Runefall
 			"economy_profiles.csv",
 			"classes.csv",
 			"skill_perks.csv",
+			"compat_profiles.csv",
 		};
 	}
 

@@ -27,6 +27,7 @@
 #include "ClassRegistry.h"
 #include "PrismaUIBridge.h"
 #include "SkillPerkEngine.h"
+#include "CompatibilityEngine.h"
 #include "HookManager.h"
 #include "MaterialRegistry.h"
 #include "RuneForge.h"
@@ -141,6 +142,7 @@ namespace
 		Runefall::EconomyEngine::Get().Load();
 		Runefall::ClassRegistry::Get().Load();
 		Runefall::SkillPerkEngine::Get().Load();
+		Runefall::CompatibilityEngine::Get().Load();
 		Runefall::MaterialRegistry::Get().LoadDefinitions();
 		Runefall::RuneForge::Get().ReloadSocketRecipes();
 		Runefall::LootEngine::Get().Reload();

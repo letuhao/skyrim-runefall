@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "R5.3",
-  "updatedAt": "2026-10-28T03:57:57.178Z",
+  "currentSlice": "R5.4",
+  "updatedAt": "2026-10-28T04:10:30.513Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -947,11 +947,27 @@
       "id": "R5.3",
       "layer": "L5",
       "slice": "Famous-mod packs",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "supported mod smoke PASS",
       "depends": "R5.1/C1.2",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/r5.3-mod-packs-20261028.md",
+        "build/evidence/batch-test-20261028-110825.md",
+        "build/evidence/static-gates-20261028-110945.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "compat-profiles": "PASS 3",
+        "owl-profile": "PASS data",
+        "spid-kid-profile": "PASS data",
+        "detection": "PASS vanilla in test env",
+        "loot-mode": "PASS additive",
+        "protect-vanilla": "PASS",
+        "self-test": "PASS 37",
+        "batch": "PASS 37/37",
+        "static-gates": "PASS",
+        "full-list-test": "DEFERRED R6.1"
+      }
     },
     "R5.4": {
       "id": "R5.4",
@@ -1025,9 +1041,9 @@
     }
   },
   "currentWork": {
-    "slice": "R5.3",
-    "step": "mod packs",
-    "nextAction": "mod pack compatibility profiles for OWL/SPID/KID and third-party loot"
+    "slice": "R5.4",
+    "step": "agent skills",
+    "nextAction": "agent skill definitions/training/cooldown and co-save persistence"
   },
   "blockers": [],
   "finalRelease": null

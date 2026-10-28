@@ -141,6 +141,11 @@ internal static class LadderContent
         "classId", "nameKey", "primaryAttribute", "attributeBonuses", "startingSkills", "roleTags"
     };
 
+    public static readonly string[] CompatColumns =
+    {
+        "profileId", "requiredPlugins", "optionalPlugins", "lootMode", "protectVanillaLoot", "notes"
+    };
+
     public static readonly string[] PerkColumns =
     {
         "perkId", "skill", "rankRequired", "effectKey", "magnitude", "descriptionKey"
@@ -319,6 +324,7 @@ internal static class LadderContent
         WriteCsv(dir, "economy_profiles.csv", EconomyColumns, pack.EconomyRows);
         WriteCsv(dir, "classes.csv", ClassColumns, pack.ClassRows);
         WriteCsv(dir, "skill_perks.csv", PerkColumns, pack.PerkRows);
+        WriteCsv(dir, "compat_profiles.csv", CompatColumns, pack.CompatRows);
         return errors;
     }
 

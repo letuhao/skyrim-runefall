@@ -97,6 +97,7 @@ else()
         src/ClassRegistry.cpp
         src/PrismaUIBridge.cpp
         src/SkillPerkEngine.cpp
+        src/CompatibilityEngine.cpp
         src/RuntimeContentResolver.cpp
         src/CoSave.cpp
         src/ItemRegistry.cpp

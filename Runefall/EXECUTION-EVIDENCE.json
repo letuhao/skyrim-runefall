@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T03:57:57.183Z",
+  "updatedAt": "2026-10-28T04:10:30.518Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -887,6 +887,27 @@
       "slice": "R5.2",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-105717.md",
+      "result": "PASS",
+      "detail": "9/9"
+    },
+    {
+      "slice": "R5.3",
+      "kind": "summary",
+      "path": "build/evidence/r5.3-mod-packs-20261028.md",
+      "result": "PASS",
+      "detail": "vanilla/owl/spid_kid profiles; active vanilla; additive loot"
+    },
+    {
+      "slice": "R5.3",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-110825.md",
+      "result": "PASS",
+      "detail": "37/37"
+    },
+    {
+      "slice": "R5.3",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-110945.md",
       "result": "PASS",
       "detail": "9/9"
     }

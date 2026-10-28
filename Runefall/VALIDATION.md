@@ -1191,3 +1191,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - packs/base.json format-1 manifest for Runefall.esp; unique/hunt packs still valid.
 - Batch 36/36; static gates 9/9.
+
+
+## R5.3 mod packs/compat - PASS (2026-10-28 11:00-11:09)
+
+- 3 compatibility profiles; runtime detection active vanilla; additive loot/protect vanilla.
+- Batch 37/37; static gates 9/9. Full 3,700-mod list test remains R6.1.

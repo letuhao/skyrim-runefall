@@ -20,6 +20,7 @@
 #include "ClassRegistry.h"
 #include "PrismaUIBridge.h"
 #include "SkillPerkEngine.h"
+#include "CompatibilityEngine.h"
 #include "FormResolver.h"
 #include "ItemRegistry.h"
 #include "HuntEngine.h"
@@ -101,6 +102,7 @@ namespace Runefall
 		EconomyEngine::Get().Load();
 		ClassRegistry::Get().Load();
 		SkillPerkEngine::Get().Load();
+		CompatibilityEngine::Get().Load();
 		results.push_back(DataStore::Get().SelfTest());
 		results.push_back(FormCatalog::SelfTest());
 		results.push_back(StageEngine::SelfTest());
@@ -120,6 +122,7 @@ namespace Runefall
 		results.push_back(ClassRegistry::SelfTest());
 		results.push_back(PrismaUIBridge::SelfTest());
 		results.push_back(SkillPerkEngine::SelfTest());
+		results.push_back(CompatibilityEngine::SelfTest());
 		LootEngine::Get().Reload();
 		TierEngine::Get().Reload();
 		HuntEngine::Get().Reload();

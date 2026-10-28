@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "profiles": [
+    {
+      "schemaVersion": 1,
+      "profileId": "vanilla",
+      "requiredPlugins": "",
+      "optionalPlugins": "",
+      "lootMode": "additive",
+      "protectVanillaLoot": true,
+      "notes": "base game only"
+    },
+    {
+      "schemaVersion": 1,
+      "profileId": "owl",
+      "requiredPlugins": "OWL.esp|OWL Randomized Special Loot.esp",
+      "optionalPlugins": "",
+      "lootMode": "additive",
+      "protectVanillaLoot": true,
+      "notes": "keep OWL loot; rune gear additive"
+    },
+    {
+      "schemaVersion": 1,
+      "profileId": "spid_kid",
+      "requiredPlugins": "po3_SpellPerkItemDistributor.dll",
+      "optionalPlugins": "",
+      "lootMode": "additive",
+      "protectVanillaLoot": true,
+      "notes": "SPID/KID distributions untouched"
+    }
+  ]
+}
