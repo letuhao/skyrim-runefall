@@ -19,6 +19,8 @@ param(
     [int]$StartupTimeoutSeconds = 40,
     [int]$LoadTimeoutSeconds = 40,
     [int]$ActivationWaitSeconds = 18,
+    [string]$SaveDir = '',
+    [string]$ExpectedPlayerName = '',
     [switch]$ExerciseDeathDrops,
     [switch]$NoInputHotkeys,
     [switch]$DisableActorEquipment,
@@ -101,7 +103,14 @@ if (-not $SaveName) {
 }
 if (-not $SaveName) { throw 'No saveName supplied and no clean-save manifest found.' }
 
-Write-Host "Runefall batch test: save=$SaveName game=$GameRoot"
+if (-not $SaveDir) { $SaveDir = Join-Path $env:USERPROFILE 'Documents\My Games\Skyrim Special Edition\Saves' }
+$saveEss = Join-Path $SaveDir ($SaveName + '.ess')
+$saveSkse = Join-Path $SaveDir ($SaveName + '.skse')
+if (-not (Test-Path $saveEss) -or -not (Test-Path $saveSkse)) {
+    Write-Host "SAVE PREFLIGHT FAILED: ess=$saveEss exists=$((Test-Path $saveEss)) skse=$saveSkse exists=$((Test-Path $saveSkse))"
+    exit 2
+}
+Write-Host "Runefall batch test: save=$SaveName game=$GameRoot saveDir=$SaveDir"
 $proc = Get-CimInstance Win32_Process -Filter "name='SkyrimSE.exe'" -ErrorAction SilentlyContinue |
     Where-Object { $_.ExecutablePath -eq (Join-Path $GameRoot 'SkyrimSE.exe') }
 if (-not $proc) {
@@ -113,31 +122,43 @@ if (-not $proc) {
 }
 
 $conn = ''
-for ($attempt = 0; $attempt -lt 15; ++$attempt) {
+for ($attempt = 0; $attempt -lt 20; ++$attempt) {
     $conn = Invoke-Mcp 'check_connection'
     if ($conn -match '"connected":true') { break }
     Start-Sleep -Seconds 2
 }
-Add-Check 'MCP connected' ($conn -match '"connected":true') ''
+$mcpOk = $conn -match '"connected":true'
+Add-Check 'MCP connected' $mcpOk ''
 $load = Invoke-Mcp 'load_save' @{ saveName = $SaveName }
-$loadRequested = $load -match '"loading":true'
+$loadJson = $load | Out-String
+$loadRequested = $loadJson -match '"loading"\s*:\s*true' -or $loadJson -match '"success"\s*:\s*true'
 if (-not $loadRequested) {
-    Start-Sleep -Seconds 2
+    Start-Sleep -Seconds 3
     $load = Invoke-Mcp 'load_save' @{ saveName = $SaveName }
-    $loadRequested = $load -match '"loading":true'
+    $loadJson = $load | Out-String
+    $loadRequested = $loadJson -match '"loading"\s*:\s*true' -or $loadJson -match '"success"\s*:\s*true'
 }
 $loadDeadline = (Get-Date).AddSeconds($LoadTimeoutSeconds)
 $player = ''
+$playerName = ''
 while ((Get-Date) -lt $loadDeadline) {
     Start-Sleep -Seconds 2
     $player = Invoke-Mcp 'get_player_info'
-    if ($player -match '"name":"([^"]+)"') { break }
+    if ($player -match '"name":"([^"]+)"') { $playerName = $Matches[1] }
+    if ($playerName -and $playerName -ne 'Prisoner') { break }
 }
-$playerName = if ($player -match '"name":"([^"]+)"') { $Matches[1] } else { '' }
-Add-Check 'Player loaded' ($playerName -ne '') "name=$playerName"
-Add-Check 'Load save requested' ($loadRequested -or $playerName -eq 'CleanSave') $SaveName
 $cell = Invoke-Mcp 'get_cell_info'
+$playerOk = ($playerName -ne '') -and ($playerName -ne 'Prisoner')
+if ($ExpectedPlayerName -and $playerName -ne $ExpectedPlayerName) { $playerOk = $false }
+Add-Check 'Load accepted' $loadRequested $SaveName
+Add-Check 'Player loaded in game' $playerOk "name=$playerName"
 Add-Check 'Cell query' ($cell -match '"formId"') ''
+if (-not ($mcpOk -and $loadRequested -and $playerOk -and ($cell -match '"formId"'))) {
+    $report = Join-Path $evidenceDir ("batch-test-{0}.md" -f $stamp)
+    @("# Runefall batch preflight FAILED", "", "cwd=$((Get-Location).Path)", "command=powershell tools/run-batch-test.ps1", "saveName=$SaveName", "saveDir=$SaveDir", "saveEss=$saveEss", "saveSkse=$saveSkse", "", "## Responses", "", "mcp=$conn", "load=$loadJson", "player=$player", "cell=$cell", "", "## Checks", "") + $checks | Set-Content -Path $report -Encoding utf8
+    Write-Host "GAME PREFLIGHT FAILED - no gameplay checks were run; report=$report"
+    exit 2
+}
 $inv = Invoke-Mcp 'get_inventory'
 Add-Check 'Inventory query' ($inv -match '"totalItems"') ''
 $plugins = Invoke-Mcp 'get_loaded_skse_plugins'
