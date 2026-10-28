@@ -25,7 +25,7 @@
   },
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "S1",
-  "updatedAt": "2026-10-28T09:28:26.145Z",
+  "updatedAt": "2026-10-28T09:58:25.214Z",
   "remediation": {
     "S0": {
       "id": "S0",
@@ -98,10 +98,18 @@
     },
     "S1": {
       "id": "S1",
-      "state": "PENDING",
+      "state": "IMPLEMENTING",
       "status": "NOT_STARTED",
-      "contract": null,
-      "specAudit": null,
+      "contract": {
+        "path": "build/slices/S1/spec.md",
+        "sha256": "E94ECAEFF8375ADF282B93F348370AD6677733EE4EDF7F19D1D78F7E17EC9427"
+      },
+      "specAudit": {
+        "path": "build/audit/S1-spec-audit-6b.md",
+        "sha256": "3070A6A64A07180A5C0F15F131F61F22C20396130A636F73A5176283C6CB52B6",
+        "verdict": "APPROVED",
+        "recordCommit": null
+      },
       "implementationAudit": null,
       "commit": null,
       "evidence": [],
