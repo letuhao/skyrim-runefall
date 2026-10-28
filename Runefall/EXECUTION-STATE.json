@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "A3.4",
-  "updatedAt": "2026-10-28T03:02:28.817Z",
+  "currentSlice": "A3.5",
+  "updatedAt": "2026-10-28T03:03:36.722Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -635,11 +635,24 @@
       "id": "A3.4",
       "layer": "L3",
       "slice": "Crafting system",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "full crafting loop; transaction-safe",
       "depends": "A3.3",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/a3.4-rune-gear-20261028.md",
+        "build/evidence/batch-test-20261028-095912.md",
+        "build/evidence/static-gates-20261028-100032.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "affix-budget": "PASS",
+        "rarity-enhancements": "PASS",
+        "socket-budget": "PASS",
+        "affix-tier-cap": "PASS",
+        "progression-gates": "PASS",
+        "batch": "PASS 32/32",
+        "static-gates": "PASS"
+      }
     },
     "A3.5": {
       "id": "A3.5",
@@ -843,9 +856,9 @@
     }
   },
   "currentWork": {
-    "slice": "A3.4",
-    "step": "rune gear",
-    "nextAction": "rune gear tiers, affix budgets, socket limits, progression gates"
+    "slice": "A3.5",
+    "step": "economy and sinks",
+    "nextAction": "gold/material/rune faucets and sinks, vendor pricing, respec/salvage economy"
   },
   "blockers": [],
   "finalRelease": null

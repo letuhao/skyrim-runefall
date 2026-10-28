@@ -1114,3 +1114,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - RuneForge reroll/upgrade/socket/extract/convert/salvage self-test PASS.
 - 8 recipes + salvage COBJ; batch 32/32; static gates 9/9.
+
+
+## A3.4 rune gear - PASS (2026-10-28 10:02)
+
+- Affix/socket budgets and min(5,1+ilvl/20) tier cap; rank/rfTier/ilvl gates.
+- Batch 32/32; static gates 9/9.

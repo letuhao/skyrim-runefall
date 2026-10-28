@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T03:02:28.821Z",
+  "updatedAt": "2026-10-28T03:03:36.726Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -640,6 +640,27 @@
     },
     {
       "slice": "A3.3",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-100032.md",
+      "result": "PASS",
+      "detail": "9/9"
+    },
+    {
+      "slice": "A3.4",
+      "kind": "summary",
+      "path": "build/evidence/a3.4-rune-gear-20261028.md",
+      "result": "PASS",
+      "detail": "affix/socket budgets; rarity enhancements; tier cap; progression gates"
+    },
+    {
+      "slice": "A3.4",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-095912.md",
+      "result": "PASS",
+      "detail": "32/32 loot/equipment"
+    },
+    {
+      "slice": "A3.4",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-100032.md",
       "result": "PASS",
