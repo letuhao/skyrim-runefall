@@ -25,7 +25,7 @@
   },
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "S1",
-  "updatedAt": "2026-10-28T22:28:18.098Z",
+  "updatedAt": "2026-10-28T22:38:43.828Z",
   "remediation": {
     "S0": {
       "id": "S0",
@@ -111,13 +111,13 @@
         "recordCommit": null
       },
       "implementationAudit": {
-        "path": "build/audit/S1-audit-8.md",
-        "sha256": "24F1908A02ACE087DFBC84ADACC41DC5860BDF38A52594B3E334B728C8AD565D",
+        "path": "build/audit/S1-audit-9.md",
+        "sha256": "2923035D244C5049CEE375BEA6BE3B6849A419254E9A529BCFB1811D1A0A3993",
         "verdict": "PARTIAL",
-        "subjectCommit": "e819ecd",
+        "subjectCommit": "4e3094d",
         "recordCommit": null
       },
-      "commit": "4e3094d",
+      "commit": "95be8aa",
       "evidence": [
         {
           "path": "build/slices/S1/spec.md",
@@ -132,74 +132,20 @@
           "exists": true
         },
         {
-          "path": "build/audit/S1-audit-5.md",
-          "sha256": "92DEDFEBBB1CED81AD20BCE2EA281E9637B7F61E2EE3250520CBA81E794A472A",
+          "path": "build/audit/S1-audit-9.md",
+          "sha256": "2923035D244C5049CEE375BEA6BE3B6849A419254E9A529BCFB1811D1A0A3993",
           "kind": "report",
           "exists": true
         },
         {
-          "path": "evidence/S1/self-test.log",
-          "sha256": "E6C3376568A47F6BE52F8AA67CDC19CB834A1A8EFA1AD1E5D3AEA7C1C059A887",
+          "path": "evidence/S1/batch-20261029-053626.md",
+          "sha256": "DACB89020BAA33773376DAE589D019F32E4288C315475A053B75CC44CD094E72",
           "kind": "log",
           "exists": true
         },
         {
-          "path": "evidence/S1/crash-assessment.log",
-          "sha256": "FFBCCD6D2F3B480F5B5BC4D4FF5D9AF70E92628DF96F45A29E16B5464960007F",
-          "kind": "log",
-          "exists": true
-        },
-        {
-          "path": "build/audit/S1-batch-blocker.md",
-          "sha256": "DAC5C32ED8A6EE0F434DAC22B8A6295AE3A71A9124380475B9411636757BB3D1",
-          "kind": "report",
-          "exists": true
-        },
-        {
-          "path": "build/audit/LESSONS-LEARNED-2026-10-29.md",
-          "sha256": "38FB787204D16F9214FCE217A94F96FFA58D96E037C00D08812E3863C47FBC14",
-          "kind": "report",
-          "exists": true
-        },
-        {
-          "path": "evidence/S1/build-proof-20261029-0443.log",
-          "sha256": "20C1C6752E13C733DBAEFA4627FC0C5FF96BF1B44ADCCC32F590DDB5C7F5D69C",
-          "kind": "log",
-          "exists": true
-        },
-        {
-          "path": "build/audit/F7-hotfix.md",
-          "sha256": "90AF2DA0D3E951270E0653B86454C1B119F6CEC73D59B0D5D98E83B2718869A6",
-          "kind": "report",
-          "exists": true
-        },
-        {
-          "path": "build/audit/LESSONS-LEARNED-2026-10-29.md",
-          "sha256": "38FB787204D16F9214FCE217A94F96FFA58D96E037C00D08812E3863C47FBC14",
-          "kind": "report",
-          "exists": true
-        },
-        {
-          "path": "evidence/S1/build-proof-20261029-0443.log",
-          "sha256": "20C1C6752E13C733DBAEFA4627FC0C5FF96BF1B44ADCCC32F590DDB5C7F5D69C",
-          "kind": "log",
-          "exists": true
-        },
-        {
-          "path": "build/audit/LESSONS-LEARNED-2026-10-29.md",
-          "sha256": "38FB787204D16F9214FCE217A94F96FFA58D96E037C00D08812E3863C47FBC14",
-          "kind": "report",
-          "exists": true
-        },
-        {
-          "path": "evidence/S1/batch-20261029-052516.md",
-          "sha256": "2D33779E97829BAED6096567F203E7EE7D23AE7A637B82A0431DB2CC4F4B95F7",
-          "kind": "log",
-          "exists": true
-        },
-        {
-          "path": "evidence/S1/build-proof-20261029-0525.log",
-          "sha256": "C91C00257D84206E4388555A7EFE8FC368EB70B565768A674BF119B068DC3554",
+          "path": "evidence/S1/build-proof-20261029-0536.log",
+          "sha256": "EE1476B5A71226055A29DC0E58FA1C27BC5982803FC85CB23E91C62C32F970D0",
           "kind": "log",
           "exists": true
         },
@@ -212,6 +158,12 @@
         {
           "path": "build/audit/F7-waiver.md",
           "sha256": "D05D3A91AF662420BDCC0CEE53A53D149BF4F8ABB49D18FE9674DC01CB7D1CAC",
+          "kind": "report",
+          "exists": true
+        },
+        {
+          "path": "build/audit/LESSONS-LEARNED-2026-10-29.md",
+          "sha256": "38FB787204D16F9214FCE217A94F96FFA58D96E037C00D08812E3863C47FBC14",
           "kind": "report",
           "exists": true
         }
