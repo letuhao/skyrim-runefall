@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T04:15:04.673Z",
+  "updatedAt": "2026-10-28T04:24:18.218Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -929,6 +929,27 @@
       "slice": "R5.4",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-111422.md",
+      "result": "PASS",
+      "detail": "9/9"
+    },
+    {
+      "slice": "R5.5",
+      "kind": "summary",
+      "path": "build/evidence/r5.5-endgame-20261028.md",
+      "result": "PASS",
+      "detail": "endgame profile, completion state, co-save; batch 38/38"
+    },
+    {
+      "slice": "R5.5",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-112209.md",
+      "result": "PASS",
+      "detail": "38/38; co-save endgame flag"
+    },
+    {
+      "slice": "R5.5",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-112337.md",
       "result": "PASS",
       "detail": "9/9"
     }

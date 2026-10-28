@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "R5.5",
-  "updatedAt": "2026-10-28T04:15:04.668Z",
+  "currentSlice": "R5.6",
+  "updatedAt": "2026-10-28T04:24:18.214Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -995,11 +995,27 @@
       "id": "R5.5",
       "layer": "L5",
       "slice": "Endgame, raids, quests",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "endgame loop complete",
       "depends": "W2.5/W2.6/A3.6",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/r5.5-endgame-20261028.md",
+        "build/evidence/batch-test-20261028-112209.md",
+        "build/evidence/static-gates-20261028-112337.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "endgame-data": "PASS",
+        "final-boss": "PASS boss_5 stage95",
+        "rank-gate": "PASS 90",
+        "boss-tier-gate": "PASS 5",
+        "reward": "PASS 50 runes",
+        "completion-state": "PASS co-save",
+        "self-test": "PASS 38",
+        "batch": "PASS 38/38",
+        "static-gates": "PASS",
+        "scripted-final-kill": "NOT RUN"
+      }
     },
     "R5.6": {
       "id": "R5.6",
@@ -1053,9 +1069,9 @@
     }
   },
   "currentWork": {
-    "slice": "R5.5",
-    "step": "endgame progression",
-    "nextAction": "endgame tiers, final boss, reward loop and completion state"
+    "slice": "R5.6",
+    "step": "localization",
+    "nextAction": "English-only string table coverage, placeholder/format validation, localization policy"
   },
   "blockers": [],
   "finalRelease": null

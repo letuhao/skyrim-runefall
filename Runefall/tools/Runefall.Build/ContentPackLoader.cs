@@ -32,6 +32,7 @@ internal sealed class LoadedPack
     public List<string[]> EconomyRows { get; } = new();
     public List<string[]> ClassRows { get; } = new();
     public List<string[]> CompatRows { get; } = new();
+    public List<string[]> EndgameRows { get; } = new();
     public List<string[]> PerkRows { get; } = new();
 }
 
@@ -94,6 +95,7 @@ internal static class ContentPackLoader
             ReadEconomy(pack, files, errors);
             ReadClasses(pack, files, errors);
             ReadCompatProfiles(pack, files, errors);
+            ReadEndgame(pack, files, errors);
             ReadSkillPerks(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
@@ -725,6 +727,25 @@ internal static class ContentPackLoader
                 Text(item, "profileId", path, errors), Text(item, "requiredPlugins", path, errors),
                 Text(item, "optionalPlugins", path, errors), Text(item, "lootMode", path, errors),
                 B(Bool(item, "protectVanillaLoot", path, errors)), Text(item, "notes", path, errors)
+            });
+        }
+    }
+
+
+    private static void ReadEndgame(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("endgameProfiles", files, errors, "profiles");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"endgame_profiles.profiles[{index++}]";
+            pack.EndgameRows.Add(new[]
+            {
+                Text(item, "profileId", path, errors), Text(item, "finalBossId", path, errors),
+                I(Int(item, "requiredRank", path, errors)), I(Int(item, "requiredBossTier", path, errors)),
+                I(Int(item, "rewardRunes", path, errors)), Text(item, "completionTitleKey", path, errors),
+                I(Int(item, "endgameTier", path, errors))
             });
         }
     }

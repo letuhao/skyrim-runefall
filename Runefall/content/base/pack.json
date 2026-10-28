@@ -116,6 +116,10 @@
     {
       "entity": "compatProfiles",
       "file": "data/compat_profiles.json"
+    },
+    {
+      "entity": "endgameProfiles",
+      "file": "data/endgame_profiles.json"
     }
   ],
   "localization": []

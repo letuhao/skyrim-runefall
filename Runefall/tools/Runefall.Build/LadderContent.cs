@@ -146,6 +146,11 @@ internal static class LadderContent
         "profileId", "requiredPlugins", "optionalPlugins", "lootMode", "protectVanillaLoot", "notes"
     };
 
+    public static readonly string[] EndgameColumns =
+    {
+        "profileId", "finalBossId", "requiredRank", "requiredBossTier", "rewardRunes", "completionTitleKey", "endgameTier"
+    };
+
     public static readonly string[] PerkColumns =
     {
         "perkId", "skill", "rankRequired", "effectKey", "magnitude", "descriptionKey"
@@ -325,6 +330,7 @@ internal static class LadderContent
         WriteCsv(dir, "classes.csv", ClassColumns, pack.ClassRows);
         WriteCsv(dir, "skill_perks.csv", PerkColumns, pack.PerkRows);
         WriteCsv(dir, "compat_profiles.csv", CompatColumns, pack.CompatRows);
+        WriteCsv(dir, "endgame_profiles.csv", EndgameColumns, pack.EndgameRows);
         return errors;
     }
 

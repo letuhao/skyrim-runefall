@@ -33,6 +33,7 @@ namespace Runefall
 		std::uint32_t                                 playerXp = 0;
 		std::string                                   characterClass;
 		std::unordered_map<std::string, std::int32_t> skillRanks;
+		bool                                          endgameComplete = false;
 		std::uint8_t                                  difficultyProfile = 255;
 		std::uint8_t                                  curveId = 1;
 		std::vector<LadderOverride>                   ladderOverrides;

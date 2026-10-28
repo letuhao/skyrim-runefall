@@ -56,6 +56,7 @@ namespace Runefall
 			"classes.csv",
 			"skill_perks.csv",
 			"compat_profiles.csv",
+			"endgame_profiles.csv",
 		};
 	}
 

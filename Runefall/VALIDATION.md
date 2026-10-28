@@ -1203,3 +1203,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - Project-local content/pack authoring skills and fail-closed pack validator.
 - 3 manifests PASS; batch 37/37; static gates 9/9.
+
+
+## R5.5 endgame progression - PASS (2026-10-28 11:14-11:23)
+
+- Endgame profile, rank/boss-tier gates, completion reward/state persisted in co-save.
+- Batch 38/38; static gates 9/9. Scripted final-boss kill not run.

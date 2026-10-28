@@ -34,6 +34,7 @@ ENTITY_SCHEMA = {
     "economyProfiles": "economy-profiles.schema.json",
     "classes": "classes.schema.json",
     "compatProfiles": "compat-profiles.schema.json",
+    "endgameProfiles": "endgame-profiles.schema.json",
     "skillPerks": "skill-perks.schema.json",
     "ratingProfiles": "rating-profiles.schema.json",
     "combatPaceProfiles": "combat-pace-profiles.schema.json",

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "profiles": [
+    {
+      "schemaVersion": 1,
+      "profileId": "default",
+      "finalBossId": "boss_5",
+      "requiredRank": 90,
+      "requiredBossTier": 5,
+      "rewardRunes": 50,
+      "completionTitleKey": "RF_ENDGAME_COMPLETE",
+      "endgameTier": 10
+    }
+  ]
+}
