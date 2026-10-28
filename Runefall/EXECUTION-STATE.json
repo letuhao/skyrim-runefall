@@ -25,7 +25,7 @@
   },
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "S1",
-  "updatedAt": "2026-10-28T11:21:08.992Z",
+  "updatedAt": "2026-10-28T11:36:26.395Z",
   "remediation": {
     "S0": {
       "id": "S0",
@@ -98,8 +98,8 @@
     },
     "S1": {
       "id": "S1",
-      "state": "IMPLEMENTING",
-      "status": "NOT_STARTED",
+      "state": "AUDIT_PENDING",
+      "status": "PARTIAL",
       "contract": {
         "path": "build/slices/S1/spec.md",
         "sha256": "E94ECAEFF8375ADF282B93F348370AD6677733EE4EDF7F19D1D78F7E17EC9427"
@@ -110,8 +110,14 @@
         "verdict": "APPROVED",
         "recordCommit": null
       },
-      "implementationAudit": null,
-      "commit": "adcc529",
+      "implementationAudit": {
+        "path": "build/audit/S1-audit-4.md",
+        "sha256": "D1D7247B4BDACC14B45F7DC2C6F91E27B90F4B8A67333975674BD0E7EA3E7839",
+        "verdict": "FAIL",
+        "subjectCommit": "adcc529",
+        "recordCommit": null
+      },
+      "commit": "3cc6ef1",
       "evidence": [
         {
           "path": "build/slices/S1/spec.md",
@@ -126,20 +132,20 @@
           "exists": true
         },
         {
-          "path": "build/audit/S1-audit-3.md",
-          "sha256": "05F0EB393379C600C69334EEC3AF15EFD55455C3025A238FC95EAC3544262121",
+          "path": "build/audit/S1-audit-4.md",
+          "sha256": "D1D7247B4BDACC14B45F7DC2C6F91E27B90F4B8A67333975674BD0E7EA3E7839",
           "kind": "report",
           "exists": true
         },
         {
-          "path": "evidence/S1/batch-20261028-181823.md",
-          "sha256": "D5A7DF7038347E2F8E26A4F250C8091F4DD73DAD1D0A38D3C34EE2C771C553C9",
+          "path": "evidence/S1/batch-20261028-183341.md",
+          "sha256": "55CE277315874721502D520A7ABE6A78E607368928BE309F26F58DD8349B3A0E",
           "kind": "log",
           "exists": true
         },
         {
           "path": "evidence/S1/self-test.log",
-          "sha256": "EC3EAC9FDBD136F65A2F9E16BB656C78F855674BD513B9235D8AAA9BAD4F6422",
+          "sha256": "9DE1DB4185C4FFBF0B7246B691B969B134511CF6D4249D9E3E1B48DCD74C65AB",
           "kind": "log",
           "exists": true
         },
