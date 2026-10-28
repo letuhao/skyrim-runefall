@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "R5.1",
-  "updatedAt": "2026-10-28T03:52:14.350Z",
+  "currentSlice": "R5.2",
+  "updatedAt": "2026-10-28T03:54:12.463Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -899,11 +899,26 @@
       "id": "R5.1",
       "layer": "L5",
       "slice": "Pack tooling",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "base + test pack; no load-order language",
       "depends": "F0.3/F0.9",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/r5.1-pack-format-20261028.md",
+        "build/evidence/batch-test-20261028-104930.md",
+        "build/evidence/static-gates-20261028-105049.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "format-1": "PASS",
+        "manifest": "PASS 2",
+        "min-base-version": "PASS",
+        "content-files": "PASS",
+        "record-count-editors": "PASS",
+        "base-present": "PASS",
+        "last-loaded-wins": "PASS",
+        "batch": "PASS 36/36",
+        "static-gates": "PASS"
+      }
     },
     "R5.2": {
       "id": "R5.2",
@@ -997,9 +1012,9 @@
     }
   },
   "currentWork": {
-    "slice": "R5.1",
-    "step": "content pack format",
-    "nextAction": "pack schema/manifest/version validation and last-loaded-wins"
+    "slice": "R5.2",
+    "step": "base content packs",
+    "nextAction": "base packs for loot/combat/world/player and pack load-order behavior"
   },
   "blockers": [],
   "finalRelease": null

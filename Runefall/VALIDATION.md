@@ -1179,3 +1179,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - HUD/menu/codex contracts + shells, fail-closed; batch 36/36; static gates 9/9.
 - Visual Prisma host screenshot not available (unverified, not claimed PASS).
+
+
+## R5.1 content pack format - PASS (2026-10-28 10:52-10:54)
+
+- Format-1 manifests (unique/hunt) validated; base present; version/contentFiles/conflict fields.
+- Batch 36/36; static gates 9/9.

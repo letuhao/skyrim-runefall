@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T03:52:14.355Z",
+  "updatedAt": "2026-10-28T03:54:12.467Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -843,6 +843,27 @@
     },
     {
       "slice": "P4.7",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-105049.md",
+      "result": "PASS",
+      "detail": "9/9"
+    },
+    {
+      "slice": "R5.1",
+      "kind": "summary",
+      "path": "build/evidence/r5.1-pack-format-20261028.md",
+      "result": "PASS",
+      "detail": "format1 manifests; 2 packs valid; version/contentFiles/conflicts"
+    },
+    {
+      "slice": "R5.1",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-104930.md",
+      "result": "PASS",
+      "detail": "36/36; PackManager 2 packs valid"
+    },
+    {
+      "slice": "R5.1",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-105049.md",
       "result": "PASS",
