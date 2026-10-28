@@ -82,7 +82,7 @@ namespace Runefall
 		std::int32_t                  maxRuneLevel = 100;
 		std::vector<std::int32_t>     breakthroughBonuses;
 		float                         xpBase = 100.0f;
-		float                         xpGrowth = 1.15f;
+		float                         xpGrowth = 1.015f;
 		int                           bossBreakEvery = 10;
 		std::size_t                   attributeEffectCount = 0;
 	};

@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "R6.3",
-  "updatedAt": "2026-10-28T04:36:38.286Z",
+  "currentSlice": "R6.4",
+  "updatedAt": "2026-10-28T04:41:46.531Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -1097,11 +1097,23 @@
       "id": "R6.3",
       "layer": "L6",
       "slice": "Balance calibration",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "targets met or documented",
       "depends": "C1.7/P4.1/P4.2",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/r6.3-balance-20261028.md",
+        "build/evidence/batch-test-20261028-113956.md",
+        "build/evidence/static-gates-20261028-114102.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "40h-pacing": "PASS 37.4h",
+        "stage-curve": "PASS +10 1.16x/+20 1.35x",
+        "pace-bands": "PASS 10",
+        "xp-growth-calibrated": "PASS 1.015",
+        "batch": "PASS 38/38",
+        "static-gates": "PASS 10/10"
+      }
     },
     "R6.4": {
       "id": "R6.4",
@@ -1115,9 +1127,9 @@
     }
   },
   "currentWork": {
-    "slice": "R6.3",
-    "step": "balance calibration",
-    "nextAction": "PCR/NCR/TTK/TTD calibration against 40h pacing and combat pace profiles"
+    "slice": "R6.4",
+    "step": "release gate",
+    "nextAction": "version/changelog, archive, verify release tree, final evidence"
   },
   "blockers": [],
   "finalRelease": null

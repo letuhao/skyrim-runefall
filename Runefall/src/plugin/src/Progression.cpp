@@ -54,7 +54,7 @@ namespace Runefall
 		pointsPerLevel = 3;
 		maxRuneLevel = 100;
 		xpBase = 100.0f;
-		xpGrowth = 1.15f;
+		xpGrowth = 1.015f;
 		bossBreakEvery = 10;
 		breakthroughBonuses = { 9, 12, 15, 18, 21, 24, 27, 30, 33, 36 };
 		const auto* table = DataStore::Get().GetTable("player_progression.csv");
