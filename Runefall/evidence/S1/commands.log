@@ -1,9 +1,10 @@
 cwd=D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall
 command=powershell tools/run-batch-test.ps1
 exit=0
-batchReport=build/evidence/batch-test-20261028-171725.md
-command=python build/slices/S1/tools/export_fixtures.py && python build/slices/S1/tools/decode_cosave.py ...
+batchReport=evidence/S1/batch-20261028-174124.md
+command=python build/slices/S1/tools/export_fixtures.py && verify_fixtures.py && decode_cosave.py
 exit=0
 command=powershell tools/run-static-gates.ps1
 exit=0
-staticGates=build/evidence/static-gates-20261028-171901.md
+staticGates=evidence/S1/static-gates-20261028-174302.md
+note=2026-10-28 17:37 transient BSWin32KeyboardDevice crash in batch; rerun 17:41 passed with no new crash; no Runefall frames in crash stack; documented as environment/input risk

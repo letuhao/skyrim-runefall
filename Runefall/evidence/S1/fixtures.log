@@ -1,7 +1,16 @@
 schema2_tier5.bin 166 B846584A0BF34CBEA4ADC60070311DB329E9536B68BE27B4917FC7523AA80B81
+schema2_tier2.bin 166 7E35B27D6A2FB2FD689CDFCE60E43696F47620CD16C43CF45B14A3253E42D56E
 schema1_legacy.bin 158 C06AE63FF8E1D43F5E074179A34B259BE334D200D8F93C07021254BB7201DB2F
-baseline_v3.bin 190 76B8EAF50351E738EB0A6538C5C407D32EEA8872B2F9DB96C7BDE0066CEA6FA6
+baseline_v3.bin 192 DC78DF40A37CB0D18A8C635550FE4057FA60D8134106F94D35A50CF395CBDE0C
 fixtures written
+PASS schema2_tier5.bin: v2 header
+PASS schema2_tier5.bin: runeTier 5 -> rank 100
+PASS schema2_tier2.bin: v2 header
+PASS schema2_tier2.bin: runeTier 2 -> rank 40
+PASS baseline_v3.bin: v3 header
+PASS baseline_v3.bin: ladder fields
+RESULT: PASS
 build/slices/S1/fixtures/schema2_tier5.bin {"schema": 2, "flags": null, "saveVersion": 2, "sectionCount": 9, "sections": [[1, 52], [2, 20], [3, 4], [4, 4], [5, 4], [7, 4], [8, 4], [9, 4], [10, 4]], "trailing": 0}
+build/slices/S1/fixtures/schema2_tier2.bin {"schema": 2, "flags": null, "saveVersion": 2, "sectionCount": 9, "sections": [[1, 52], [2, 20], [3, 4], [4, 4], [5, 4], [7, 4], [8, 4], [9, 4], [10, 4]], "trailing": 0}
 build/slices/S1/fixtures/schema1_legacy.bin {"schema": 1, "flags": null, "saveVersion": 1, "sectionCount": 9, "sections": [[1, 44], [2, 20], [3, 4], [4, 4], [5, 4], [7, 4], [8, 4], [9, 4], [10, 4]], "trailing": 0}
-build/slices/S1/fixtures/baseline_v3.bin {"schema": 3, "flags": 0, "saveVersion": 3, "sectionCount": 10, "sections": [[1, 52], [2, 20], [3, 4], [4, 4], [5, 4], [7, 4], [8, 4], [9, 4], [10, 4], [11, 14]], "trailing": 0}
+build/slices/S1/fixtures/baseline_v3.bin {"schema": 3, "flags": 0, "saveVersion": 3, "sectionCount": 10, "sections": [[1, 52], [2, 20], [3, 4], [4, 4], [5, 4], [7, 4], [8, 4], [9, 4], [10, 4], [11, 16]], "trailing": 0}

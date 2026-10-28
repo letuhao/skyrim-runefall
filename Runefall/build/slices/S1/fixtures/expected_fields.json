@@ -6,6 +6,13 @@
     "curveId": 1,
     "bossKillTier": 2
   },
+  "schema2_tier2": {
+    "playerRank": 40,
+    "playerStage": 40,
+    "difficultyProfile": 255,
+    "curveId": 1,
+    "bossKillTier": -1
+  },
   "schema1_legacy": {
     "playerRank": 1,
     "playerStage": 1,

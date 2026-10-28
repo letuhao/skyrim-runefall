@@ -245,11 +245,23 @@ namespace Runefall
 			if (!validKey(key, 32) || !validKey(version, 32)) return {};
 		for (const auto& [skill, rank] : a_state.skillRanks)
 			if (!validKey(skill, 64) || rank < 1 || rank > 100) return {};
+		if (a_state.playerRank < 1 || a_state.playerRank > 100 || a_state.playerStage < 1 || a_state.playerStage > 100 ||
+			a_state.playerXp > 10000000 || (a_state.difficultyProfile != 255 && (a_state.difficultyProfile < 1 || a_state.difficultyProfile > 5)) ||
+			a_state.curveId < 1 || a_state.curveId > 5)
+			return {};
 		for (const auto& item : a_state.items) {
-			if (item.registryId == 0 || item.rarity > 5 || item.ilvl > 1000 || item.socketCount > 3 ||
-				item.enhancementCount > 5 || !validKey(item.enhancements[0].affixId, 64))
+			if (item.registryId == 0 || item.rarity > 5 || item.ilvl > 1000 || item.socketCount > 3 || item.enhancementCount > 5)
 				return {};
+			for (int r = 0; r < 3; ++r)
+				if (item.socketRunes[r] < 0 || item.socketRunes[r] > 5) return {};
+			for (std::uint8_t e = 0; e < 5; ++e) {
+				const auto& enhancement = item.enhancements[e];
+				if (!validKey(enhancement.affixId, 64) || !validKey(enhancement.effectEditorId, 64)) return {};
+				if (enhancement.category < 0 || enhancement.category > 5 || enhancement.tier < 0 || enhancement.tier > 5) return {};
+			}
 		}
+		for (const auto& entry : a_state.ladderOverrides)
+			if (entry.key == 0 || entry.stage < 1 || entry.stage > 100 || entry.flags > 1) return {};
 		auto sortedItems = a_state.items;
 		std::sort(sortedItems.begin(), sortedItems.end(), [](const ItemMetadata& a, const ItemMetadata& b) {
 			return a.registryId != b.registryId ? a.registryId < b.registryId : a.baseFormId < b.baseFormId;
@@ -407,7 +419,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 			logger::error("co-save: reject version-mirror");
 			return false;
 		}
-		if (!reader.U32(sectionCount)) return false;
+		if (!reader.U32(sectionCount) || sectionCount == 0) return false;
 		constexpr std::uint32_t kMaxSections = 64;
 		if (sectionCount > kMaxSections) { logger::error("co-save: reject section-count {}", sectionCount); return false; }
 		std::array<bool, 16> seenSections{};
@@ -479,7 +491,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 						return false;
 					}
 					for (auto& rune : item.socketRunes)
-						if (!sectionReader.I32(rune))
+						if (!sectionReader.I32(rune) || rune < 0 || rune > 5)
 							return false;
 					if (!sectionReader.U8(item.enhancementCount) || item.enhancementCount > 5)
 						return false;
@@ -489,6 +501,8 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 						if (!sectionReader.I32(enhancement.category) || !sectionReader.I32(enhancement.tier) || !sectionReader.Float(enhancement.magnitude))
 							return false;
 						if (!sectionReader.I32(enhancement.duration) || !sectionReader.I32(enhancement.area))
+							return false;
+						if (enhancement.category < 0 || enhancement.category > 5 || enhancement.tier < 0 || enhancement.tier > 5)
 							return false;
 					}
 					if (!sectionReader.U16(item.tags))
@@ -608,6 +622,10 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 			default:
 				break;
 			}
+			if (id >= 1 && id <= 12 && sectionReader.Remaining() != 0) {
+				logger::error("co-save: reject section-trailing {}", id);
+				return false;
+			}
 		}
 		if (reader.Remaining() != 0) { logger::error("co-save: reject trailing bytes {}", reader.Remaining()); return false; }
 		MigrateLegacy(a_out, schema);
@@ -673,7 +691,6 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 	void CoSave::OnLoad(SKSE::SerializationInterface* a_intfc)
 	{
 		if (!a_intfc) return;
-		CoSave::Get().Reset();
 
 		std::uint32_t type = 0;
 		std::uint32_t size = 0;
@@ -709,7 +726,9 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 		if (!loaded) {
 			CoSave::Get().Reset();
 			ItemRegistry::Get().Clear();
-			logger::info("co-save: no record; defaults");
+			Progression::Get().LoadFromCoSave();
+			MaterialRegistry::Get().LoadFromCoSave();
+			logger::info("co-save: no valid record; defaults");
 		}
 	}
 
@@ -897,6 +916,26 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 		const auto thousandBytes = Encode(thousand);
 		if (thousandBytes.empty() || thousandBytes.size() > kMaxEncodedBytes)
 			return { "CoSave.SelfTest", CheckStatus::Fail, "1000-item budget failed" };
+
+		CoSaveState badRank = sample;
+		badRank.playerRank = 0;
+		if (!Encode(badRank).empty()) return { "CoSave.SelfTest", CheckStatus::Fail, "rank range not enforced" };
+		CoSaveState badSocket = sample;
+		badSocket.items[0].socketRunes[0] = 9;
+		if (!Encode(badSocket).empty()) return { "CoSave.SelfTest", CheckStatus::Fail, "socket range not enforced" };
+		CoSaveState badEnhancement = sample;
+		badEnhancement.items[0].enhancements[0].category = 7;
+		if (!Encode(badEnhancement).empty()) return { "CoSave.SelfTest", CheckStatus::Fail, "enhancement range not enforced" };
+		CoSaveState badOverride = sample;
+		badOverride.ladderOverrides[0].flags = 2;
+		if (!Encode(badOverride).empty()) return { "CoSave.SelfTest", CheckStatus::Fail, "override range not enforced" };
+		auto zeroSections = encoded;
+		zeroSections[12] = 0; zeroSections[13] = 0; zeroSections[14] = 0; zeroSections[15] = 0;
+		CoSaveState zeroTarget;
+		if (Decode(zeroSections, zeroTarget)) return { "CoSave.SelfTest", CheckStatus::Fail, "sectionCount 0 accepted" };
+		std::vector<std::uint8_t> oversizedRecord(kMaxRecordBytes + 1, 0);
+		CoSaveState oversizedTarget;
+		if (LoadRecord(oversizedRecord, kSaveVersion, oversizedTarget)) return { "CoSave.SelfTest", CheckStatus::Fail, "oversized record accepted" };
 
 		// Eviction is smallest FormID, not FIFO.
 		auto savedContainers = CoSave::Get().State().generatedContainers;
