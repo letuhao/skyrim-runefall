@@ -25,7 +25,7 @@
   },
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "S1",
-  "updatedAt": "2026-10-28T09:58:25.214Z",
+  "updatedAt": "2026-10-28T11:01:48.834Z",
   "remediation": {
     "S0": {
       "id": "S0",
@@ -111,8 +111,45 @@
         "recordCommit": null
       },
       "implementationAudit": null,
-      "commit": null,
-      "evidence": [],
+      "commit": "4411d3b",
+      "evidence": [
+        {
+          "path": "build/slices/S1/spec.md",
+          "sha256": "E94ECAEFF8375ADF282B93F348370AD6677733EE4EDF7F19D1D78F7E17EC9427",
+          "kind": "report",
+          "exists": true
+        },
+        {
+          "path": "build/audit/S1-spec-audit-6b.md",
+          "sha256": "3070A6A64A07180A5C0F15F131F61F22C20396130A636F73A5176283C6CB52B6",
+          "kind": "report",
+          "exists": true
+        },
+        {
+          "path": "build/audit/S1-audit-2.md",
+          "sha256": "780DF10A96AA3F242A1C6284266E794AF45CECF9575A7BC112131405EE6CE575",
+          "kind": "report",
+          "exists": true
+        },
+        {
+          "path": "evidence/S1/batch-20261028-175819.md",
+          "sha256": "C9F7C1DB17AD507ABBEF6D5C8FCBBCCB751E13AF8C4DE8885FE0B3F5505C52E8",
+          "kind": "log",
+          "exists": true
+        },
+        {
+          "path": "evidence/S1/self-test.log",
+          "sha256": "A6A4B32894B2433A8D2C2FEE9B16E77A57E81F88A1A04B76054DED6E08491A13",
+          "kind": "log",
+          "exists": true
+        },
+        {
+          "path": "build/slices/S1/fixtures/canonical_v3.bin",
+          "sha256": "DC78DF40A37CB0D18A8C635550FE4057FA60D8134106F94D35A50CF395CBDE0C",
+          "kind": "data",
+          "exists": true
+        }
+      ],
       "blockers": [],
       "followups": []
     },
