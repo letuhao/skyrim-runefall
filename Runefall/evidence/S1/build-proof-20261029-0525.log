@@ -1,0 +1,12 @@
+cwd=D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall
+command=cmd /c C:/Users/NeneScarlet/.cache/build-runefall.bat
+buildExit=0
+buildOutput=Linking CXX shared library Runefall.dll; RunefallStage.dll
+testEnvDll=
+J:\SkyrimTest\1.6.1170\Data\SKSE\Plugins\Runefall.dll
+testEnvDllSha256=
+B003E1D268D120D1418A41F8F8072827E179C302361D2DA214C662EB2D07BFEC
+CoSave.cppLastWrite=
+10/29/2026 5:23:48 AM
+batch=evidence/S1/batch-20261029-052516.md
+verified=build after final edits; DLL hash matches test env; batch 05:25 self-tests 38/38

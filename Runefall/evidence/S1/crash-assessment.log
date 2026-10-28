@@ -1,4 +1,6 @@
-crash-2026-10-28-14-29-46.log 21:29 BSWin32KeyboardDevice; no Runefall frame
-crash-2026-10-28-21-26-46.log 04:26 Runefall.dll ConsoleLog::Print diagnostics (F7); fixed in cda5dbe, F7 retest logged diagnostics with no crash
-batch 04:24 and 04:42 loaded CleanSave with preflight PASS and no new crash
-assessment=F7 crash resolved by removing ConsoleLog::Print; input-device crash remains environmental and is not waived
+crashes observed 2026-10-28/29:
+- crash-2026-10-28-14-29-46.log (21:29): BSWin32KeyboardDevice input path; no Runefall frame.
+- crash-2026-10-28-21-26-46.log (04:26): Runefall.dll!RE::ConsoleLog::Print from F7 diagnostics; fixed by removing ConsoleLog::Print (cda5dbe).
+- F7 retest after fix: diagnostics logged, game process alive, no new crash.
+- batch 2026-10-29 05:25: PASS, preflight loaded CleanSave, self-tests 38/38, no new crash log.
+assessment: F7 crash resolved; input-device crash remains environmental and is not waived.

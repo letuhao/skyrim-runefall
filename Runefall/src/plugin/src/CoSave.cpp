@@ -744,7 +744,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 		std::uint32_t version = 0;
 		std::vector<Record> records;
 		while (a_intfc->GetNextRecordInfo(type, version, size)) {
-			if (size > kMaxRecordBytes) { logger::error("co-save: reject record-size {}", size); continue; }
+			if (size > kMaxRecordBytes) { MarkReject("co-save: reject record-size"); logger::error("co-save: reject record-size {}", size); continue; }
 			Record record{ type, version, std::vector<std::uint8_t>(size) };
 			if (size > 0 && a_intfc->ReadRecordData(record.bytes.data(), size) != size) {
 				logger::error("co-save: short read on record {:08X}", type);
@@ -1101,6 +1101,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 		for (const auto* token : {
 			"co-save: reject section-count",
 			"co-save: reject schema",
+			"co-save: reject record-size",
 			"co-save: reject flags",
 			"co-save: reject version-mirror",
 			"co-save: reject item-count",
@@ -1117,6 +1118,8 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 			"co-save: reject item.tags",
 			"co-save: reject hunt-count",
 			"co-save: reject string.map-key",
+			"co-save: reject string.material",
+			"co-save: reject string.hunt",
 			"co-save: reject material-count",
 			"co-save: reject pack-count",
 			"co-save: reject string.pack",
