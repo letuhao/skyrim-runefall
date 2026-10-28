@@ -1,0 +1,30 @@
+cwd=D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall
+command=python tools/audit-validators/run_gate_fixtures.py
+exit=0
+output_sha256=4467E2331F6EC8DFD771F1D1B1CD2765C7706972C1173475124BF093982A8ECC
+output:
+# S0 audit gate negative fixtures
+
+| positive.json | expected GATE-PASS | got GATE-PASS | exit 0 | PASS |  |
+| e01-schema.json | expected GATE-E01 | got GATE-E01 | exit 1 | PASS | state schema invalid: 2 was expected
+
+Failed validating 'const' in schema['properties']['schemaVersion']:
+    {'const': 2}
+
+On instance['schemaVersion']:
+    1 |
+| e02-baseline.json | expected GATE-E02 | got GATE-E02 | exit 1 | PASS | baseline counts mismatch: {'PASS': 6, 'PARTIAL': 30, 'FAIL': 11} |
+| e03-false-pass.json | expected GATE-E03 | got GATE-E03 | exit 1 | PASS | F0.7: status PASS contradicts baseline FAIL |
+| e04-audit-missing.json | expected GATE-E04 | got GATE-E04 | exit 1 | PASS | S0 audit missing and not in bootstrap state |
+| e05-missing-evidence.json | expected GATE-E05 | got GATE-E05 | exit 1 | PASS | missing evidence build/audit/does-not-exist.md |
+| e06-stale-audit.json | expected GATE-E06 | got GATE-E06 | exit 1 | PASS | S0 audit subjectCommit != slice commit |
+| e08-blocker.json | expected GATE-E08 | got GATE-E08 | exit 1 | PASS | unresolved blockers in S0 |
+| e05b-empty-evidence.json | expected GATE-E05 | got GATE-E05 | exit 1 | PASS | empty evidence build/audit/fixtures/S0/empty.log |
+| e09-doc-claim.json | expected GATE-E09 | got GATE-E09 | exit 1 | PASS | STATE.md: forbidden current claim '48/48 PASS' |
+| e10-history.json | expected GATE-E10 | got GATE-E10 | exit 1 | PASS | HISTORY hash mismatch |
+| release-incomplete | expected NONZERO | got 1 | exit 1 | PASS | release gate must reject incomplete program |
+| dirty-tracked | expected GATE-E07 | got GATE-E07 | exit 1 | PASS | dirty tree rejection |
+
+fixtureExit=0
+
+

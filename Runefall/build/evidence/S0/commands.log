@@ -1,0 +1,12 @@
+# S0 command evidence summary
+cwd=D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall
+Each entry below points to a raw log in this directory; each raw log records cwd, command, exit code and output SHA-256.
+
+- audit-gate.log: powershell tools/audit-gate.ps1 -StatePath EXECUTION-STATE.json -Mode truthfulness -Bootstrap -SkipGitCheck
+- audit-gate-release-reject.log: same, -Mode release (expected exit 1)
+- negative-fixtures.log: python tools/audit-validators/run_gate_fixtures.py (expected exit 0)
+- normalize.log: python build/audit/normalize_legacy.py --state EXECUTION-STATE.json --out build/audit/normalize_legacy.output.json
+- git-durability.log: git check-ignore -v and git add -n on S0 governance paths
+- status-counts.log: state schemaVersion/status/slice counts
+
+No command in this slice rebuilds the DLL, runs static gates, or launches the game.

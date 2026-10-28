@@ -1,6 +1,13 @@
-schemaVersion 2
-overallStatus IN_PROGRESS
-currentSlice S0
-slices 48
-statusCounts {'PASS': 7, 'PARTIAL': 30, 'FAIL': 11}
-remediation 16
+cwd=D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall
+command=read EXECUTION-STATE.json and count statuses
+exit=0
+output_sha256=52B291409E966ED59E0B7ACA5C3858057E9063F523DEDB9A6F9C48230080E5C5
+output:
+schemaVersion=2
+overallStatus=IN_PROGRESS
+currentSlice=S0
+slices=48
+pass=7
+partial=30
+fail=11
+remediation=16

@@ -56,6 +56,10 @@ def main() -> None:
     if set(slices) != set(PASS_IDS)|set(FAIL_IDS)|(set(slices)-set(PASS_IDS)-set(FAIL_IDS)):
         pass
     statuses = {k:v["status"] for k,v in slices.items()}
+    for sid, st in statuses.items():
+        expected = "PASS" if sid in PASS_IDS else "FAIL" if sid in FAIL_IDS else "PARTIAL"
+        if st != expected:
+            fail("GATE-E03", f"{sid}: status {st} contradicts baseline {expected}")
     if {k for k,v in statuses.items() if v=="PASS"} != PASS_IDS: fail("GATE-E02","PASS slice set mismatch")
     if {k for k,v in statuses.items() if v=="FAIL"} != FAIL_IDS: fail("GATE-E02","FAIL slice set mismatch")
     if {k for k,v in statuses.items() if v=="PARTIAL"} != set(slices)-PASS_IDS-FAIL_IDS: fail("GATE-E02","PARTIAL set mismatch")
@@ -82,7 +86,7 @@ def main() -> None:
     if s0.get("implementationAudit"):
         aud = s0["implementationAudit"]
         if aud.get("verdict") != "PASS": fail("GATE-E04","S0 implementation audit is not PASS")
-        if aud.get("subjectCommit") != s0.get("commit"): fail("GATE-E04","S0 audit subjectCommit != slice commit")
+        if aud.get("subjectCommit") != s0.get("commit"): fail("GATE-E06","S0 audit subjectCommit != slice commit")
         for ev in s0.get("evidence",[]):
             p = repo/ev["path"]
             if not p.is_file(): fail("GATE-E05",f"missing evidence {ev['path']}")

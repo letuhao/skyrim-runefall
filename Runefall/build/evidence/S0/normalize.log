@@ -1,0 +1,7 @@
+cwd=D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall
+command=python build/audit/normalize_legacy.py --state EXECUTION-STATE.json --out build/audit/normalize_legacy.output.json
+exit=0
+output_sha256=56EAD78BD6B9721FF2ACD02E5425725F73953C58E8AF171075E741C70002E373
+output:
+normalize_sha256=D8B899E179170D6EB716634D27EC7CDA1E151AB8778BC4282F277370B79D4B92
+

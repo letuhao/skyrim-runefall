@@ -1,0 +1,1587 @@
+{
+  "checklists": {
+    "A3.1": {
+      "affix-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 600"
+      },
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 32/32"
+      },
+      "container-actor-quest": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "deterministic-rng": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "general-drops": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 36"
+      },
+      "rarity-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 6"
+      },
+      "rarity-weights": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 36"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "weighted-rarity-test": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "A3.2": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 32/32"
+      },
+      "material-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 31"
+      },
+      "material-sink": {
+        "criterionStatus": "PASS",
+        "detail": "PASS recipes/COBJ"
+      },
+      "salvage-engine": {
+        "criterionStatus": "PASS",
+        "detail": "PASS RuneForge"
+      },
+      "salvage-yield-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "tiers-families": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 4x3"
+      }
+    },
+    "A3.3": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 32/32"
+      },
+      "convert": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "extract": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "recipes": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 8"
+      },
+      "reroll": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "rune-costs": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "salvage": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "socket": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "upgrade": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "A3.4": {
+      "affix-budget": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "affix-tier-cap": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 32/32"
+      },
+      "progression-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "rarity-enhancements": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "socket-budget": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "A3.5": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 33/33"
+      },
+      "economy-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "faucets": {
+        "criterionStatus": "PASS",
+        "detail": "PASS existing"
+      },
+      "item-value": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "respec-cost": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "rune-material-value": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "self-test": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 33"
+      },
+      "sinks": {
+        "criterionStatus": "PASS",
+        "detail": "PASS existing"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "vendor-spread": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "A3.6": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 33/33"
+      },
+      "formid-catalog": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 573"
+      },
+      "load-order-independent-cache": {
+        "criterionStatus": "PASS",
+        "detail": "PASS W2.7"
+      },
+      "pack-manifests": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 2"
+      },
+      "plugin-relative-ids": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 9/9"
+      },
+      "vanilla-loot-preserved": {
+        "criterionStatus": "PASS",
+        "detail": "PASS design"
+      }
+    },
+    "A3.7": {
+      "actor": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 33/33"
+      },
+      "co-save": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "container": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "crafting": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "economy": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "hunt": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "no-crash": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "quest": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "C1.1": {
+      "apply-once": {
+        "criterionStatus": "PASS",
+        "detail": "PASS fallback disabled"
+      },
+      "classifier-matrix": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "damage-hook": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 0x104 Actor/Character/PlayerCharacter"
+      },
+      "in-game-direct-samples": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "no-crash": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "ranged/spell/DoT/explosion observation": {
+        "criterionStatus": "DEFERRED",
+        "detail": "DEFERRED to C1.3 same hook"
+      }
+    },
+    "C1.2": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 23/23"
+      },
+      "explicit-profiles": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 19"
+      },
+      "keyword-rules": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 7"
+      },
+      "known-draugr-in-game": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "no-crash": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "unknown-fallback": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "C1.3": {
+      "anomaly-policy": {
+        "criterionStatus": "FAIL",
+        "detail": "DATA false pending anomaly module"
+      },
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 23/23"
+      },
+      "cap-70-per-stage-3-floor-5": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "dot-50": {
+        "criterionStatus": "PASS",
+        "detail": "PASS (classifier flag)"
+      },
+      "formula": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "no-crash": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "npc-protection": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 13->11.7"
+      },
+      "penetration-sources": {
+        "criterionStatus": "FAIL",
+        "detail": "PENDING C1.8"
+      },
+      "player-no-protection": {
+        "criterionStatus": "PASS",
+        "detail": "PASS in-game 25 unchanged"
+      },
+      "reflected-environmental-bypass": {
+        "criterionStatus": "PASS",
+        "detail": "PASS (classifier flag)"
+      }
+    },
+    "C1.4": {
+      "apply-once": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 24/24"
+      },
+      "budget-validation": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "elite-boss-overlays": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "no-crash": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "package-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 20"
+      },
+      "perk-data-seam": {
+        "criterionStatus": "PASS",
+        "detail": "PASS (empty until content)"
+      },
+      "selection": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "spell-stat-ability": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "C1.5": {
+      "applied-once": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 25/25"
+      },
+      "cleanup": {
+        "criterionStatus": "FAIL",
+        "detail": "future-only by design (vanilla equipment persistent)"
+      },
+      "equipment-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 15"
+      },
+      "gear-apply": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 5 items"
+      },
+      "perks": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 1 perk"
+      },
+      "random-chance-field": {
+        "criterionStatus": "PASS",
+        "detail": "PASS (100 default)"
+      },
+      "save-load": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "toggle-off": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "toggle-on": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "C1.6": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 25/25"
+      },
+      "breakthrough-9-12-15": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "effects-caps-respec": {
+        "criterionStatus": "PASS",
+        "detail": "PASS existing"
+      },
+      "nine-attributes": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "points-per-level-3": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "self-test": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "stage-award-api": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "C1.7": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 26/26"
+      },
+      "display-profile": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "pace-profiles": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 2x5"
+      },
+      "pcr-ncr-rcr": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "rating-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "self-test": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "ttk-ttd-q": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "C1.8": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 26/26"
+      },
+      "consumable-channel": {
+        "criterionStatus": "FAIL",
+        "detail": "data seam false"
+      },
+      "formula": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "mage-channel": {
+        "criterionStatus": "PASS",
+        "detail": "PASS data"
+      },
+      "penetration-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "player-stage-input": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "self-test": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "weapon-channel": {
+        "criterionStatus": "PASS",
+        "detail": "PASS data"
+      }
+    },
+    "F0.1": {
+      "batch-no-crash": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "co-save-v3": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "curve-legacy-load": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "default-difficulty": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "generator-validator": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "host-core-tests-benchmark": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "request-abi": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "table-validation": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "tier-keyword-retirement": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "wire-into-loot-rank": {
+        "criterionStatus": "PASS",
+        "detail": "PASS_BRIDGE"
+      }
+    },
+    "F0.2": {
+      "base-pack": {
+        "criterionStatus": "PASS",
+        "detail": "PASS_7_entities"
+      },
+      "schemas": {
+        "criterionStatus": "PASS",
+        "detail": "PASS_28"
+      },
+      "static-gate": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "validation": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "F0.3": {
+      "batch-regression": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "invalid-pack-rejection-path": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "pack-loader": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gate": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "valid-pack-build": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "F0.4": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "csv-parser-removed": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "json-generation": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "runtime-json-loader": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "F0.5": {
+      "save-size": {
+        "criterionStatus": "FAIL",
+        "detail": "1939 bytes observed"
+      },
+      "section-11": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "truncation-test": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "v2-to-v3-migration": {
+        "criterionStatus": "PASS",
+        "detail": "PASS (schema1 observed)"
+      }
+    },
+    "F0.6": {
+      "host-core-target": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "json-data-test": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "lookup-benchmark": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 1.53ns"
+      },
+      "static-gate": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "zero-allocation": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "F0.7": {
+      "cache-write-read": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "known-humanoid": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "race-profiles": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 19"
+      },
+      "roles": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 15"
+      },
+      "self-test": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 21/21"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "unknown-provisional": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "F0.8": {
+      "automatic-cache-invalidation": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "batch-rescan-check": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "delayed-startup-scan": {
+        "criterionStatus": "PASS",
+        "detail": "PASS (1s test config; production 600s)"
+      },
+      "diagnostics-resolver-fields": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "manual-rescan-hotkey": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "F0.9": {
+      "json-only-data-tree": {
+        "criterionStatus": "PASS",
+        "detail": "PASS (0 CSV, 30 JSON)"
+      },
+      "poc-regression": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 21/21"
+      },
+      "release-verifier-json": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "runtime-json": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "P4.1": {
+      "attribute-award": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 33/33"
+      },
+      "boss-gate": {
+        "criterionStatus": "PASS",
+        "detail": "PASS code"
+      },
+      "co-save-xp": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 418B"
+      },
+      "rank-1-100": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "xp-award": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 10/50"
+      },
+      "xp-curve": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "P4.2": {
+      "attribute-bonuses": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 34/34"
+      },
+      "class-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 3"
+      },
+      "class-permanent": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "co-save-class-skills": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "skill-ranks": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 18 defs"
+      },
+      "starting-skills": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "P4.3": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 35/35"
+      },
+      "derived-bonus": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "perk-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 6"
+      },
+      "rank-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "self-test": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 35"
+      },
+      "skill-defs": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 18"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "P4.4": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 36/36"
+      },
+      "fail-closed": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "menu-snapshot-rank-class": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "prisma-dependency": {
+        "criterionStatus": "PASS",
+        "detail": "PASS declared"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "ui-shell": {
+        "criterionStatus": "PASS",
+        "detail": "PASS source"
+      },
+      "view-model": {
+        "criterionStatus": "PASS",
+        "detail": "PASS runefall-hud"
+      }
+    },
+    "P4.5": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 36/36"
+      },
+      "fail-closed": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "rank-widget": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "stats": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "target-threat": {
+        "criterionStatus": "PASS",
+        "detail": "PASS data"
+      },
+      "visual-host": {
+        "criterionStatus": "NOT_VERIFIED",
+        "detail": "NOT VERIFIED (no Prisma host screenshot)"
+      },
+      "xp-bar": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "P4.6": {
+      "anomaly-codex": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 36/36"
+      },
+      "character-tab": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "gear-tab": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "menu-model": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 4 tabs"
+      },
+      "menu-shell": {
+        "criterionStatus": "PASS",
+        "detail": "PASS source"
+      },
+      "skills-tab": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "visual-host": {
+        "criterionStatus": "NOT_VERIFIED",
+        "detail": "NOT VERIFIED"
+      }
+    },
+    "P4.7": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 36/36"
+      },
+      "codex": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "fail-closed": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "hud-contract": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "menu-contract": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "visual-host": {
+        "criterionStatus": "NOT_VERIFIED",
+        "detail": "NOT VERIFIED (no Prisma host screenshot)"
+      }
+    },
+    "R5.1": {
+      "base-present": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 36/36"
+      },
+      "content-files": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "format-1": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "last-loaded-wins": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "manifest": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 2"
+      },
+      "min-base-version": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "record-count-editors": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "R5.2": {
+      "base-manifest": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "base-present": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 36/36"
+      },
+      "content-files": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "format-1": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "unique-hunt-packs": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "R5.3": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 37/37"
+      },
+      "compat-profiles": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 3"
+      },
+      "detection": {
+        "criterionStatus": "PASS",
+        "detail": "PASS vanilla in test env"
+      },
+      "full-list-test": {
+        "criterionStatus": "DEFERRED",
+        "detail": "DEFERRED R6.1"
+      },
+      "loot-mode": {
+        "criterionStatus": "PASS",
+        "detail": "PASS additive"
+      },
+      "owl-profile": {
+        "criterionStatus": "PASS",
+        "detail": "PASS data"
+      },
+      "protect-vanilla": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "self-test": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 37"
+      },
+      "spid-kid-profile": {
+        "criterionStatus": "PASS",
+        "detail": "PASS data"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "R5.4": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 37/37"
+      },
+      "content-skill": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "pack-skill": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "pack-validator": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 3"
+      },
+      "runtime-json-content-paths": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "R5.5": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 38/38"
+      },
+      "boss-tier-gate": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 5"
+      },
+      "completion-state": {
+        "criterionStatus": "PASS",
+        "detail": "PASS co-save"
+      },
+      "endgame-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "final-boss": {
+        "criterionStatus": "PASS",
+        "detail": "PASS boss_5 stage95"
+      },
+      "rank-gate": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 90"
+      },
+      "reward": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 50 runes"
+      },
+      "scripted-final-kill": {
+        "criterionStatus": "NOT_RUN",
+        "detail": "NOT RUN"
+      },
+      "self-test": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 38"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "R5.6": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 38/38"
+      },
+      "coverage-gate": {
+        "criterionStatus": "PASS",
+        "detail": "PASS >=250"
+      },
+      "english-only": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "placeholders": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gate": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 10/10"
+      },
+      "string-table": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 262"
+      },
+      "unique-keys": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "R6.1": {
+      "actor": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "clean-save": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "container": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "external-mod": {
+        "criterionStatus": "PASS",
+        "detail": "PASS DiabloRim"
+      },
+      "full-mo2-list": {
+        "criterionStatus": "NOT_RUN",
+        "detail": "NOT RUN (user-side)"
+      },
+      "kid": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "no-crash": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "quest": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "rune": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "skypatcher": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "spid": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "R6.2": {
+      "all-remove": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "dll-remove": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "no-crash": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "pack-disable": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "reinstall-safe": {
+        "criterionStatus": "PASS",
+        "detail": "PASS design"
+      },
+      "save-load-after-removal": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 10/10"
+      }
+    },
+    "R6.3": {
+      "40h-pacing": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 37.4h"
+      },
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 38/38"
+      },
+      "pace-bands": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 10"
+      },
+      "stage-curve": {
+        "criterionStatus": "PASS",
+        "detail": "PASS +10 1.16x/+20 1.35x"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 10/10"
+      },
+      "xp-growth-calibrated": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 1.015"
+      }
+    },
+    "R6.4": {
+      "archive": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "archive-verify": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 25/25"
+      },
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 38/38"
+      },
+      "changelog": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "form-catalog": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 573"
+      },
+      "publication": {
+        "criterionStatus": "FAIL",
+        "detail": "NOT PUBLISHED (user decision)"
+      },
+      "readiness-doc": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "release-tree": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 10/10"
+      },
+      "version": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 0.1.0"
+      }
+    },
+    "W2.1": {
+      "actor-stage-wired": {
+        "criterionStatus": "PASS",
+        "detail": "PASS stage12"
+      },
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 27/27"
+      },
+      "deterministic-stage": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "exclusions": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "fallback": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "matcher": {
+        "criterionStatus": "PASS",
+        "detail": "PASS zone/cell/worldspace/default"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "world-band-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 2"
+      }
+    },
+    "W2.2": {
+      "ambient-hook": {
+        "criterionStatus": "DEFERRED",
+        "detail": "DEFERRED W2.3/W2.5"
+      },
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 28/28"
+      },
+      "caps": {
+        "criterionStatus": "PASS",
+        "detail": "PASS maxPerCell"
+      },
+      "city-quest-filter": {
+        "criterionStatus": "DEFERRED",
+        "detail": "DEFERRED W2.3/W2.5"
+      },
+      "config": {
+        "criterionStatus": "PASS",
+        "detail": "PASS default off"
+      },
+      "cooldown": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 60s"
+      },
+      "encounter-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 3"
+      },
+      "exterior-only": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "selection": {
+        "criterionStatus": "PASS",
+        "detail": "PASS deterministic"
+      },
+      "spawn": {
+        "criterionStatus": "PASS",
+        "detail": "PASS debug F5"
+      }
+    },
+    "W2.3": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 29/29"
+      },
+      "conditions": {
+        "criterionStatus": "PASS",
+        "detail": "PASS reserved fail-closed"
+      },
+      "determinism": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "high-stage-stage-override": {
+        "criterionStatus": "PASS",
+        "detail": "PASS stage91"
+      },
+      "no-crash": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "rate-table": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "W2.4": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 30/30"
+      },
+      "completion": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "contract-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 2"
+      },
+      "cooldown": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "identity": {
+        "criterionStatus": "PASS",
+        "detail": "PASS family"
+      },
+      "persistence": {
+        "criterionStatus": "FAIL",
+        "detail": "session-scoped (co-save deferred)"
+      },
+      "reward": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 2 runes"
+      },
+      "start": {
+        "criterionStatus": "PASS",
+        "detail": "PASS F4"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "W2.5": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 31/31"
+      },
+      "boss-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 5"
+      },
+      "fixed-stage": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "formid-resolution": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "quest-band-field": {
+        "criterionStatus": "PASS",
+        "detail": "PASS reserved"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "unique-flag": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "W2.6": {
+      "anomaly-spawn": {
+        "criterionStatus": "PASS",
+        "detail": "PASS F3"
+      },
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 32/32"
+      },
+      "codex-feed": {
+        "criterionStatus": "PASS",
+        "detail": "PASS data (UI P4.6)"
+      },
+      "core-trophy-rewards": {
+        "criterionStatus": "PASS",
+        "detail": "PASS corpse"
+      },
+      "family-data": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 5"
+      },
+      "no-host-protection": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "stage-offset-curve": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "tier-labels": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    },
+    "W2.7": {
+      "batch": {
+        "criterionStatus": "PASS",
+        "detail": "PASS 32/32"
+      },
+      "cache-key": {
+        "criterionStatus": "PASS",
+        "detail": "PASS load-order independent"
+      },
+      "data-version-invalidation": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "delayed-startup-scan": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "f6-rescan": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      },
+      "manifest": {
+        "criterionStatus": "PASS",
+        "detail": "PASS self-test"
+      },
+      "static-gates": {
+        "criterionStatus": "PASS",
+        "detail": "PASS"
+      }
+    }
+  },
+  "normalisation": "case-insensitive prefix; PASS* -> PASS; UNVERIFIED -> PARTIAL; unknown -> FAIL",
+  "schemaVersion": 1,
+  "source": "EXECUTION-STATE.json"
+}

@@ -1,2 +1,7 @@
+cwd=D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall
+command=powershell tools/audit-gate.ps1 -StatePath EXECUTION-STATE.json -Mode truthfulness -Bootstrap -SkipGitCheck
+exit=0
+output_sha256=B57F648B8B095F28FE4572BE4E1C6DD93750B43915B001164D3C5D46C212A18A
+output:
 {"ok": true, "code": "GATE-PASS", "mode": "truthfulness", "slices": 48, "active": "S0", "overall": "IN_PROGRESS"}
-positiveExit=0
+

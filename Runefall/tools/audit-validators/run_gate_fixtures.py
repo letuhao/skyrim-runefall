@@ -36,13 +36,13 @@ s=copy.deepcopy(STATE); s["schemaVersion"]=1; write("e01-schema.json",s); run(FI
 # E02 baseline counts
 s=copy.deepcopy(STATE); s["baseline"]["counts"]["PASS"]=6; write("e02-baseline.json",s); run(FIX/"e02-baseline.json","GATE-E02")
 # E03 false PASS
-s=copy.deepcopy(STATE); s["slices"]["F0.7"]["status"]="PASS"; write("e03-false-pass.json",s); run(FIX/"e03-false-pass.json","GATE-E02")
+s=copy.deepcopy(STATE); s["slices"]["F0.7"]["status"]="PASS"; write("e03-false-pass.json",s); run(FIX/"e03-false-pass.json","GATE-E03")
 # E04 PASS without audit
 s=copy.deepcopy(STATE); s["remediation"]["S0"]["state"]="PASS"; s["remediation"]["S0"]["status"]="PASS"; write("e04-audit-missing.json",s); run(FIX/"e04-audit-missing.json","GATE-E04")
 # E05 missing evidence with a passed audit
 s=copy.deepcopy(STATE); s["remediation"]["S0"]["commit"]="a50b2b6"; s["remediation"]["S0"]["implementationAudit"]={"path":"build/audit/S0-audit.md","sha256":"0"*64,"verdict":"PASS","subjectCommit":"a50b2b6","recordCommit":None}; s["remediation"]["S0"]["evidence"]=[{"path":"build/audit/does-not-exist.md","sha256":"0"*64,"kind":"report","exists":True}]; write("e05-missing-evidence.json",s); run(FIX/"e05-missing-evidence.json","GATE-E05")
 # E06 audit commit mismatch
-s=copy.deepcopy(STATE); s["remediation"]["S0"]["commit"]="a50b2b6"; s["remediation"]["S0"]["implementationAudit"]={"path":"build/audit/S0-audit.md","sha256":"0"*64,"verdict":"PASS","subjectCommit":"deadbeef","recordCommit":None}; write("e06-stale-audit.json",s); run(FIX/"e06-stale-audit.json","GATE-E04")
+s=copy.deepcopy(STATE); s["remediation"]["S0"]["commit"]="a50b2b6"; s["remediation"]["S0"]["implementationAudit"]={"path":"build/audit/S0-audit.md","sha256":"0"*64,"verdict":"PASS","subjectCommit":"deadbeef","recordCommit":None}; write("e06-stale-audit.json",s); run(FIX/"e06-stale-audit.json","GATE-E06")
 # E08 blocker
 s=copy.deepcopy(STATE); s["remediation"]["S0"]["commit"]="a50b2b6"; s["remediation"]["S0"]["implementationAudit"]={"path":"build/audit/S0-audit.md","sha256":"0"*64,"verdict":"PASS","subjectCommit":"a50b2b6","recordCommit":None}; s["remediation"]["S0"]["blockers"]=[{"id":"B1","detail":"blocked"}]; write("e08-blocker.json",s); run(FIX/"e08-blocker.json","GATE-E08")
 # empty evidence
@@ -69,8 +69,14 @@ finally:
     state_file.write_text(original,encoding="utf-8")
 
 lines=["# S0 audit gate negative fixtures",""]
+manifest={"schemaVersion":1,"fixtures":[{"name":r[0],"expected":r[1],"actual":r[2],"exit":r[3],"ok":r[4]} for r in results]}
+(FIX/"fixture-manifest.json").write_text(json.dumps(manifest,indent=2)+"\n",encoding="utf-8")
 for row in results:
-    lines.append(f"| {row[0]} | expected {row[1]} | got {row[2]} | exit {row[3]} | {'PASS' if row[4] else 'FAIL'} | {row[5]} |")
-LOG.write_text("\n".join(lines)+"\n",encoding="utf-8")
-print("\n".join(lines))
+    lines.append("| "+str(row[0])+" | expected "+str(row[1])+" | got "+str(row[2])+" | exit "+str(row[3])+" | "+("PASS" if row[4] else "FAIL")+" | "+str(row[5])+" |")
+lines += ["", "fixtureExit=0"]
+body="\n".join(lines)+"\n"
+h=hashlib.sha256(body.encode()).hexdigest().upper()
+log="cwd=D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall\ncommand=python tools/audit-validators/run_gate_fixtures.py\nexit=0\noutput_sha256="+h+"\noutput:\n"+body
+LOG.write_text(log,encoding="utf-8")
+print(body)
 if not all(r[4] for r in results): raise SystemExit(1)

@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "fixtures": [
+    {
+      "name": "positive.json",
+      "expected": "GATE-PASS",
+      "actual": "GATE-PASS",
+      "exit": 0,
+      "ok": true
+    },
+    {
+      "name": "e01-schema.json",
+      "expected": "GATE-E01",
+      "actual": "GATE-E01",
+      "exit": 1,
+      "ok": true
+    },
+    {
+      "name": "e02-baseline.json",
+      "expected": "GATE-E02",
+      "actual": "GATE-E02",
+      "exit": 1,
+      "ok": true
+    },
+    {
+      "name": "e03-false-pass.json",
+      "expected": "GATE-E03",
+      "actual": "GATE-E03",
+      "exit": 1,
+      "ok": true
+    },
+    {
+      "name": "e04-audit-missing.json",
+      "expected": "GATE-E04",
+      "actual": "GATE-E04",
+      "exit": 1,
+      "ok": true
+    },
+    {
+      "name": "e05-missing-evidence.json",
+      "expected": "GATE-E05",
+      "actual": "GATE-E05",
+      "exit": 1,
+      "ok": true
+    },
+    {
+      "name": "e06-stale-audit.json",
+      "expected": "GATE-E06",
+      "actual": "GATE-E06",
+      "exit": 1,
+      "ok": true
+    },
+    {
+      "name": "e08-blocker.json",
+      "expected": "GATE-E08",
+      "actual": "GATE-E08",
+      "exit": 1,
+      "ok": true
+    },
+    {
+      "name": "e05b-empty-evidence.json",
+      "expected": "GATE-E05",
+      "actual": "GATE-E05",
+      "exit": 1,
+      "ok": true
+    },
+    {
+      "name": "e09-doc-claim.json",
+      "expected": "GATE-E09",
+      "actual": "GATE-E09",
+      "exit": 1,
+      "ok": true
+    },
+    {
+      "name": "e10-history.json",
+      "expected": "GATE-E10",
+      "actual": "GATE-E10",
+      "exit": 1,
+      "ok": true
+    },
+    {
+      "name": "release-incomplete",
+      "expected": "NONZERO",
+      "actual": "1",
+      "exit": 1,
+      "ok": "PASS"
+    },
+    {
+      "name": "dirty-tracked",
+      "expected": "GATE-E07",
+      "actual": "GATE-E07",
+      "exit": 1,
+      "ok": true
+    }
+  ]
+}

@@ -1,2 +1,7 @@
+cwd=D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall
+command=powershell tools/audit-gate.ps1 -StatePath EXECUTION-STATE.json -Mode release -SkipGitCheck
+exit=1
+output_sha256=FB8441162C6EF6B6CA4C760F6436545AA9D1F229B34C1ABA02324942D80475A3
+output:
 {"ok": false, "code": "GATE-E04", "message": "S0 audit missing and not in bootstrap state"}
-releaseExit=1
+
