@@ -80,8 +80,11 @@ namespace Runefall
 		const int pMax = FindColumn(*table, "stageMax");
 		const int pSpells = FindColumn(*table, "spellEditorIds");
 		const int pPerks = FindColumn(*table, "perkEditorIds");
+		const int pElite = FindColumn(*table, "eliteSpellEditorIds");
+		const int pBoss = FindColumn(*table, "bossSpellEditorIds");
 		const int pLoot = FindColumn(*table, "lootTable");
 		const int pWeight = FindColumn(*table, "weight");
+		const int pBudget = FindColumn(*table, "budgetCost");
 		for (const auto& row : table->rows) {
 			PackageDef def;
 			def.packageId = Cell(row, pId);
@@ -90,8 +93,11 @@ namespace Runefall
 			def.stageMax = static_cast<std::uint8_t>((std::clamp)(Int(row, pMax, 100), 1, 100));
 			def.spells = Split(Cell(row, pSpells));
 			def.perks = Split(Cell(row, pPerks));
+			def.eliteSpells = Split(Cell(row, pElite));
+			def.bossSpells = Split(Cell(row, pBoss));
 			def.lootTable = Cell(row, pLoot);
 			def.weight = Float(row, pWeight, 0.0f);
+			def.budgetCost = Float(row, pBudget, 0.0f);
 			if (!def.packageId.empty() && def.stageMin <= def.stageMax)
 				packages.push_back(std::move(def));
 		}
@@ -124,7 +130,7 @@ namespace Runefall
 		return package ? package->packageId : std::string{};
 	}
 
-	bool ActorPackageEngine::Apply(RE::Actor* a_actor, std::string_view a_roleKey, std::uint8_t a_stage)
+	bool ActorPackageEngine::Apply(RE::Actor* a_actor, std::string_view a_roleKey, std::uint8_t a_stage, std::int32_t a_rank)
 	{
 		if (!loaded || !a_actor)
 			return false;
@@ -141,6 +147,24 @@ namespace Runefall
 			if (!a_actor->HasSpell(spell) && a_actor->AddSpell(spell)) {
 				applied = true;
 				logger::info("actor-packager: applied spell {} from {} to {:08X}", editorId, package->packageId, a_actor->GetFormID());
+			}
+		}
+		if (a_rank >= 4) {
+			for (const auto& editorId : package->eliteSpells) {
+				auto* spell = FormCatalog::Get().LookupAs<RE::SpellItem>(editorId);
+				if (spell && !a_actor->HasSpell(spell) && a_actor->AddSpell(spell)) {
+					applied = true;
+					logger::info("actor-packager: elite overlay {} from {} applied to {:08X}", editorId, package->packageId, a_actor->GetFormID());
+				}
+			}
+		}
+		if (a_rank >= 5) {
+			for (const auto& editorId : package->bossSpells) {
+				auto* spell = FormCatalog::Get().LookupAs<RE::SpellItem>(editorId);
+				if (spell && !a_actor->HasSpell(spell) && a_actor->AddSpell(spell)) {
+					applied = true;
+					logger::info("actor-packager: boss overlay {} from {} applied to {:08X}", editorId, package->packageId, a_actor->GetFormID());
+				}
 			}
 		}
 		for (const auto& editorId : package->perks) {
@@ -164,6 +188,9 @@ namespace Runefall
 			return { "ActorPackageEngine.SelfTest", CheckStatus::Fail, "packages not loaded" };
 		if (engine.PackageCount() < 10)
 			return { "ActorPackageEngine.SelfTest", CheckStatus::Fail, "package coverage too small" };
+		for (const auto& package : engine.packages)
+			if (package.budgetCost < 0.0f || package.budgetCost > 100.0f)
+				return { "ActorPackageEngine.SelfTest", CheckStatus::Fail, "package budget out of range" };
 		const auto humanoid = engine.SelectPackageId("rf:role/humanoid", 50);
 		const auto fallback = engine.SelectPackageId("rf:role/unknown", 50);
 		if (humanoid.empty() || fallback.empty())

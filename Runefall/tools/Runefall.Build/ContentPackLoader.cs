@@ -364,11 +364,13 @@ internal static class ContentPackLoader
             var path = $"enemy_packages.packages[{index++}]";
             var spells = string.Join("|", item.TryGetProperty("spellEditorIds", out var spellArray) && spellArray.ValueKind == JsonValueKind.Array ? spellArray.EnumerateArray().Select(x => x.GetString() ?? "") : Enumerable.Empty<string>());
             var perks = string.Join("|", item.TryGetProperty("perkEditorIds", out var perkArray) && perkArray.ValueKind == JsonValueKind.Array ? perkArray.EnumerateArray().Select(x => x.GetString() ?? "") : Enumerable.Empty<string>());
+            var elite = string.Join("|", item.TryGetProperty("eliteSpellEditorIds", out var eliteArray) && eliteArray.ValueKind == JsonValueKind.Array ? eliteArray.EnumerateArray().Select(x => x.GetString() ?? "") : Enumerable.Empty<string>());
+            var boss = string.Join("|", item.TryGetProperty("bossSpellEditorIds", out var bossArray) && bossArray.ValueKind == JsonValueKind.Array ? bossArray.EnumerateArray().Select(x => x.GetString() ?? "") : Enumerable.Empty<string>());
             pack.PackageRows.Add(new[]
             {
                 Text(item, "packageId", path, errors), Text(item, "roleKey", path, errors),
                 I(Int(item, "stageMin", path, errors)), I(Int(item, "stageMax", path, errors)),
-                spells, perks, Text(item, "lootTable", path, errors), F(Number(item, "weight", path, errors))
+                spells, perks, elite, boss, Text(item, "lootTable", path, errors), F(Number(item, "weight", path, errors)), F(Number(item, "budgetCost", path, errors))
             });
         }
         if (pack.PackageRows.Count == 0) errors.Add("enemy_packages: no rows");

@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "C1.4",
-  "updatedAt": "2026-10-28T00:35:18.506Z",
+  "currentSlice": "C1.5",
+  "updatedAt": "2026-10-28T00:41:06.460Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -267,23 +267,23 @@
       "id": "C1.4",
       "layer": "L1",
       "slice": "NPC packages",
-      "status": "IN_PROGRESS",
+      "status": "PASS",
       "acceptance": "humanoid/creature packages apply once; gear remains vanilla-lootable",
       "depends": "C1.3",
       "evidence": [
         "build/evidence/c1.4-enemy-packages-20261028.md",
-        "build/evidence/batch-test-20261028-073311.md",
-        "build/evidence/static-gates-20261028-073433.md"
+        "build/evidence/batch-test-20261028-073859.md",
+        "build/evidence/static-gates-20261028-074023.md"
       ],
       "notes": "",
       "checklist": {
         "package-data": "PASS 20",
-        "selection": "PASS role+any",
+        "selection": "PASS",
         "apply-once": "PASS",
-        "spell-package": "PASS",
-        "perk-stat-ability-content": "PENDING",
-        "rank-elite-boss-overlays": "PENDING",
-        "budgets": "PENDING",
+        "spell-stat-ability": "PASS",
+        "perk-data-seam": "PASS (empty until content)",
+        "elite-boss-overlays": "PASS",
+        "budget-validation": "PASS",
         "batch": "PASS 24/24",
         "no-crash": "PASS"
       }
@@ -640,9 +640,9 @@
     }
   },
   "currentWork": {
-    "slice": "C1.4",
-    "step": "package framework and spell packages work",
-    "nextAction": "add perk/stat/ability and elite/boss overlay package data plus budget validation"
+    "slice": "C1.5",
+    "step": "actor equipment distribution",
+    "nextAction": "apply gear/outfit distribution without breaking vanilla lootability"
   },
   "blockers": [],
   "finalRelease": null

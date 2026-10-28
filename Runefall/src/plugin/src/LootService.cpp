@@ -342,18 +342,28 @@ namespace Runefall
 		const auto stageForPackage = ResolveActorStage(a_actor);
 		if (const auto* race = a_actor->GetActorBase() ? a_actor->GetActorBase()->GetRace() : nullptr) {
 			const auto classification = RaceClassifier::Get().Classify(const_cast<RE::TESRace*>(race));
-			(void)ActorPackageEngine::Get().Apply(a_actor, classification.roleKey, stageForPackage);
+			(void)ActorPackageEngine::Get().Apply(a_actor, classification.roleKey, stageForPackage, 0);
 			logger::info("package-rank-path: actor {:08X} role {} stage {} package {}",
 				formID, classification.roleKey, stageForPackage, ActorPackageEngine::Get().SelectPackageId(classification.roleKey, stageForPackage));
 		}
 		const auto existing = RankFromSpells(a_actor);
 		if (existing >= 0) {
 			actorRanks[formID] = existing;
+			if (const auto* race = a_actor->GetActorBase() ? a_actor->GetActorBase()->GetRace() : nullptr) {
+				const auto classification = RaceClassifier::Get().Classify(const_cast<RE::TESRace*>(race));
+				(void)ActorPackageEngine::Get().Apply(a_actor, classification.roleKey, stageForPackage, existing);
+			}
 			return;
 		}
 		const auto rfTier = Progression::Get().RuneTier();
 		const auto rank = RollActorRank(formID, rfTier);
 		actorRanks[formID] = rank;
+		if (const auto* race = a_actor->GetActorBase() ? a_actor->GetActorBase()->GetRace() : nullptr) {
+			const auto classification = RaceClassifier::Get().Classify(const_cast<RE::TESRace*>(race));
+			(void)ActorPackageEngine::Get().Apply(a_actor, classification.roleKey, stageForPackage, rank);
+			logger::info("package-rank-path: actor {:08X} role {} stage {} rank {} package {}",
+				formID, classification.roleKey, stageForPackage, rank, ActorPackageEngine::Get().SelectPackageId(classification.roleKey, stageForPackage));
+		}
 		if (rank <= 0)
 			return;
 		auto* spell = RankSpell(rank);
@@ -403,7 +413,7 @@ namespace Runefall
 		actorStages[formID] = stage;
 		if (const auto* race = a_actor->GetActorBase() ? a_actor->GetActorBase()->GetRace() : nullptr) {
 			const auto classification = RaceClassifier::Get().Classify(const_cast<RE::TESRace*>(race));
-			ActorPackageEngine::Get().Apply(a_actor, classification.roleKey, stage);
+			ActorPackageEngine::Get().Apply(a_actor, classification.roleKey, stage, 0);
 		}
 		return stage;
 	}

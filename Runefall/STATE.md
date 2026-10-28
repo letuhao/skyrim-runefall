@@ -98,7 +98,8 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
 - C1.1 PASS: HandleHealthDamage 0x104 hook on Actor/Character/PlayerCharacter, apply-once, direct samples; batch 22/22.
 - C1.2 PASS: 19 profiles + 7 keyword rules; Draugr explicit undead; unknown fallback; batch 23/23.
 - C1.3 PASS: data-driven DR 70%/3%/5%, DoT 50%, player unprotected, NPC 13->11.7; batch 23/23.
-- C1.4 partial: 20 packages + apply-once framework; Draugr package applied; perk/stat/overlays pending.
+- C1.4 PASS: 20 packages, apply-once, elite/boss overlays, budget; Draugr package applied.
+- Next: C1.5 actor equipment distribution.
 
 ## Next step
 

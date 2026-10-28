@@ -990,3 +990,10 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Static gates 9/9.
 - C1.4 remains IN_PROGRESS: perk/stat/ability content, elite/boss overlays and budget validation
   are still pending.
+
+
+## C1.4 enemy packages - PASS (2026-10-28 07:24-07:40)
+
+- 20 packages across roles and stage bands; apply-once; elite/boss overlay hooks; budget field.
+- Draugr package undead_1_20 applied once; self-test 24/24; batch PASS; static gates 9/9.
+- Perk arrays are the data seam for future safe NPC perks; current stat/ability effects are spells.

@@ -25,7 +25,10 @@
           "spellEditorIds",
           "perkEditorIds",
           "lootTable",
-          "weight"
+          "weight",
+          "eliteSpellEditorIds",
+          "bossSpellEditorIds",
+          "budgetCost"
         ],
         "properties": {
           "schemaVersion": {
@@ -67,6 +70,23 @@
           "weight": {
             "type": "number",
             "minimum": 0
+          },
+          "eliteSpellEditorIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "bossSpellEditorIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "budgetCost": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
           }
         },
         "additionalProperties": false

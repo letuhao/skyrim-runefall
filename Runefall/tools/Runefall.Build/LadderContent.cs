@@ -68,7 +68,7 @@ internal static class LadderContent
 
     public static readonly string[] PackageColumns =
     {
-        "packageId", "roleKey", "stageMin", "stageMax", "spellEditorIds", "perkEditorIds", "lootTable", "weight"
+        "packageId", "roleKey", "stageMin", "stageMax", "spellEditorIds", "perkEditorIds", "eliteSpellEditorIds", "bossSpellEditorIds", "lootTable", "weight", "budgetCost"
     };
 
     public static void WriteAll(string dir)

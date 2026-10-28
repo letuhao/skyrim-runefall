@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T00:35:18.510Z",
+  "updatedAt": "2026-10-28T00:41:06.464Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -264,6 +264,27 @@
       "slice": "C1.4",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-073433.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "C1.4",
+      "kind": "summary",
+      "path": "build/evidence/c1.4-enemy-packages-20261028.md",
+      "result": "PASS",
+      "detail": "20 packages, overlays, budget, apply-once"
+    },
+    {
+      "slice": "C1.4",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-073859.md",
+      "result": "PASS",
+      "detail": "24/24; package applied; no crash"
+    },
+    {
+      "slice": "C1.4",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-074023.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }
