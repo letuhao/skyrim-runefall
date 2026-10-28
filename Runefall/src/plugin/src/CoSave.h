@@ -48,6 +48,7 @@ namespace Runefall
 		[[nodiscard]] CoSaveState&       State() noexcept { return state; }
 		[[nodiscard]] const CoSaveState& State() const noexcept { return state; }
 		void Reset();
+		void ClearLoadedState();
 
 		static constexpr std::uint32_t kMaxEncodedBytes = 1048576;
 		static constexpr std::uint32_t kMaxRecordBytes = 2097152;

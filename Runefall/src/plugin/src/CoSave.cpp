@@ -186,6 +186,14 @@ namespace Runefall
 		state = CoSaveState{};
 	}
 
+	void CoSave::ClearLoadedState()
+	{
+		Reset();
+		ItemRegistry::Get().Clear();
+		Progression::Get().LoadFromCoSave();
+		MaterialRegistry::Get().LoadFromCoSave();
+	}
+
 	bool CoSave::HasGeneratedContainer(std::uint32_t a_formID) const
 	{
 		return std::find(state.generatedContainers.begin(), state.generatedContainers.end(), a_formID) != state.generatedContainers.end();
@@ -454,7 +462,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 			Reader sectionReader{ payload };
 			constexpr std::uint16_t kMaxKnownSection = 12;
 			if (id >= 1 && id <= kMaxKnownSection) {
-				if (seenSections[id]) { logger::error("co-save: reject duplicate-section {}", id); return false; }
+				if (seenSections[id]) { MarkReject("co-save: reject duplicate-section"); logger::error("co-save: reject duplicate-section"); return false; }
 				seenSections[id] = true;
 			}
 
@@ -769,10 +777,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 				candidate.generatedContainers.size(), candidate.rewardedQuests.size(), candidate.items.size(), candidate.materials.size(), candidate.configHash,
 				candidate.difficultyProfile, candidate.curveId, candidate.ladderOverrides.size(), candidate.skillRanks.size(), firstContainer, firstItem, firstSkillRank, firstQuest);
 		} else {
-			CoSave::Get().Reset();
-			ItemRegistry::Get().Clear();
-			Progression::Get().LoadFromCoSave();
-			MaterialRegistry::Get().LoadFromCoSave();
+			CoSave::Get().ClearLoadedState();
 			logger::info("co-save: no record; defaults");
 		}
 	}
@@ -1135,6 +1140,16 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 			MarkReject(token);
 			if (LastRejectToken() != token) return { "CoSave.SelfTest", CheckStatus::Fail, "reject token table mismatch" };
 		}
+		const auto savedState = CoSave::Get().State();
+		const auto savedItems = ItemRegistry::Get().All();
+		CoSave::Get().ClearLoadedState();
+		const bool clearOk = CoSave::Get().State().playerRank == 1 && ItemRegistry::Get().All().empty();
+		CoSave::Get().State() = savedState;
+		ItemRegistry::Get().Load(savedItems);
+		Progression::Get().LoadFromCoSave();
+		MaterialRegistry::Get().LoadFromCoSave();
+		if (!clearOk) return { "CoSave.SelfTest", CheckStatus::Fail, "ClearLoadedState did not reset state/registries" };
+
 		// Eviction is smallest FormID, not FIFO.
 		auto savedContainers = CoSave::Get().State().generatedContainers;
 		CoSave::Get().State().generatedContainers.clear();

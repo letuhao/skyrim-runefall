@@ -1,0 +1,10 @@
+cwd=D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall
+command=cmd /c C:/Users/NeneScarlet/.cache/build-runefall.bat
+buildExit=0
+testEnvDll=
+J:\SkyrimTest\1.6.1170\Data\SKSE\Plugins\Runefall.dll
+testEnvDllSha256=
+969DA4895E7F74782BD1F326B394BD004B8D587F880CAD6CE894578818020527
+CoSave.cppLastWrite=
+10/29/2026 5:57:12 AM
+batch=evidence/S1/batch-20261029-055759.md
