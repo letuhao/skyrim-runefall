@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "A3.7",
-  "updatedAt": "2026-10-28T03:09:35.693Z",
+  "currentSlice": "P4.1",
+  "updatedAt": "2026-10-28T03:10:22.764Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -707,11 +707,27 @@
       "id": "A3.7",
       "layer": "L3",
       "slice": "Loot authority compat",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "compatibility smoke PASS; no crash",
       "depends": "A3.1",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/a3.7-loot-acceptance-20261028.md",
+        "build/evidence/batch-test-20261028-100626.md",
+        "build/evidence/static-gates-20261028-100744.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "container": "PASS",
+        "quest": "PASS",
+        "actor": "PASS",
+        "hunt": "PASS",
+        "crafting": "PASS",
+        "economy": "PASS",
+        "co-save": "PASS",
+        "no-crash": "PASS",
+        "batch": "PASS 33/33",
+        "static-gates": "PASS"
+      }
     },
     "P4.1": {
       "id": "P4.1",
@@ -885,9 +901,9 @@
     }
   },
   "currentWork": {
-    "slice": "A3.7",
-    "step": "loot integration acceptance",
-    "nextAction": "end-to-end loot/crafting acceptance: container, actor, quest, salvage, gear, economy"
+    "slice": "P4.1",
+    "step": "player rank and rune level",
+    "nextAction": "player rank 1-100, XP curve, attribute/skill awards, boss kill unlock, co-save persistence"
   },
   "blockers": [],
   "finalRelease": null

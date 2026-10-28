@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T03:09:35.697Z",
+  "updatedAt": "2026-10-28T03:10:22.768Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -693,6 +693,13 @@
       "path": "build/evidence/a3.6-compatibility-20261028.md",
       "result": "PASS",
       "detail": "573 FormIDs plugin-relative; cache key load-order independent; pack manifests"
+    },
+    {
+      "slice": "A3.7",
+      "kind": "summary",
+      "path": "build/evidence/a3.7-loot-acceptance-20261028.md",
+      "result": "PASS",
+      "detail": "end-to-end container/quest/actor/hunt/crafting/economy/co-save"
     }
   ]
 }

@@ -1132,3 +1132,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - 573 plugin-relative FormIDs; load-order-independent runtime cache key; 2 pack manifests.
 - Batch 33/33; static gates 9/9. OWL/SPID/KID conflict profiles deferred to R5.
+
+
+## A3.7 loot integration acceptance - PASS (2026-10-28 10:08)
+
+- One-session acceptance: container/quest/actor/hunt/crafting/economy/co-save all green.
+- Batch 33/33; static gates 9/9. L3 loot/crafting complete.
