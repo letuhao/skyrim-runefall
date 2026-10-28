@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "W2.4",
-  "updatedAt": "2026-10-28T02:09:11.470Z",
+  "currentSlice": "W2.5",
+  "updatedAt": "2026-10-28T02:17:18.162Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -465,11 +465,26 @@
       "id": "W2.4",
       "layer": "L2",
       "slice": "Hunt contracts",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "hunts work end-to-end; no duplicate rewards",
       "depends": "W2.2",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/w2.4-hunt-contracts-20261028.md",
+        "build/evidence/batch-test-20261028-091456.md",
+        "build/evidence/static-gates-20261028-091637.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "contract-data": "PASS 2",
+        "start": "PASS F4",
+        "identity": "PASS family",
+        "completion": "PASS",
+        "reward": "PASS 2 runes",
+        "cooldown": "PASS",
+        "batch": "PASS 30/30",
+        "persistence": "session-scoped (co-save deferred)",
+        "static-gates": "PASS"
+      }
     },
     "W2.5": {
       "id": "W2.5",
@@ -743,9 +758,9 @@
     }
   },
   "currentWork": {
-    "slice": "W2.4",
-    "step": "hunt contracts",
-    "nextAction": "player-called hunt contracts, identity, reward/evidence, safety"
+    "slice": "W2.5",
+    "step": "bosses and unique actors",
+    "nextAction": "fixed-stage overrides, unique FormID refs, boss packages, quest band exclusions"
   },
   "blockers": [],
   "finalRelease": null

@@ -27,6 +27,8 @@ namespace Runefall
 				enableActorEquipment = a_value == "1" || a_value == "true";
 			else if (a_key == "bEnableEncounters")
 				enableEncounters = a_value == "1" || a_value == "true";
+			else if (a_key == "bEnableHuntContracts")
+				enableHuntContracts = a_value == "1" || a_value == "true";
 			else if (a_key == "bEnableActorRanks")
 				enableActorRanks = a_value == "1" || a_value == "true";
 			else if (a_key == "bEnableQuestDrops")

@@ -26,6 +26,7 @@ internal sealed class LoadedPack
     public List<string[]> WorldBandRows { get; } = new();
     public List<string[]> EncounterRows { get; } = new();
     public List<string[]> RareRows { get; } = new();
+    public List<string[]> ContractRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -81,6 +82,7 @@ internal static class ContentPackLoader
             ReadWorldBands(pack, files, errors);
             ReadEncounters(pack, files, errors);
             ReadRareSpawns(pack, files, errors);
+            ReadHuntContracts(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -576,6 +578,25 @@ internal static class ContentPackLoader
                 I(Int(item, "stageMin", path, errors)), I(Int(item, "stageMax", path, errors)),
                 Text(item, "conditionTag", path, errors), F(Number(item, "weight", path, errors)),
                 B(Bool(item, "enabled", path, errors))
+            });
+        }
+    }
+
+
+    private static void ReadHuntContracts(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("huntContracts", files, errors, "contracts");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"hunt_contracts.contracts[{index++}]";
+            pack.ContractRows.Add(new[]
+            {
+                Text(item, "contractId", path, errors), Text(item, "family", path, errors),
+                I(Int(item, "minStage", path, errors)), I(Int(item, "maxStage", path, errors)),
+                I(Int(item, "rewardRunes", path, errors)), I(Int(item, "cooldownSeconds", path, errors)),
+                I(Int(item, "durationSeconds", path, errors)), B(Bool(item, "enabled", path, errors))
             });
         }
     }

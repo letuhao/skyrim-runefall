@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "hunt-contracts.schema.json",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "contracts"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "contracts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "schemaVersion",
+          "contractId",
+          "family",
+          "minStage",
+          "maxStage",
+          "rewardRunes",
+          "cooldownSeconds",
+          "durationSeconds",
+          "enabled"
+        ],
+        "properties": {
+          "schemaVersion": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "contractId": {
+            "type": "string"
+          },
+          "family": {
+            "type": "string"
+          },
+          "minStage": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "maxStage": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "rewardRunes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "cooldownSeconds": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "durationSeconds": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "enabled": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

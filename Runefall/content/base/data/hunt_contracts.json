@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "contracts": [
+    {
+      "schemaVersion": 1,
+      "contractId": "contract_draugr",
+      "family": "Draugr",
+      "minStage": 1,
+      "maxStage": 20,
+      "rewardRunes": 2,
+      "cooldownSeconds": 60,
+      "durationSeconds": 300,
+      "enabled": true
+    },
+    {
+      "schemaVersion": 1,
+      "contractId": "contract_beast",
+      "family": "Bear",
+      "minStage": 1,
+      "maxStage": 20,
+      "rewardRunes": 3,
+      "cooldownSeconds": 60,
+      "durationSeconds": 300,
+      "enabled": true
+    }
+  ]
+}

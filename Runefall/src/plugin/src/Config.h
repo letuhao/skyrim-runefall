@@ -27,6 +27,7 @@ namespace Runefall
 		[[nodiscard]] bool        EnableActorRanks() const noexcept { return enableActorRanks; }
 		[[nodiscard]] bool        EnableActorEquipment() const noexcept { return enableActorEquipment; }
 		[[nodiscard]] bool        EnableEncounters() const noexcept { return enableEncounters; }
+		[[nodiscard]] bool        EnableHuntContracts() const noexcept { return enableHuntContracts; }
 		[[nodiscard]] bool        EnableQuestDrops() const noexcept { return enableQuestDrops; }
 		[[nodiscard]] int         ContainerLootPerCell() const noexcept { return containerLootPerCell; }
 		[[nodiscard]] int         LootAuthority() const noexcept { return lootAuthority; }
@@ -45,6 +46,7 @@ namespace Runefall
 		bool        enableActorRanks = true;
 		bool        enableActorEquipment = true;
 		bool        enableEncounters = false;
+		bool        enableHuntContracts = false;
 		bool        enableQuestDrops = true;
 		int         containerLootPerCell = 8;
 		bool        enableMenu = true;

@@ -106,7 +106,8 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
 - L1 combat core C1.1-C1.8 complete. W2.1 PASS: data-driven world bands; Draugr stage12.
 - W2.2 PASS: encounter table, caps/cooldown, F5 spawn, batch 28/28.
 - W2.3 PASS: rare spawn chance/stage/condition seam; apex stage91; batch 29/29.
-- Next: W2.4 hunt contracts.
+- W2.4 PASS: data-driven hunt contract; F4 start; Draugr completed with 2 runes; batch 30/30.
+- Next: W2.5 bosses/unique actors.
 
 ## Next step
 

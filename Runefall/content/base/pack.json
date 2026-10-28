@@ -88,6 +88,10 @@
     {
       "entity": "rareSpawns",
       "file": "data/rare_spawns.json"
+    },
+    {
+      "entity": "huntContracts",
+      "file": "data/hunt_contracts.json"
     }
   ],
   "localization": []

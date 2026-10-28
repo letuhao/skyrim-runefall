@@ -116,6 +116,11 @@ internal static class LadderContent
         "rareId", "bandId", "actorEditorId", "chancePermille", "stageMin", "stageMax", "conditionTag", "weight", "enabled"
     };
 
+    public static readonly string[] ContractColumns =
+    {
+        "contractId", "family", "minStage", "maxStage", "rewardRunes", "cooldownSeconds", "durationSeconds", "enabled"
+    };
+
     public static void WriteAll(string dir)
     {
         Directory.CreateDirectory(dir);
@@ -283,6 +288,7 @@ internal static class LadderContent
         WriteCsv(dir, "world_bands.csv", WorldBandColumns, pack.WorldBandRows);
         WriteCsv(dir, "encounter_tables.csv", EncounterColumns, pack.EncounterRows);
         WriteCsv(dir, "rare_spawns.csv", RareColumns, pack.RareRows);
+        WriteCsv(dir, "hunt_contracts.csv", ContractColumns, pack.ContractRows);
         return errors;
     }
 

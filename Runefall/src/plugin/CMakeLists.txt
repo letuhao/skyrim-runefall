@@ -90,6 +90,7 @@ else()
         src/WorldBandEngine.cpp
         src/EncounterManager.cpp
         src/RareSpawnEngine.cpp
+        src/HuntContractManager.cpp
         src/RuntimeContentResolver.cpp
         src/CoSave.cpp
         src/ItemRegistry.cpp

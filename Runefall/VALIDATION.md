@@ -1056,3 +1056,10 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - rare_spawns table with chance permille, stage range, condition tag seam.
 - Rare apex spawned at stage 91 in Tamriel; batch 29/29; static gates 9/9.
+
+
+## W2.4 hunt contracts - PASS (2026-10-28 09:09-09:16)
+
+- Data-driven hunt_contracts; F4 starts first eligible contract.
+- Draugr contract completed on kill, 2 runes granted; batch 30/30, static gates 9/9.
+- Contract state session-scoped; co-save persistence deferred.

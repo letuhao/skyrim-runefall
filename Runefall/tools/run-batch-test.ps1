@@ -22,7 +22,8 @@ param(
     [switch]$ExerciseDeathDrops,
     [switch]$NoInputHotkeys,
     [switch]$DisableActorEquipment,
-    [switch]$TestEncounters
+    [switch]$TestEncounters,
+    [switch]$TestHuntContract
 )
 
 $ErrorActionPreference = 'Stop'
@@ -42,6 +43,7 @@ if (Test-Path $iniPath) {
     $ini = $ini -replace 'iGameplayDelaySeconds=\d+', 'iGameplayDelaySeconds=8'
     $ini = $ini -replace 'iRuntimeScanDelaySeconds=\d+', 'iRuntimeScanDelaySeconds=1'
     if ($TestEncounters) { $ini = $ini -replace 'bEnableEncounters=\d+', 'bEnableEncounters=1' }
+    if ($TestHuntContract) { $ini = $ini -replace 'bEnableHuntContracts=\d+', 'bEnableHuntContracts=1' }
     if ($DisableActorEquipment) { $ini = $ini -replace 'bEnableActorEquipment=\d+', 'bEnableActorEquipment=0' }
     Set-Content -Path $iniPath -Value $ini -NoNewline
 }
@@ -202,6 +204,10 @@ Add-Check 'Rune item aggregated' (Wait-LogPattern 'runes: aggregated 1 x R3' 12)
 
 # Actor-rank path: spawned actor must receive a rank spell at Load3D.
 $spawn = Invoke-Mcp 'execute_console_command' @{ command = 'player.placeatme 000EBC2D 1' }
+if ($TestHuntContract) {
+    $null = Tap-Key 62
+    Add-Check 'Hunt contract started' (Wait-LogPattern 'hunt-contract: started ' 10) ''
+}
 Add-Check 'Spawn test Draugr' ($spawn -match '"executed":true') ''
 Add-Check 'Actor package applied' (Wait-LogPattern 'actor-packager: package .* applied once' 12) ''
 if ($DisableActorEquipment) {
@@ -209,7 +215,7 @@ if ($DisableActorEquipment) {
 } else {
     Add-Check 'Actor equipment applied' (Wait-LogPattern 'equipment: set .* applied' 12) ''
     $equipmentLog = Get-LogText
-    Add-Check 'Equipment applied' (([regex]::Matches($equipmentLog, 'equipment: set .* applied')).Count -ge 1) ''
+Add-Check 'Equipment applied' (([regex]::Matches($equipmentLog, 'equipment: set .* applied')).Count -ge 1) ''
 }
 Start-Sleep -Seconds 2
 
@@ -224,6 +230,7 @@ if ($ExerciseDeathDrops) {
         Add-Check 'Hunt first kill' ($logText -match 'hunt: first kill family') ''
         Add-Check 'Hunt material grant' ($logText -match 'hunt: granted first-kill material') ''
         Add-Check 'Hunt unique item grant' ($logText -match 'hunt: granted unique affix') ''
+        if ($TestHuntContract) { Add-Check 'Hunt contract completed' (Wait-LogPattern 'hunt-contract: completed ' 12) '' }
         $corpse = Invoke-Mcp 'get_npc_inventory' @{ refId = $ref }
         Add-Check 'Corpse has unique item' ($corpse -match 'Runed|enchantment') ''
     } else {

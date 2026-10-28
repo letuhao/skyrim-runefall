@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T02:09:11.474Z",
+  "updatedAt": "2026-10-28T02:17:18.166Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -453,6 +453,27 @@
       "slice": "W2.3",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-090820.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "W2.4",
+      "kind": "summary",
+      "path": "build/evidence/w2.4-hunt-contracts-20261028.md",
+      "result": "PASS",
+      "detail": "contract_draugr started/completed; 2 runes; 30/30"
+    },
+    {
+      "slice": "W2.4",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-091456.md",
+      "result": "PASS",
+      "detail": "30/30; hunt contract completed; no crash"
+    },
+    {
+      "slice": "W2.4",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-091637.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

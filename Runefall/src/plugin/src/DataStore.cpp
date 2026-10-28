@@ -49,6 +49,7 @@ namespace Runefall
 			"world_bands.csv",
 			"encounter_tables.csv",
 			"rare_spawns.csv",
+			"hunt_contracts.csv",
 		};
 	}
 

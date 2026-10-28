@@ -13,6 +13,7 @@
 #include "WorldBandEngine.h"
 #include "EncounterManager.h"
 #include "RareSpawnEngine.h"
+#include "HuntContractManager.h"
 #include "FormResolver.h"
 #include "ItemRegistry.h"
 #include "HuntEngine.h"
@@ -88,6 +89,7 @@ namespace Runefall
 		WorldBandEngine::Get().Load();
 		EncounterManager::Get().Load();
 		RareSpawnEngine::Get().Load();
+		HuntContractManager::Get().Load();
 		results.push_back(DataStore::Get().SelfTest());
 		results.push_back(FormCatalog::SelfTest());
 		results.push_back(StageEngine::SelfTest());
@@ -100,6 +102,7 @@ namespace Runefall
 		results.push_back(WorldBandEngine::SelfTest());
 		results.push_back(EncounterManager::SelfTest());
 		results.push_back(RareSpawnEngine::SelfTest());
+		results.push_back(HuntContractManager::SelfTest());
 		LootEngine::Get().Reload();
 		TierEngine::Get().Reload();
 		HuntEngine::Get().Reload();

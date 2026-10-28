@@ -18,6 +18,7 @@
 #include "ActorPackageEngine.h"
 #include "ActorEquipmentDistributor.h"
 #include "WorldBandEngine.h"
+#include "HuntContractManager.h"
 
 #include "RE/C/ContainerMenu.h"
 
@@ -881,6 +882,7 @@ namespace Runefall
 		if (processedActors.contains(formId))
 			return;
 		processedActors.insert(formId);
+		HuntContractManager::Get().OnActorDeath(a_actor);
 		GrantHuntFirstKill(a_actor);
 		if (!SpawnForActor(a_actor))
 			logger::warn("loot: death roll failed for actor {:08X}", formId);

@@ -5,12 +5,14 @@
 #include "MenuApi.h"
 #include "RuntimeContentResolver.h"
 #include "EncounterManager.h"
+#include "HuntContractManager.h"
 
 namespace Runefall
 {
 	namespace
 	{
 		// DirectInput scan codes for the default debug/UI hotkeys.
+		constexpr std::uint32_t kKeyF4 = 0x3E;
 		constexpr std::uint32_t kKeyF5 = 0x3F;
 		constexpr std::uint32_t kKeyF6 = 0x40;
 		constexpr std::uint32_t kKeyF7 = 0x41;
@@ -35,7 +37,12 @@ namespace Runefall
 						continue;
 					const auto code = button->GetIDCode();
 					if (auto* tasks = SKSE::GetTaskInterface()) {
-						if (code == kKeyF5) {
+						if (code == kKeyF4) {
+							tasks->AddTask([]() {
+								HuntContractManager::Get().DebugStartFirst();
+								logger::info("input: hunt contract start requested");
+							});
+						} else if (code == kKeyF5) {
 							tasks->AddTask([]() {
 								EncounterManager::Get().DebugSpawn();
 								logger::info("input: encounter debug spawn requested");
@@ -112,7 +119,7 @@ namespace Runefall
 		}
 		deviceManager->AddEventSink<RE::InputEvent*>(&g_inputSink);
 		registered = true;
-		logger::info("input: hotkeys registered (F5 encounter spawn, F6 runtime rescan, F7 diagnostics, F8 rune debug, F9 quest debug, F10 snapshot, F11 probe, F12 probe item)");
+		logger::info("input: hotkeys registered (F4 hunt contract, F5 encounter spawn, F6 runtime rescan, F7 diagnostics, F8 rune debug, F9 quest debug, F10 snapshot, F11 probe, F12 probe item)");
 	}
 
 	SelfTestResult InputManager::SelfTest()
