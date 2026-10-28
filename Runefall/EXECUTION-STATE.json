@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "R6.2",
-  "updatedAt": "2026-10-28T04:33:07.219Z",
+  "currentSlice": "R6.3",
+  "updatedAt": "2026-10-28T04:36:38.286Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -1072,11 +1072,26 @@
       "id": "R6.2",
       "layer": "L6",
       "slice": "Save/upgrade/uninstall",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "all uninstall modes PASS",
       "depends": "F0.5/A3.7",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/r6.2-save-uninstall-20261028.md",
+        "build/evidence/uninstall-pack-disable-20261028-113404.md",
+        "build/evidence/uninstall-dll-remove-20261028-113448.md",
+        "build/evidence/uninstall-all-remove-20261028-113533.md",
+        "build/evidence/static-gates-20261028-112802.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "pack-disable": "PASS",
+        "dll-remove": "PASS",
+        "all-remove": "PASS",
+        "save-load-after-removal": "PASS",
+        "no-crash": "PASS",
+        "reinstall-safe": "PASS design",
+        "static-gates": "PASS 10/10"
+      }
     },
     "R6.3": {
       "id": "R6.3",
@@ -1100,9 +1115,9 @@
     }
   },
   "currentWork": {
-    "slice": "R6.2",
-    "step": "save/uninstall",
-    "nextAction": "save compatibility, clean uninstall, orphan cleanup and reinstall safety"
+    "slice": "R6.3",
+    "step": "balance calibration",
+    "nextAction": "PCR/NCR/TTK/TTD calibration against 40h pacing and combat pace profiles"
   },
   "blockers": [],
   "finalRelease": null

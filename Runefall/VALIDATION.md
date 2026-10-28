@@ -1221,3 +1221,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - DiabloRim 1.0.7 + SPID/KID/SkyPatcher in J: test env; all smoke paths PASS; no crash.
 - Full 3,700-mod MO2 profile not run (user-side); limitation recorded.
+
+
+## R6.2 save/uninstall - PASS (2026-10-28 11:33-11:36)
+
+- pack-disable, dll-remove, all-remove: CleanSave loads, no crash, game running.
+- Static gates 10/10. Reinstall uses the same files.
