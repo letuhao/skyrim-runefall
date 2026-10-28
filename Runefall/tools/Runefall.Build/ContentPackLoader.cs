@@ -27,6 +27,7 @@ internal sealed class LoadedPack
     public List<string[]> EncounterRows { get; } = new();
     public List<string[]> RareRows { get; } = new();
     public List<string[]> ContractRows { get; } = new();
+    public List<string[]> BossRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -83,6 +84,7 @@ internal static class ContentPackLoader
             ReadEncounters(pack, files, errors);
             ReadRareSpawns(pack, files, errors);
             ReadHuntContracts(pack, files, errors);
+            ReadBosses(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -597,6 +599,25 @@ internal static class ContentPackLoader
                 I(Int(item, "minStage", path, errors)), I(Int(item, "maxStage", path, errors)),
                 I(Int(item, "rewardRunes", path, errors)), I(Int(item, "cooldownSeconds", path, errors)),
                 I(Int(item, "durationSeconds", path, errors)), B(Bool(item, "enabled", path, errors))
+            });
+        }
+    }
+
+
+    private static void ReadBosses(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("bosses", files, errors, "bosses");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"bosses.bosses[{index++}]";
+            pack.BossRows.Add(new[]
+            {
+                Text(item, "bossId", path, errors), Text(item, "actorEditorId", path, errors),
+                I(Int(item, "fixedStage", path, errors)), B(Bool(item, "unique", path, errors)),
+                I(Int(item, "questBand", path, errors)), Text(item, "packageId", path, errors),
+                B(Bool(item, "enabled", path, errors))
             });
         }
     }

@@ -29,6 +29,7 @@ ENTITY_SCHEMA = {
     "encounterTables": "encounter-tables.schema.json",
     "rareSpawns": "rare-spawns.schema.json",
     "huntContracts": "hunt-contracts.schema.json",
+    "bosses": "bosses.schema.json",
     "ratingProfiles": "rating-profiles.schema.json",
     "combatPaceProfiles": "combat-pace-profiles.schema.json",
     "ratingDisplayProfiles": "rating-display-profiles.schema.json",

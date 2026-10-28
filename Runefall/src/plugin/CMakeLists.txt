@@ -91,6 +91,7 @@ else()
         src/EncounterManager.cpp
         src/RareSpawnEngine.cpp
         src/HuntContractManager.cpp
+        src/BossRegistry.cpp
         src/RuntimeContentResolver.cpp
         src/CoSave.cpp
         src/ItemRegistry.cpp

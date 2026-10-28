@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "W2.5",
-  "updatedAt": "2026-10-28T02:17:18.162Z",
+  "currentSlice": "W2.6",
+  "updatedAt": "2026-10-28T02:29:17.494Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -490,11 +490,24 @@
       "id": "W2.5",
       "layer": "L2",
       "slice": "Bosses and unique actors",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "authored bosses at designed stage; unique refs resolve",
       "depends": "W2.2/W2.4",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/w2.5-bosses-20261028.md",
+        "build/evidence/batch-test-20261028-092715.md",
+        "build/evidence/static-gates-20261028-092836.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "boss-data": "PASS 5",
+        "fixed-stage": "PASS",
+        "formid-resolution": "PASS",
+        "unique-flag": "PASS",
+        "quest-band-field": "PASS reserved",
+        "batch": "PASS 31/31",
+        "static-gates": "PASS"
+      }
     },
     "W2.6": {
       "id": "W2.6",
@@ -758,9 +771,9 @@
     }
   },
   "currentWork": {
-    "slice": "W2.5",
-    "step": "bosses and unique actors",
-    "nextAction": "fixed-stage overrides, unique FormID refs, boss packages, quest band exclusions"
+    "slice": "W2.6",
+    "step": "anomaly ladder",
+    "nextAction": "anomaly families/curves/tier labels and anomaly encounters without host protection"
   },
   "blockers": [],
   "finalRelease": null

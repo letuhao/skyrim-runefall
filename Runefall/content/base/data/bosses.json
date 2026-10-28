@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "bosses": [
+    {
+      "schemaVersion": 1,
+      "bossId": "boss_1",
+      "actorEditorId": "RF_NPC_Boss_01",
+      "fixedStage": 20,
+      "unique": true,
+      "questBand": 1,
+      "packageId": "",
+      "enabled": true
+    },
+    {
+      "schemaVersion": 1,
+      "bossId": "boss_2",
+      "actorEditorId": "RF_NPC_Boss_02",
+      "fixedStage": 40,
+      "unique": true,
+      "questBand": 2,
+      "packageId": "",
+      "enabled": true
+    },
+    {
+      "schemaVersion": 1,
+      "bossId": "boss_3",
+      "actorEditorId": "RF_NPC_Boss_03",
+      "fixedStage": 60,
+      "unique": true,
+      "questBand": 3,
+      "packageId": "",
+      "enabled": true
+    },
+    {
+      "schemaVersion": 1,
+      "bossId": "boss_4",
+      "actorEditorId": "RF_NPC_Boss_04",
+      "fixedStage": 80,
+      "unique": true,
+      "questBand": 4,
+      "packageId": "",
+      "enabled": true
+    },
+    {
+      "schemaVersion": 1,
+      "bossId": "boss_5",
+      "actorEditorId": "RF_NPC_Boss_05",
+      "fixedStage": 95,
+      "unique": true,
+      "questBand": 5,
+      "packageId": "",
+      "enabled": true
+    }
+  ]
+}

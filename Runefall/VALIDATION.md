@@ -1063,3 +1063,10 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - Data-driven hunt_contracts; F4 starts first eligible contract.
 - Draugr contract completed on kill, 2 runes granted; batch 30/30, static gates 9/9.
 - Contract state session-scoped; co-save persistence deferred.
+
+
+## W2.5 bosses/unique actors - PASS (2026-10-28 09:16-09:28)
+
+- Data-driven bosses with fixed stages and FormID resolution; boss fixed stage overrides rare stage.
+- In-game boss_03 fixed stage 60; batch 31/31; static gates 9/9.
+- Quest-band placement remains content-pack data.

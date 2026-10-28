@@ -50,6 +50,7 @@ namespace Runefall
 			"encounter_tables.csv",
 			"rare_spawns.csv",
 			"hunt_contracts.csv",
+			"bosses.csv",
 		};
 	}
 

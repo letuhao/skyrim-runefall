@@ -92,6 +92,10 @@
     {
       "entity": "huntContracts",
       "file": "data/hunt_contracts.json"
+    },
+    {
+      "entity": "bosses",
+      "file": "data/bosses.json"
     }
   ],
   "localization": []

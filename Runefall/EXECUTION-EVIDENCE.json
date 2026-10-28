@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T02:17:18.166Z",
+  "updatedAt": "2026-10-28T02:29:17.499Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -474,6 +474,27 @@
       "slice": "W2.4",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-091637.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "W2.5",
+      "kind": "summary",
+      "path": "build/evidence/w2.5-bosses-20261028.md",
+      "result": "PASS",
+      "detail": "5 bosses fixed stages; FormID resolution; batch 31/31"
+    },
+    {
+      "slice": "W2.5",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-092715.md",
+      "result": "PASS",
+      "detail": "31/31; Boss fixed stage; no crash"
+    },
+    {
+      "slice": "W2.5",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-092836.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

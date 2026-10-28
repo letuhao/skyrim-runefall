@@ -19,6 +19,7 @@
 #include "ActorEquipmentDistributor.h"
 #include "WorldBandEngine.h"
 #include "HuntContractManager.h"
+#include "BossRegistry.h"
 
 #include "RE/C/ContainerMenu.h"
 

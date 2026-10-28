@@ -5,6 +5,7 @@
 #include "FormCatalog.h"
 #include "WorldBandEngine.h"
 #include "RareSpawnEngine.h"
+#include "BossRegistry.h"
 #include "LootService.h"
 
 #include "RE/P/PlayerCharacter.h"
@@ -144,7 +145,11 @@ namespace Runefall
 			if (rareBase) {
 				const auto placedRare = player->PlaceObjectAtMe(rareBase, true);
 				if (placedRare) {
-					LootService::Get().SetActorStageOverride(placedRare->GetFormID(), rare.stage);
+					const auto bossStage = BossRegistry::Get().FixedStageForEditorId(rare.actorEditorId);
+					const auto finalStage = bossStage > 0 ? bossStage : rare.stage;
+					LootService::Get().SetActorStageOverride(placedRare->GetFormID(), finalStage);
+					if (bossStage > 0)
+						logger::info("boss-registry: actor {:08X} fixed stage {}", placedRare->GetFormID(), bossStage);
 					// rare spawns use the debug spawn path but still obey one-per-cell semantics
 					const auto cellID = cell->GetFormID();
 					++cellCounts[cellID];
