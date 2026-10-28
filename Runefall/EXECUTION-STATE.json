@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "R5.2",
-  "updatedAt": "2026-10-28T03:54:12.463Z",
+  "currentSlice": "R5.3",
+  "updatedAt": "2026-10-28T03:57:57.178Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -924,11 +924,24 @@
       "id": "R5.2",
       "layer": "L5",
       "slice": "Base content packs",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "base world fully staged; no gaps",
       "depends": "R5.1/A3.7",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/r5.2-base-packs-20261028.md",
+        "build/evidence/batch-test-20261028-105557.md",
+        "build/evidence/static-gates-20261028-105717.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "base-manifest": "PASS",
+        "format-1": "PASS",
+        "content-files": "PASS",
+        "base-present": "PASS",
+        "unique-hunt-packs": "PASS",
+        "batch": "PASS 36/36",
+        "static-gates": "PASS"
+      }
     },
     "R5.3": {
       "id": "R5.3",
@@ -1012,9 +1025,9 @@
     }
   },
   "currentWork": {
-    "slice": "R5.2",
-    "step": "base content packs",
-    "nextAction": "base packs for loot/combat/world/player and pack load-order behavior"
+    "slice": "R5.3",
+    "step": "mod packs",
+    "nextAction": "mod pack compatibility profiles for OWL/SPID/KID and third-party loot"
   },
   "blockers": [],
   "finalRelease": null

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T03:54:12.467Z",
+  "updatedAt": "2026-10-28T03:57:57.183Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -866,6 +866,27 @@
       "slice": "R5.1",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-105049.md",
+      "result": "PASS",
+      "detail": "9/9"
+    },
+    {
+      "slice": "R5.2",
+      "kind": "summary",
+      "path": "build/evidence/r5.2-base-packs-20261028.md",
+      "result": "PASS",
+      "detail": "base pack manifest; 3 manifests; base present"
+    },
+    {
+      "slice": "R5.2",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-105557.md",
+      "result": "PASS",
+      "detail": "36/36"
+    },
+    {
+      "slice": "R5.2",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-105717.md",
       "result": "PASS",
       "detail": "9/9"
     }

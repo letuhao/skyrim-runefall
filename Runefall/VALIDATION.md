@@ -1185,3 +1185,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - Format-1 manifests (unique/hunt) validated; base present; version/contentFiles/conflict fields.
 - Batch 36/36; static gates 9/9.
+
+
+## R5.2 base content packs - PASS (2026-10-28 10:54-10:57)
+
+- packs/base.json format-1 manifest for Runefall.esp; unique/hunt packs still valid.
+- Batch 36/36; static gates 9/9.

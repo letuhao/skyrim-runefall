@@ -181,6 +181,8 @@ internal static class Program
         var huntEditors = content.HuntNames
             .Concat(content.HuntRecords.Where(e => e.StartsWith("RF_MISC_", StringComparison.Ordinal)))
             .Distinct(StringComparer.Ordinal).ToArray();
+        WriteManifest(Path.Combine(packDir, "base.json"), "base", "Runefall.esp",
+            new[] { "data/form_ids.csv", "data/stage_ladder.csv", "data/rarity.csv", "data/affixes.csv" }, 495, Array.Empty<string>());
         WriteManifest(Path.Combine(packDir, "unique.json"), "unique", "Runefall - Unique.esp",
             new[] { "data/unique_affixes.csv", "data/unique_sources.csv" }, uniqueEditors.Length, uniqueEditors);
         WriteManifest(Path.Combine(packDir, "hunt.json"), "hunt", "Runefall - Hunt.esp",
