@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T03:08:24.097Z",
+  "updatedAt": "2026-10-28T03:09:35.697Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -686,6 +686,13 @@
       "path": "build/evidence/static-gates-20261028-100744.md",
       "result": "PASS",
       "detail": "9/9"
+    },
+    {
+      "slice": "A3.6",
+      "kind": "summary",
+      "path": "build/evidence/a3.6-compatibility-20261028.md",
+      "result": "PASS",
+      "detail": "573 FormIDs plugin-relative; cache key load-order independent; pack manifests"
     }
   ]
 }

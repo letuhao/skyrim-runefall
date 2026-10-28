@@ -1126,3 +1126,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - Data-driven item value, vendor spread, respec cost, rune/material value; self-test 33/33.
 - Batch 33/33; static gates 9/9. Vendor UI consumes model in P4.6/P4.7.
+
+
+## A3.6 compatibility/load order - PASS (2026-10-28 10:07)
+
+- 573 plugin-relative FormIDs; load-order-independent runtime cache key; 2 pack manifests.
+- Batch 33/33; static gates 9/9. OWL/SPID/KID conflict profiles deferred to R5.
