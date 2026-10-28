@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "A3.3",
-  "updatedAt": "2026-10-28T03:01:13.274Z",
+  "currentSlice": "A3.4",
+  "updatedAt": "2026-10-28T03:02:28.817Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -609,11 +609,27 @@
       "id": "A3.3",
       "layer": "L3",
       "slice": "Runtime item generation",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "generated item persists; visuals/name correct; no crash",
       "depends": "A3.2/F0.7",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/a3.3-crafting-20261028.md",
+        "build/evidence/batch-test-20261028-095912.md",
+        "build/evidence/static-gates-20261028-100032.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "reroll": "PASS",
+        "upgrade": "PASS",
+        "socket": "PASS",
+        "extract": "PASS",
+        "convert": "PASS",
+        "salvage": "PASS",
+        "recipes": "PASS 8",
+        "rune-costs": "PASS",
+        "batch": "PASS 32/32",
+        "static-gates": "PASS"
+      }
     },
     "A3.4": {
       "id": "A3.4",
@@ -827,9 +843,9 @@
     }
   },
   "currentWork": {
-    "slice": "A3.3",
-    "step": "crafting and rune forge",
-    "nextAction": "recipe costs, upgrade/socket/extract/convert operations, station validation"
+    "slice": "A3.4",
+    "step": "rune gear",
+    "nextAction": "rune gear tiers, affix budgets, socket limits, progression gates"
   },
   "blockers": [],
   "finalRelease": null

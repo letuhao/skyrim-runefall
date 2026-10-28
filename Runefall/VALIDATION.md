@@ -1108,3 +1108,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - 31 materials with data-driven salvage ranges; RuneForge uses tier salvage yield.
 - Batch 32/32; static gates 9/9.
+
+
+## A3.3 crafting/rune forge - PASS (2026-10-28 10:00-10:01)
+
+- RuneForge reroll/upgrade/socket/extract/convert/salvage self-test PASS.
+- 8 recipes + salvage COBJ; batch 32/32; static gates 9/9.

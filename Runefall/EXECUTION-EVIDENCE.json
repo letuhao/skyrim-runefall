@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T03:01:13.279Z",
+  "updatedAt": "2026-10-28T03:02:28.821Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -619,6 +619,27 @@
     },
     {
       "slice": "A3.2",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-100032.md",
+      "result": "PASS",
+      "detail": "9/9"
+    },
+    {
+      "slice": "A3.3",
+      "kind": "summary",
+      "path": "build/evidence/a3.3-crafting-20261028.md",
+      "result": "PASS",
+      "detail": "reroll/upgrade/socket/extract/convert/salvage; 8 recipes"
+    },
+    {
+      "slice": "A3.3",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-095912.md",
+      "result": "PASS",
+      "detail": "32/32"
+    },
+    {
+      "slice": "A3.3",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-100032.md",
       "result": "PASS",
