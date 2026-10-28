@@ -1,10 +1,12 @@
-[18:33:48.780] [info] [CoSave.cpp:824] co-save: header hex 524E465303000000000003000A000000
-[18:33:48.782] [info] [DebugHarness.cpp:155] [probe][PASS] CoSave.SelfTest: round-trip 442 bytes; header/sentinel/v2/deterministic/caps/budget/eviction OK
-[18:33:58.077] [info] [CoSave.cpp:740] co-save: loaded schema 1 (0 item entries)
-[18:33:58.077] [info] [CoSave.cpp:745] co-save: state rank=1 stage=1 xp=0 class= endgame=0 containers=0 quests=0 items=0 materials=0 configHash=52464C31 difficulty=255 curve=1 overrides=0 skillCount=0 firstContainer=0 firstItem=0
-[18:34:20.262] [info] [CoSave.cpp:824] co-save: header hex 524E465303000000000003000A000000
-[18:34:20.265] [info] [DebugHarness.cpp:155] [probe][PASS] CoSave.SelfTest: round-trip 442 bytes; header/sentinel/v2/deterministic/caps/budget/eviction OK
-[18:34:28.531] [info] [CoSave.cpp:704] co-save: state rank=1 stage=1 xp=0 class= endgame=0 containers=1 quests=0 items=5 materials=31 configHash=52464C31 difficulty=255 curve=1 overrides=0 skillCount=0 firstContainer=4278193991 firstItem=1 skillRank=0 firstQuest=0
-[18:34:28.531] [info] [CoSave.cpp:714] co-save: wrote 1948 bytes (schema 3)
-[18:34:29.720] [info] [CoSave.cpp:740] co-save: loaded schema 3 (5 item entries)
-[18:34:29.720] [info] [CoSave.cpp:745] co-save: state rank=1 stage=1 xp=0 class= endgame=0 containers=1 quests=0 items=5 materials=31 configHash=52464C31 difficulty=255 curve=1 overrides=0 skillCount=0 firstContainer=4278193991 firstItem=1
+[18:40:11.459] [error] [CoSave.cpp:426] co-save: reject schema 0
+[18:40:11.459] [error] [CoSave.cpp:400] co-save: reject record-version 4
+[18:40:11.459] [error] [CoSave.cpp:400] co-save: reject record-version 0
+[18:40:11.459] [error] [CoSave.cpp:426] co-save: reject schema 4
+[18:40:11.460] [error] [CoSave.cpp:437] co-save: reject section-count
+[18:40:11.460] [error] [CoSave.cpp:684] co-save: reject record; defaults kept
+[18:40:11.461] [info] [DebugHarness.cpp:155] [probe][PASS] StageEngine.SelfTest: 100 stages, 10 tiers, 1 curve, 6 legacy tiers, validated; encounter stage 51; rejection/difficulty/player-rank paths OK
+[18:40:11.461] [info] [DebugHarness.cpp:155] [probe][PASS] CoSave.SelfTest: round-trip 442 bytes; header/sentinel/v2/deterministic/caps/budget/eviction OK
+[18:40:20.165] [info] [CoSave.cpp:712] co-save: state rank=1 stage=1 xp=0 class= endgame=0 containers=1 quests=0 items=4 materials=31 configHash=52464C31 difficulty=255 curve=1 overrides=0 skillCount=0 firstContainer=4278193992 firstItem=1 skillRank=0 firstQuest=0
+[18:40:20.165] [info] [CoSave.cpp:722] co-save: wrote 1801 bytes (schema 3)
+[18:40:21.454] [info] [CoSave.cpp:748] co-save: loaded schema 3 (4 item entries)
+[18:40:21.454] [info] [CoSave.cpp:753] co-save: state rank=1 stage=1 xp=0 class= endgame=0 containers=1 quests=0 items=4 materials=31 configHash=52464C31 difficulty=255 curve=1 overrides=0 skillCount=0 firstContainer=4278193992 firstItem=1

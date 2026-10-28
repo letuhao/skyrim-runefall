@@ -61,6 +61,7 @@ namespace Runefall
 		bool               RememberRewardedQuest(std::uint32_t a_questFormID);
 
 		[[nodiscard]] static SelfTestResult SelfTest();
+		[[nodiscard]] static const std::string& LastRejectToken();
 
 	private:
 		static void OnSave(SKSE::SerializationInterface* a_intfc);

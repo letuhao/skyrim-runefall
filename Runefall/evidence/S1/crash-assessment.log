@@ -1,0 +1,6 @@
+cwd=D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall
+pre-existing crash=crash-2026-10-28-10-37-27.log at 17:37 local
+probable call stack=6 SkyrimSE.exe frames, BSWin32KeyboardDevice input path, no Runefall.dll frame
+reruns after crash=17:41,17:58,18:13,18:33,18:39 all batch PASS with no new crash log
+assessment=not reproducible as Runefall regression; environment/input risk retained, not waived
+new crash since 18:39=no

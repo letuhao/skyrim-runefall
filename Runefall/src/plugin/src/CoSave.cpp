@@ -28,6 +28,8 @@ namespace Runefall
 		constexpr std::uint32_t kMaxPersistedRefs = 4096;
 		constexpr std::uint32_t kMaxPersistedQuests = 1024;
 		constexpr std::uint32_t kMaxLadderOverrides = 256;
+		std::string gLastRejectToken;
+		void MarkReject(std::string_view a_token) { gLastRejectToken = a_token; }
 
 		void PutU8(std::vector<std::uint8_t>& a_out, std::uint8_t a_value)
 		{
@@ -166,6 +168,11 @@ namespace Runefall
 			out.insert(out.end(), a_payload.begin(), a_payload.end());
 			return out;
 		}
+	}
+
+	const std::string& CoSave::LastRejectToken()
+	{
+		return gLastRejectToken;
 	}
 
 	CoSave& CoSave::Get()
@@ -389,6 +396,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 	bool CoSave::LoadRecord(const std::vector<std::uint8_t>& a_bytes, std::uint32_t a_recordVersion, CoSaveState& a_out)
 	{
 		if (a_recordVersion == 0 || a_recordVersion > kSaveVersion) {
+			MarkReject("co-save: reject record-version");
 			logger::error("co-save: reject record-version {}", a_recordVersion);
 			return false;
 		}
@@ -414,18 +422,19 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 		std::uint32_t flags = 0;
 		std::uint32_t sectionCount = 0;
 		if (!reader.U16(schema) || schema < 1 || schema > kSaveVersion) {
+			MarkReject("co-save: reject schema");
 			logger::error("co-save: reject schema {}", schema);
 			return false;
 		}
 		if (schema >= 3) {
 			if (!reader.U32(flags)) return false;
-			if (flags != 0) { logger::error("co-save: reject flags {}", flags); return false; }
-			if (!reader.U16(saveVersion) || saveVersion != schema) { logger::error("co-save: reject version-mirror"); return false; }
+			if (flags != 0) { MarkReject("co-save: reject flags"); logger::error("co-save: reject flags {}", flags); return false; }
+			if (!reader.U16(saveVersion) || saveVersion != schema) { MarkReject("co-save: reject version-mirror"); logger::error("co-save: reject version-mirror"); return false; }
 		} else if (!reader.U16(saveVersion) || saveVersion != schema) {
 			logger::error("co-save: reject version-mirror");
 			return false;
 		}
-		if (!reader.U32(sectionCount) || sectionCount == 0) { logger::error("co-save: reject section-count"); return false; }
+		if (!reader.U32(sectionCount) || sectionCount == 0) { MarkReject("co-save: reject section-count"); logger::error("co-save: reject section-count"); return false; }
 		constexpr std::uint32_t kMaxSections = 64;
 		if (sectionCount > kMaxSections) { logger::error("co-save: reject section-count {}", sectionCount); return false; }
 		std::array<bool, 16> seenSections{};
@@ -492,15 +501,14 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 						return false;
 					if (!sectionReader.U8(item.rarity) || !sectionReader.U16(item.ilvl) || !sectionReader.U8(item.socketCount))
 						return false;
-					if (item.registryId == 0 || item.rarity > 5 || item.ilvl > 1000 || item.socketCount > 3) {
-						logger::error("co-save: reject item-range");
-						return false;
-					}
+					if (item.registryId == 0) { MarkReject("co-save: reject item.registryId"); logger::error("co-save: reject item.registryId"); return false; }
+					if (item.rarity > 5) { MarkReject("co-save: reject item.rarity"); logger::error("co-save: reject item.rarity"); return false; }
+					if (item.ilvl > 1000) { MarkReject("co-save: reject item.ilvl"); logger::error("co-save: reject item.ilvl"); return false; }
+					if (item.socketCount > 3) { MarkReject("co-save: reject item.socketCount"); logger::error("co-save: reject item.socketCount"); return false; }
 					for (auto& rune : item.socketRunes)
 						if (!sectionReader.I32(rune) || rune < 0 || rune > 5)
 							return false;
-					if (!sectionReader.U8(item.enhancementCount) || item.enhancementCount > 5)
-						return false;
+					if (!sectionReader.U8(item.enhancementCount) || item.enhancementCount > 5) { MarkReject("co-save: reject item.enhancementCount"); return false; }
 					for (auto& enhancement : item.enhancements) {
 						if (!sectionReader.String(enhancement.affixId) || enhancement.affixId.size() > 64 || !sectionReader.String(enhancement.effectEditorId) || enhancement.effectEditorId.size() > 64)
 							return false;
@@ -513,7 +521,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 					}
 					if (!sectionReader.U16(item.tags))
 						return false;
-					if ((item.tags & ~static_cast<std::uint16_t>(0x3F)) != 0) { logger::error("co-save: reject item.tags"); return false; }
+					if ((item.tags & ~static_cast<std::uint16_t>(0x3F)) != 0) { MarkReject("co-save: reject item.tags"); logger::error("co-save: reject item.tags"); return false; }
 				}
 				break;
 			}
@@ -858,8 +866,12 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 		CoSaveState reject;
 		if (Decode(schemaZero, reject))
 			return { "CoSave.SelfTest", CheckStatus::Fail, "schema 0 accepted" };
+		if (LastRejectToken() != "co-save: reject schema")
+			return { "CoSave.SelfTest", CheckStatus::Fail, "schema rejection token missing" };
 		if (LoadRecord(encoded, 4, reject) || LoadRecord(encoded, 0, reject))
 			return { "CoSave.SelfTest", CheckStatus::Fail, "record version gate invalid" };
+		if (LastRejectToken() != "co-save: reject record-version")
+			return { "CoSave.SelfTest", CheckStatus::Fail, "record-version rejection token missing" };
 		auto schemaFour = encoded;
 		schemaFour[4] = 4; schemaFour[5] = 0;
 		if (Decode(schemaFour, reject))
@@ -931,6 +943,9 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 			canonicalExpected.push_back(static_cast<std::uint8_t>(std::stoul(canonicalHex.substr(i, 2), nullptr, 16)));
 		if (Encode(canonical) != canonicalExpected)
 			return { "CoSave.SelfTest", CheckStatus::Fail, "canonical golden mismatch" };
+		CoSaveState canonicalDecoded;
+		if (!Decode(canonicalExpected, canonicalDecoded) || canonicalDecoded.playerRank != 42 || canonicalDecoded.playerStage != 42)
+			return { "CoSave.SelfTest", CheckStatus::Fail, "canonical golden decode failed" };
 
 		// Encode caps and gate states.
 		CoSaveState tooManySkills = sample;
