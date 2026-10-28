@@ -106,7 +106,9 @@ if (-not $SaveName) { throw 'No saveName supplied and no clean-save manifest fou
 if (-not $SaveDir) { $SaveDir = Join-Path $env:USERPROFILE 'Documents\My Games\Skyrim Special Edition\Saves' }
 $saveEss = Join-Path $SaveDir ($SaveName + '.ess')
 $saveSkse = Join-Path $SaveDir ($SaveName + '.skse')
-if (-not (Test-Path $saveEss) -or -not (Test-Path $saveSkse)) {
+$saveFilesOk = (Test-Path $saveEss) -and (Test-Path $saveSkse)
+Add-Check 'Save files present' $saveFilesOk "ess=$saveEss skse=$saveSkse"
+if (-not $saveFilesOk) {
     Write-Host "SAVE PREFLIGHT FAILED: ess=$saveEss exists=$((Test-Path $saveEss)) skse=$saveSkse exists=$((Test-Path $saveSkse))"
     exit 2
 }

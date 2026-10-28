@@ -878,8 +878,11 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 		schemaZero[4] = 0;
 		schemaZero[5] = 0;
 		CoSaveState reject;
-		if (Decode(schemaZero, reject))
-			return { "CoSave.SelfTest", CheckStatus::Fail, "schema 0 accepted" };
+		CoSaveState decodeSentinel;
+		decodeSentinel.playerRank = 77;
+		const auto decodeSentinelBefore = Encode(decodeSentinel);
+		if (Decode(schemaZero, decodeSentinel) || Encode(decodeSentinel) != decodeSentinelBefore)
+			return { "CoSave.SelfTest", CheckStatus::Fail, "schema 0 accepted or mutated state" };
 		if (LastRejectToken() != "co-save: reject schema")
 			return { "CoSave.SelfTest", CheckStatus::Fail, "schema rejection token missing" };
 		if (LoadRecord(encoded, 4, reject) || LoadRecord(encoded, 0, reject))
@@ -888,8 +891,11 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 			return { "CoSave.SelfTest", CheckStatus::Fail, "record-version rejection token missing" };
 		auto schemaFour = encoded;
 		schemaFour[4] = 4; schemaFour[5] = 0;
-		if (Decode(schemaFour, reject))
-			return { "CoSave.SelfTest", CheckStatus::Fail, "schema 4 accepted" };
+		CoSaveState schemaSentinel;
+		schemaSentinel.playerRank = 77;
+		const auto schemaSentinelBefore = Encode(schemaSentinel);
+		if (Decode(schemaFour, schemaSentinel) || Encode(schemaSentinel) != schemaSentinelBefore)
+			return { "CoSave.SelfTest", CheckStatus::Fail, "schema 4 accepted or mutated state" };
 
 		// v2 migration fixture: 12-byte header, progression with runeTier=5, bossKillTier=2, no ladder.
 		std::vector<std::uint8_t> v2;
@@ -1092,6 +1098,41 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 		if (!LoadRecords(repairRecords, repairTarget, repairVersion) || repairTarget.playerRank != sample.playerRank)
 			return { "CoSave.SelfTest", CheckStatus::Fail, "malformed-then-valid record did not recover" };
 
+		for (const auto* token : {
+			"co-save: reject section-count",
+			"co-save: reject schema",
+			"co-save: reject flags",
+			"co-save: reject version-mirror",
+			"co-save: reject item-count",
+			"co-save: reject item.registryId",
+			"co-save: reject item.baseFormId",
+			"co-save: reject item.rarity",
+			"co-save: reject item.ilvl",
+			"co-save: reject item.socketCount",
+			"co-save: reject item.enhancementCount",
+			"co-save: reject item.socketRunes",
+			"co-save: reject string.affix",
+			"co-save: reject item.category",
+			"co-save: reject item.tier",
+			"co-save: reject item.tags",
+			"co-save: reject hunt-count",
+			"co-save: reject string.map-key",
+			"co-save: reject material-count",
+			"co-save: reject pack-count",
+			"co-save: reject string.pack",
+			"co-save: reject container-count",
+			"co-save: reject quest-count",
+			"co-save: reject override-count",
+			"co-save: reject string.class",
+			"co-save: reject skill-count",
+			"co-save: reject string.skill",
+			"co-save: reject range",
+			"co-save: reject trailing",
+			"co-save: reject duplicate-section",
+		}) {
+			MarkReject(token);
+			if (LastRejectToken() != token) return { "CoSave.SelfTest", CheckStatus::Fail, "reject token table mismatch" };
+		}
 		// Eviction is smallest FormID, not FIFO.
 		auto savedContainers = CoSave::Get().State().generatedContainers;
 		CoSave::Get().State().generatedContainers.clear();
