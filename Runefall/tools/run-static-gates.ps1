@@ -63,6 +63,14 @@ Gate "JSON content pipeline" {
     ($out | Select-Object -Last 1)
 }
 
+Gate "English string table" {
+    $strings = Join-Path $Project "build\dist\Data\Runefall\data\strings.json"
+    $out = & python (Join-Path $Project "tools\validate-strings.py") $strings 2>&1
+    $out | Set-Content (Join-Path $evidence "strings-$stamp.log")
+    if ($LASTEXITCODE -ne 0) { throw "English string table validation failed: $($out -join '; ')" }
+    ($out | Select-Object -Last 1)
+}
+
 Gate "host core tests" {
     $out = & (Join-Path $Project "tools\run-host-tests.ps1") 2>&1
     $out | Set-Content (Join-Path $evidence "host-core-$stamp.log")

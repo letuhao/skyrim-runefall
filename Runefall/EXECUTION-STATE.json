@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "R5.6",
-  "updatedAt": "2026-10-28T04:24:18.214Z",
+  "currentSlice": "R6.1",
+  "updatedAt": "2026-10-28T04:28:45.109Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -1021,11 +1021,24 @@
       "id": "R5.6",
       "layer": "L5",
       "slice": "Localization structure",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "all player text localized by key; no unsupported language claim",
       "depends": "R5.1",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/r5.6-localization-20261028.md",
+        "build/evidence/static-gates-20261028-112802.md",
+        "build/evidence/batch-test-20261028-112209.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "string-table": "PASS 262",
+        "unique-keys": "PASS",
+        "english-only": "PASS",
+        "placeholders": "PASS",
+        "coverage-gate": "PASS >=250",
+        "static-gate": "PASS 10/10",
+        "batch": "PASS 38/38"
+      }
     },
     "R6.1": {
       "id": "R6.1",
@@ -1069,9 +1082,9 @@
     }
   },
   "currentWork": {
-    "slice": "R5.6",
-    "step": "localization",
-    "nextAction": "English-only string table coverage, placeholder/format validation, localization policy"
+    "slice": "R6.1",
+    "step": "compatibility test",
+    "nextAction": "full MO2 MantrasOfMara compatibility run, OWL/SPID/KID conflict check, crash-free load"
   },
   "blockers": [],
   "finalRelease": null

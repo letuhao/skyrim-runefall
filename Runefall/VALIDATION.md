@@ -1209,3 +1209,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - Endgame profile, rank/boss-tier gates, completion reward/state persisted in co-save.
 - Batch 38/38; static gates 9/9. Scripted final-boss kill not run.
+
+
+## R5.6 localization - PASS (2026-10-28 11:24-11:28)
+
+- 262 English strings, unique/non-empty/balanced placeholders; new English string table gate.
+- Static gates 10/10; batch 38/38. English-only v1 policy.

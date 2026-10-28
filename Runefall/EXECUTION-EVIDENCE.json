@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T04:24:18.218Z",
+  "updatedAt": "2026-10-28T04:28:45.114Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -952,6 +952,27 @@
       "path": "build/evidence/static-gates-20261028-112337.md",
       "result": "PASS",
       "detail": "9/9"
+    },
+    {
+      "slice": "R5.6",
+      "kind": "summary",
+      "path": "build/evidence/r5.6-localization-20261028.md",
+      "result": "PASS",
+      "detail": "262 English keys; validator; static gate"
+    },
+    {
+      "slice": "R5.6",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-112802.md",
+      "result": "PASS",
+      "detail": "10/10 gates"
+    },
+    {
+      "slice": "R5.6",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-112209.md",
+      "result": "PASS",
+      "detail": "38/38"
     }
   ]
 }
