@@ -1096,3 +1096,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - Load-order-independent cache key, dataVersion invalidation, manifest, F6 and delayed scans.
 - Batch 32/32; static gates 9/9.
+
+
+## A3.1 loot tables/rarity - PASS (2026-10-28 09:53-09:54)
+
+- Audited 600 affixes, 6 rarities, 36 rarity weights, 36 general drop rows.
+- LootEngine synthetic weighted-rarity self-test PASS; batch 32/32; static gates 9/9.

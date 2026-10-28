@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T02:52:31.657Z",
+  "updatedAt": "2026-10-28T02:54:53.067Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -579,6 +579,27 @@
       "slice": "W2.7",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-095152.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "A3.1",
+      "kind": "summary",
+      "path": "build/evidence/a3.1-loot-tables-20261028.md",
+      "result": "PASS",
+      "detail": "600 affixes; 6 rarities; 36 weights; 36 drops; deterministic test"
+    },
+    {
+      "slice": "A3.1",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-094909.md",
+      "result": "PASS",
+      "detail": "32/32 loot checks"
+    },
+    {
+      "slice": "A3.1",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-095413.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

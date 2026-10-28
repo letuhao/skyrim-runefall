@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "A3.1",
-  "updatedAt": "2026-10-28T02:52:31.653Z",
+  "currentSlice": "A3.2",
+  "updatedAt": "2026-10-28T02:54:53.063Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -561,11 +561,26 @@
       "id": "A3.1",
       "layer": "L3",
       "slice": "Ladder-driven loot",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "loot follows stage and data; no hardcoded values",
       "depends": "W2.2/C1.4",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/a3.1-loot-tables-20261028.md",
+        "build/evidence/batch-test-20261028-094909.md",
+        "build/evidence/static-gates-20261028-095413.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "affix-data": "PASS 600",
+        "rarity-data": "PASS 6",
+        "rarity-weights": "PASS 36",
+        "general-drops": "PASS 36",
+        "weighted-rarity-test": "PASS",
+        "deterministic-rng": "PASS",
+        "container-actor-quest": "PASS",
+        "batch": "PASS 32/32",
+        "static-gates": "PASS"
+      }
     },
     "A3.2": {
       "id": "A3.2",
@@ -799,9 +814,9 @@
     }
   },
   "currentWork": {
-    "slice": "A3.1",
-    "step": "loot tables and rarity",
-    "nextAction": "data-driven loot tables, rarity weights, container/actor/boss/quest loot generation"
+    "slice": "A3.2",
+    "step": "materials and salvage",
+    "nextAction": "material tiers, dismantle/salvage yields, material sinks"
   },
   "blockers": [],
   "finalRelease": null
