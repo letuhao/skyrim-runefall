@@ -25,7 +25,7 @@
   },
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "S1",
-  "updatedAt": "2026-10-28T12:32:19.692Z",
+  "updatedAt": "2026-10-28T21:38:18.402Z",
   "remediation": {
     "S0": {
       "id": "S0",
@@ -111,13 +111,13 @@
         "recordCommit": null
       },
       "implementationAudit": {
-        "path": "build/audit/S1-audit-5.md",
-        "sha256": "92DEDFEBBB1CED81AD20BCE2EA281E9637B7F61E2EE3250520CBA81E794A472A",
+        "path": "build/audit/S1-audit-6.md",
+        "sha256": "85961229A7E655A177FE6EF6FD0A60CAEAE1E89AAEA8E0124C21A6375AD2B905",
         "verdict": "FAIL",
-        "subjectCommit": "576a840",
+        "subjectCommit": "f765235",
         "recordCommit": null
       },
-      "commit": "576a840",
+      "commit": "cda5dbe",
       "evidence": [
         {
           "path": "build/slices/S1/spec.md",
@@ -138,12 +138,6 @@
           "exists": true
         },
         {
-          "path": "evidence/S1/batch-20261028-183923.md",
-          "sha256": "1FB0C11D1AF3A2A33A2721F48E99A6E08D9745401B5E161F548153EBDBD3C704",
-          "kind": "log",
-          "exists": true
-        },
-        {
           "path": "evidence/S1/self-test.log",
           "sha256": "E6C3376568A47F6BE52F8AA67CDC19CB834A1A8EFA1AD1E5D3AEA7C1C059A887",
           "kind": "log",
@@ -160,16 +154,27 @@
           "sha256": "DAC5C32ED8A6EE0F434DAC22B8A6295AE3A71A9124380475B9411636757BB3D1",
           "kind": "report",
           "exists": true
-        }
-      ],
-      "blockers": [
+        },
         {
-          "id": "B-S1-A8-RIG",
-          "detail": "run-batch-test.ps1 launches Skyrim and MCP connects, but player/save load fails (empty player name, no gameplay/co-save) across repeated fresh launches after 18:39; no new crash frame. A8 re-verification blocked until the game/Steam/main-menu/save-load rig is cleanly restarted. Last passing evidence remains candidate 576a840.",
-          "evidence": "build/audit/S1-batch-blocker.md"
+          "path": "evidence/S1/batch-20261029-043231.md",
+          "sha256": "3225A1F41609854E75A43A0B22806D8903486E3481C75201A80C3B1B52BE0F85",
+          "kind": "log",
+          "exists": true
+        },
+        {
+          "path": "build/audit/LESSONS-LEARNED-2026-10-29.md",
+          "sha256": "38FB787204D16F9214FCE217A94F96FFA58D96E037C00D08812E3863C47FBC14",
+          "kind": "report",
+          "exists": true
         }
       ],
-      "followups": []
+      "blockers": [],
+      "followups": [
+        {
+          "id": "F7-CONSOLE-THREAD",
+          "detail": "F7 diagnostics no longer calls ConsoleLog::Print; crash stack confirmed Runefall.dll ConsoleLog::Print. Hotfix included in cda5dbe; re-audit required."
+        }
+      ]
     },
     "S2": {
       "id": "S2",
