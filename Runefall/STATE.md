@@ -108,7 +108,8 @@ T2 (fix confirmation). Goal: implement-first, batch-test (session goal, up to 30
 - W2.3 PASS: rare spawn chance/stage/condition seam; apex stage91; batch 29/29.
 - W2.4 PASS: data-driven hunt contract; F4 start; Draugr completed with 2 runes; batch 30/30.
 - W2.5 PASS: 5 bosses fixed stages; FormID resolution; batch 31/31.
-- W2.6 progress: anomaly spawn + no-protection done; core/trophy/codex/curve pending.
+- W2.6 PASS: 5 anomalies, spawn/no-protection, core/trophy rewards; batch 32/32.
+- Next: W2.7 runtime cache/hot reload.
 
 ## Next step
 

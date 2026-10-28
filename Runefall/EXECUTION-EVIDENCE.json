@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T02:40:27.849Z",
+  "updatedAt": "2026-10-28T02:46:46.631Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -537,6 +537,27 @@
       "slice": "W2.6",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-093932.md",
+      "result": "PASS",
+      "detail": "9/9 gates"
+    },
+    {
+      "slice": "W2.6",
+      "kind": "summary",
+      "path": "build/evidence/w2.6-anomaly-20261028.md",
+      "result": "PASS",
+      "detail": "5 anomalies; spawn stage20; no protection; core/trophy rewards"
+    },
+    {
+      "slice": "W2.6",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-094437.md",
+      "result": "PASS",
+      "detail": "32/32; anomaly core/trophy; no crash"
+    },
+    {
+      "slice": "W2.6",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-094603.md",
       "result": "PASS",
       "detail": "9/9 gates"
     }

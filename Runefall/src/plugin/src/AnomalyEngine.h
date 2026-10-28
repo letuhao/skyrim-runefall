@@ -16,6 +16,7 @@ namespace Runefall
 		[[nodiscard]] std::string CoreItem(std::string_view a_family) const;
 		[[nodiscard]] std::string EncounterActor(std::string_view a_family) const;
 		bool DebugSpawn();
+		void OnActorDeath(RE::Actor* a_actor);
 		[[nodiscard]] static SelfTestResult SelfTest();
 
 	private:
@@ -32,6 +33,7 @@ namespace Runefall
 		};
 		[[nodiscard]] const Family* Find(std::string_view a_family) const;
 		std::vector<Family> families;
+		std::unordered_map<RE::FormID, std::string> spawnedFamilies;
 		bool loaded = false;
 	};
 }

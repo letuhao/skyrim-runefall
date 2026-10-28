@@ -251,6 +251,13 @@ internal static class PluginFactory
                 miscByEditor[editor] = AddMisc(mod, keys, editor, tier + " " + family, 5u, 0.2f);
             }
 
+        foreach (var anomaly in new[] { "Ember", "Rime", "Umbral", "Verdant", "Tempest" })
+            foreach (var kind in new[] { "Core", "Trophy" })
+            {
+                var editor = "RF_MISC_Anomaly_" + anomaly + "_" + kind;
+                miscByEditor[editor] = AddMisc(mod, keys, editor, anomaly + " Anomaly " + kind, kind == "Core" ? 50u : 150u, 0.1f);
+            }
+
         keys.StartAt(0xC00);
         AddRecipes(mod, miscByEditor);
 

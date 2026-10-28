@@ -1084,3 +1084,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 - 5 families; F3 anomaly spawn stage20; target marked anomaly -> host protection skipped.
 - Batch 32/32; static gates 9/9.
 - Core/trophy rewards, Codex feed and anomaly curve evaluation remain pending; W2.6 not PASS yet.
+
+
+## W2.6 anomaly ladder - PASS (2026-10-28 09:34-09:46)
+
+- 5 families; F3 anomaly spawn; host protection skipped; core/trophy MISC granted on corpse.
+- Batch 32/32; static gates 9/9. Codex UI feed remains P4.6.

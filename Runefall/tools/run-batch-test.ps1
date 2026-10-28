@@ -274,6 +274,12 @@ $crashed = $latestCrash -and $latestCrash.LastWriteTime -gt $startTime
 if ($TestAnomaly) {
     $null = Tap-Key 61
     Add-Check 'Anomaly spawned' (Wait-LogPattern 'anomaly: spawned family ' 12) ''
+    $anomalyLog = Get-LogText
+    if ($anomalyLog -match 'anomaly: spawned family \w+ at ([0-9A-F]+)') {
+        $anomalyRef = $Matches[1]
+        $null = Invoke-Mcp 'kill_actor' @{ refId = $anomalyRef }
+        Add-Check 'Anomaly core/trophy' (Wait-LogPattern 'anomaly: granted core' 10) ''
+    }
 }
 if ($TestEncounters) {
     $null = Tap-Key 63

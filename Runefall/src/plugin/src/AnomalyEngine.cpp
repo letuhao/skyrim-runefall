@@ -2,6 +2,8 @@
 
 #include "DataStore.h"
 #include "FormCatalog.h"
+
+#include "RE/T/TESObjectMISC.h"
 #include "LootService.h"
 #include "WorldBandEngine.h"
 
@@ -165,8 +167,31 @@ namespace Runefall
 			return false;
 		LootService::Get().SetActorStageOverride(placed->GetFormID(), stage);
 		LootService::Get().MarkAnomalyFormID(placed->GetFormID());
+		spawnedFamilies[placed->GetFormID()] = family;
 		logger::info("anomaly: spawned family {} at {:08X} stage {} tier {}", family, placed->GetFormID(), static_cast<int>(stage), TierLabel(stage, family));
 		return true;
+	}
+
+	void AnomalyEngine::OnActorDeath(RE::Actor* a_actor)
+	{
+		if (!a_actor)
+			return;
+		const auto it = spawnedFamilies.find(a_actor->GetFormID());
+		if (it == spawnedFamilies.end())
+			return;
+		const auto* family = Find(it->second);
+		if (family) {
+			auto grant = [&](const std::string& editorId) {
+				if (editorId.empty())
+					return;
+				if (auto* item = FormCatalog::Get().LookupAs<RE::TESObjectMISC>(editorId))
+					a_actor->AddObjectToContainer(item, nullptr, 1, nullptr);
+			};
+			grant(family->coreItem);
+			grant(family->trophyItem);
+			logger::info("anomaly: granted core {} and trophy {} for family {}", family->coreItem, family->trophyItem, family->family);
+		}
+		spawnedFamilies.erase(it);
 	}
 
 	SelfTestResult AnomalyEngine::SelfTest()
