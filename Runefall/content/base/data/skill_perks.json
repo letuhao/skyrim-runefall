@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "perks": [
+    {
+      "schemaVersion": 1,
+      "perkId": "perk_cleave_1",
+      "skill": "Cleave",
+      "rankRequired": 1,
+      "effectKey": "skill.cleave.power",
+      "magnitude": 5,
+      "descriptionKey": "RF_PERK_CLEAVE_1"
+    },
+    {
+      "schemaVersion": 1,
+      "perkId": "perk_cleave_2",
+      "skill": "Cleave",
+      "rankRequired": 3,
+      "effectKey": "skill.cleave.power",
+      "magnitude": 10,
+      "descriptionKey": "RF_PERK_CLEAVE_2"
+    },
+    {
+      "schemaVersion": 1,
+      "perkId": "perk_block_1",
+      "skill": "Block",
+      "rankRequired": 1,
+      "effectKey": "skill.block.mitigation",
+      "magnitude": 3,
+      "descriptionKey": "RF_PERK_BLOCK_1"
+    },
+    {
+      "schemaVersion": 1,
+      "perkId": "perk_sneak_1",
+      "skill": "Sneak",
+      "rankRequired": 1,
+      "effectKey": "skill.sneak.detection",
+      "magnitude": 5,
+      "descriptionKey": "RF_PERK_SNEAK_1"
+    },
+    {
+      "schemaVersion": 1,
+      "perkId": "perk_destruction_1",
+      "skill": "Destruction",
+      "rankRequired": 1,
+      "effectKey": "skill.destruction.power",
+      "magnitude": 5,
+      "descriptionKey": "RF_PERK_DESTRUCTION_1"
+    },
+    {
+      "schemaVersion": 1,
+      "perkId": "perk_restoration_1",
+      "skill": "Restoration",
+      "rankRequired": 1,
+      "effectKey": "skill.restoration.power",
+      "magnitude": 5,
+      "descriptionKey": "RF_PERK_RESTORATION_1"
+    }
+  ]
+}

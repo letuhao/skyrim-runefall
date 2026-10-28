@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T03:28:47.838Z",
+  "updatedAt": "2026-10-28T03:33:47.985Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -740,6 +740,27 @@
       "slice": "P4.2",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-102804.md",
+      "result": "PASS",
+      "detail": "9/9"
+    },
+    {
+      "slice": "P4.3",
+      "kind": "summary",
+      "path": "build/evidence/p4.3-skill-perks-20261028.md",
+      "result": "PASS",
+      "detail": "6 perks; rank gates; DerivedValue integration"
+    },
+    {
+      "slice": "P4.3",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-103144.md",
+      "result": "PASS",
+      "detail": "35/35"
+    },
+    {
+      "slice": "P4.3",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-103304.md",
       "result": "PASS",
       "detail": "9/9"
     }

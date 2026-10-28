@@ -31,6 +31,7 @@ internal sealed class LoadedPack
     public List<string[]> AnomalyRows { get; } = new();
     public List<string[]> EconomyRows { get; } = new();
     public List<string[]> ClassRows { get; } = new();
+    public List<string[]> PerkRows { get; } = new();
 }
 
 internal static class ContentPackLoader
@@ -91,6 +92,7 @@ internal static class ContentPackLoader
             ReadAnomalies(pack, files, errors);
             ReadEconomy(pack, files, errors);
             ReadClasses(pack, files, errors);
+            ReadSkillPerks(pack, files, errors);
             return errors.Count == 0 ? pack : null;
         }
         catch (Exception exception)
@@ -685,6 +687,24 @@ internal static class ContentPackLoader
                 Text(item, "classId", path, errors), Text(item, "nameKey", path, errors),
                 Text(item, "primaryAttribute", path, errors), Text(item, "attributeBonuses", path, errors),
                 Text(item, "startingSkills", path, errors), Text(item, "roleTags", path, errors)
+            });
+        }
+    }
+
+
+    private static void ReadSkillPerks(LoadedPack pack, Dictionary<string, string> files, List<string> errors)
+    {
+        var array = Root("skillPerks", files, errors, "perks");
+        if (array is null) return;
+        var index = 0;
+        foreach (var item in array.Value.EnumerateArray())
+        {
+            var path = $"skill_perks.perks[{index++}]";
+            pack.PerkRows.Add(new[]
+            {
+                Text(item, "perkId", path, errors), Text(item, "skill", path, errors),
+                I(Int(item, "rankRequired", path, errors)), Text(item, "effectKey", path, errors),
+                F(Number(item, "magnitude", path, errors)), Text(item, "descriptionKey", path, errors)
             });
         }
     }

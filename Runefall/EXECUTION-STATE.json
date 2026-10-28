@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "P4.3",
-  "updatedAt": "2026-10-28T03:28:47.833Z",
+  "currentSlice": "P4.4",
+  "updatedAt": "2026-10-28T03:33:47.980Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -781,11 +781,24 @@
       "id": "P4.3",
       "layer": "L4",
       "slice": "Skills and passives",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "builds playable; no NPC skill contamination",
       "depends": "P4.2",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/p4.3-skill-perks-20261028.md",
+        "build/evidence/batch-test-20261028-103144.md",
+        "build/evidence/static-gates-20261028-103304.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "perk-data": "PASS 6",
+        "rank-gates": "PASS",
+        "derived-bonus": "PASS",
+        "skill-defs": "PASS 18",
+        "self-test": "PASS 35",
+        "batch": "PASS 35/35",
+        "static-gates": "PASS"
+      }
     },
     "P4.4": {
       "id": "P4.4",
@@ -929,9 +942,9 @@
     }
   },
   "currentWork": {
-    "slice": "P4.3",
-    "step": "skills and perks",
-    "nextAction": "skill perk effects, rank scaling, skill point awards, respec validation"
+    "slice": "P4.4",
+    "step": "Prisma UI shell",
+    "nextAction": "Prisma UI bridge/screens, data contract, fail-closed fallback"
   },
   "blockers": [],
   "finalRelease": null

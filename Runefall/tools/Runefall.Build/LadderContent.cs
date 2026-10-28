@@ -141,6 +141,11 @@ internal static class LadderContent
         "classId", "nameKey", "primaryAttribute", "attributeBonuses", "startingSkills", "roleTags"
     };
 
+    public static readonly string[] PerkColumns =
+    {
+        "perkId", "skill", "rankRequired", "effectKey", "magnitude", "descriptionKey"
+    };
+
     public static void WriteAll(string dir)
     {
         Directory.CreateDirectory(dir);
@@ -313,6 +318,7 @@ internal static class LadderContent
         WriteCsv(dir, "anomaly_families.csv", AnomalyColumns, pack.AnomalyRows);
         WriteCsv(dir, "economy_profiles.csv", EconomyColumns, pack.EconomyRows);
         WriteCsv(dir, "classes.csv", ClassColumns, pack.ClassRows);
+        WriteCsv(dir, "skill_perks.csv", PerkColumns, pack.PerkRows);
         return errors;
     }
 

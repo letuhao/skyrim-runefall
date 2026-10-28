@@ -1150,3 +1150,8 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - 3 classes with bonuses/skills; permanent selection; class+skill ranks in co-save.
 - Warrior applied in-game; batch 34/34; static gates 9/9.
+
+
+## P4.3 skills/perks - PASS (2026-10-28 10:29-10:33)
+
+- 6 rank-gated perks; DerivedValue includes perk bonuses; batch 35/35; static gates 9/9.

@@ -25,6 +25,7 @@
 #include "AnomalyEngine.h"
 #include "EconomyEngine.h"
 #include "ClassRegistry.h"
+#include "SkillPerkEngine.h"
 #include "HookManager.h"
 #include "MaterialRegistry.h"
 #include "RuneForge.h"
@@ -138,6 +139,7 @@ namespace
 		Runefall::AnomalyEngine::Get().Load();
 		Runefall::EconomyEngine::Get().Load();
 		Runefall::ClassRegistry::Get().Load();
+		Runefall::SkillPerkEngine::Get().Load();
 		Runefall::MaterialRegistry::Get().LoadDefinitions();
 		Runefall::RuneForge::Get().ReloadSocketRecipes();
 		Runefall::LootEngine::Get().Reload();

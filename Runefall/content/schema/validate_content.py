@@ -33,6 +33,7 @@ ENTITY_SCHEMA = {
     "anomalyFamilies": "anomaly-families.schema.json",
     "economyProfiles": "economy-profiles.schema.json",
     "classes": "classes.schema.json",
+    "skillPerks": "skill-perks.schema.json",
     "ratingProfiles": "rating-profiles.schema.json",
     "combatPaceProfiles": "combat-pace-profiles.schema.json",
     "ratingDisplayProfiles": "rating-display-profiles.schema.json",

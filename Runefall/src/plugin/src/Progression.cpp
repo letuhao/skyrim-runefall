@@ -1,6 +1,7 @@
 #include "Progression.h"
 
 #include "RuneForge.h"
+#include "SkillPerkEngine.h"
 #include "DataStore.h"
 #include "FormCatalog.h"
 #include "FormResolver.h"

@@ -54,6 +54,7 @@ namespace Runefall
 			"anomaly_families.csv",
 			"economy_profiles.csv",
 			"classes.csv",
+			"skill_perks.csv",
 		};
 	}
 

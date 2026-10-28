@@ -108,6 +108,10 @@
     {
       "entity": "classes",
       "file": "data/classes.json"
+    },
+    {
+      "entity": "skillPerks",
+      "file": "data/skill_perks.json"
     }
   ],
   "localization": []
