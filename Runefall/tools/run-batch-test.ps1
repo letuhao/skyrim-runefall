@@ -203,7 +203,7 @@ if (-not $NoInputHotkeys) {
 Start-Sleep -Milliseconds 700
 Add-Check 'Runtime content rescan' (Wait-LogPattern 'runtime-resolver: manual rescan removed' 10) ''
 Add-Check 'F10 menu snapshot' $okF10 ''
-Add-Check 'Co-save header hex' (Wait-LogPattern 'co-save: header hex 524E465303000000000003' 10) '524E465303000000000003'
+Add-Check 'Co-save header hex' (Wait-LogPattern 'co-save: header hex 524E465303000000000003000A000000' 10) '524E465303000000000003000A000000'
 Add-Check 'Prisma view model' (Wait-LogPattern 'prisma-ui: wrote view model' 10) ''
 Add-Check 'Prisma menu model' (Wait-LogPattern 'prisma-ui: wrote menu model' 10) ''
 Add-Check 'Delayed runtime scan' (Wait-LogPattern 'runtime-resolver: delayed startup scan complete' 15) ''

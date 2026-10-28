@@ -1,0 +1,13 @@
+cwd=D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall
+command=cmd /c C:/Users/NeneScarlet/.cache/build-runefall.bat
+buildExit=0
+buildOutput=Linking CXX shared library Runefall.dll; RunefallStage.dll
+testEnvDll=
+J:\SkyrimTest\1.6.1170\Data\SKSE\Plugins\Runefall.dll
+testEnvDllSha256=
+E4C847570B76E26F2A7631ED3AECE1BFD012B81D0FE23C6BCFB690449DDC7934
+CoSave.cppLastWrite=
+10/29/2026 4:41:15 AM
+verified=foreground build exit 0 and DLL copied/refreshed before batch
+batchReport=evidence/S1/batch-20261029-044245.md
+staticGates=foreground build; static gates not rerun after token-only changes (build+in-game batch used)

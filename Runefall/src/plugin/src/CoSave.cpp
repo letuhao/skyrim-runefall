@@ -502,6 +502,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 				for (auto& item : a_out.items) {
 					if (!sectionReader.U32(item.registryId) || !sectionReader.U32(item.baseFormId))
 						return false;
+					if (item.baseFormId == 0) { MarkReject("co-save: reject item.baseFormId"); logger::error("co-save: reject item.baseFormId"); return false; }
 					if (!sectionReader.U8(item.rarity) || !sectionReader.U16(item.ilvl) || !sectionReader.U8(item.socketCount))
 						return false;
 					if (item.registryId == 0) { MarkReject("co-save: reject item.registryId"); logger::error("co-save: reject item.registryId"); return false; }
@@ -521,9 +522,8 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 							return false;
 						if (!sectionReader.I32(enhancement.duration) || !sectionReader.I32(enhancement.area))
 							return false;
-						if (enhancement.category < 0 || enhancement.category > 5 || enhancement.tier < 0 || enhancement.tier > 5) {
-						    MarkReject("co-save: reject item.category"); logger::error("co-save: reject item.category"); return false;
-						}
+						if (enhancement.category < 0 || enhancement.category > 5) { MarkReject("co-save: reject item.category"); logger::error("co-save: reject item.category"); return false; }
+						if (enhancement.tier < 0 || enhancement.tier > 5) { MarkReject("co-save: reject item.tier"); logger::error("co-save: reject item.tier"); return false; }
 					}
 					if (!sectionReader.U16(item.tags))
 						return false;
@@ -602,8 +602,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 					return false;
 				if (a_out.playerRank < 1 || a_out.playerRank > 100 || a_out.playerStage < 1 || a_out.playerStage > 100 ||
 					(a_out.difficultyProfile != 255 && (a_out.difficultyProfile < 1 || a_out.difficultyProfile > 5)) ||
-					a_out.curveId < 1 || a_out.curveId > 5)
-					return false;
+					a_out.curveId < 1 || a_out.curveId > 5) { MarkReject("co-save: reject range"); logger::error("co-save: reject range"); return false; }
 				std::uint16_t count = 0;
 				if (!sectionReader.U16(count) || count > kMaxLadderOverrides) {
 				    MarkReject("co-save: reject override-count"); logger::error("co-save: reject override-count"); return false;
@@ -618,8 +617,7 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 					a_out.ladderOverrides.push_back(entry);
 				}
 				if (sectionReader.Remaining() >= 4) {
-					if (!sectionReader.U32(a_out.playerXp) || a_out.playerXp > 10000000)
-						return false;
+					if (!sectionReader.U32(a_out.playerXp) || a_out.playerXp > 10000000) { MarkReject("co-save: reject range"); logger::error("co-save: reject range"); return false; }
 				}
 				if (sectionReader.Remaining() > 0) {
 					if (!sectionReader.String(a_out.characterClass) || a_out.characterClass.size() > 64) {
@@ -654,11 +652,11 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 				break;
 			}
 			if (id >= 1 && id <= 12 && sectionReader.Remaining() != 0) {
-				logger::error("co-save: reject section-trailing {}", id);
+				MarkReject("co-save: reject trailing"); logger::error("co-save: reject trailing");
 				return false;
 			}
 		}
-		if (reader.Remaining() != 0) { logger::error("co-save: reject trailing bytes {}", reader.Remaining()); return false; }
+		if (reader.Remaining() != 0) { MarkReject("co-save: reject trailing"); logger::error("co-save: reject trailing"); return false; }
 		MigrateLegacy(a_out, schema);
 		std::sort(a_out.generatedContainers.begin(), a_out.generatedContainers.end());
 		a_out.generatedContainers.erase(std::unique(a_out.generatedContainers.begin(), a_out.generatedContainers.end()), a_out.generatedContainers.end());
@@ -942,6 +940,13 @@ bool CoSave::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out
 		if (!Decode(v1, v1Decoded) || v1Decoded.playerRank != 1 || v1Decoded.playerStage != 1 ||
 			v1Decoded.difficultyProfile != 255 || v1Decoded.curveId != 1)
 			return { "CoSave.SelfTest", CheckStatus::Fail, "v1 migration fixture failed" };
+
+		auto v2tier2 = v2;
+		const std::int32_t two = 2;
+		std::memcpy(v2tier2.data() + 62, &two, sizeof(two));
+		CoSaveState tier2Decoded;
+		if (!Decode(v2tier2, tier2Decoded) || tier2Decoded.playerRank != 40 || tier2Decoded.playerStage != 40)
+			return { "CoSave.SelfTest", CheckStatus::Fail, "v2 tier2 migration fixture failed" };
 
 		// Deterministic encoding independent of unordered_map insertion order.
 		CoSaveState reordered;

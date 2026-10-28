@@ -1,6 +1,4 @@
-cwd=D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall
-pre-existing crash=crash-2026-10-28-10-37-27.log at 17:37 local
-probable call stack=6 SkyrimSE.exe frames, BSWin32KeyboardDevice input path, no Runefall.dll frame
-reruns after crash=17:41,17:58,18:13,18:33,18:39 all batch PASS with no new crash log
-assessment=not reproducible as Runefall regression; environment/input risk retained, not waived
-new crash since 18:39=no
+crash-2026-10-28-14-29-46.log 21:29 BSWin32KeyboardDevice; no Runefall frame
+crash-2026-10-28-21-26-46.log 04:26 Runefall.dll ConsoleLog::Print diagnostics (F7); fixed in cda5dbe, F7 retest logged diagnostics with no crash
+batch 04:24 and 04:42 loaded CleanSave with preflight PASS and no new crash
+assessment=F7 crash resolved by removing ConsoleLog::Print; input-device crash remains environmental and is not waived
