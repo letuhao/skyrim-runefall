@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "P4.7",
-  "updatedAt": "2026-10-28T03:51:30.180Z",
+  "currentSlice": "R5.1",
+  "updatedAt": "2026-10-28T03:52:14.350Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -876,11 +876,24 @@
       "id": "P4.7",
       "layer": "L4",
       "slice": "Codex/inspect/tooltip",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "pages work; data from registry only",
       "depends": "A3.5/P4.4",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/p4.7-ui-acceptance-20261028.md",
+        "build/evidence/batch-test-20261028-104930.md",
+        "build/evidence/static-gates-20261028-105049.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "hud-contract": "PASS",
+        "menu-contract": "PASS",
+        "codex": "PASS",
+        "fail-closed": "PASS",
+        "batch": "PASS 36/36",
+        "static-gates": "PASS",
+        "visual-host": "NOT VERIFIED (no Prisma host screenshot)"
+      }
     },
     "R5.1": {
       "id": "R5.1",
@@ -984,9 +997,9 @@
     }
   },
   "currentWork": {
-    "slice": "P4.7",
-    "step": "player UI acceptance and polish",
-    "nextAction": "end-to-end player UI acceptance: HUD, menus, codex, fail-closed behavior"
+    "slice": "R5.1",
+    "step": "content pack format",
+    "nextAction": "pack schema/manifest/version validation and last-loaded-wins"
   },
   "blockers": [],
   "finalRelease": null

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T03:51:30.185Z",
+  "updatedAt": "2026-10-28T03:52:14.355Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -822,6 +822,27 @@
     },
     {
       "slice": "P4.6",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-105049.md",
+      "result": "PASS",
+      "detail": "9/9"
+    },
+    {
+      "slice": "P4.7",
+      "kind": "summary",
+      "path": "build/evidence/p4.7-ui-acceptance-20261028.md",
+      "result": "PASS",
+      "detail": "HUD/menus/codex contracts + fail-closed; visual host unverified"
+    },
+    {
+      "slice": "P4.7",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-104930.md",
+      "result": "PASS",
+      "detail": "36/36"
+    },
+    {
+      "slice": "P4.7",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-105049.md",
       "result": "PASS",

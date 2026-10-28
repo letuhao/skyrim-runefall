@@ -1173,3 +1173,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - Menu model 4 tabs + anomaly codex; menus.html shell; batch 36/36; static gates 9/9.
 - Visual Prisma-host screenshot not available.
+
+
+## P4.7 player UI acceptance - PASS (2026-10-28 10:51)
+
+- HUD/menu/codex contracts + shells, fail-closed; batch 36/36; static gates 9/9.
+- Visual Prisma host screenshot not available (unverified, not claimed PASS).
