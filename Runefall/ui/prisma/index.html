@@ -2,33 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <title>Runefall</title>
+  <title>Runefall HUD</title>
   <style>
     html, body { margin: 0; height: 100%; background: transparent; color: #e8ddc6; font: 13px/1.4 "Segoe UI", sans-serif; }
-    #runefall { position: fixed; left: 18px; bottom: 18px; padding: 10px 14px; border: 1px solid #8a6a2f; background: rgba(12, 10, 8, 0.86); border-radius: 6px; }
+    #runefall { position: fixed; left: 18px; bottom: 18px; width: 280px; padding: 10px 14px; border: 1px solid #8a6a2f; background: rgba(12, 10, 8, 0.86); border-radius: 6px; }
+    .row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
     .rank { color: #f0c96b; font-weight: 600; }
     .muted { color: #a89b82; }
+    .bar { height: 6px; margin: 6px 0 8px; background: #2a2118; border: 1px solid #4a3a22; border-radius: 3px; overflow: hidden; }
+    .bar > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #8a6a2f, #f0c96b); }
+    .stats { display: flex; gap: 10px; font-size: 12px; color: #c8bda5; }
+    #threat { display: none; margin-top: 8px; padding-top: 6px; border-top: 1px solid #3a2e1e; }
+    #threat.visible { display: block; }
+    #threat .label { color: #e07a5f; font-weight: 600; }
   </style>
 </head>
 <body>
-  <div id="runefall">
-    <div>Runefall <span class="muted" id="version">v0.1.0</span></div>
-    <div><span class="rank" id="rank">Rank 1</span> <span class="muted" id="class"></span></div>
-    <div class="muted" id="xp"></div>
+  <div id="runefall" aria-label="Runefall HUD">
+    <div class="row"><span class="rank" id="rank">Rank 1</span><span class="muted" id="class"></span></div>
+    <div class="bar" role="progressbar" aria-label="Rune XP"><i id="xpbar"></i></div>
+    <div class="row muted"><span id="xp"></span><span id="points"></span></div>
+    <div class="stats"><span id="runes"></span><span id="items"></span></div>
+    <div id="threat"><span class="label">Target</span> <span id="threat-text" class="muted"></span></div>
   </div>
   <script>
-    // The native Prisma bridge writes Data/Runefall/ui/view-model.json.
-    // PrismaUI host supplies the fetch/transport; this file only renders the contract.
+    // PrismaUI host serves Data/Runefall/ui/view-model.json; render only that contract.
     async function refresh() {
       try {
         const response = await fetch('../Runefall/ui/view-model.json', { cache: 'no-store' });
         if (!response.ok) return;
         const model = await response.json();
-        document.getElementById('rank').textContent = 'Rank ' + (model.playerRank || 1);
+        const snapshot = model.snapshot || {};
+        const rank = model.playerRank || snapshot.rank || 1;
+        const xp = model.playerXp != null ? model.playerXp : (snapshot.xp || 0);
+        const next = model.xpToNext || 100;
+        document.getElementById('rank').textContent = 'Rank ' + rank;
         document.getElementById('class').textContent = model.classId ? '· ' + model.classId : '';
-        document.getElementById('xp').textContent = model.playerXp != null ? model.playerXp + ' XP' : '';
+        document.getElementById('xpbar').style.width = Math.min(100, Math.round((xp / Math.max(1, next)) * 100)) + '%';
+        document.getElementById('xp').textContent = xp + ' / ' + next + ' XP';
+        document.getElementById('points').textContent = 'Attr ' + (snapshot.attributePoints || 0) + ' · Skill ' + (snapshot.skillPoints || 0);
+        document.getElementById('runes').textContent = 'Runes ' + (snapshot.runes || []).reduce((a, b) => a + b, 0);
+        document.getElementById('items').textContent = 'Items ' + (snapshot.items || 0);
+        const threat = model.target || null;
+        const box = document.getElementById('threat');
+        if (threat) {
+          box.classList.add('visible');
+          document.getElementById('threat-text').textContent = threat.label + ' · stage ' + threat.stage;
+        } else {
+          box.classList.remove('visible');
+        }
       } catch (error) {
-        // PrismaUI host absent: the game remains fully playable; HUD simply stays hidden.
+        // PrismaUI host absent: HUD hides, game remains playable and no state is mutated.
       }
     }
     refresh();

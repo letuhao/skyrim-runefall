@@ -3,6 +3,11 @@
 #include "DataStore.h"
 #include "MenuApi.h"
 #include "Progression.h"
+#include "LootService.h"
+
+#include "RE/C/CrosshairPickData.h"
+#include "RE/A/Actor.h"
+#include "RE/T/TESObjectREFR.h"
 
 #include <fstream>
 #include <format>
@@ -42,7 +47,27 @@ namespace Runefall
 		file << "  \"viewId\": \"runefall-hud\",\n";
 		file << "  \"playerRank\": " << Progression::Get().RuneLevel() << ",\n";
 		file << "  \"playerXp\": " << Progression::Get().RuneXp() << ",\n";
+		file << "  \"xpToNext\": " << Progression::Get().XpForNextLevel() << ",\n";
+		file << "  \"hud\": {\"rankVisible\": true, \"xpBarVisible\": true, \"threatVisible\": true},\n";
 		file << "  \"classId\": \"" << Progression::Get().ClassId() << "\",\n";
+		std::int32_t targetStage = 0;
+		std::string targetLabel;
+		if (auto* pick = RE::CrosshairPickData::GetSingleton(); pick) {
+			if (auto handle = pick->GetActiveTarget(); handle) {
+				if (auto ref = handle.get(); ref) {
+					if (auto* actor = ref->As<RE::Actor>(); actor) {
+						targetStage = static_cast<std::int32_t>(LootService::Get().StageForFormID(actor->GetFormID()));
+						const auto delta = targetStage - Progression::Get().RuneLevel();
+						targetLabel = delta <= -10 ? "Trivial" : delta <= 0 ? "Fair" : delta <= 10 ? "Dangerous" : "Lethal";
+					}
+				}
+			}
+		}
+		file << "  \"target\": ";
+		if (targetStage > 0)
+			file << "{\"stage\": " << targetStage << ", \"label\": \"" << targetLabel << "\"},\n";
+		else
+			file << "null,\n";
 		file << "  \"snapshot\": " << MenuApi::BuildSnapshotJson() << "\n";
 		file << "}\n";
 		lastWriteOk = static_cast<bool>(file);
@@ -62,7 +87,7 @@ namespace Runefall
 		if (!file)
 			return { "PrismaUIBridge.SelfTest", CheckStatus::Fail, "view model cannot be read back" };
 		std::string text{ std::istreambuf_iterator<char>{ file }, std::istreambuf_iterator<char>{} };
-		if (text.find("runefall-hud") == std::string::npos || text.find("playerRank") == std::string::npos || text.find("snapshot") == std::string::npos)
+		if (text.find("runefall-hud") == std::string::npos || text.find("playerRank") == std::string::npos || text.find("xpToNext") == std::string::npos || text.find("hud") == std::string::npos || text.find("snapshot") == std::string::npos)
 			return { "PrismaUIBridge.SelfTest", CheckStatus::Fail, "view model contract is incomplete" };
 		return { "PrismaUIBridge.SelfTest", CheckStatus::Pass, std::format("view model {} bytes", text.size()) };
 	}

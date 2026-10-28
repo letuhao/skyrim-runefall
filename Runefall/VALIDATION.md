@@ -1161,3 +1161,9 @@ Result: **5/5 PASS** (evidence in Runefall\build\evidence\static-gates-20261026-
 
 - View-model contract runefall-hud with rank/xp/class/snapshot; UI shell source; F10 writes it.
 - Batch 36/36; static gates 9/9. HUD widgets in P4.5.
+
+
+## P4.5 HUD widgets - PASS (2026-10-28 10:41-10:46)
+
+- Rank/XP bar/stats/target threat widgets; target stage from crosshair.
+- Batch 36/36; static gates 9/9. Visual Prisma-host screenshot not available.

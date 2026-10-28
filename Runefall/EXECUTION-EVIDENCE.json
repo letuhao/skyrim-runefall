@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T03:41:46.066Z",
+  "updatedAt": "2026-10-28T03:47:21.370Z",
   "entries": [
     {
       "slice": "F0.1",
@@ -782,6 +782,27 @@
       "slice": "P4.4",
       "kind": "static-gates",
       "path": "build/evidence/static-gates-20261028-104102.md",
+      "result": "PASS",
+      "detail": "9/9"
+    },
+    {
+      "slice": "P4.5",
+      "kind": "summary",
+      "path": "build/evidence/p4.5-hud-20261028.md",
+      "result": "PASS",
+      "detail": "rank/xp/stats/target HUD; view model extended"
+    },
+    {
+      "slice": "P4.5",
+      "kind": "batch",
+      "path": "build/evidence/batch-test-20261028-104512.md",
+      "result": "PASS",
+      "detail": "36/36"
+    },
+    {
+      "slice": "P4.5",
+      "kind": "static-gates",
+      "path": "build/evidence/static-gates-20261028-104637.md",
       "result": "PASS",
       "detail": "9/9"
     }

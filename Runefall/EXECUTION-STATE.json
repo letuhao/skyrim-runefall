@@ -2,8 +2,8 @@
   "plan": "Runefall/SPECS/ULTIMATE-PLAN.md",
   "planVersion": "v2",
   "overallStatus": "IN_PROGRESS",
-  "currentSlice": "P4.5",
-  "updatedAt": "2026-10-28T03:41:46.061Z",
+  "currentSlice": "P4.6",
+  "updatedAt": "2026-10-28T03:47:21.365Z",
   "slices": {
     "F0.1": {
       "id": "F0.1",
@@ -827,11 +827,25 @@
       "id": "P4.5",
       "layer": "L4",
       "slice": "Character/HUD/indicators",
-      "status": "PENDING",
+      "status": "PASS",
       "acceptance": "ratings display correct; HUD optional/low cost",
       "depends": "P4.4/C1.7",
-      "evidence": [],
-      "notes": ""
+      "evidence": [
+        "build/evidence/p4.5-hud-20261028.md",
+        "build/evidence/batch-test-20261028-104512.md",
+        "build/evidence/static-gates-20261028-104637.md"
+      ],
+      "notes": "",
+      "checklist": {
+        "rank-widget": "PASS",
+        "xp-bar": "PASS",
+        "stats": "PASS",
+        "target-threat": "PASS data",
+        "fail-closed": "PASS",
+        "batch": "PASS 36/36",
+        "static-gates": "PASS",
+        "visual-host": "NOT VERIFIED (no Prisma host screenshot)"
+      }
     },
     "P4.6": {
       "id": "P4.6",
@@ -955,9 +969,9 @@
     }
   },
   "currentWork": {
-    "slice": "P4.5",
-    "step": "HUD widgets",
-    "nextAction": "HUD rank/xp/combat/threat/target widgets from view model"
+    "slice": "P4.6",
+    "step": "menus and codex",
+    "nextAction": "Prisma menus for attributes/class/skills/gear/codex and anomaly codex feed"
   },
   "blockers": [],
   "finalRelease": null
