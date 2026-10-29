@@ -197,6 +197,7 @@ namespace Runefall
 		std::uint32_t version = 0;
 		std::vector<CoSaveRecord> records;
 		while (a_intfc->GetNextRecordInfo(type, version, size)) {
+			if (version > kSaveVersion) logger::warn("co-save: warn newer-save version={}", version);
 			if (size > kMaxRecordBytes) { MarkReject("co-save: reject record-size"); logger::error("co-save: reject record-size {}", size); continue; }
 			CoSaveRecord record{ type, version, std::vector<std::uint8_t>(size) };
 			if (size > 0 && a_intfc->ReadRecordData(record.bytes.data(), size) != size) {

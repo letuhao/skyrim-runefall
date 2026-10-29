@@ -333,7 +333,7 @@ namespace Runefall
 		sections.push_back(BuildSection(kSectionLadder, ladder));
 		PutU32(out, static_cast<std::uint32_t>(sections.size()));
 		for (const auto& section : sections) out.insert(out.end(), section.begin(), section.end());
-		if (out.size() > a_budget) return {};
+		if (out.size() > a_budget) { MarkReject("co-save: reject budget"); return {}; }
 		return out;
 	}
 
@@ -359,6 +359,7 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 	bool CoSaveCodec::DecodeImpl(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out)
 	{
 		a_out = CoSaveState{};
+		if (a_bytes.size() > kMaxRecordBytes) { MarkReject("co-save: reject record-size"); return false; }
 		if (a_bytes.size() < 12)
 			return false;
 		if (!(a_bytes[0] == 'R' && a_bytes[1] == 'N' && a_bytes[2] == 'F' && a_bytes[3] == 'S'))
@@ -384,18 +385,21 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 			if (flags != 0) { MarkReject("co-save: reject flags"); logger::error("co-save: reject flags {}", flags); return false; }
 			if (!reader.U16(saveVersion) || saveVersion != schema) { MarkReject("co-save: reject version-mirror"); logger::error("co-save: reject version-mirror"); return false; }
 		} else if (!reader.U16(saveVersion) || saveVersion != schema) {
-			logger::error("co-save: reject version-mirror");
+			MarkReject("co-save: reject version-mirror"); logger::error("co-save: reject version-mirror");
 			return false;
 		}
 		if (!reader.U32(sectionCount) || sectionCount == 0) { MarkReject("co-save: reject section-count"); logger::error("co-save: reject section-count"); return false; }
 		constexpr std::uint32_t kMaxSections = 64;
-		if (sectionCount > kMaxSections) { logger::error("co-save: reject section-count {}", sectionCount); return false; }
+		if (sectionCount > kMaxSections) { MarkReject("co-save: reject section-count"); logger::error("co-save: reject section-count {}", sectionCount); return false; }
 		std::array<bool, 16> seenSections{};
 		for (std::uint32_t i = 0; i < sectionCount; ++i) {
 			std::uint16_t id = 0;
 			std::uint32_t len = 0;
-			if (!reader.U16(id) || !reader.U32(len) || len > reader.Remaining())
+			if (!reader.U16(id) || !reader.U32(len) || len > reader.Remaining()) {
+				MarkReject("co-save: reject trailing"); logger::error("co-save: reject trailing");
 				return false;
+			}
+			if (len == 0) { MarkReject("co-save: reject empty-section"); logger::error("co-save: reject empty-section"); return false; }
 
 			std::vector<std::uint8_t> payload(len);
 			for (std::uint32_t b = 0; b < len; ++b) {
@@ -409,6 +413,9 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 			if (id >= 1 && id <= kMaxKnownSection) {
 				if (seenSections[id]) { MarkReject("co-save: reject duplicate-section"); logger::error("co-save: reject duplicate-section"); return false; }
 				seenSections[id] = true;
+			} else {
+				MarkReject("co-save: drain unknown-record");
+				continue;
 			}
 
 			switch (id) {
@@ -440,6 +447,7 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 					if (!sectionReader.String(id) || id.size() > 64 || !sectionReader.I32(value) || value < 0) {
 					    MarkReject("co-save: reject string.map-key"); logger::error("co-save: reject string.map-key"); return false;
 					}
+					if (a_out.materials.contains(id)) { MarkReject("co-save: reject duplicate-key"); return false; }
 					a_out.materials[id] = value;
 				}
 				break;
@@ -449,8 +457,7 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 				if (!sectionReader.U32(count) || count > 1024) {
 				    MarkReject("co-save: reject item-count"); logger::error("co-save: reject item-count"); return false;
 				}
-				if (sectionReader.Remaining() < count * 100u)
-					return false;
+				if (sectionReader.Remaining() < count * 100u) { MarkReject("co-save: reject count-remaining"); return false; }
 				a_out.items.resize(count);
 				for (auto& item : a_out.items) {
 					if (!sectionReader.U32(item.registryId) || !sectionReader.U32(item.baseFormId))
@@ -482,6 +489,9 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 						return false;
 					if ((item.tags & ~static_cast<std::uint16_t>(0x3F)) != 0) { MarkReject("co-save: reject item.tags"); logger::error("co-save: reject item.tags"); return false; }
 				}
+				for (std::size_t i = 0; i < a_out.items.size(); ++i)
+					for (std::size_t j = i + 1; j < a_out.items.size(); ++j)
+						if (a_out.items[i].registryId == a_out.items[j].registryId) { MarkReject("co-save: reject item.registryId"); return false; }
 				break;
 			}
 			case kSectionHunt: {
@@ -495,6 +505,7 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 					if (!sectionReader.String(key) || key.size() > 64 || !sectionReader.U8(flag) || flag > 1) {
 					    MarkReject("co-save: reject string.map-key"); logger::error("co-save: reject string.map-key"); return false;
 					}
+					if (a_out.huntFirstKill.contains(key)) { MarkReject("co-save: reject duplicate-key"); return false; }
 					a_out.huntFirstKill[std::move(key)] = flag;
 				}
 				break;
@@ -510,6 +521,7 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 					if (!sectionReader.String(key) || key.size() > 32 || !sectionReader.String(version) || version.size() > 32) {
 					    MarkReject("co-save: reject string.pack"); logger::error("co-save: reject string.pack"); return false;
 					}
+					if (a_out.packVersions.contains(key)) { MarkReject("co-save: reject duplicate-key"); return false; }
 					a_out.packVersions[std::move(key)] = std::move(version);
 				}
 				break;
@@ -588,6 +600,7 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 						}
 						if (rank < 1 || rank > 100)
 							return false;
+						if (a_out.skillRanks.contains(skill)) { MarkReject("co-save: reject duplicate-key"); return false; }
 						a_out.skillRanks[skill] = rank;
 					}
 					if (sectionReader.Remaining() >= 1) {
@@ -624,6 +637,7 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 				if (item.enhancements[e].category < 0 || item.enhancements[e].category > 5 || item.enhancements[e].tier < 0 || item.enhancements[e].tier > 5)
 					return false;
 		}
+		if (!seenSections[kSectionProgression]) { MarkReject("co-save: reject missing-section"); return false; }
 		return true;
 	}
 

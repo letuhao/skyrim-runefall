@@ -1,5 +1,9 @@
 #include "CoSaveCodec.h"
+#ifdef RUNEFALL_VENDORED_CATCH2
 #include "catch_amalgamated.hpp"
+#else
+#include <catch2/catch_test_macros.hpp>
+#endif
 
 using namespace Runefall;
 
@@ -115,4 +119,96 @@ TEST_CASE("CoSaveCodec deterministic encoding", "[cosave]")
 	b.skillRanks.clear();
 	b.skillRanks["Cleave"] = 3;
 	REQUIRE(CoSaveCodec::Encode(a) == CoSaveCodec::Encode(b));
+}
+
+
+namespace
+{
+	using Bytes = std::vector<std::uint8_t>;
+
+	Bytes U16v(std::uint16_t v) { return { static_cast<std::uint8_t>(v & 0xFF), static_cast<std::uint8_t>(v >> 8) }; }
+	Bytes U32v(std::uint32_t v) { Bytes b; for (int i = 0; i < 4; ++i) b.push_back(static_cast<std::uint8_t>((v >> (8 * i)) & 0xFF)); return b; }
+	Bytes Hdr(std::uint32_t sections, std::uint16_t schema = 3, std::uint16_t version = 3, std::uint32_t flags = 0)
+	{
+		Bytes b{ 'R', 'N', 'F', 'S' };
+		Bytes s = U16v(schema); b.insert(b.end(), s.begin(), s.end());
+		Bytes f = U32v(flags); b.insert(b.end(), f.begin(), f.end());
+		Bytes v = U16v(version); b.insert(b.end(), v.begin(), v.end());
+		Bytes c = U32v(sections); b.insert(b.end(), c.begin(), c.end());
+		return b;
+	}
+	Bytes Progression()
+	{
+		Bytes b;
+		for (int i = 0; i < 9; ++i) { Bytes v = U32v(0); b.insert(b.end(), v.begin(), v.end()); }
+		Bytes a = U32v(0); b.insert(b.end(), a.begin(), a.end());
+		Bytes s = U32v(0); b.insert(b.end(), s.begin(), s.end());
+		return b;
+	}
+	Bytes I32v(std::int32_t v) { return U32v(static_cast<std::uint32_t>(v)); }
+	Bytes Str(const std::string& s) { Bytes b = U16v(static_cast<std::uint16_t>(s.size())); b.insert(b.end(), s.begin(), s.end()); return b; }
+	Bytes Cat(std::initializer_list<Bytes> parts)
+	{
+		std::size_t total = 0;
+		for (const auto& p : parts) total += p.size();
+		Bytes b;
+		b.reserve(total);
+		for (const auto& p : parts) b.insert(b.end(), p.begin(), p.end());
+		return b;
+	}
+	Bytes Sec(std::uint16_t id, const Bytes& payload)
+	{
+		Bytes b = U16v(id);
+		Bytes len = U32v(static_cast<std::uint32_t>(payload.size()));
+		b.insert(b.end(), len.begin(), len.end());
+		b.insert(b.end(), payload.begin(), payload.end());
+		return b;
+	}
+	Bytes Save(std::initializer_list<Bytes> sections)
+	{
+		Bytes b = Hdr(static_cast<std::uint32_t>(sections.size()));
+		for (const auto& section : sections) b.insert(b.end(), section.begin(), section.end());
+		return b;
+	}
+}
+
+TEST_CASE("CoSaveCodec A6 rejection token classes", "[cosave][a6]")
+{
+	CoSaveState out;
+	auto expect = [&](const Bytes& bytes, const std::string& token) {
+		out = CoSaveState{};
+		REQUIRE_FALSE(CoSaveCodec::Decode(bytes, out));
+		REQUIRE(CoSaveCodec::LastRejectToken() == token);
+	};
+
+	auto base = Save({ Sec(1, Progression()) });
+	REQUIRE(CoSaveCodec::Decode(base, out));
+	REQUIRE(out.playerRank == 1);
+
+	auto flags = base; flags[6] = 1; expect(flags, "co-save: reject flags");
+	auto mirror = base; mirror[10] = 2; expect(mirror, "co-save: reject version-mirror");
+	auto count0 = base; count0[12] = count0[13] = count0[14] = count0[15] = 0; expect(count0, "co-save: reject section-count");
+	auto count65 = base; count65[12] = 65; expect(count65, "co-save: reject section-count");
+	expect(Save({ Sec(1, {}) }), "co-save: reject empty-section");
+	expect(Save({ Sec(2, Bytes(20, 0)) }), "co-save: reject missing-section");
+	expect(Save({ Sec(1, Progression()), Sec(1, Progression()) }), "co-save: reject duplicate-section");
+	expect(Save({ Sec(1, Progression()), Sec(3, U32v(1024)) }), "co-save: reject count-remaining");
+	expect(Save({ Sec(1, Progression()), Sec(5, Cat({ U32v(2), Str("a"), I32v(1), Str("a"), I32v(2) })) }), "co-save: reject duplicate-key");
+	auto big = Bytes(CoSaveCodec::kMaxRecordBytes + 1, 0); expect(big, "co-save: reject record-size");
+	REQUIRE(CoSaveCodec::EncodeWithBudget(Sample(), 8).empty());
+	REQUIRE(CoSaveCodec::LastRejectToken() == "co-save: reject budget");
+}
+
+TEST_CASE("CoSaveCodec A6 accepted classes", "[cosave][a6]")
+{
+	CoSaveState out;
+	auto unknown = Save({ Sec(99, { 1, 2, 3 }), Sec(1, Progression()) });
+	REQUIRE(CoSaveCodec::Decode(unknown, out));
+	REQUIRE(CoSaveCodec::LastRejectToken() == "co-save: drain unknown-record");
+	REQUIRE(out.playerRank == 1);
+
+	std::vector<CoSaveRecord> two{ { CoSaveCodec::kSerializationRecord, 3, CoSaveCodec::Encode(Sample()) },
+		{ CoSaveCodec::kSerializationRecord, 3, CoSaveCodec::Encode(Sample()) } };
+	REQUIRE(CoSaveCodec::LoadRecords(two, 3, out));
+	REQUIRE(out.playerRank == Sample().playerRank);
 }

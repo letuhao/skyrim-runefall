@@ -11,12 +11,31 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 option(PLUGIN_TESTS_ONLY "Build unit tests instead of the plugin" OFF)
+option(RUNEFALL_VENDORED_CATCH2 "Use vendored Catch2 amalgamated headers" OFF)
 
 if(PLUGIN_TESTS_ONLY)
 
     include(CTest)
-    add_executable(${PROJECT_NAME}Tests test/CoSaveCodecTests.cpp src/CoSaveCodec.cpp test/vendor/catch_amalgamated.cpp)
-    target_include_directories(${PROJECT_NAME}Tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/test/vendor")
+    if(RUNEFALL_VENDORED_CATCH2)
+        add_executable(${PROJECT_NAME}Tests
+            test/CoSaveCodecTests.cpp
+            src/CoSaveCodec.cpp
+            test/vendor/catch_amalgamated.cpp)
+        target_include_directories(${PROJECT_NAME}Tests PRIVATE
+            "${CMAKE_CURRENT_SOURCE_DIR}/src"
+            "${CMAKE_CURRENT_SOURCE_DIR}/test/vendor")
+        target_compile_definitions(${PROJECT_NAME}Tests PRIVATE RUNEFALL_VENDORED_CATCH2=1)
+    else()
+        find_package(Catch2 3 CONFIG REQUIRED)
+        include(Catch)
+        add_executable(${PROJECT_NAME}Tests
+            test/ExampleTests.cpp
+            test/CoSaveCodecTests.cpp
+            src/CoSaveCodec.cpp)
+        target_include_directories(${PROJECT_NAME}Tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
+        target_link_libraries(${PROJECT_NAME}Tests PRIVATE Catch2::Catch2WithMain)
+        catch_discover_tests(${PROJECT_NAME}Tests)
+    endif()
     target_compile_features(${PROJECT_NAME}Tests PRIVATE cxx_std_20)
     add_test(NAME ${PROJECT_NAME}Tests COMMAND ${PROJECT_NAME}Tests)
 

@@ -105,19 +105,21 @@
             "displayName": "Test (Windows, MSVC + Ninja)",
             "description": "Build and run unit tests on Windows with MSVC",
             "inherits": [
+                "_vcpkg",
                 "_ninja",
                 "_msvc"
             ],
             "binaryDir": "${sourceDir}/build/test-windows",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "PLUGIN_TESTS_ONLY": "ON"
+                "PLUGIN_TESTS_ONLY": "ON",
+                "VCPKG_MANIFEST_FEATURES": "tests"
             }
         },
         {
             "name": "test-linux",
             "displayName": "Test (Linux, native)",
-            "description": "Build and run unit tests natively on Linux against the system Catch2",
+            "description": "Host tests with a Catch2 3 CONFIG package (system or vcpkg); no vendored Catch2",
             "inherits": [
                 "_ninja"
             ],
@@ -125,6 +127,21 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "PLUGIN_TESTS_ONLY": "ON"
+            }
+        },
+        {
+            "name": "test-windows-vendored",
+            "displayName": "Test (Windows, vendored Catch2)",
+            "description": "Host codec tests with vendored Catch2; no vcpkg",
+            "inherits": [
+                "_ninja",
+                "_msvc"
+            ],
+            "binaryDir": "${sourceDir}/build/test-windows-vendored",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "PLUGIN_TESTS_ONLY": "ON",
+                "RUNEFALL_VENDORED_CATCH2": "ON"
             }
         }
     ],
@@ -161,6 +178,11 @@
             "name": "test-linux",
             "displayName": "Test (Linux)",
             "configurePreset": "test-linux"
+        },
+        {
+            "name": "test-windows-vendored",
+            "displayName": "Test (Windows, vendored Catch2)",
+            "configurePreset": "test-windows-vendored"
         }
     ],
     "testPresets": [
@@ -176,6 +198,14 @@
             "name": "test-linux",
             "displayName": "Test (Linux)",
             "configurePreset": "test-linux",
+            "output": {
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "test-windows-vendored",
+            "displayName": "Test (Windows, vendored Catch2)",
+            "configurePreset": "test-windows-vendored",
             "output": {
                 "outputOnFailure": true
             }
