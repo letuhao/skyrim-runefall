@@ -8,7 +8,7 @@
 
 ## The Runefall
 
-Some years before the dragonborn's story begins - on the coldest night in
+Some years before the Dragonborn's story begins - on the coldest night in
 living memory - the sky over Skyrim cracked open, and runes fell. Nothing
 burned. Nothing changed. The runes sank quietly into everything they
 touched, and the land carried them the way a tide carries salt.
