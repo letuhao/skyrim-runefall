@@ -19,6 +19,7 @@ if(PLUGIN_TESTS_ONLY)
     if(RUNEFALL_VENDORED_CATCH2)
         add_executable(${PROJECT_NAME}Tests
             test/CoSaveCodecTests.cpp
+            test/CoSaveCodecExtraTests.cpp
             src/CoSaveCodec.cpp
             test/vendor/catch_amalgamated.cpp)
         target_include_directories(${PROJECT_NAME}Tests PRIVATE
@@ -31,6 +32,7 @@ if(PLUGIN_TESTS_ONLY)
         add_executable(${PROJECT_NAME}Tests
             test/ExampleTests.cpp
             test/CoSaveCodecTests.cpp
+            test/CoSaveCodecExtraTests.cpp
             src/CoSaveCodec.cpp)
         target_include_directories(${PROJECT_NAME}Tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
         target_link_libraries(${PROJECT_NAME}Tests PRIVATE Catch2::Catch2WithMain)

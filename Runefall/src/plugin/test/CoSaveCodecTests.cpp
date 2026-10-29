@@ -278,3 +278,5 @@ TEST_CASE("CoSaveCodec A6 caps strings range trailing", "[cosave][a6]")
 	base.push_back(0);
 	expect(base, "co-save: reject trailing");
 }
+
+// append-probe

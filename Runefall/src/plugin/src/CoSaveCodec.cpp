@@ -457,7 +457,7 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 				if (!sectionReader.U32(count) || count > 1024) {
 				    MarkReject("co-save: reject item-count"); logger::error("co-save: reject item-count"); return false;
 				}
-				if (sectionReader.Remaining() < count * 100u) { MarkReject("co-save: reject count-remaining"); return false; }
+				if (sectionReader.Remaining() < count * 48u) { MarkReject("co-save: reject count-remaining"); return false; }
 				a_out.items.resize(count);
 				for (auto& item : a_out.items) {
 					if (!sectionReader.U32(item.registryId) || !sectionReader.U32(item.baseFormId))
@@ -675,6 +675,13 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 		a_out = std::move(candidate);
 		return true;
 	}
+	bool CoSaveCodec::LoadOrReset(const std::vector<CoSaveRecord>& a_records, std::uint16_t a_recordVersion, CoSaveState& a_out)
+	{
+		const bool ok = LoadRecords(a_records, a_recordVersion, a_out);
+		if (!ok) a_out = CoSaveState{};
+		return ok;
+	}
+
 
 
 }

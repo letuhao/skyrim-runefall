@@ -101,6 +101,7 @@ namespace Runefall
 		static bool Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& a_out);
 		static bool LoadRecord(const std::vector<std::uint8_t>& a_bytes, std::uint32_t a_recordVersion, CoSaveState& a_out);
 		static bool LoadRecords(const std::vector<CoSaveRecord>& a_records, std::uint16_t a_recordVersion, CoSaveState& a_out);
+		static bool LoadOrReset(const std::vector<CoSaveRecord>& a_records, std::uint16_t a_recordVersion, CoSaveState& a_out);
 		static void MigrateLegacy(CoSaveState& a_state, std::uint16_t a_schema);
 		static const std::string& LastRejectToken();
 
