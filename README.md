@@ -8,34 +8,29 @@
 
 ## The Runefall
 
-On the coldest night in living memory, the sky above Skyrim cracked open - and
-what fell was not dragons this time. **Runes.** Old, unclaimed power, older than
-the Thu'um, older than the stones, seeping down through the snow, quiet as a held
-breath, everywhere by dawn.
+Some years before the traveler's story begins - on the coldest night in
+living memory - the sky over Skyrim cracked open, and runes fell. Nothing
+burned. Nothing changed. The runes sank quietly into everything they
+touched, and the land carried them the way a tide carries salt.
 
-No one claims to have watched them land. Everyone claims to have seen what they
-touched. A wolf in the Reach woke with a mark burning under its pelt and put to
-flight the hunters who had tracked it for a season. A draugr rose from a barrow it
-had guarded for four thousand years, its bones now carved with words no tongue of
-men ever taught it. A smith's daughter in Riverwood raised her hammer at dawn and
-watched the forge-fire lean toward her, the way an animal answers a name it knows.
+Then the wild began to change first. The beasts grew stronger, stranger,
+and much harder to kill: hunts failed, roads emptied, walls went up, and
+life got harder for everyone. And when hunters finally started winning
+again, they found the reason the wild had gotten so strong sealed inside
+its victims: **rune fragments** - the fallen power, warm and awake and
+loose.
 
-The jarls called it rumor until it wasn't. The College called it impossible,
-which did not stop the marks. Riders went out paired and armed and came home
-quiet, saying one thing in different words: whatever fell that night had not
-fallen only on people.
+The mages studied them and made the discovery that changed Skyrim: a
+fragment's power can pass into a *willing* body too. They named the
+practice **Rune Mastery** - and taught it, so that anyone could fight
+back. Smiths learned to bind fragments into steel and armor, and the
+**Rune Forge** was born. Enchanters and alchemists opened doors of their
+own - because the runes had fallen on *everything*, and every craft
+answered them in kind.
 
-No war came with the runes, and no warning either. They fell the way winter falls
-- on everyone, without asking. Skyrim has been counting ever since: counting what
-a hunt is worth now, what a forge now answers, who climbs, who slips, and what in
-this land was never a rune's host at all.
-
-The first hunter who pressed a blade-tip into stone beneath the candlelight wrote
-the line every tavern now repeats, and meant it as a question:
-
-*Master the runes - or be mastered by them.*
-
-Then she went hunting.
+*Master the runes - or be mastered by them.* The full chronicle - the
+night it fell, the beasts, the fragments, the first forge, and the land it
+made - is told in [LORE.md](LORE.md).
 
 ---
 
@@ -261,6 +256,7 @@ Target runtime: Skyrim SE/AE 1.6.1170 only (D-062). Do not advertise 1.7.x suppo
 
 | Path | Contents |
 |---|---|
+| [LORE.md](LORE.md) | The full in-world chronicle of the Runefall |
 | [Runefall/GAME-DESIGN.md](Runefall/GAME-DESIGN.md) | The Rune Mastery design: pillars, economy, balance |
 | [Runefall/SPECS/](Runefall/SPECS/) | Layered design specs L1-L5, plus mining and balance studies |
 | [Runefall/SPECS/POWER-LADDER.md](Runefall/SPECS/POWER-LADDER.md) | The 100-stage ladder and world threat bands |
