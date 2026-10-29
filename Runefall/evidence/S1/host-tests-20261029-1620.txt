@@ -1,0 +1,8 @@
+cwd=D:\Works\source\skyrim-moddings\skyrim-runefall\Runefall\src\plugin
+command=cmake --build --preset test-windows-vendored --target RunefallTests && build/test-windows-vendored/RunefallTests.exe
+exit=0
+
+Randomness seeded to: 3829881849
+===============================================================================
+All tests passed (140 assertions in 16 test cases)
+

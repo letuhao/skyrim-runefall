@@ -552,7 +552,13 @@ namespace Runefall
 		const auto savedState = CoSave::Get().State();
 		const auto savedItems = ItemRegistry::Get().All();
 		CoSave::Get().ClearLoadedState();
-		const bool clearOk = CoSave::Get().State().playerRank == 1 && ItemRegistry::Get().All().empty();
+		const CoSaveState defaults;
+		const auto& cleared = CoSave::Get().State();
+		const bool clearOk = cleared.playerRank == defaults.playerRank && cleared.playerStage == defaults.playerStage &&
+			cleared.playerXp == defaults.playerXp && cleared.characterClass == defaults.characterClass &&
+			cleared.endgameComplete == defaults.endgameComplete && cleared.items.empty() &&
+			ItemRegistry::Get().All().empty() && Progression::Get().AttributePoints() == 0 &&
+			MaterialRegistry::Get().Total() == 0;
 		CoSave::Get().State() = savedState;
 		ItemRegistry::Get().Load(savedItems);
 		Progression::Get().LoadFromCoSave();

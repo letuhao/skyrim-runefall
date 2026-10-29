@@ -426,4 +426,18 @@ TEST_CASE("A1 LoadOrReset defaults", "[cosave][a1]")
 		REQUIRE(out.items.empty());
 	}
 
+
+	TEST_CASE("A6 exact max record size accepted", "[cosave][a6]")
+	{
+		const std::size_t payload = CoSaveCodec::kMaxRecordBytes - 16 - 6 - 50;
+		Bytes big = Hdr(2);
+		Bytes progression = Sec(1, Prog());
+		big.insert(big.end(), progression.begin(), progression.end());
+		Bytes section = Sec(99, Bytes(payload, 0));
+		big.insert(big.end(), section.begin(), section.end());
+		REQUIRE(big.size() == CoSaveCodec::kMaxRecordBytes);
+		CoSaveState out;
+		REQUIRE(CoSaveCodec::Decode(big, out));
+	}
+
 }
