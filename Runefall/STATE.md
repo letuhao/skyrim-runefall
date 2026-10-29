@@ -1,8 +1,8 @@
 # STATE - Runefall
 
-STATUS: v0.2 remediation — S0 PASS (audited 65ee033) — S1 pending — NOT RELEASED.
+STATUS: v0.2 remediation — S0 PASS — S1 BLOCKED on evidence-standard reset — NOT RELEASED.
 
-Last updated: 2026-10-28
+Last updated: 2026-10-29
 
 ## Current program
 
@@ -11,7 +11,11 @@ Last updated: 2026-10-28
 - Baseline audit: 7 PASS, 30 PARTIAL, 11 FAIL (build/audit/plan-gaps.md, runtime-gaps.md).
 - The previous all-slices PASS and verified release claim are RETRACTED.
 - S0 truth reset and audit harness: PASS, independently audited at 65ee033.
-- Current slice: S1 co-save correctness — specification next.
+- Current slice: S1 co-save correctness — BLOCKED on evidence-standard amendment, not code.
+- S1 latest audit: 11 PARTIAL; A2/A3/A4/A7/A8 PASS, A1/A5/A6 PARTIAL.
+- Workflow reset: build/audit/METHODOLOGY.md and ADR-001 (data-driven audit, host-side codec tests).
+- Reference index: _context/code-index (9,228 files, 28,147 term hits); first review in
+  _context/code-index/REFERENCE-REVIEW.md. Isekai Hero/Clamity Loot System were not available.
 
 ## What is actually proven
 

@@ -1,0 +1,43 @@
+# S1 (co-save) implementation audit — subject commit 930a89c
+
+Auditor: dll-config-analyst (independent; did not implement S1). Read-only; only this file written.
+Repo: D:\Works\source\skyrim-moddings\skyrim-runefall\Runefall. Date: 2026-10-28, timeboxed.
+Inputs read: build/slices/S1/spec.md rev6 (SHA-256 E94ECAEFF8375ADF282B93F348370AD6677733EE4EDF7F19D1D78F7E17EC9427, matching remediation.S1.contract), build/audit/S1-spec-audit-6b.md (APPROVED), CoSave.h/cpp, both corrected docs, tools/run-batch-test.ps1, tools/audit-gate.ps1, build/slices/S1/{fixtures,tools}, evidence/S1/*, EXECUTION-STATE.json, HISTORY.jsonl, git history/diffs.
+
+## Commands actually run (read-only; no build/game launch)
+
+1. `python build/slices/S1/tools/decode_cosave.py <fixture>` (via bundled Python) on all three fixtures — header/section output; all trailing=0; baseline_v3 section 11 payload = 14 bytes (`012a2a0201000000000000000000`).
+2. `powershell -NoProfile -ExecutionPolicy Bypass -File tools/audit-gate.ps1 -StatePath EXECUTION-STATE.json -Mode truthfulness` -> exit 0, `{"ok":true,"code":"GATE-PASS","mode":"truthfulness","slices":48,"active":"S1","overall":"IN_PROGRESS"}`.
+3. `git diff --name-only 37dfb68..930a89c` (S1 implementation range) — all paths inside the S1 C1 allowlist.
+4. `git diff --name-only a50b2b6..HEAD` — includes S0/CHANGELOG/STATE/VALIDATION/PROGRAM/.gitignore/tools/audit-* outside the S1 allowlist (spec's literal C1 command conflicts with its own allowlist; the 37dfb68 baseline is the correct implementation range).
+5. `git show 37dfb68:Runefall/src/plugin/src/CoSave.cpp` — pre-S1 ladder encoder writes `PutU16(skillCount)` (old line 324) between class string and skills, then endgame byte.
+6. Inspected evidence: evidence/S1/commands.log (batch exit=0; fixtures/static exit=0), evidence/S1/batch-20261028-171725.md (38/38 PASS incl CoSave.SelfTest), evidence/S1/self-test.log (header hex `524E465303000000000003000A000000`, `CoSave.SelfTest ... PASS`), evidence/S1/fixtures.log, evidence/S1/static-gates-20261028-171901.md (native build PASS hash 216A66AF…).
+7. Did NOT rerun the native build or in-game batch (read-only audit; game launch prohibited in this workspace). Build/batch evidence is from the implementation session (17:17–17:19), inspected but not independently reproduced.
+
+## Criterion verdicts
+
+| ID | Verdict | Reason |
+|---|---|---|
+| S1-A1 | PARTIAL | `Decode` is failure-pure (CoSave.cpp:362-369: local `candidate`, assign only on success; sentinel truncation test at :802-809). But `OnLoad` calls `Reset()` before any Decode (:676), contrary to "does not Reset until Decode succeeds"; on failure/no-record it resets state and clears only ItemRegistry (:709-713), not Progression/MaterialRegistry. Sentinel tests cover truncation/schema-0, not semantic-invalid inputs. |
+| S1-A2 | PASS | Header code matches spec v1/v2/v3 table: v3 = RNFS,u16 schema,u32 flags=0,u16 saveVersion,u32 count (CoSave.cpp:280-285, :398-410); SelfTest asserts bytes and logs hex (:778-784; evidence self-test.log hex matches: schema 3, flags 0, version 3, count 10); docs corrected (POWER-LADDER.md:178, L4-RUNTIME.md:117/134); decode_cosave.py reproduces headers for all fixtures. |
+| S1-A3 | FAIL | (a) baseline_v3.bin section 11 is 14 bytes and omits the `u16 skillCount` that both the pre-S1 encoder (37dfb68, old CoSave.cpp:324) and current decoder require; current decoder therefore rejects it (after class string, 1 byte left cannot satisfy U16 skillCount). (b) required second schema-2 case (runeTier=2) is absent; only schema2_tier5.bin exists. (c) expected_fields.json is not consumed by decode_cosave.py or any test — no automated field assertions. (d) provenance claim is false: fixtures were produced by export_fixtures.py, whose docstring claims it "mirrors CoSave.cpp Encode at 37dfb68 exactly", but it omits the skill-count field; no pre-S1 build/save export is evidenced. |
+| S1-A4 | PARTIAL | `LoadRecord` rejects recordVersion > 3 with token `co-save: reject record-version` (:371-377); payload schema > kSaveVersion rejected with `co-save: reject schema` (:398-401); distinct tokens exist. But SelfTest has no payload-schema=4 case (:817 only tests LoadRecord v4/v0 and Decode schema0); recordVersion=0 is asserted to be accepted (not rejected); no in-game newer-save simulation/blocked note. |
+| S1-A5 | PARTIAL | Deterministic encode: sorted items/containers/quests/overrides, sorted map pairs, dedupe, min-FormID eviction (:187-215, :253-278); SelfTest reordered equality (:846-871) and eviction (:901-909) pass. But the required golden `canonical_v3.bin` with committed SHA-256 is absent from build/slices/S1/fixtures; no duplicate-key policy documentation for map sections; no golden-byte comparison. |
+| S1-A6 | FAIL | Encode cap != decode cap and required rows missing: encoder (:223-252) validates only rarity/ilvl/socketCount/enhancementCount/registryId and enhancements[0].affixId; it does NOT validate socketRunes 0-5, tags mask, playerRank/stage, playerXp, difficultyProfile, curveId, override key/stage/flags, or enhancement 1-4 strings/effectEditorId — decoder rejects several of these, so Encode can emit a record that Decode rejects. Decoder does NOT validate socketRunes range or item.tags mask, ignores trailing bytes inside known sections (only top-level trailing is rejected, :612), and accepts sectionCount=0 though the cap table requires >=1. SelfTest has only schema0/skill-cap/item-cap negatives, not one negative per table row. |
+| S1-A7 | PARTIAL | Constants correct: kMaxEncodedBytes=1,048,576, kMaxRecordBytes=2,097,152 (CoSave.h); OnSave checks empty encode and budget before OpenRecord (:651-666); OnLoad rejects record-size > cap (:684-686); 1000-item legal case tested (:883-899). Missing: no oversize-state refusal test (SelfTest never builds >1 MiB), no committed budget-derivation table/evidence, no assertion that a >budget state leaves no partial write. |
+| S1-A8 | PARTIAL | Batch ran (evidence/S1/batch-20261028-171725.md; commands.log exit=0; 38/38 incl CoSave.SelfTest PASS; schema3 write 1948 B, load equal). But the batch "Co-save fields round-trip" only compares 10 regex groups (rank, stage, xp, class, endgame, containers count, quests count, items count, materials count, configHash) — missing required difficulty, curve, one skill rank, generatedContainers member, rewardedQuests member, overrides count, item registryId; no F11 header hex in the batch evidence (hex only in the self-test log); evidence file has no cwd/command/exit/sha256 (commands.log separate); "No new crash log" detail cites the old crash-2026-10-27 file. |
+
+## False/unsubstantiated claims found
+
+1. **A3 fixture provenance:** export_fixtures.py claims to mirror pre-S1 CoSave.cpp at 37dfb68 exactly, but the pre-S1 encoder writes `u16 skillCount` after the class string (git show 37dfb68:.../CoSave.cpp:324); baseline_v3.bin's ladder payload (14 bytes) omits it, so the fixture is not loadable by either the pre-S1 or current decoder. It is not a pre-S1 build/save export.
+2. **A3 expected-field verification:** expected_fields.json exists but no committed tool or test reads it; fixtures.log only prints headers/sections. The "assert field table" verification is not implemented.
+3. **A3 second case:** schema-2 runeTier=2 fixture required by the spec is missing.
+4. **A5 golden fixture:** canonical_v3.bin (and its SHA-256) required by A5 is missing.
+5. **A6 coverage:** "one negative per table row" and several cap/range rows are untested; encoder/decoder asymmetries mean Encode can produce records Decode rejects.
+6. **A8 assertions:** pre/post batch field list and F11 header hex required by A8 are only partially included (see A8).
+7. **A1 semantics:** "OnLoad does not Reset … until Decode succeeds" and "clears ItemRegistry/Progression/MaterialRegistry once" are not implemented as written.
+8. **State/governance:** remediation.S1 is `state=IMPLEMENTING, status=NOT_STARTED, implementationAudit=null, evidence=[]` after commit 930a89c; EXECUTION-STATE has no S1 slice; HISTORY has the spec audit but no implementation-audit record. Truthfulness gate exits 0 regardless (48 slices, overall IN_PROGRESS), so it does not detect S1 closure incompleteness.
+
+## Overall verdict
+
+**FAIL** — S1 is not passable as implemented/evidenced: A3 and A6 fail; A1, A4, A5, A7, A8 are partial; only A2 passes. The safety improvements are real (atomic decode, header contract, sorted encoding, budget constants, batch round-trip), but the fixture/provenance/coverage claims and fail-closed/clear semantics do not meet the frozen rev-6 contract. No repairs were made (read-only audit).
