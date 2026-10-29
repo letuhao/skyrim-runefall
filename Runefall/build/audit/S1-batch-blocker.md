@@ -27,3 +27,11 @@ and a fresh launch still reached self-tests then hung at the main menu with the 
 The clean save files are byte-identical to _context/clean-save backups. No new crash log.
 Conclusion: the current blocker is the test rig/main-menu/game-thread state, not proven to be the codec
 split. A clean Steam/SKSE/game restart is required before another runtime attempt. Do not claim S1 A8.
+
+
+## 2026-10-29 13:02 — black game window / main-thread timeout
+
+Desktop capture after a fresh launch shows a completely black 1920x1080 screen. SkyrimSE.exe is running
+and MCP reports connected, but get_player_info/get_cell_info time out ("Game thread task timed out").
+The clean save is unchanged; no new crash log. This blocks all A8 runtime verification and is an
+environment/display/game-window issue, not evidence about the reverted codec split.
