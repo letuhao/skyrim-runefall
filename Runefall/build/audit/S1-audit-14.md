@@ -1,0 +1,32 @@
+# S1 implementation audit 14 — code candidate 1393a52 / state child 9b96983
+
+Auditor: independent implementation auditor; did not implement S1. Read-only; only this file written; no game launch.
+Contract: spec rev8 SHA-256 FADE63AC4AE10973E9746F8E54CE86D17ED967C725E7E2AE941DDAD57E5744C1 (= state contract, recomputed) plus approved amendment 2 (E5456397..., audit rev2 F6519FBE..., APPROVED).
+Repo: D:/Works/source/skyrim-moddings/skyrim-runefall (Runefall). HEAD 9b96983 (state child), candidate code 1393a52, clean tracked tree. Audit-13 (849f9d8) read.
+
+## 1. Commands actually run (read-only)
+1. git log/status/diff: HEAD 9b96983; 1393a52 exists; delta 1393a52..9b96983 = state/HISTORY/audit13/raw-batch/host-tests only; candidate diff 849f9d8..1393a52 = CoSaveCodec.cpp (+10/-?), CoSaveCodecTests.cpp (+10), evidence/S1/{batch-151341*.md,build-1513.txt,host-tests-1513.txt}, EXECUTION-STATE.json.
+2. Ran host test executable src/plugin/build/test-windows-vendored/RunefallTests.exe -> exit 0, 'All tests passed (62 assertions in 8 test cases)' (matches evidence/S1/host-tests-20261029-1513.txt).
+3. A8 evidence: batch-20261029-151341.md header cwd/command/exit=0/body_sha256 2AF8A780E1D623D32B9EE9F1A0DA6A5209F3125D96B403F81B3954779F847173; independently hashed tracked raw copy evidence/S1/batch-20261029-151341-raw.md = same 2AF8A780... (reproducible). build-1513: BUILD_EXIT=0, DLL_SHA256=891EA8FD0F265F8037254F175D02BF172CD70E758FA8E2CD41FA366027F151EB; rig J:/SkyrimTest/1.6.1170/.../Runefall.dll SHA = same, mtime 15:13:12; batch 15:13:41 after DLL.
+4. Hash-checked remediation.S1.evidence: 3 stale entries (C1-allowlist.txt C3AFEE72 vs current CBB6AF7E; batch-144557 8C7C6B23 vs DE186E2D; host-tests-1432 11B69C01 vs 556EFA02).
+5. Code/token inspection: CoSave.cpp OnLoad warn path (:200), CoSaveCodec.cpp duplicate-key/items post-sort (:450,:508,:524,:579-584,:606,:634-645), C1-allowlist, tests.
+6. Candidate diff 849f9d8..1393a52 paths all within C1-allowlist (CoSaveCodec*.cpp, test, evidence/S1/**, EXECUTION-STATE.json); amendment-2 paths present in allowlist (src/plugin/test/vendor/**, CMakePresets, ItemMetadata.h, evidence/S1/**). No build/static gates/game run (read-only).
+
+## 2. Criterion verdicts
+| ID | Verdict | Evidence / exact gap |
+|---|---|---|
+| S1-A1 | PARTIAL | Host tests cover codec failure purity and LoadRecords zero/one/malformed-then-valid/unknown (:93-108, :64-80); adapter OnLoad publish vs ClearLoadedState/three registries still not exercised by host tests (adapter includes Core/RE); in-game F11 is regression evidence only. Unchanged by candidate. |
+| S1-A2 | PASS | Header v1/v2/v3 layouts and flags; host round-trip header asserts; batch full 16-byte hex; fixtures/decoder agree. |
+| S1-A3 | PASS | Migration fixtures and assertions unchanged from audit-10..13 PASS; verify_fixtures PASS (previously verified); candidate does not touch migration code. |
+| S1-A4 | **PASS** | Fixed token now present and reachable: CoSave.cpp:200 `if (version > kSaveVersion) logger::warn("co-save: warn newer-save version={}", version)` inside OnLoad record loop; newer records are then fail-closed by the codec record-version gate (host test asserts reject record-version for versions 0/4), destination unchanged. On-screen warning remains BLOCKED per spec (allowed). Audit-13's FAIL claim is superseded: the token exists at this commit (grep CoSave.cpp; introduced before 1393a52). |
+| S1-A5 | PARTIAL | Overrides: duplicate (key,stage,flags) now rejected with co-save: reject duplicate-key (CoSaveCodec.cpp:579-584) and crafted host test exists (:216-224). Maps: materials/hunt/pack/skill duplicate keys reject with the same token (:450,:508,:524,:606). Remaining: duplicate item.registryId post-sort path (:634-638) returns false WITHOUT MarkReject token (spec A5 requires co-save: reject item.registryId), and no crafted host test for duplicate registryId; duplicate-key policy for same-key/different-stage overrides is undocumented. |
+| S1-A6 | PARTIAL | Host suite is 62 assertions / 8 cases, but real crafted decode payloads cover only ~12 of the 37 A6.1 rejection classes: 1b record-version, 1c flags, 1d version-mirror, 2 section-count 0/65, 3b/14b record-size, 4 duplicate-section, 6 count-remaining, 11a missing-section, 11b empty-section, 14a budget, plus A5 duplicate-key material; accepted classes 2/5 (10 unknown-drain, multi-record first-valid). Missing mandatory rows: 1a schema 0/4, 3a truncated/trailing body, 5a-5h count caps (item/hunt/mat/pack/container/quest/override/skill), 7a-7e string length rows, 8a range, 8b-8j item fields (rarity/ilvl/socket/enhancement/socketRunes/category/tier/tags/baseFormId), 9 duplicate/zero registryId, 12 dedupe containers/quests, 13a at-cap accepted, 13b max-size accepted, 13c missing-optional-section accepted. |
+| S1-A7 | PASS | kMaxEncodedBytes/kMaxRecordBytes, 1000-item legal case, EncodeWithBudget(8) refusal + token, OnSave budget check, docs 1 MiB; unchanged PASS. |
+| S1-A8 | PARTIAL | Batch evidence now metadata-complete and reproducible (cwd/command/exit=0/body_sha256 = SHA of tracked raw copy 2AF8A780...); build proof DLL 891EA8FD... == rig DLL and batch ran after DLL; 38/38 self-tests, full 16-byte header hex, full field round-trip, Save-files preflight. Remaining: remediation.S1.evidence has 3 stale hashes (C1-allowlist C3AFEE72 vs CBB6AF7E; batch-144557 8C7C6B23 vs DE186E2D; host-tests-1432 11B69C01 vs 556EFA02), so the state evidence record is not current; host-tests-1513.txt has no hash field (cwd/command/exit only). |
+
+## 3. Contract/amendment and governance
+- Contract hash recomputed = FADE63AC...; amendment 2 file hash E5456397..., approval audit hash F6519FBE... all match state. Candidate 1393a52 touches only C1-allowlisted paths (CoSaveCodec.cpp, tests, evidence/S1/**, EXECUTION-STATE.json); amendment-2 paths are in C1-allowlist. F7 waiver unchanged/not needed here.
+- State S1 remains AUDIT_PENDING, status PENDING, implementationAudit null (audit14 pending); clean tracked tree; no files modified by this audit besides this report.
+
+## 4. Overall verdict
+**PARTIAL — not PASS at 1393a52.** A2/A3/A4/A7 PASS (A4 warn-newer-save token now verified present/reachable and fail-closed). Remaining blockers: A5 duplicate item.registryId token+crafted test; A6 mandatory failure-class coverage (≈12/37 rejection, 2/5 accepted classes); A8 stale S1 evidence hashes; A1 adapter seam remains host-untested. No repairs made.
