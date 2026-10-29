@@ -25,7 +25,7 @@
   },
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "S1",
-  "updatedAt": "2026-10-29T14:58:48.248Z",
+  "updatedAt": "2026-10-29T15:07:18.316Z",
   "remediation": {
     "S0": {
       "id": "S0",
@@ -98,8 +98,8 @@
     },
     "S1": {
       "id": "S1",
-      "state": "AUDIT_PENDING",
-      "status": "PENDING",
+      "state": "PASS",
+      "status": "PASS",
       "contract": {
         "path": "build/slices/S1/spec.md",
         "sha256": "FADE63AC4AE10973E9746F8E54CE86D17ED967C725E7E2AE941DDAD57E5744C1",
@@ -121,7 +121,12 @@
         "verdict": "APPROVED",
         "recordCommit": null
       },
-      "implementationAudit": null,
+      "implementationAudit": {
+        "path": "build/audit/S1-audit-17.md",
+        "sha256": "8EAF2D4698D5D14A07282FD4EB2407FEE3BA81E72BE2F26ECA0E9544DADA95CC",
+        "verdict": "PASS",
+        "commit": "a03bdda"
+      },
       "commit": "a03bdda",
       "evidence": [
         {
@@ -237,6 +242,12 @@
           "sha256": "B65C6B00F0564CBDE3CC7ED761AABC819E58CD713125E3C354A70FF05274F3AA",
           "kind": "report",
           "exists": true
+        },
+        {
+          "path": "build/audit/S1-audit-17.md",
+          "sha256": "8EAF2D4698D5D14A07282FD4EB2407FEE3BA81E72BE2F26ECA0E9544DADA95CC",
+          "kind": "report",
+          "exists": true
         }
       ],
       "blockers": [],
@@ -251,7 +262,8 @@
         "commit": "947bf67",
         "hostTests": "evidence/S1/host-tests-20261029-1549.txt",
         "batch": "evidence/S1/batch-20261029-154959.md"
-      }
+      },
+      "passedAt": "2026-10-29T15:07:18.316Z"
     },
     "S2": {
       "id": "S2",
