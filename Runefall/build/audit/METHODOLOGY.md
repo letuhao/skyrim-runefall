@@ -76,3 +76,17 @@ The old S1-A6 per-row token/data matrix is withdrawn. The amended S1 contract sh
   possible, the real callback.
 - A3: representative v1/v2/v3 migration behavior, not every data value.
 - A8: runtime integration only after preflight; evidence hash and build proof.
+
+## 8. Reference-derived design patterns (2026-10-29)
+
+- CodexOfPowerNG: split serialization state store from SKSE callback; stage a Snapshot, ReplaceState
+  only after the record loop; host C++ tests with CMake/CTest and standalone script; save snapshots
+  and runs all writers, logging failures.
+- calamity-reactive-loot-affixes: bounded DrainRecordBytes for unknown records; per-record
+  version/length validation; rebuild derived state after load; defer inventory-dependent migration
+  to post-load.
+- isekai-hero-skyrim: source-decidable checks separate from a read-only in-game SelfTest; do not
+  use the in-game test as the primary codec oracle.
+
+Runefall S1 should adopt the split/host-test pattern and behavioral atomicity tests, not Codex's
+source-grep atomicity test or a per-row data matrix.

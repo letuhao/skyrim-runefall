@@ -4,6 +4,25 @@ Status: DRAFT — requires independent specification audit before implementation
 Applies to: build/slices/S1/spec.md revision 6
 Author: Lead, 2026-10-29
 Reference: _context/code-index/REFERENCE-REVIEW.md, build/audit/METHODOLOGY.md, ADR-001
+Reference review status: completed 2026-10-29; CodexOfPowerNG, calamity-reactive-loot-affixes and isekai-hero-skyrim indexed and read.
+
+## Reference evidence (2026-10-29)
+
+The reference index now includes 12,114 files / 40,454 term hits, including the three Prisma UI
+source trees. Concrete patterns:
+
+- CodexOfPowerNG: load stages into a SerializationStateStore::Snapshot and calls ReplaceState only
+  after the record loop; save snapshots and runs all writers; host C++ tests under tests/*.test.cpp;
+  CMake COPNG_BUILD_CPP_TEST_TARGETS + CTest; scripts/test.sh. Its atomicity JS test greps source
+  rather than executing load; Runefall must use a behavioral host test instead.
+- calamity-reactive-loot-affixes: split Save/Load/Lifecycle/StatMigration; bounded DrainRecordBytes
+  for unknown records; per-record version/length validation; rebuild derived state after load;
+  inventory-dependent migration deferred to post-load.
+- isekai-hero-skyrim: source-decidable checks separate from a read-only in-game SelfTest for
+  runtime-only facts; no SerializationInterface found in its indexed tree.
+
+These patterns require the amendment below: split pure codec/state-store from the SKSE callback,
+add host tests, drain unknown records, and test failure classes rather than per-row data.
 
 ## Why
 
