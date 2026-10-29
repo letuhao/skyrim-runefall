@@ -634,8 +634,10 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 		std::sort(a_out.items.begin(), a_out.items.end(), [](const ItemMetadata& a, const ItemMetadata& b) { return a.registryId != b.registryId ? a.registryId < b.registryId : a.baseFormId < b.baseFormId; });
 		for (std::size_t i = 0; i < a_out.items.size(); ++i) {
 			const auto& item = a_out.items[i];
-			if (item.registryId == 0 || (i > 0 && a_out.items[i - 1].registryId == item.registryId) || item.rarity > 5 || item.ilvl > 1000 || item.socketCount > 3 || item.enhancementCount > 5)
+			if (item.registryId == 0 || (i > 0 && a_out.items[i - 1].registryId == item.registryId) || item.rarity > 5 || item.ilvl > 1000 || item.socketCount > 3 || item.enhancementCount > 5) {
+				MarkReject("co-save: reject item.registryId");
 				return false;
+			}
 			for (std::uint8_t e = 0; e < item.enhancementCount && e < 5; ++e)
 				if (item.enhancements[e].category < 0 || item.enhancements[e].category > 5 || item.enhancements[e].tier < 0 || item.enhancements[e].tier > 5)
 					return false;

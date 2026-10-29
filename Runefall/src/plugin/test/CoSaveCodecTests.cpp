@@ -222,3 +222,59 @@ TEST_CASE("CoSaveCodec A5 override duplicate", "[cosave][a5]")
 	REQUIRE_FALSE(CoSaveCodec::Decode(bytes, out));
 	REQUIRE(CoSaveCodec::LastRejectToken() == "co-save: reject duplicate-key");
 }
+
+TEST_CASE("CoSaveCodec A5 duplicate registryId", "[cosave][a5]")
+{
+	const auto encoded = CoSaveCodec::Encode(Sample());
+	REQUIRE(!encoded.empty());
+	std::size_t off = 16;
+	Bytes itemPayload;
+	while (off + 6 <= encoded.size()) {
+		const std::uint16_t id = static_cast<std::uint16_t>(encoded[off] | (encoded[off + 1] << 8));
+		const std::uint32_t len = static_cast<std::uint32_t>(encoded[off + 2]) |
+			(static_cast<std::uint32_t>(encoded[off + 3]) << 8) |
+			(static_cast<std::uint32_t>(encoded[off + 4]) << 16) |
+			(static_cast<std::uint32_t>(encoded[off + 5]) << 24);
+		if (id == 3) { itemPayload.assign(encoded.begin() + off + 6, encoded.begin() + off + 6 + len); break; }
+		off += 6 + len;
+	}
+	REQUIRE(itemPayload.size() > 4);
+	const Bytes items(itemPayload.begin() + 4, itemPayload.end());
+	const auto bytes = Save({ Sec(1, Bytes(44, 0)), Sec(3, Cat({ U32v(2), items, items })) });
+	CoSaveState out;
+	REQUIRE_FALSE(CoSaveCodec::Decode(bytes, out));
+	REQUIRE(CoSaveCodec::LastRejectToken() == "co-save: reject item.registryId");
+}
+
+TEST_CASE("CoSaveCodec A6 caps strings range trailing", "[cosave][a6]")
+{
+	CoSaveState out;
+	auto expect = [&](const Bytes& bytes, const std::string& token) {
+		INFO("token " << token);
+		out = CoSaveState{};
+		REQUIRE_FALSE(CoSaveCodec::Decode(bytes, out));
+		REQUIRE(CoSaveCodec::LastRejectToken() == token);
+	};
+	auto with = [](const Bytes& section) { return Save({ Sec(1, Bytes(44, 0)), section }); };
+	const Bytes ladderHeader = { 1, 1, 1, 255, 1, 0, 0 };
+
+	expect(with(Sec(3, U32v(1025))), "co-save: reject item-count");
+	expect(with(Sec(4, U32v(257))), "co-save: reject hunt-count");
+	expect(with(Sec(5, U32v(257))), "co-save: reject material-count");
+	expect(with(Sec(7, U32v(65))), "co-save: reject pack-count");
+	expect(with(Sec(9, U32v(4097))), "co-save: reject container-count");
+	expect(with(Sec(10, U32v(1025))), "co-save: reject quest-count");
+	expect(with(Sec(11, { 1, 1, 1, 255, 1, 1, 1 })), "co-save: reject override-count");
+
+	expect(with(Sec(5, Cat({ U32v(1), Str(std::string(65, 'a')), I32v(1) }))), "co-save: reject string.map-key");
+	expect(with(Sec(7, Cat({ U32v(1), Str(std::string(33, 'a')), Str("v") }))), "co-save: reject string.pack");
+	expect(with(Sec(11, Cat({ ladderHeader, U32v(0), Str(std::string(65, 'a')) }))), "co-save: reject string.class");
+
+	expect(with(Sec(11, { 1, 0, 1, 255, 1, 0, 0 })), "co-save: reject range");
+	expect(with(Sec(11, { 1, 1, 1, 6, 1, 0, 0 })), "co-save: reject range");
+	expect(with(Sec(11, { 1, 1, 1, 255, 0, 0, 0 })), "co-save: reject range");
+
+	auto base = Save({ Sec(1, Progression()) });
+	base.push_back(0);
+	expect(base, "co-save: reject trailing");
+}
