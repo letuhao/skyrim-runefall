@@ -25,7 +25,7 @@
   },
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "S1",
-  "updatedAt": "2026-10-29T09:10:57.106Z",
+  "updatedAt": "2026-10-29T09:21:53.629Z",
   "remediation": {
     "S0": {
       "id": "S0",
@@ -98,8 +98,8 @@
     },
     "S1": {
       "id": "S1",
-      "state": "PARTIAL",
-      "status": "PARTIAL",
+      "state": "AUDIT_PENDING",
+      "status": "PENDING",
       "contract": {
         "path": "build/slices/S1/spec.md",
         "sha256": "FADE63AC4AE10973E9746F8E54CE86D17ED967C725E7E2AE941DDAD57E5744C1",
@@ -121,13 +121,8 @@
         "verdict": "APPROVED",
         "recordCommit": null
       },
-      "implementationAudit": {
-        "path": "build/audit/S1-audit-16.md",
-        "sha256": "9DBDD9137C39BA1D1A95B7C1A394786B341BE2EB517E700C591B02D5248676E0",
-        "verdict": "PARTIAL",
-        "commit": "947bf67"
-      },
-      "commit": "b983cb5",
+      "implementationAudit": null,
+      "commit": "a03bdda",
       "evidence": [
         {
           "path": "build/slices/S1/spec.md",
@@ -224,9 +219,20 @@
           "sha256": "BBA23F9CF9B717CAEE409CFEB44BA77B3A556000B6D91CC6DFA4391FFE432E43",
           "kind": "report",
           "exists": true
+        },
+        {
+          "path": "evidence/S1/host-tests-20261029-1620.txt",
+          "sha256": "576ED74823A32C7BB22512E5C9401771A4C6FD3998B3BBAE8A23B1CAE423AE94",
+          "kind": "report",
+          "exists": true
         }
       ],
-      "blockers": [],
+      "blockers": [
+        {
+          "id": "B-S1-RIG-HANG",
+          "detail": "After the A1/A6 final build, batch preflight again failed: self-tests 38/38 pass, then load_save is not accepted and player/cell queries fail. Same main-thread/black-screen rig issue; requires full Steam/SKSE restart. No new runtime evidence for a03bdda."
+        }
+      ],
       "followups": [
         {
           "id": "F7-CONSOLE-THREAD",
