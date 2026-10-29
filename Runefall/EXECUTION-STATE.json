@@ -25,7 +25,7 @@
   },
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "S1",
-  "updatedAt": "2026-10-29T09:21:53.629Z",
+  "updatedAt": "2026-10-29T14:58:48.248Z",
   "remediation": {
     "S0": {
       "id": "S0",
@@ -225,14 +225,21 @@
           "sha256": "576ED74823A32C7BB22512E5C9401771A4C6FD3998B3BBAE8A23B1CAE423AE94",
           "kind": "report",
           "exists": true
-        }
-      ],
-      "blockers": [
+        },
         {
-          "id": "B-S1-RIG-HANG",
-          "detail": "After the A1/A6 final build, batch preflight again failed: self-tests 38/38 pass, then load_save is not accepted and player/cell queries fail. Same main-thread/black-screen rig issue; requires full Steam/SKSE restart. No new runtime evidence for a03bdda."
+          "path": "evidence/S1/batch-20261029-215510.md",
+          "sha256": "97469C74AC05E3FD74F72C4454144083A9F318D682B5F009072A840F60A4C157",
+          "kind": "report",
+          "exists": true
+        },
+        {
+          "path": "evidence/S1/build-20261029-2149.txt",
+          "sha256": "B65C6B00F0564CBDE3CC7ED761AABC819E58CD713125E3C354A70FF05274F3AA",
+          "kind": "report",
+          "exists": true
         }
       ],
+      "blockers": [],
       "followups": [
         {
           "id": "F7-CONSOLE-THREAD",
