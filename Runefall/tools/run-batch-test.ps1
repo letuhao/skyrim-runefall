@@ -95,15 +95,18 @@ function Wait-Game {
 }
 
 function Stop-TestGame {
-    for ($attempt = 0; $attempt -lt 3; ++$attempt) {
-        Get-Process -Name SkyrimSE -ErrorAction SilentlyContinue | ForEach-Object {
-            Write-Host "Killing SkyrimSE PID $($_.Id)"
-            Stop-Process -Id $_.Id -Force -ErrorAction SilentlyContinue
+    for ($attempt = 0; $attempt -lt 4; ++$attempt) {
+        foreach ($name in @('skse64_loader', 'SkyrimSE')) {
+            Get-Process -Name $name -ErrorAction SilentlyContinue | ForEach-Object {
+                Write-Host "Killing $name PID $($_.Id)"
+                Stop-Process -Id $_.Id -Force -ErrorAction SilentlyContinue
+            }
         }
         Start-Sleep -Seconds 2
-        if (-not (Get-Process -Name SkyrimSE -ErrorAction SilentlyContinue)) { return }
+        $left = @(Get-Process -Name 'skse64_loader', 'SkyrimSE' -ErrorAction SilentlyContinue)
+        if ($left.Count -eq 0) { return }
     }
-    throw 'SkyrimSE.exe is still running after 3 kill attempts.'
+    throw 'Game-side processes (skse64_loader/SkyrimSE) are still running after 4 kill attempts.'
 }
 
 if (-not $SaveName) {
@@ -125,7 +128,7 @@ if (-not $saveFilesOk) {
     exit 2
 }
 Write-Host "Runefall batch test: save=$SaveName game=$GameRoot saveDir=$SaveDir"
-Write-Host 'Stopping any running SkyrimSE...'
+Write-Host 'Stopping all game-side processes (skse64_loader, SkyrimSE)...'
 Stop-TestGame
 Write-Host 'Starting Skyrim...'
 Start-Process -FilePath (Join-Path $GameRoot 'skse64_loader.exe') -WorkingDirectory $GameRoot
