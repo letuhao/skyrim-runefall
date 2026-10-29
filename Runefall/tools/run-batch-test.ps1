@@ -94,6 +94,18 @@ function Wait-Game {
     return $false
 }
 
+function Stop-TestGame {
+    for ($attempt = 0; $attempt -lt 3; ++$attempt) {
+        Get-Process -Name SkyrimSE -ErrorAction SilentlyContinue | ForEach-Object {
+            Write-Host "Killing SkyrimSE PID $($_.Id)"
+            Stop-Process -Id $_.Id -Force -ErrorAction SilentlyContinue
+        }
+        Start-Sleep -Seconds 2
+        if (-not (Get-Process -Name SkyrimSE -ErrorAction SilentlyContinue)) { return }
+    }
+    throw 'SkyrimSE.exe is still running after 3 kill attempts.'
+}
+
 if (-not $SaveName) {
     $manifest = 'D:\Works\source\skyrim-moddings\_context\clean-save\CURRENT-CLEAN-SAVE.txt'
     if (Test-Path $manifest) {
@@ -113,15 +125,11 @@ if (-not $saveFilesOk) {
     exit 2
 }
 Write-Host "Runefall batch test: save=$SaveName game=$GameRoot saveDir=$SaveDir"
-$proc = Get-CimInstance Win32_Process -Filter "name='SkyrimSE.exe'" -ErrorAction SilentlyContinue |
-    Where-Object { $_.ExecutablePath -eq (Join-Path $GameRoot 'SkyrimSE.exe') }
-if (-not $proc) {
-    Write-Host 'Starting Skyrim...'
-    Start-Process -FilePath (Join-Path $GameRoot 'skse64_loader.exe') -WorkingDirectory $GameRoot
-    if (-not (Wait-Game)) { throw 'Skyrim did not start within timeout.' }
-} else {
-    Write-Host "Using running Skyrim PID $($proc.ProcessId)"
-}
+Write-Host 'Stopping any running SkyrimSE...'
+Stop-TestGame
+Write-Host 'Starting Skyrim...'
+Start-Process -FilePath (Join-Path $GameRoot 'skse64_loader.exe') -WorkingDirectory $GameRoot
+if (-not (Wait-Game)) { throw 'Skyrim did not start within timeout.' }
 
 $conn = ''
 for ($attempt = 0; $attempt -lt 20; ++$attempt) {
