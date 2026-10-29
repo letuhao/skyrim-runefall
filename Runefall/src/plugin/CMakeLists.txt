@@ -14,18 +14,11 @@ option(PLUGIN_TESTS_ONLY "Build unit tests instead of the plugin" OFF)
 
 if(PLUGIN_TESTS_ONLY)
 
-    find_package(Catch2 3 CONFIG REQUIRED)
-
     include(CTest)
-    include(Catch)
-
-    add_executable(${PROJECT_NAME}Tests test/ExampleTests.cpp)
-
-    target_include_directories(${PROJECT_NAME}Tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
-
-    target_link_libraries(${PROJECT_NAME}Tests PRIVATE Catch2::Catch2WithMain)
-
-    catch_discover_tests(${PROJECT_NAME}Tests)
+    add_executable(${PROJECT_NAME}Tests test/CoSaveCodecTests.cpp src/CoSaveCodec.cpp test/vendor/catch_amalgamated.cpp)
+    target_include_directories(${PROJECT_NAME}Tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/test/vendor")
+    target_compile_features(${PROJECT_NAME}Tests PRIVATE cxx_std_20)
+    add_test(NAME ${PROJECT_NAME}Tests COMMAND ${PROJECT_NAME}Tests)
 
 else()
 
@@ -101,6 +94,7 @@ else()
         src/EndgameEngine.cpp
         src/RuntimeContentResolver.cpp
         src/CoSave.cpp
+        src/CoSaveCodec.cpp
         src/ItemRegistry.cpp
         src/LootEngine.cpp
         src/TierEngine.cpp
