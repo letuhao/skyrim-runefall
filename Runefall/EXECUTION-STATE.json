@@ -25,7 +25,7 @@
   },
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "S1",
-  "updatedAt": "2026-10-29T05:58:03.321Z",
+  "updatedAt": "2026-10-29T06:48:21.117Z",
   "remediation": {
     "S0": {
       "id": "S0",
@@ -142,15 +142,15 @@
           "sha256": "206F48F09BD1677EC45C1621867482DE3771417E116F78B5343082256E7507B2",
           "kind": "report",
           "exists": true
-        }
-      ],
-      "blockers": [
+        },
         {
-          "id": "B-S1-RIG-HANG",
-          "detail": "Game reaches main menu and passes 38/38 self-tests, then main thread stops responding; MCP get_player_info/get_cell_info and load_save time out. Reproduced after reverting the codec split and rebuilding (DLL 01F7B92F). Clean save files match backup; no new crash log. Runtime A8 verification blocked until a clean Steam/SKSE/game restart restores save loading.",
-          "evidence": "build/audit/S1-batch-blocker.md"
+          "path": "build/evidence/batch-test-20261029-134621.md",
+          "sha256": "4F8AB0F5F05F23A8EC57040DF03227BAF7A012360C425673FB3560D2FD233274",
+          "kind": "report",
+          "exists": true
         }
       ],
+      "blockers": [],
       "followups": [
         {
           "id": "F7-CONSOLE-THREAD",
