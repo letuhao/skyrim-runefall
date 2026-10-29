@@ -25,7 +25,7 @@
   },
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "S1",
-  "updatedAt": "2026-10-29T07:52:45.757Z",
+  "updatedAt": "2026-10-29T08:17:20.388Z",
   "remediation": {
     "S0": {
       "id": "S0",
@@ -122,7 +122,7 @@
         "recordCommit": null
       },
       "implementationAudit": null,
-      "commit": "849f9d8",
+      "commit": "1393a52",
       "evidence": [
         {
           "path": "build/slices/S1/spec.md",
@@ -177,6 +177,24 @@
           "sha256": "11B69C01D5B41DB022DBD254A75364C645A4A05A88BF7E1CA985DCC73C65D102",
           "kind": "report",
           "exists": true
+        },
+        {
+          "path": "evidence/S1/batch-20261029-151341.md",
+          "sha256": "26600E103656A7A95E1FED2781FF8E1CB07F2D997570AD754684DBC455567BF1",
+          "kind": "report",
+          "exists": true
+        },
+        {
+          "path": "evidence/S1/build-20261029-1513.txt",
+          "sha256": "2D12C165C667A4E428665D5758773C230F63FC960B4DDE7C59C2556B03BE6897",
+          "kind": "report",
+          "exists": true
+        },
+        {
+          "path": "evidence/S1/host-tests-20261029-1513.txt",
+          "sha256": "F7F28EC7C7BD00725E0F8C0F8BB77A00D53BC63038763723EFFCD16FC4C5E558",
+          "kind": "report",
+          "exists": true
         }
       ],
       "blockers": [],
@@ -187,10 +205,10 @@
         }
       ],
       "implementationAttempt": {
-        "id": "C1-849f9d8",
-        "commit": "849f9d8",
-        "hostTests": "build/evidence/host-tests-20261029-1432.txt",
-        "batch": "evidence/S1/batch-20261029-144557.md"
+        "id": "C1-1393a52",
+        "commit": "1393a52",
+        "hostTests": "evidence/S1/host-tests-20261029-1513.txt",
+        "batch": "evidence/S1/batch-20261029-151341.md"
       }
     },
     "S2": {
