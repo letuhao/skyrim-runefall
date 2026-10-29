@@ -1,0 +1,38 @@
+cwd=D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall/src/plugin
+command=cmake --preset test-windows (vcpkg Catch2 path)
+exit=1
+
+Preset CMake variables:
+
+  CMAKE_BUILD_TYPE="Release"
+  CMAKE_EXPORT_COMPILE_COMMANDS="ON"
+  CMAKE_MAKE_PROGRAM="ninja"
+  CMAKE_TOOLCHAIN_FILE:FILEPATH="D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall/src/plugin/lib/vcpkg/scripts/buildsystems/vcpkg.cmake"
+  PLUGIN_TESTS_ONLY="ON"
+  VCPKG_HOST_TRIPLET="x64-windows-static-md"
+  VCPKG_INSTALL_OPTIONS="--allow-unsupported"
+  VCPKG_MANIFEST_FEATURES="tests"
+  VCPKG_MANIFEST_MODE="ON"
+  VCPKG_OVERLAY_PORTS="D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall/src/plugin/cmake/ports"
+  VCPKG_OVERLAY_TRIPLETS="D:/Works/source/skyrim-moddings/skyrim-runefall/Runefall/src/plugin/cmake/triplets"
+  VCPKG_TARGET_TRIPLET="x64-windows-static-md"
+
+-- Running vcpkg install
+error: "C:\Program Files\Git\cmd\git.exe" --git-dir "D:\Works\source\skyrim-moddings\skyrim-runefall\Runefall\src\plugin\lib\vcpkg\.git" -c core.autocrlf=false read-tree 5f7385233a249ddbcc48f261b4e4c20f42297360 failed with exit code 128
+fatal: not a git repository: ../../.git/modules/lib/vcpkg
+note: while checking out port catch2 with git tree 5f7385233a249ddbcc48f261b4e4c20f42297360
+note: See https://learn.microsoft.com/vcpkg/users/versioning-troubleshooting?WT.mc_id=vcpkg_inproduct_cli for more information.
+note: while loading catch2@3.11.0
+
+-- Running vcpkg install - failed
+CMake Error at lib/vcpkg/scripts/buildsystems/vcpkg.cmake:953 (message):
+  vcpkg install failed.  See logs for more information:
+  D:\Works\source\skyrim-moddings\skyrim-runefall\Runefall\src\plugin\build\test-windows\vcpkg-manifest-install.log
+Call Stack (most recent call first):
+  C:/Program Files/Microsoft Visual Studio/2022/Enterprise/Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:146 (include)
+  CMakeLists.txt:3 (project)
+
+
+CMake Error: CMAKE_CXX_COMPILER not set, after EnableLanguage
+-- Configuring incomplete, errors occurred!
+VCPKG_PROBE_EXIT=1

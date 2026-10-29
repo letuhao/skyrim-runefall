@@ -1,4 +1,4 @@
-# C1 exact allowlist for S1 revision 7
+# C1 exact allowlist for S1 revision 8 + amendment 2
 # One path or prefix per line; * is a prefix match. Pre-C1 S0 paths are grandfathered by base commit.
 src/plugin/src/CoSave.h
 src/plugin/src/CoSave.cpp
@@ -6,6 +6,9 @@ src/plugin/src/CoSaveCodec.h
 src/plugin/src/CoSaveCodec.cpp
 src/plugin/src/DebugHarness.cpp
 src/plugin/test/CoSaveCodecTests.cpp
+src/plugin/test/vendor/*
+src/plugin/CMakePresets.json
+src/plugin/src/ItemMetadata.h
 src/plugin/CMakeLists.txt
 SPECS/POWER-LADDER.md
 SPECS/L4-RUNTIME.md
