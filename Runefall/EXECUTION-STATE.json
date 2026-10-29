@@ -25,7 +25,7 @@
   },
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "S1",
-  "updatedAt": "2026-10-29T15:07:18.316Z",
+  "updatedAt": "2026-10-29T15:08:13.875Z",
   "remediation": {
     "S0": {
       "id": "S0",
@@ -102,18 +102,7 @@
       "status": "PASS",
       "contract": {
         "path": "build/slices/S1/spec.md",
-        "sha256": "FADE63AC4AE10973E9746F8E54CE86D17ED967C725E7E2AE941DDAD57E5744C1",
-        "amendments": [
-          {
-            "path": "build/slices/S1/spec-amendment-2.md",
-            "sha256": "E54563976FF17974E22CED1C71483086BCA1276EF6833C35177A2273009F2F95",
-            "base": "build/slices/S1/spec.md",
-            "baseSha256": "FADE63AC4AE10973E9746F8E54CE86D17ED967C725E7E2AE941DDAD57E5744C1",
-            "scope": "test harness/allowlist only; supersedes rev8 §4 test-preset wording and listed §5 allowlist entries",
-            "approvedBy": "build/audit/S1-spec-amendment-2-audit-rev2.md",
-            "approvedSha256": "F6519FBE473B18DE15EDA53F26A9C88083E2A5ED2AA4C6C09C943F53A7BF0B43"
-          }
-        ]
+        "sha256": "FADE63AC4AE10973E9746F8E54CE86D17ED967C725E7E2AE941DDAD57E5744C1"
       },
       "specAudit": {
         "path": "build/audit/S1-spec-audit-8b.md",
@@ -256,14 +245,7 @@
           "id": "F7-CONSOLE-THREAD",
           "detail": "F7 ConsoleLog::Print crash hotfix remains a separate accepted crash-safety exception; not part of S1 codec."
         }
-      ],
-      "implementationAttempt": {
-        "id": "C1-947bf67",
-        "commit": "947bf67",
-        "hostTests": "evidence/S1/host-tests-20261029-1549.txt",
-        "batch": "evidence/S1/batch-20261029-154959.md"
-      },
-      "passedAt": "2026-10-29T15:07:18.316Z"
+      ]
     },
     "S2": {
       "id": "S2",
