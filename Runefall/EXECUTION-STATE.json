@@ -25,7 +25,7 @@
   },
   "overallStatus": "IN_PROGRESS",
   "currentSlice": "S1",
-  "updatedAt": "2026-10-29T08:38:52.595Z",
+  "updatedAt": "2026-10-29T08:53:49.557Z",
   "remediation": {
     "S0": {
       "id": "S0",
@@ -98,8 +98,8 @@
     },
     "S1": {
       "id": "S1",
-      "state": "PARTIAL",
-      "status": "PARTIAL",
+      "state": "AUDIT_PENDING",
+      "status": "PENDING",
       "contract": {
         "path": "build/slices/S1/spec.md",
         "sha256": "FADE63AC4AE10973E9746F8E54CE86D17ED967C725E7E2AE941DDAD57E5744C1",
@@ -121,13 +121,8 @@
         "verdict": "APPROVED",
         "recordCommit": null
       },
-      "implementationAudit": {
-        "path": "build/audit/S1-audit-15.md",
-        "sha256": "19D64B49B94961C462724A8CDD9C54301F013BB18BA10C1ABDFDA4BC0F59396A",
-        "verdict": "PARTIAL",
-        "commit": "d8bcf79"
-      },
-      "commit": "d8bcf79",
+      "implementationAudit": null,
+      "commit": "947bf67",
       "evidence": [
         {
           "path": "build/slices/S1/spec.md",
@@ -206,6 +201,24 @@
           "sha256": "52EDDBA01EDC952B917A78320B442DF87D209F62E46C1C0E86ED3D9D12833261",
           "kind": "report",
           "exists": true
+        },
+        {
+          "path": "evidence/S1/batch-20261029-154959.md",
+          "sha256": "267EE5FD99AD14E9AD63B2C14D160D80EEB17CE2EC8B13EF51676518EAE28FDA",
+          "kind": "report",
+          "exists": true
+        },
+        {
+          "path": "evidence/S1/build-20261029-1549.txt",
+          "sha256": "C1379ADFFDC78394DF2CB50569F3D08C638D27A8604B2C201269FDD5CE2A4E0D",
+          "kind": "report",
+          "exists": true
+        },
+        {
+          "path": "evidence/S1/host-tests-20261029-1549.txt",
+          "sha256": "BBA23F9CF9B717CAEE409CFEB44BA77B3A556000B6D91CC6DFA4391FFE432E43",
+          "kind": "report",
+          "exists": true
         }
       ],
       "blockers": [],
@@ -216,10 +229,10 @@
         }
       ],
       "implementationAttempt": {
-        "id": "C1-d8bcf79",
-        "commit": "d8bcf79",
-        "hostTests": "evidence/S1/host-tests-20261029-1529.txt",
-        "batch": "evidence/S1/batch-20261029-152924.md"
+        "id": "C1-947bf67",
+        "commit": "947bf67",
+        "hostTests": "evidence/S1/host-tests-20261029-1549.txt",
+        "batch": "evidence/S1/batch-20261029-154959.md"
       }
     },
     "S2": {
