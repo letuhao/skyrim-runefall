@@ -212,3 +212,13 @@ TEST_CASE("CoSaveCodec A6 accepted classes", "[cosave][a6]")
 	REQUIRE(CoSaveCodec::LoadRecords(two, 3, out));
 	REQUIRE(out.playerRank == Sample().playerRank);
 }
+
+TEST_CASE("CoSaveCodec A5 override duplicate", "[cosave][a5]")
+{
+	const Bytes ladder = { 1, 1, 1, 255, 1, 2, 0, 7, 0, 0, 0, 0, 0, 0, 0, 20, 0,
+		7, 0, 0, 0, 0, 0, 0, 0, 20, 0 };
+	const auto bytes = Save({ Sec(1, Bytes(44, 0)), Sec(11, ladder) });
+	CoSaveState out;
+	REQUIRE_FALSE(CoSaveCodec::Decode(bytes, out));
+	REQUIRE(CoSaveCodec::LastRejectToken() == "co-save: reject duplicate-key");
+}

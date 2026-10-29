@@ -579,6 +579,10 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 						return false;
 					if (entry.key == 0 || entry.stage < 1 || entry.stage > 100)
 						return false;
+					for (const auto& prior : a_out.ladderOverrides)
+						if (prior.key == entry.key && prior.stage == entry.stage && prior.flags == entry.flags) {
+							MarkReject("co-save: reject duplicate-key"); return false;
+						}
 					a_out.ladderOverrides.push_back(entry);
 				}
 				if (sectionReader.Remaining() >= 4) {
@@ -586,7 +590,7 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 				}
 				if (sectionReader.Remaining() > 0) {
 					if (!sectionReader.String(a_out.characterClass) || a_out.characterClass.size() > 64) {
-					    MarkReject("co-save: reject string"); logger::error("co-save: reject string"); return false;
+					    MarkReject("co-save: reject string.class"); logger::error("co-save: reject string.class"); return false;
 					}
 					std::uint16_t skillCount = 0;
 					if (!sectionReader.U16(skillCount) || skillCount > 256) {
@@ -598,8 +602,7 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 						if (!sectionReader.String(skill) || skill.size() > 64 || !sectionReader.I32(rank)) {
 						    MarkReject("co-save: reject string.skill"); logger::error("co-save: reject string.skill"); return false;
 						}
-						if (rank < 1 || rank > 100)
-							return false;
+						if (rank < 1 || rank > 100) { MarkReject("co-save: reject range"); return false; }
 						if (a_out.skillRanks.contains(skill)) { MarkReject("co-save: reject duplicate-key"); return false; }
 						a_out.skillRanks[skill] = rank;
 					}
@@ -637,6 +640,7 @@ bool CoSaveCodec::Decode(const std::vector<std::uint8_t>& a_bytes, CoSaveState& 
 				if (item.enhancements[e].category < 0 || item.enhancements[e].category > 5 || item.enhancements[e].tier < 0 || item.enhancements[e].tier > 5)
 					return false;
 		}
+		if (reader.Remaining() != 0) { MarkReject("co-save: reject trailing"); return false; }
 		if (!seenSections[kSectionProgression]) { MarkReject("co-save: reject missing-section"); return false; }
 		return true;
 	}
