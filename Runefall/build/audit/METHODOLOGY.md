@@ -90,3 +90,20 @@ The old S1-A6 per-row token/data matrix is withdrawn. The amended S1 contract sh
 
 Runefall S1 should adopt the split/host-test pattern and behavioral atomicity tests, not Codex's
 source-grep atomicity test or a per-row data matrix.
+
+## 9. MEO-derived crafting/data rules (2026-10-29)
+
+See _context/code-index/MEO-REVIEW.md. For any future Runefall crafting slice:
+
+1. Canonical data pipeline: authored JSON -> validated generation -> runtime data + generated C++
+   catalog/ESP forms. Generator must fail on unknown ids/missing mappings and keep indexes
+   append-only. DLL must not parse gameplay JSON at runtime.
+2. Stable identity: persist stable string ids (gid), never enum indexes; key per-instance state by
+   (baseFormID, uid, slot), with a collision-checked uid range.
+3. Runtime resolver: missing forms/families register DISABLED; records go dormant, never deleted.
+4. Co-save: versioned fields, ResolveFormID on load, clamp ranges, drop unresolved forms with a log,
+   and warn loudly that a newer save cannot be read and saving would destroy unread records.
+5. Snapshot target lists before mutation; use engine flows for item/effect changes; never give an
+   item two enchant sources.
+6. Before a large crafting feature, run a P0-style premise test: item/instance model survives
+   save/load, re-equip, stacked items, uninstall. Then build recipes on top.
