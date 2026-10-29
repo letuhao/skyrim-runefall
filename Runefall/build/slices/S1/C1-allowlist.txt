@@ -1,0 +1,20 @@
+# C1 exact allowlist for S1 revision 7
+# One path or prefix per line; * is a prefix match. Pre-C1 S0 paths are grandfathered by base commit.
+src/plugin/src/CoSave.h
+src/plugin/src/CoSave.cpp
+src/plugin/src/CoSaveCodec.h
+src/plugin/src/CoSaveCodec.cpp
+src/plugin/src/DebugHarness.cpp
+src/plugin/test/CoSaveCodecTests.cpp
+src/plugin/CMakeLists.txt
+SPECS/POWER-LADDER.md
+SPECS/L4-RUNTIME.md
+tools/run-batch-test.ps1
+build/slices/S1/*
+build/audit/S1-spec-audit*
+build/audit/S1-audit*
+build/audit/HISTORY.jsonl
+evidence/S1/*
+EXECUTION-STATE.json
+# F7 crash-safety exception, accepted separately; not part of S1 co-save scope
+src/plugin/src/InputManager.cpp

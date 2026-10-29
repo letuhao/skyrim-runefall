@@ -1,124 +1,306 @@
-# S1 — Co-save correctness (revision 6, after three independent spec audits)
+# S1 — Co-save correctness (revision 8)
 
-Program: PROGRAM.md sections 1-5. Baseline: a50b2b6. Slice source: PROGRAM.md section 4 (S1) and ULTIMATE-PLAN.md F0.5 row; audit findings H4/H5/C5/C6/M2.
-Status: DRAFT FOR FOURTH INDEPENDENT SPEC AUDIT (revision 6)
-Revision: 6 (amends rev5 after third audit token/provenance precision)
+Program: PROGRAM.md sections 1-5. Baseline commit: a50b2b6.
+Status: DRAFT FOR INDEPENDENT SPEC AUDIT (revision 8 supersedes revision 6 and amendment-1).
+This revision merges amendment-1 and resolves the rev7 audit R1-R4 and BA1-BA10.
 Dependencies: S0 PASS. S1 is a safety gate; S2-S15 may not consume co-save changes until S1 PASS.
 
-## 1. Normative header table (M3/M4)
+## 1. Normative header table (unchanged from rev6)
 
-Canonical v3 layout is the bytes the existing code writes; do NOT reorder (baseline v3 saves must remain readable). POWER-LADDER.md section 9 is normative; L4-RUNTIME.md section 5 must match it.
+Canonical v3 layout is the bytes the existing code writes; do NOT reorder. POWER-LADDER.md
+section 9 is normative; L4-RUNTIME.md section 5 must match.
 
 | Version | Header bytes | Fields (offset:width) | Rule |
 |---|---|---|---|
 | v1/v2 | 12 | magic 0:4; schema 4:u16; saveVersion 6:u16; sectionCount 8:u32 | schema 1 or 2; saveVersion equals schema |
 | v3 | 16 | magic 0:4; schema 4:u16; flags 6:u32; saveVersion 10:u16; sectionCount 12:u32 | schema=3; flags=0; saveVersion=3 |
 
-Precise: v1/v2 header 12 bytes: magic[0..3], u16 schema[4..5], u16 saveVersion[6..7], u32 sectionCount[8..11]. v3 header 16 bytes: magic[0..3], u16 schema[4..5], u32 flags[6..9]=0, u16 saveVersion[10..11]=3, u32 sectionCount[12..15]. Encoder writes schema 3 only; schemas 1/2 are read-only legacy. Exact doc edits: POWER-LADDER.md section 9 header bullet; L4-RUNTIME.md section 5 lines 117 and 134. Standalone decoder build/slices/S1/tools/decode_cosave.py must parse fixtures and print header fields/sections.
+Precise: v1/v2 = magic[0..3], u16 schema[4..5], u16 saveVersion[6..7], u32 sectionCount[8..11].
+v3 = magic[0..3], u16 schema[4..5], u32 flags[6..9]=0, u16 saveVersion[10..11]=3,
+u32 sectionCount[12..15]. Encoder writes schema 3 only; schemas 1/2 are read-only legacy.
+Standalone decoder build/slices/S1/tools/decode_cosave.py must reproduce the table.
 
-## 2. Frozen acceptance criteria
+## 2. Reference review (new, required by METHODOLOGY §4)
 
-| ID | Criterion | Verification | Pass condition |
-|---|---|---|---|
-| S1-A1 | Decode destination atomicity and publish-only-on-success. (a) Decode decodes into a local candidate and assigns to caller only on success; every rejected input leaves caller state byte-for-byte unchanged. (b) OnLoad does not Reset or mutate registries until Decode succeeds; on failure it publishes empty/default state and clears ItemRegistry/Progression/MaterialRegistry once. Zero-record, one-record, multiple-RNF2, unknown-record and oversized-record behavior specified. | SelfTest: prefill sentinel CoSaveState, decode malformed/truncated/semantic-invalid inputs, compare every field; LoadRecord seam tests; code inspection of OnLoad; in-game F11 log. | Sentinel preserved on every reject; accepted record publishes atomically; fail-closed state exact; no crash. |
-| S1-A2 | Canonical header: exact v1/v2/v3 table; flags=0; saveVersion mirror checked; byte offsets asserted; docs corrected; standalone decoder agrees. | SelfTest header bytes and hex log; decode_cosave.py on fixtures; doc diff evidence. | Header matches for all versions; docs match; decoder reproduces. |
-| S1-A3 | Golden migration fixtures: schema2.bin with progression section only (header magic,u16 schema=2,u16 saveVersion=2,u32 sectionCount; no flags; payload 13 i32: attrs9, attrPoints, skillPoints, runeTier, bossKillTier; runeTier=5 and a second case runeTier=2; no ladder section) and schema1.bin without runeTier/bossKillTier; baseline-v3.bin from the pre-S1 build at 37dfb68 (one-off exporter or current runtime save), exported before the first co-save code change; derivation command and SHA-256 committed. Expected: tier5 -> rank=stage=100, tier2 -> 40, difficulty=255, curve=1, bossKillTier retained, XP0, class empty, endgame false; v1 -> rank=stage=1. | decode each fixture; assert field table; v3 baseline loads; standalone decoder; re-encode canonical. | Fixtures decode; all pinned fields exact; v3 baseline loads; docs/mapping consistent. |
-| S1-A4 | Distinct downgrade gates: recordVersion > kSaveVersion and payload schema > kSaveVersion separately tested with distinct fixed log tokens, rejection, empty/default post-state, no crash; schema 0/absent rejected; in-game simulation BLOCKED unless real newer save exists. | LoadRecord(recordVersion=4), LoadRecord(schema=4), schema=0 tests; log capture. | Both reject with distinct tokens; empty state exact; no crash. |
-| S1-A5 | Deterministic encoding/canonicalization: maps keys byte-lexicographic; containers/quests ascending u32 with dedupe policy; overrides key/stage/flags; items registryId then baseFormId; skills key; duplicate keys rejected or documented; decode canonicalizes; encode(decode(encode(x))) byte-identical; golden canonical_v3.bin with sha256 committed. | SelfTest reversed insertion, unsorted decode, idempotent re-encode, duplicate test, eviction-at-cap test (smallest FormID removed), compare against golden bytes. | All equal; golden matches; no unordered leak. |
-| S1-A6 | Bounds/range table section 3.1 with encode cap=decode cap, fixed rejection token per row, validate-before-allocate and exact-consume; encoder writes exactly declared counts (fixes skillRanks min/loop bug); schema 0/absent rejected; no truncation. | SelfTest one negative per table row and >256 skills/schema0/duplicate/trailing bytes; assert token text; no crash. | Every case rejected with its token; no unbounded allocation; counts exact. |
-| S1-A7 | Budget: kMaxEncodedBytes=1,048,576 and kMaxRecordBytes=2,097,152 (code currently accepts 16 MiB; C1 must lower it to 2 MiB); budget derivation table proves 1,000-item Phase-0 case fits; oversize save refused before OpenRecord with fixed error and no partial write; configHash opaque/preserved/out of scope. | SelfTest legal 1000-item state <= budget; oversize state refused; constants/docs audited. | Budget enforced; legal case passes; oversize refused; docs state number. |
-| S1-A8 | Runtime persistence on the existing disposable rig: command `powershell -NoProfile -ExecutionPolicy Bypass -File tools/run-batch-test.ps1` from Runefall project root, default clean-save manifest (SaveName from _context/clean-save/CURRENT-CLEAN-SAVE.txt), game root J:\SkyrimTest\1.6.1170, SKSE 1.6.1170, CleanSave; batch must add pre/post field assertions (rank, stage, xp, class, one skill rank, difficulty, curve, endgame, generatedContainers count+member, rewardedQuests count+member, overrides count, items count+registryId, materials count, configHash) and F11 header hex; crash-log absence. Evidence file Runefall/evidence/S1/batch-<stamp>.md with cwd/command/exit/sha256. All A1-A7 self-tests run through the same game session (DebugHarness F11); if the rig is unavailable S1 is BLOCKED, not PASS. | Batch exit 0; log tokens; evidence file; no new crash. | All fields match pre/post; batch exit 0; no new crash; evidence complete. |
+Sources indexed and read (ADR-001 implements this methodology): CodexOfPowerNG, calamity-reactive-loot-affixes, isekai-hero-skyrim,
+MEO, Adaptive Attributes SKSE. Details: _context/code-index/REFERENCE-REVIEW.md,
+MEO-REVIEW.md. Adopted patterns:
 
+- Split pure codec/state-store from the SKSE callback (Codex); host C++ tests with CMake/CTest.
+- Stage a snapshot and publish only after the record loop; do not reset live state before decode.
+- Bounded drain for unknown/unsupported records (Calamity), with a fixed drain token.
+- Versioned POD structs and explicit migration functions (Codex/Adaptive).
+- Stable identity strings, never enum indexes or raw runtime FormIDs without ResolveFormID (MEO).
+- P0-style premise gate before a large crafting feature; not part of S1 implementation.
 
-### 3.1 Field/collection cap, range and fixed token table
+Rejected from references: MEO's reset-then-read directly into global state; Adaptive Attributes'
+unchecked ReadRecordData results; Codex's source-grep atomicity test (behavioral test required).
+Useful but out of S1 scope: MEO's generated catalog and item-instance identity (future crafting slice).
 
-| Collection/field | Encode cap | Decode cap | Range/rule | Rejection token |
+## 2.5 Normative data contract (retained from rev6; self-contained)
+
+### 2.5.1 Field/collection bounds and record contract
+
+| Collection/field | Encode cap | Decode cap | Range/rule | Token |
 |---|---|---|---|---|
-| sectionCount | 64 | 64 | >=1, <=64 | co-save: reject section-count |
-| record size | - | 2,097,152 | <=2 MiB | co-save: reject record-size |
-| items | 1024 | 1024 | registryId>0 unique; sorted | co-save: reject item-count |
-| item.rarity | - | 5 | 0..5 | co-save: reject item.rarity |
-| item.socketCount | - | 3 | 0..3 | co-save: reject item.socketCount |
-| item.enhancementCount | - | 5 | 0..5 | co-save: reject item.enhancementCount |
-| item.registryId | - | - | >0 unique | co-save: reject item.registryId |
-| item.baseFormId | - | - | low32 | co-save: reject item.baseFormId |
-| huntFirstKill | 256 | 256 | key<=64, flag 0/1 | co-save: reject hunt-count |
-| materials | 256 | 256 | key<=64, count>=0 | co-save: reject material-count |
-| packVersions | 64 | 64 | key/version<=32 | co-save: reject pack-count |
-| generatedContainers | 4096 | 4096 | u32>0, sorted set | co-save: reject container-count |
-| rewardedQuests | 1024 | 1024 | u32>0, sorted set | co-save: reject quest-count |
-| ladderOverrides | 256 | 256 | key>0, stage1..100, flags 0/1 | co-save: reject override-count |
-| skillRanks | 256 | 256 | key<=64, rank1..100 | co-save: reject skill-count |
-| characterClass | 64 | 64 | string | co-save: reject string |
-| playerRank/stage | - | - | 1..100 | co-save: reject range |
-| playerXp | - | - | 0..10,000,000 | co-save: reject range |
-| difficultyProfile | - | - | 255 or 1..5 | co-save: reject range |
-| curveId | - | - | 1..5 | co-save: reject range |
-| endgameComplete | - | - | 0/1 | co-save: reject range |
-| schema | - | - | 1,2,3 only | co-save: reject schema |
-| saveVersion | - | - | equals schema | co-save: reject version-mirror |
-| flags | - | - | v3 must be 0 | co-save: reject flags |
-| item.ilvl | - | 1000 | 0..1000 | co-save: reject item.ilvl |
-| item.socketRunes | - | 3 entries | each 0..5 | co-save: reject item.socketRunes |
-| item.enhancement category | - | 5 entries | 0..5 | co-save: reject item.category |
-| item.enhancement tier | - | 5 entries | 0..5 | co-save: reject item.tier |
-| item.tags | - | - | known mask only | co-save: reject item.tags |
-| string.class | - | 64 | length | co-save: reject string.class |
-| string.skill | - | 64 | length | co-save: reject string.skill |
-| string.material/hunt | - | 64 | length | co-save: reject string.map-key |
-| string.pack | - | 32 | length | co-save: reject string.pack |
-| string.affix/effect | - | 64 | length | co-save: reject string.affix |
-| trailing bytes | - | - | reject | co-save: reject trailing |
-| duplicate known section | - | - | reject | co-save: reject duplicate-section |
-| unknown section | - | - | skip if length valid | (none) |
+| sectionCount | 64 | 64 | >=1, <=64 | reject section-count |
+| record size | - | 2,097,152 | <=2 MiB | reject record-size |
+| items | 1024 | 1024 | registryId>0 unique | reject item-count |
+| item.rarity | - | 5 | 0..5 | reject item.rarity |
+| item.socketCount | - | 3 | 0..3 | reject item.socketCount |
+| item.enhancementCount | - | 5 | 0..5 | reject item.enhancementCount |
+| item.registryId | - | - | >0, unique | reject item.registryId |
+| item.baseFormId | - | - | nonzero low32 | reject item.baseFormId |
+| item.ilvl | - | 1000 | 0..1000 | reject item.ilvl |
+| item.socketRunes | - | 3 entries | each 0..5 | reject item.socketRunes |
+| item.category | - | 5 entries | 0..5 | reject item.category |
+| item.tier | - | 5 entries | 0..5 | reject item.tier |
+| item.tags | - | - | known mask 0x3F | reject item.tags |
+| huntFirstKill | 256 | 256 | key<=64, flag 0/1 | reject hunt-count |
+| materials | 256 | 256 | key<=64, count>=0 | reject material-count |
+| packVersions | 64 | 64 | key/version<=32 | reject pack-count |
+| generatedContainers | 4096 | 4096 | u32>0, sorted set | reject container-count |
+| rewardedQuests | 1024 | 1024 | u32>0, sorted set | reject quest-count |
+| ladderOverrides | 256 | 256 | key>0, stage 1..100, flags 0/1 | reject override-count |
+| skillRanks | 256 | 256 | key<=64, rank 1..100 | reject skill-count |
+| string.class | - | 64 | length | reject string.class |
+| string.skill | - | 64 | length | reject string.skill |
+| string.material/hunt | - | 64 | length | reject string.map-key |
+| string.pack | - | 32 | length | reject string.pack |
+| string.affix/effect | - | 64 | length | reject string.affix |
+| playerRank/stage | - | - | 1..100 | reject range |
+| playerXp | - | - | 0..10,000,000 | reject range |
+| difficultyProfile | - | - | 255 or 1..5 | reject range |
+| curveId | - | - | 1..5 | reject range |
+| endgameComplete | - | - | 0/1 | reject range |
+| trailing bytes | - | - | reject | reject trailing |
+| duplicate known section | - | - | reject | reject duplicate-section |
+| unknown section | - | - | skip if length valid | drain unknown-record |
 
-Schema 0 or absent schema is rejected with co-save: reject schema. Every rejection leaves caller destination unchanged and logs its fixed token once.
+### 2.5.2 Ordering and eviction
 
-## 3. Codec semantics, caps and ranges (M1/M2/M9/M10)
+Maps sorted by byte-lexicographic key; containers/quests ascending u32 and deduped; items by
+registryId then baseFormId; overrides by key/stage/flags. At cap, the smallest FormID is evicted
+before insert (not FIFO). Persisted order is canonical and non-semantic. Decode canonicalizes;
+encode(decode(encode)) is byte-identical.
 
-Caps (encode and decode identical): sectionCount 64; items 1024; hunt 256; materials 256; packs 64; containers 4096; quests 1024; ladderOverrides 256; skillRanks 256; string lengths: class 64, skill 64, material key 64, hunt key 64, pack key/version 32, affix/effect 64; item: rarity 0-5, ilvl 0-1000, socketCount 0-3, socketRunes 0-5, enhancementCount 0-5, category/tier 0-5, registryId>0 unique, baseFormId low 32-bit, tags mask known bits; playerRank/stage 1-100, playerXp<=10,000,000, difficultyProfile 255 or 1-5, curveId 1-5, material count>=0, hunt flag 0/1, endgame 0/1.
+### 2.5.3 Budget arithmetic
 
-- Decode validates every length/range before resize/allocation; unknown sections skipped only after valid length; duplicate known sections rejected; trailing bytes rejected.
-- Encoder enforces caps; if a collection exceeds cap, encode fails and OnSave logs co-save: encode cap exceeded and does not write. No silent truncation.
-- skillRanks: write exactly min(size,256) and reject >256; loop bounded by declared count.
-- Budget: kMaxEncodedBytes=1048576; kMaxRecordBytes=2097152. OnSave checks encoded.size() > budget and returns before OpenRecord with co-save: encoded bytes exceed budget. Docs: POWER-LADDER section 9, L4-RUNTIME section 5 and section 14 item 11 must state 1 MiB.
-- configHash remains opaque/placeholder and is preserved; no fingerprint behavior in S1.
+1024 items * 787 B = 805,888 B; materials 17,920; hunts 17,152; packs 4,352; containers 16,384;
+quests 4,096; overrides 2,560; skills 17,920; overhead <2 KiB; total <890 KiB <1 MiB. 1,000-item
+Phase-0 case is under budget. kMaxEncodedBytes=1,048,576; kMaxRecordBytes=2,097,152.
+OnSave refuses >1 MiB before OpenRecord; Decode rejects >2 MiB.
 
+### 2.5.4 OnLoad record-loop semantics
 
-### 3.2 Ordering and eviction (B2)
-Persisted order is canonical and non-semantic: containers/quests are sorted ascending u32 and deduped; at cap, the smallest FormID is evicted before insert (deterministic; the implementation must change the current FIFO erase(begin()) to smallest-FormID eviction); items sorted by registryId then baseFormId, duplicate registryId rejected; overrides by key/stage/flags; maps by byte-lexicographic key. Decode canonicalizes; encode(decode(encode)) byte-identical. Persisted order never affects gameplay outcome beyond the documented eviction rule.
+Zero RNF2 records: publish defaults once and clear all registries. One valid: publish it. Multiple:
+first valid wins; later records ignored with a duplicate token. Unknown record type: drain bounded
+chunks and continue; it does not collapse the stream. Malformed/oversized: reject that record,
+continue; a later valid record publishes. recordVersion > kSaveVersion or schema > kSaveVersion:
+reject before decode with distinct tokens. No record at all leaves defaults.
 
-### 3.3 Budget arithmetic and oversize behavior (B3)
-Worst case: 1024 items * 787 B = 805,888 B; materials 256*70=17,920; hunts 256*67=17,152; packs 64*68=4,352; containers 4096*4=16,384; quests 1024*4=4,096; overrides 256*10=2,560; skills 256*70=17,920; item/map section overheads < 2 KiB; total < 890 KiB < 1 MiB. 1,000-item Phase-0 case is under budget. If encoded.size() > 1,048,576, OnSave logs co-save: encoded bytes exceed budget and returns before OpenRecord; the engine save continues without Runefall co-save data (documented data-loss consequence: that save reloads Runefall defaults; no in-save mutation or partial record).
+## 3. Frozen acceptance criteria
 
-### 3.4 OnLoad record loop (B4)
-- Zero RNF2 records: reset state to defaults, clear ItemRegistry/Progression/MaterialRegistry, log co-save: no record; defaults.
-- One valid RNF2: publish candidate atomically.
-- Multiple RNF2: first valid record wins; later records ignored with co-save: duplicate record ignored.
-- Unknown record type: ignored.
-- Malformed/oversized RNF2: reject, publish defaults/clear once, log fixed token; continue loop. A malformed record followed by a valid RNF2 in the same stream must publish the later valid record (invalid does not poison the session).
-- recordVersion > kSaveVersion or schema > kSaveVersion: reject before Decode with distinct tokens (co-save: reject record-version / co-save: reject schema), default state; no crash.
+### A1 — Failure-pure codec and fail-closed load
 
-## 4. Evidence and governance (M11-M14)
+Two levels, explicitly separated.
 
-- C1 allowed paths: src/plugin/src/CoSave.h, CoSave.cpp; src/plugin/src/DebugHarness.cpp only for SelfTest registration; SPECS/POWER-LADDER.md and SPECS/L4-RUNTIME.md; tools/run-batch-test.ps1; build/slices/S1/**; build/audit/S1-spec-audit*.md; build/audit/S1-audit.md; Runefall/evidence/S1/**; EXECUTION-STATE.json; build/audit/HISTORY.jsonl. Nothing under content/, fomod/, tools/Runefall.Build/**. Revert plan: git restore the listed code/docs and state if audit fails.
-- Spec freeze: approved revision sha256 recorded in remediation.S1.contract and HISTORY spec-audit record.
-- State transitions: SPEC_AUDIT->READY->IMPLEMENTING->LOCAL_CHECKS->AUDIT_PENDING->PASS; C1 hash recorded; C2 commits S1-audit.md; C3 state closure. Single writer per audit path.
-- Commands: build C:/Users/NeneScarlet/.cache/build-runefall.bat; batch tools/run-batch-test.ps1; gate pwsh tools/audit-gate.ps1 -StatePath EXECUTION-STATE.json -Mode truthfulness exit 0; evidence under Runefall/evidence/S1 with cwd/command/exit/hash; C1 enforcement command git diff --name-only a50b2b6..HEAD plus git status -uall must stay inside the allowlist.
+(a) Codec/pure layer: pure codec Decode(bytes) returns an optional/candidate. A rejected input
+returns no candidate and leaves the caller destination byte-for-byte unchanged. Host-tested.
 
-## 5. C1 acceptance mapping
+(b) SKSE adapter: frozen seam:
+  struct Record { std::uint32_t type; std::uint16_t version; std::vector<std::uint8_t> bytes; };
+  static bool LoadRecords(const std::vector<Record>& records, std::uint16_t recordVersion, CodecState& out);
+recordVersion is the SKSE record version for the stream; each Record.version is the per-record
+version and is checked by the codec. The seam selects the first valid RNF2 record. Zero/one/multi/
+unknown/malformed-then-valid expectations: see 2.5.4; unknown records are drained and later valid
+records publish; a stream with no valid record publishes defaults once and clears CoSave state,
+ItemRegistry, Progression and MaterialRegistry.
 
-| Criterion | Test/evidence |
-|---|---|
-| S1-A1 | SelfTest sentinel + LoadRecord zero/multi/unknown/oversized + F11 log |
-| S1-A2 | header byte assertions + decode_cosave.py + doc diff |
-| S1-A3 | schema1.bin/schema2.bin/baseline-v3.bin hashes, expected field table, derivation command |
-| S1-A4 | LoadRecord version=4/schema=4/schema=0 tests with fixed log tokens |
-| S1-A5 | reversed-order equality, canonical golden bytes, idempotent re-encode, duplicate test |
-| S1-A6 | one negative per cap/range row + >256 skills |
-| S1-A7 | 1000-item budget encode + oversize refusal |
-| S1-A8 | batch evidence with field comparison + F11 header + crash check |
+Pure header: CoSaveCodec.h defines CodecState, ItemMetadata, Enhancement, LadderOverride, Record and
+ItemTag with no PCH.h/Core.h/RE/SKSE includes. CoSave.h includes CoSaveCodec.h and aliases the types
+into Runefall; no Core.h dependency may leak into the codec header.
 
-## 6. Out of scope
+Registry defaults: assert equality against a freshly constructed default instance (CodecState{},
+ItemRegistry empty, Progression defaults, MaterialRegistry default map), not hardcoded data values.
+Evidence: codec/publish/token via host test; ItemRegistry/Progression/MaterialRegistry via in-game F11
+because they include Core.h/RE/SKSE. Pass condition: all seam cases and both evidence layers pass.
 
-Item instance identity (S7), save schema v4, gameplay fields, UI, pack/content changes, configHash fingerprinting.
+### A2 — Header contract (unchanged)
+
+Exact v1/v2/v3 table; flags=0; version mirror; byte assertions; full 16-byte header hex in batch;
+standalone decoder agrees. PASS evidence from rev6 remains valid for unchanged code.
+
+### A3 — Migration behavior (rev6 assertions retained)
+
+Fixtures with committed SHA-256 and derivation: schema1_legacy.bin, schema2_tier5.bin,
+schema2_tier2.bin, baseline_v3.bin, canonical_v3.bin. Pinned expected table:
+- v2 tier5 -> rank=stage=100; v2 tier2 -> rank=stage=40; v1 -> rank=stage=1.
+- difficultyProfile=255, curveId=1, bossKillTier retained, XP=0, class empty, endgame=false.
+- baseline v3 loads and decodes rank/stage 42; canonical bytes equal baseline.
+- Engine SelfTest covers v1/v2/migration + canonical decode; verify_fixtures covers fixtures.
+Data values are samples; these migration assertions are behavior, not data enumeration.
+
+### A4 — Downgrade and newer-save safety (rev6 retained)
+
+Distinct gates/tokens: recordVersion > kSaveVersion and payload schema > kSaveVersion rejected
+before decode, destination unchanged; schema 0/absent rejected; LoadRecord post-state asserted.
+Newer save consequence (MEO-derived): log a loud fixed token and on-screen warning that the build
+cannot read those records and SKSE does not preserve unread co-save data, so saving with this version
+would destroy them. Fixed log token: co-save: warn newer-save; the on-screen warning is user-side
+and its verification is recorded BLOCKED (not required for A4 PASS). In-game newer-save simulation
+is BLOCKED per spec.
+
+### A5 — Canonical order and duplicate policy (exact)
+
+- Items: decode rejects duplicate registryId post-sort; crafted duplicate payload required; token
+  co-save: reject item.registryId; destination unchanged.
+- Known sections: duplicate section rejected with co-save: reject duplicate-section.
+- Map/override duplicate keys: policy is REJECT with token co-save: reject duplicate-key; host test.
+- Containers/quests: dedupe on decode and encode; sorted ascending; eviction at cap removes the
+  smallest FormID (rev6 §3.2 retained).
+- Encode/decode determinism: byte equality across insertion order; encode(decode(encode)) identical;
+  smallest-FormID eviction host-tested.
+
+### A6 — Failure classes, not per-row data
+
+The rev6 per-row token matrix and §5 C1 "one negative per table row" are RETIRED. Section 2.5.1 is
+the normative data contract/bounds but is not the acceptance matrix. Host codec tests exercise one
+representative crafted payload per failure class through the real decode path. Rejection classes
+must assert the exact token, decode false, destination unchanged, no partial publish, no unbounded
+allocation. Accepted/normalized classes assert decode true and the expected normalized result; they
+must not be forced to reject. In-game F11 is regression evidence only, not the codec oracle.
+
+#### A6.1 Rejection classes (one exact token each)
+
+| Class | Failure | Exact token |
+|---|---|---|
+| 1a | schema 0/4 | reject schema |
+| 1b | record version 0/newer | reject record-version |
+| 1c | v3 flags nonzero | reject flags |
+| 1d | saveVersion != schema | reject version-mirror |
+| 2 | sectionCount 0 or 65 | reject section-count |
+| 3a | truncated body | reject trailing |
+| 3b | record >2 MiB | reject record-size |
+| 4 | duplicate known section | reject duplicate-section |
+| 5a | items >1024 | reject item-count |
+| 5b | hunt >256 | reject hunt-count |
+| 5c | materials >256 | reject material-count |
+| 5d | packs >64 | reject pack-count |
+| 5e | containers >4096 | reject container-count |
+| 5f | quests >1024 | reject quest-count |
+| 5g | overrides >256 | reject override-count |
+| 5h | skills >256 | reject skill-count |
+| 6 | count within cap but >remaining bytes | reject count-remaining |
+| 7a | class >64 | reject string.class |
+| 7b | skill >64 | reject string.skill |
+| 7c | material/hunt key >64 | reject string.map-key |
+| 7d | pack >32 | reject string.pack |
+| 7e | affix/effect >64 | reject string.affix |
+| 8a | rank/stage/xp/diff/curve/endgame | reject range |
+| 8b | rarity | reject item.rarity |
+| 8c | ilvl | reject item.ilvl |
+| 8d | socketCount | reject item.socketCount |
+| 8e | enhancementCount | reject item.enhancementCount |
+| 8f | socketRunes | reject item.socketRunes |
+| 8g | category | reject item.category |
+| 8h | tier | reject item.tier |
+| 8i | tags mask | reject item.tags |
+| 8j | baseFormId zero | reject item.baseFormId |
+| 9 | duplicate/zero registryId | reject item.registryId |
+| 11a | absent required section | reject missing-section |
+| 11b | zero-length section payload | reject empty-section |
+| 14a | encoded >1 MiB | reject budget |
+| 14b | record >2 MiB decode | reject record-size |
+
+#### A6.2 Accepted/normalized classes (decode true)
+
+| Class | Behavior | Expected result |
+|---|---|---|
+| 10 | unknown record type | bounded drain (chunk <=4096), stream continues, later valid record publishes; log token drain unknown-record |
+| 12 | duplicate raw container/quest IDs | dedupe and sort; no rejection |
+| 13a | collection exactly at cap | accepted |
+| 13b | record at exact max size | accepted |
+| 13c | missing optional section | accepted with defaults |
+
+Pass condition: every rejection row has a host-crafted payload and exact token; every accepted row
+has a host test; no row is both; all destination/post-state assertions pass.
+
+### A7 — Budget/caps (unchanged)
+
+kMaxEncodedBytes=1,048,576; kMaxRecordBytes=2,097,152; 1000-item legal case under budget;
+EncodeWithBudget refusal; OnSave refuses before OpenRecord; docs state 1 MiB.
+§2.5.1 bounds remain normative: sectionCount 64; items 1024; hunt/materials 256; packs 64;
+containers 4096; quests 1024; overrides/skills 256; string lengths 64/64/64/64/32/64;
+item ranges; playerRank/stage 1-100; xp<=10M; difficulty 255/1-5; curve 1-5.
+§2.5.2 ordering/eviction, §2.5.3 budget arithmetic and §2.5.4 OnLoad record-loop semantics are retained.
+
+### A8 — Runtime integration (restated verbatim + BLOCKED definitions)
+
+Exact command: powershell -NoProfile -ExecutionPolicy Bypass -File tools/run-batch-test.ps1
+from Runefall project root, default clean-save manifest, game root J:\SkyrimTest\1.6.1170,
+SKSE 1.6.1170, SaveName from _context/clean-save/CURRENT-CLEAN-SAVE.txt.
+
+Preflight: save .ess and .skse exist; MCP connected; load_save accepted; player name not Prisoner;
+cell formId. F11 runs the amended self-test suite (not a per-row matrix).
+
+Pre/post fields: rank, stage, xp, class, endgame, containers count+member, quests count+member,
+overrides count, items count+registryId, materials count, configHash, difficulty, curve, skillCount,
+firstContainer, firstItem, skillRank, firstQuest. Full 16-byte header hex. Crash-log check
+(no new crash after batch start). Evidence file Runefall/evidence/S1/batch-<stamp>.md with cwd/command/exit=0/body_sha256.
+
+Sub-item status: save/load/field/header/preflight are mandatory for A8 PASS. Corrupt/truncated
+co-save injection is BLOCKED unless a documented safe injection seam is implemented; if BLOCKED it
+does not by itself fail A8 but must be recorded, and no release claim may cite it. If the rig is
+unavailable, A8 is BLOCKED, not PASS.
+
+## 4. Codec architecture and host test target (authorized paths)
+
+NEW pure codec/state-store: src/plugin/src/CoSaveCodec.h, CoSaveCodec.cpp. Constraints: no
+PCH.h/Core.h/RE/SKSE includes; fixed-width types; optional/candidate return; token callback;
+bounded reads/writes. CoSave.h/CoSave.cpp remain the SKSE adapter and call the pure codec.
+
+NEW host test: src/plugin/test/CoSaveCodecTests.cpp (Catch2, existing test-windows preset).
+EDIT: src/plugin/CMakeLists.txt to add CoSaveCodec.cpp to RUNEFALL_CORE_SOURCES and the test to
+PLUGIN_TESTS_ONLY target (or dedicated EXCLUDE_FROM_ALL target modeled on tests/ladder_host.cpp).
+CMakePresets.json only if a new preset is added; vcpkg.json unchanged.
+
+Commands:
+  cmake --preset test-windows
+  cmake --build --preset test-windows --target RunefallTests
+  ctest --preset test-windows --output-on-failure
+Then the normal build: C:/Users/NeneScarlet/.cache/build-runefall.bat; then batch.
+
+## 5. C1 allowlist and enforcement
+
+Allowed in C1:
+- src/plugin/src/CoSave.h, CoSave.cpp, CoSaveCodec.h, CoSaveCodec.cpp
+- src/plugin/src/DebugHarness.cpp only for SelfTest registration
+- src/plugin/test/CoSaveCodecTests.cpp
+- src/plugin/CMakeLists.txt
+- SPECS/POWER-LADDER.md, SPECS/L4-RUNTIME.md
+- tools/run-batch-test.ps1
+- build/slices/S1/**
+- build/audit/S1-spec-audit*, S1-audit*
+- evidence/S1/**
+- EXECUTION-STATE.json, build/audit/HISTORY.jsonl
+- F7 waiver: src/plugin/src/InputManager.cpp (pre-approved crash-safety exception; not S1 scope)
+
+Enforcement must use a grandfathered manifest for pre-C1 S0 paths, not the literal
+a50b2b6..HEAD command. Add build/slices/S1/C1-allowlist.txt listing the exact allowed paths and
+use: git diff --name-only <C1-base> plus git status -uall filtered against that manifest.
+No content/, fomod/, tools/Runefall.Build/** changes.
+
+## 6. State and audit rules
+
+- Spec freeze: approved revision 8 SHA-256 recorded in remediation.S1.contract + HISTORY.
+- Lifecycle: SPEC_AUDIT -> READY -> IMPLEMENTING -> LOCAL_CHECKS -> AUDIT_PENDING -> PASS/PARTIAL/FAIL/BLOCKED.
+- C1 candidate code commit; C2 commits independent S1-audit.md; C3 state closure.
+- A PASS audit must be against the exact C1 commit and must include host test output, build proof,
+  batch evidence, and criterion-by-criterion verdicts.
+- No false PASS; missing evidence is PARTIAL/BLOCKED.
+
+## 7. Out of scope
+
+Item instance identity/crafting (future slice, MEO reference), save schema v4, gameplay fields, UI,
+pack/content changes, configHash fingerprinting, Prisma host integration.
